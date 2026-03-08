@@ -1,0 +1,90 @@
+[
+  {
+    "id": "clickbait-you-wont-believe",
+    "phrase": "you won't believe",
+    "neutral": "sensational teaser",
+    "type": "clickbait hook",
+    "category": "clickbait",
+    "explanation": "Pattern used to provoke curiosity clicks without adding substantive information.",
+    "mode": "highlight",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "clickbait-bombshell",
+    "phrase": "bombshell",
+    "neutral": "major development",
+    "type": "sensationalism",
+    "category": "clickbait",
+    "explanation": "Tabloid framing that inflates the perceived impact of a development.",
+    "mode": "highlight",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "clickbait-shock",
+    "phrase": "shock",
+    "neutral": "surprise",
+    "type": "sensationalism",
+    "category": "clickbait",
+    "explanation": "Dramatizes routine events by implying extreme surprise.",
+    "mode": "highlight",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "clickbait-shocking",
+    "phrase": "shocking",
+    "neutral": "surprising",
+    "type": "sensationalism",
+    "category": "clickbait",
+    "explanation": "Adds emotional drama before readers evaluate facts.",
+    "mode": "highlight",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "clickbait-stun",
+    "phrase": "stun",
+    "neutral": "surprise",
+    "type": "sensationalism",
+    "category": "clickbait",
+    "explanation": "Suggests extraordinary impact to intensify otherwise ordinary updates.",
+    "mode": "highlight",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "clickbait-jaw-dropping",
+    "phrase": "jaw-dropping",
+    "neutral": "notable",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Hyperbolic adjective used to increase emotional reaction.",
+    "mode": "highlight",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "clickbait-nightmare",
+    "phrase": "nightmare",
+    "neutral": "difficult situation",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Frames problems as extreme personal catastrophe.",
+    "mode": "highlight",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "clickbait-devastating",
+    "phrase": "devastating",
+    "neutral": "harmful",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Amplifies severity with emotionally loaded wording.",
+    "mode": "highlight",
+    "severity": 3,
+    "enabledByDefault": true
+  }
+]

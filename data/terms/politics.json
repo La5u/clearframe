@@ -1,0 +1,103 @@
+[
+  {
+    "id": "politics-illegal-aliens",
+    "phrase": "illegal aliens",
+    "neutral": "undocumented immigrants",
+    "type": "derogatory labeling",
+    "category": "politics",
+    "explanation": "Terminology that frames people primarily as criminal outsiders.",
+    "mode": "replace",
+    "aliases": ["illegal alien"],
+    "severity": 4,
+    "enabledByDefault": true
+  },
+  {
+    "id": "politics-government-handouts",
+    "phrase": "government handouts",
+    "neutral": "public assistance benefits",
+    "type": "loaded framing",
+    "category": "politics",
+    "explanation": "Phrase that can imply unearned dependency and reduce policy nuance.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "politics-officer-involved-shooting",
+    "phrase": "officer-involved shooting",
+    "neutral": "police shot someone",
+    "type": "passive framing",
+    "category": "politics",
+    "explanation": "Passive phrasing can obscure who performed the action.",
+    "mode": "replace",
+    "aliases": ["officer involved shooting", "officer-involved"],
+    "severity": 4,
+    "enabledByDefault": true
+  },
+  {
+    "id": "politics-enhanced-interrogation",
+    "phrase": "enhanced interrogation",
+    "neutral": "torture",
+    "type": "bureaucratic euphemism",
+    "category": "politics",
+    "explanation": "Sanitizes coercive or abusive interrogation practices.",
+    "mode": "replace",
+    "severity": 5,
+    "enabledByDefault": true
+  },
+  {
+    "id": "politics-neutralized",
+    "phrase": "neutralized",
+    "neutral": "killed",
+    "type": "military euphemism",
+    "category": "politics",
+    "explanation": "Technical wording that distances readers from lethal outcomes.",
+    "mode": "replace",
+    "severity": 4,
+    "enabledByDefault": true
+  },
+  {
+    "id": "politics-collateral-damage",
+    "phrase": "collateral damage",
+    "neutral": "civilian casualties",
+    "type": "military euphemism",
+    "category": "politics",
+    "explanation": "Obscures civilian harm by using abstract military language.",
+    "mode": "replace",
+    "severity": 5,
+    "enabledByDefault": true
+  },
+  {
+    "id": "politics-detained",
+    "phrase": "detained",
+    "neutral": "imprisoned",
+    "type": "legal euphemism",
+    "category": "politics",
+    "explanation": "Can soften long-term loss of freedom with procedural wording.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "politics-kinetic-action",
+    "phrase": "kinetic action",
+    "neutral": "military strike",
+    "type": "pentagon euphemism",
+    "category": "politics",
+    "explanation": "Abstract phrase used to avoid direct description of attacks.",
+    "mode": "replace",
+    "severity": 4,
+    "enabledByDefault": true
+  },
+  {
+    "id": "politics-surgical-strike",
+    "phrase": "surgical strike",
+    "neutral": "targeted bombing",
+    "type": "military euphemism",
+    "category": "politics",
+    "explanation": "Suggests precision and cleanliness that may not match real effects.",
+    "mode": "replace",
+    "severity": 4,
+    "enabledByDefault": true
+  }
+]

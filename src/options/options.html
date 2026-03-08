@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClearFrame Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <main>
+    <h1>ClearFrame Settings</h1>
+    <p class="subtext">Control how framing annotations are applied.</p>
+
+    <section class="card">
+      <h2>Global</h2>
+      <label class="row">
+        <input id="enabled" type="checkbox" />
+        <span>Enable extension on pages</span>
+      </label>
+      <label class="row">
+        <input id="highlight-only" type="checkbox" />
+        <span>Highlight only (never replace text)</span>
+      </label>
+    </section>
+
+    <section class="card">
+      <h2>Categories</h2>
+      <div id="categories" class="grid"></div>
+    </section>
+
+    <section class="card">
+      <h2>Match Modes</h2>
+      <label class="row">
+        <input id="mode-replace" type="checkbox" />
+        <span>Include replace-mode terms</span>
+      </label>
+      <label class="row">
+        <input id="mode-highlight" type="checkbox" />
+        <span>Include highlight-mode terms</span>
+      </label>
+    </section>
+
+    <section class="card">
+      <h2>Legend</h2>
+      <ul class="legend">
+        <li><span class="dot euphemism"></span> Euphemism</li>
+        <li><span class="dot clickbait"></span> Clickbait/Emotional</li>
+        <li><span class="dot attribution"></span> Unsourced/Authority</li>
+        <li><span class="dot loaded"></span> Aggressive/Loaded/Passive</li>
+        <li><span class="dot hype"></span> Hype/Vague Language</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Term Controls</h2>
+      <div class="term-tools">
+        <input id="term-search" type="search" placeholder="Search phrase, type, or replacement..." />
+        <select id="term-category">
+          <option value="all">All categories</option>
+          <option value="media">media</option>
+          <option value="politics">politics</option>
+          <option value="tech">tech</option>
+          <option value="corporate">corporate</option>
+          <option value="clickbait">clickbait</option>
+        </select>
+      </div>
+      <div class="term-actions">
+        <button id="enable-visible" type="button">Enable visible</button>
+        <button id="disable-visible" type="button">Disable visible</button>
+        <button id="reset-overrides" type="button">Reset custom toggles</button>
+      </div>
+      <p id="term-count" class="subtext"></p>
+      <div id="term-list" class="term-list"></div>
+    </section>
+
+    <p id="saved" class="saved" aria-live="polite"></p>
+  </main>
+
+  <script src="options.js"></script>
+</body>
+</html>

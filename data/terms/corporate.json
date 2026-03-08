@@ -1,0 +1,68 @@
+[
+  {
+    "id": "corporate-rightsizing",
+    "phrase": "rightsizing",
+    "neutral": "layoffs",
+    "type": "corporate euphemism",
+    "category": "corporate",
+    "explanation": "Business language that softens or obscures job cuts.",
+    "mode": "replace",
+    "severity": 4,
+    "enabledByDefault": true
+  },
+  {
+    "id": "corporate-laid-off",
+    "phrase": "laid off",
+    "neutral": "fired",
+    "type": "corporate euphemism",
+    "category": "corporate",
+    "explanation": "Can downplay the direct impact and accountability of job termination.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "corporate-restructuring",
+    "phrase": "restructuring",
+    "neutral": "layoffs",
+    "type": "corporate euphemism",
+    "category": "corporate",
+    "explanation": "Often used to avoid directly stating workforce reductions.",
+    "mode": "replace",
+    "severity": 4,
+    "enabledByDefault": true
+  },
+  {
+    "id": "corporate-sunsetting",
+    "phrase": "sunsetting",
+    "neutral": "discontinuing",
+    "type": "corporate euphemism",
+    "category": "corporate",
+    "explanation": "Soft language used when ending products or support.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "corporate-trusted-partners",
+    "phrase": "trusted partners",
+    "neutral": "approved third parties",
+    "type": "authority framing",
+    "category": "corporate",
+    "explanation": "Implies trustworthiness without necessarily disclosing vetting standards.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "corporate-synergy",
+    "phrase": "synergy",
+    "neutral": "coordination",
+    "type": "vague abstraction",
+    "category": "corporate",
+    "explanation": "Broad positive term that often lacks measurable meaning.",
+    "mode": "highlight",
+    "severity": 2,
+    "enabledByDefault": true
+  }
+]

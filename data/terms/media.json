@@ -1,0 +1,382 @@
+[
+  {
+    "id": "media-alleged",
+    "phrase": "alleged",
+    "neutral": "said to have",
+    "type": "legal distancing",
+    "category": "media",
+    "explanation": "Can imply guilt while preserving legal distance from direct accusation.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-claims",
+    "phrase": "claims",
+    "neutral": "says",
+    "type": "uncertainty framing",
+    "category": "media",
+    "explanation": "Makes a statement sound disputed or doubtful before evidence is assessed.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-sources-say",
+    "phrase": "sources say",
+    "neutral": "unsourced attribution",
+    "type": "unsourced attribution",
+    "category": "media",
+    "explanation": "Attribution phrase that can imply verification without named sources.",
+    "mode": "highlight",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-experts-claim",
+    "phrase": "experts claim",
+    "neutral": "unnamed expert attribution",
+    "type": "unsourced attribution",
+    "category": "media",
+    "explanation": "Appeals to authority while withholding source details.",
+    "mode": "highlight",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-fury",
+    "phrase": "fury",
+    "neutral": "anger",
+    "type": "emotional amplification",
+    "category": "media",
+    "explanation": "Inflates emotional intensity in reaction coverage.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-outrage",
+    "phrase": "outrage",
+    "neutral": "criticism",
+    "type": "emotional amplification",
+    "category": "media",
+    "explanation": "Implies mass anger even when reaction may be limited.",
+    "mode": "replace",
+    "aliases": [
+      "backlash"
+    ],
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-terror",
+    "phrase": "terror",
+    "neutral": "attack or violence",
+    "type": "fear framing",
+    "category": "media",
+    "explanation": "Emotionally loads violent incidents with fear-centric language.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-probe",
+    "phrase": "probe",
+    "neutral": "investigation",
+    "type": "euphemistic bureaucratic language",
+    "category": "media",
+    "explanation": "Vague institutional wording that can obscure concrete process details.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-row",
+    "phrase": "row",
+    "neutral": "dispute",
+    "type": "british tabloid slang",
+    "category": "media",
+    "explanation": "Dramatizes disagreements through tabloid-style shorthand.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-feud",
+    "phrase": "feud",
+    "neutral": "conflict",
+    "type": "narrative dramatization",
+    "category": "media",
+    "explanation": "Frames issues as personal battles rather than substantive disagreement.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-panic",
+    "phrase": "panic",
+    "neutral": "concern",
+    "type": "fear framing",
+    "category": "media",
+    "explanation": "Can exaggerate public reaction and urgency.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-crisis",
+    "phrase": "crisis",
+    "neutral": "problem",
+    "type": "escalation framing",
+    "category": "media",
+    "explanation": "Escalates perceived severity before scope is established.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-chaos",
+    "phrase": "chaos",
+    "neutral": "disorder",
+    "type": "dramatic framing",
+    "category": "media",
+    "explanation": "Exaggerates disruption with emotionally loaded wording.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-scandal",
+    "phrase": "scandal",
+    "neutral": "controversy",
+    "type": "moral framing",
+    "category": "media",
+    "explanation": "Implies wrongdoing before evidence or adjudication is complete.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-plot",
+    "phrase": "plot",
+    "neutral": "plan",
+    "type": "sinister implication",
+    "category": "media",
+    "explanation": "Suggests malicious intent through narrative framing.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-secret",
+    "phrase": "secret",
+    "neutral": "undisclosed",
+    "type": "intrigue framing",
+    "category": "media",
+    "explanation": "Can imply conspiracy where normal confidentiality may apply.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-snub",
+    "phrase": "snub",
+    "neutral": "did not acknowledge",
+    "type": "social drama framing",
+    "category": "media",
+    "explanation": "Turns minor interpersonal behavior into narrative conflict.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-hit",
+    "phrase": "hit",
+    "neutral": "criticize or affect",
+    "type": "aggression metaphor",
+    "category": "media",
+    "explanation": "Metaphoric violence wording used for rhetorical impact.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-spark",
+    "phrase": "spark",
+    "neutral": "cause",
+    "type": "dramatization",
+    "category": "media",
+    "explanation": "Amplifies causality with dramatic phrasing.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-fears",
+    "phrase": "fears",
+    "neutral": "concerns",
+    "type": "fear amplification",
+    "category": "media",
+    "explanation": "Suggests widespread anxiety with limited evidence.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-threat",
+    "phrase": "threat",
+    "neutral": "risk",
+    "type": "fear framing",
+    "category": "media",
+    "explanation": "Carries stronger emotional charge than neutral risk wording.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-warning",
+    "phrase": "warning",
+    "neutral": "statement or caution",
+    "type": "authority framing",
+    "category": "media",
+    "explanation": "Can imply imminent danger even when uncertainty remains high.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-exposed",
+    "phrase": "exposed",
+    "neutral": "revealed",
+    "type": "scandal framing",
+    "category": "media",
+    "explanation": "Suggests wrongdoing was uncovered before claims are verified.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-slam",
+    "phrase": "slam",
+    "neutral": "criticize",
+    "type": "aggression metaphor",
+    "category": "media",
+    "explanation": "Tabloid phrasing that dramatizes criticism.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-blast",
+    "phrase": "blast",
+    "neutral": "criticize strongly",
+    "type": "aggression metaphor",
+    "category": "media",
+    "explanation": "Metaphoric language that escalates rhetorical conflict.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-rage",
+    "phrase": "rage",
+    "neutral": "anger",
+    "type": "emotional amplification",
+    "category": "media",
+    "explanation": "Intensifies reactions with extreme emotional framing.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-under-fire",
+    "phrase": "under fire",
+    "neutral": "criticized",
+    "type": "conflict framing",
+    "category": "media",
+    "explanation": "War metaphor that frames scrutiny as attack.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-fuming",
+    "phrase": "fuming",
+    "neutral": "angry",
+    "type": "emotional dramatization",
+    "category": "media",
+    "explanation": "Implies extreme emotion and raises narrative intensity.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-erupt",
+    "phrase": "erupt",
+    "neutral": "begin",
+    "type": "disaster metaphor",
+    "category": "media",
+    "explanation": "Frames events as explosive even when escalation is limited.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-wipeout",
+    "phrase": "wipeout",
+    "neutral": "loss",
+    "type": "disaster framing",
+    "category": "media",
+    "explanation": "Dramatizes negative outcomes with catastrophic wording.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-spark-fury",
+    "phrase": "spark fury",
+    "neutral": "cause criticism",
+    "type": "emotional escalation",
+    "category": "media",
+    "explanation": "Combines causality and emotional intensity to magnify reaction.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-taken-out",
+    "phrase": "taken out",
+    "neutral": "killed",
+    "type": "violent euphemism",
+    "category": "media",
+    "explanation": "Casual wording that can blur the seriousness of lethal violence.",
+    "mode": "replace",
+    "severity": 4,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-non-consensual-encounter",
+    "phrase": "non-consensual encounter",
+    "neutral": "rape",
+    "type": "legalistic euphemism",
+    "category": "media",
+    "explanation": "Sanitized wording that can downplay sexual violence.",
+    "mode": "replace",
+    "aliases": [
+      "non consensual encounter"
+    ],
+    "severity": 5,
+    "enabledByDefault": true
+  },
+  {
+    "id": "media-passed-away",
+    "phrase": "passed away",
+    "neutral": "died",
+    "type": "softening euphemism",
+    "category": "media",
+    "explanation": "Softened wording that can reduce directness about death.",
+    "mode": "replace",
+    "severity": 1,
+    "enabledByDefault": true
+  }
+]

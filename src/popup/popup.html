@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClearFrame</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <main class="popup">
+    <h1>ClearFrame</h1>
+    <label class="row">
+      <input id="enabled" type="checkbox" />
+      <span>Enable on pages</span>
+    </label>
+    <label class="row">
+      <input id="highlight-only" type="checkbox" />
+      <span>Highlight only (no replacements)</span>
+    </label>
+
+    <section>
+      <h2>Categories</h2>
+      <div id="category-list" class="list"></div>
+    </section>
+
+    <a class="options-link" href="../options/options.html" target="_blank" rel="noreferrer">Open full settings</a>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

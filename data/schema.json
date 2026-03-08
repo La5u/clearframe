@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ClearFrame Term Entry",
+  "type": "object",
+  "required": [
+    "id",
+    "phrase",
+    "neutral",
+    "type",
+    "category",
+    "explanation",
+    "mode",
+    "enabledByDefault"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 3 },
+    "phrase": { "type": "string", "minLength": 2 },
+    "neutral": { "type": "string", "minLength": 2 },
+    "type": { "type": "string", "minLength": 2 },
+    "category": {
+      "type": "string",
+      "enum": ["media", "politics", "tech", "corporate", "clickbait"]
+    },
+    "explanation": { "type": "string", "minLength": 8 },
+    "mode": {
+      "type": "string",
+      "enum": ["replace", "highlight"]
+    },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 2 },
+      "uniqueItems": true
+    },
+    "severity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "language": {
+      "type": "string",
+      "default": "en"
+    },
+    "source": {
+      "type": "string"
+    },
+    "enabledByDefault": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

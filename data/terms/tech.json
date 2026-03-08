@@ -1,0 +1,134 @@
+[
+  {
+    "id": "tech-ai-powered",
+    "phrase": "AI powered",
+    "neutral": "automated or statistical system",
+    "type": "hype framing",
+    "category": "tech",
+    "explanation": "Branding phrase that can overstate capability and obscure limitations.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-ai-magic",
+    "phrase": "AI magic",
+    "neutral": "automated output",
+    "type": "hype framing",
+    "category": "tech",
+    "explanation": "Promotional language that discourages technical scrutiny.",
+    "mode": "highlight",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-sideloading",
+    "phrase": "sideloading",
+    "neutral": "installing",
+    "type": "platform framing",
+    "category": "tech",
+    "explanation": "Technical term that can hide policy and security tradeoffs.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-interoperability-challenges",
+    "phrase": "interoperability challenges",
+    "neutral": "compatibility problems",
+    "type": "bureaucratic euphemism",
+    "category": "tech",
+    "explanation": "Softens concrete integration failures with abstract wording.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-telemetry",
+    "phrase": "telemetry",
+    "neutral": "tracking or data collection",
+    "type": "technical euphemism",
+    "category": "tech",
+    "explanation": "Frequently used as softer language for user tracking.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-safety-layer",
+    "phrase": "safety layer",
+    "neutral": "content filter",
+    "type": "sanitized branding",
+    "category": "tech",
+    "explanation": "Can hide what moderation or filtering controls actually do.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-piracy",
+    "phrase": "piracy",
+    "neutral": "unauthorized copying",
+    "type": "moral framing",
+    "category": "tech",
+    "explanation": "Moralized label that can pre-frame legal nuance.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-jailbreak",
+    "phrase": "jailbreak",
+    "neutral": "remove restrictions",
+    "type": "criminal metaphor",
+    "category": "tech",
+    "explanation": "Criminal metaphor that frames user control as deviant behavior.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-ecosystem",
+    "phrase": "ecosystem",
+    "neutral": "platform environment",
+    "type": "corporate branding language",
+    "category": "tech",
+    "explanation": "Branding term that can obscure lock-in or dependency dynamics.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-engagement",
+    "phrase": "engagement",
+    "neutral": "time spent",
+    "type": "marketing euphemism",
+    "category": "tech",
+    "explanation": "Can soften attention-capture incentives in product design.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-monetization",
+    "phrase": "monetization",
+    "neutral": "extracting revenue",
+    "type": "corporate euphemism",
+    "category": "tech",
+    "explanation": "Abstract business term that hides direct commercial pressure on users.",
+    "mode": "replace",
+    "severity": 2,
+    "enabledByDefault": true
+  },
+  {
+    "id": "tech-content-moderation",
+    "phrase": "content moderation",
+    "neutral": "censorship or filtering",
+    "type": "framing debate",
+    "category": "tech",
+    "explanation": "Contested term where wording influences perceived legitimacy of restrictions.",
+    "mode": "replace",
+    "severity": 3,
+    "enabledByDefault": true
+  }
+]

@@ -1,0 +1,78 @@
+.clearframe-mark {
+  border-bottom: 3px solid var(--cf-line, #334155);
+  background-color: var(--cf-bg, rgba(51, 65, 85, 0.18));
+  cursor: help;
+  text-decoration-skip-ink: none;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+.clearframe-mark:focus-visible {
+  outline: 2px solid var(--cf-line, #334155);
+  outline-offset: 2px;
+}
+
+.clearframe-mark[data-mode="replace"] {
+  background-color: var(--cf-bg-strong, rgba(51, 65, 85, 0.25));
+}
+
+.clearframe-mark[data-framing="euphemism"] {
+  --cf-line: #1d4ed8;
+  --cf-bg: rgba(29, 78, 216, 0.14);
+  --cf-bg-strong: rgba(29, 78, 216, 0.26);
+}
+
+.clearframe-mark[data-framing="clickbait"] {
+  --cf-line: #a16207;
+  --cf-bg: rgba(202, 138, 4, 0.18);
+  --cf-bg-strong: rgba(202, 138, 4, 0.28);
+}
+
+.clearframe-mark[data-framing="attribution"] {
+  --cf-line: #0f766e;
+  --cf-bg: rgba(15, 118, 110, 0.14);
+  --cf-bg-strong: rgba(15, 118, 110, 0.25);
+}
+
+.clearframe-mark[data-framing="loaded"] {
+  --cf-line: #b91c1c;
+  --cf-bg: rgba(185, 28, 28, 0.16);
+  --cf-bg-strong: rgba(185, 28, 28, 0.28);
+}
+
+.clearframe-mark[data-framing="hype"] {
+  --cf-line: #db2777;
+  --cf-bg: rgba(219, 39, 119, 0.14);
+  --cf-bg-strong: rgba(219, 39, 119, 0.24);
+}
+
+.clearframe-mark[data-framing="other"] {
+  --cf-line: #334155;
+  --cf-bg: rgba(51, 65, 85, 0.14);
+  --cf-bg-strong: rgba(51, 65, 85, 0.24);
+}
+
+.clearframe-tooltip {
+  position: fixed;
+  left: 0;
+  top: 0;
+  max-width: 420px;
+  background: #111827;
+  color: #f9fafb;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  z-index: 2147483647;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 100ms ease, transform 100ms ease;
+  white-space: normal;
+  box-shadow: 0 14px 28px rgba(17, 24, 39, 0.25);
+}
+
+.clearframe-tooltip.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

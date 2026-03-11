@@ -1,0 +1,269 @@
+[
+  {
+    "phrase": "you won't believe",
+    "neutral": "sensational teaser",
+    "type": "clickbait hook",
+    "category": "clickbait",
+    "explanation": "Curiosity bait that promises more than delivery."
+  },
+  {
+    "phrase": "bombshell",
+    "neutral": "major development",
+    "type": "sensationalism",
+    "category": "clickbait",
+    "explanation": "Inflates the significance of news."
+  },
+  {
+    "phrase": "shocking",
+    "neutral": "surprising",
+    "type": "sensationalism",
+    "category": "clickbait",
+    "explanation": "Adds unnecessary drama to ordinary news."
+  },
+  {
+    "phrase": "stun",
+    "neutral": "surprise",
+    "type": "sensationalism",
+    "category": "clickbait",
+    "explanation": "Overstates the impact of information."
+  },
+  {
+    "phrase": "jaw-dropping",
+    "neutral": "notable",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Pure hype with no substance."
+  },
+  {
+    "phrase": "nightmare",
+    "neutral": "difficult situation",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Uses fear to dramatize situations."
+  },
+  {
+    "phrase": "devastating",
+    "neutral": "serious",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Emotional wording that overstates severity."
+  },
+  {
+    "phrase": "biggest",
+    "neutral": "largest",
+    "type": "superlative framing",
+    "category": "clickbait",
+    "explanation": "Inflates importance without evidence."
+  },
+  {
+    "phrase": "worst",
+    "neutral": "most severe",
+    "type": "superlative framing",
+    "category": "clickbait",
+    "explanation": "Inflates severity without basis."
+  },
+  {
+    "phrase": "most",
+    "neutral": "many or highest",
+    "type": "superlative framing",
+    "category": "clickbait",
+    "explanation": "Broad superlative without specificity."
+  },
+  {
+    "phrase": "huge",
+    "neutral": "large",
+    "type": "exaggeration",
+    "category": "clickbait",
+    "explanation": "Vague intensifier without precise meaning."
+  },
+  {
+    "phrase": "massive",
+    "neutral": "large",
+    "type": "exaggeration",
+    "category": "clickbait",
+    "explanation": "Vague intensifier lacking specificity."
+  },
+  {
+    "phrase": "exclusive",
+    "neutral": "special access",
+    "type": "attention hook",
+    "category": "clickbait",
+    "explanation": "Claims special access to create urgency."
+  },
+  {
+    "phrase": "what's really",
+    "neutral": "what is",
+    "type": "reveal framing",
+    "category": "clickbait",
+    "explanation": "Suggests hidden truth that doesn't exist.",
+    "aliases": ["what is really"]
+  },
+  {
+    "phrase": "totally",
+    "neutral": "very",
+    "type": "intensifier",
+    "category": "clickbait",
+    "explanation": "Adds hype without adding information."
+  },
+  {
+    "phrase": "up to",
+    "neutral": "as much as",
+    "type": "maximum framing",
+    "category": "clickbait",
+    "explanation": "Highlights the best case, ignores the rest."
+  },
+  {
+    "phrase": "finally",
+    "neutral": "now",
+    "type": "relief framing",
+    "category": "clickbait",
+    "explanation": "Pushes artificial payoff narrative."
+  },
+  {
+    "phrase": "chilling",
+    "neutral": "disturbing",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Fear amplification through emotive language."
+  },
+  {
+    "phrase": "intense",
+    "neutral": "strong",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Dramatizes severity unnecessarily."
+  },
+  {
+    "phrase": "desperately",
+    "neutral": "urgently",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Adds desperation framing to ordinary situations."
+  },
+  {
+    "phrase": "crazy",
+    "neutral": "unusual",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Sensationalist adjective lacking precision."
+  },
+  {
+    "phrase": "savage",
+    "neutral": "severe",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Dramatizes violence or criticism."
+  },
+  {
+    "phrase": "fiery",
+    "neutral": "passionate",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Dramatizes conflict through fire metaphor."
+  },
+  {
+    "phrase": "heartbreaking",
+    "neutral": "sad",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Sensationalist emotional manipulation."
+  },
+  {
+    "phrase": "stunning",
+    "neutral": "impressive",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Overstates impact or appearance."
+  },
+  {
+    "phrase": "insane",
+    "neutral": "extreme",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Sensationalist adjective with clinical misusage."
+  },
+  {
+    "phrase": "wild",
+    "neutral": "unusual",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Sensationalist adjective for ordinary events."
+  },
+  {
+    "phrase": "epic",
+    "neutral": "notable",
+    "type": "hype framing",
+    "category": "clickbait",
+    "explanation": "Overstates importance dramatically."
+  },
+  {
+    "phrase": "unbelievable",
+    "neutral": "surprising",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Sensationalist adjective overused in headlines."
+  },
+  {
+    "phrase": "horrifying",
+    "neutral": "disturbing",
+    "type": "emotional amplification",
+    "category": "clickbait",
+    "explanation": "Fear amplification through extreme language."
+  },
+  {
+    "phrase": "despicable",
+    "neutral": "contemptible",
+    "type": "moral framing",
+    "category": "clickbait",
+    "explanation": "Moral judgment word pushing editorial bias."
+  },
+  {
+    "phrase": "shockwaves",
+    "neutral": "repercussions",
+    "type": "fear amplification",
+    "category": "clickbait",
+    "explanation": "Dramatizes impact through disaster metaphor."
+  },
+  {
+    "phrase": "slam",
+    "neutral": "criticize",
+    "type": "aggression metaphor",
+    "category": "clickbait",
+    "explanation": "Conflict verb that escalates stories."
+  },
+  {
+    "phrase": "rips",
+    "neutral": "criticizes",
+    "type": "aggression metaphor",
+    "category": "clickbait",
+    "explanation": "Violent verb for verbal criticism."
+  },
+  {
+    "phrase": "torches",
+    "neutral": "criticizes",
+    "type": "aggression metaphor",
+    "category": "clickbait",
+    "explanation": "Fire metaphor for criticism."
+  },
+  {
+    "phrase": "blast",
+    "neutral": "criticize",
+    "type": "aggression metaphor",
+    "category": "clickbait",
+    "explanation": "Explosive criticism escalation."
+  },
+  {
+    "phrase": "roasts",
+    "neutral": "criticizes",
+    "type": "aggression metaphor",
+    "category": "clickbait",
+    "explanation": "Public criticism dramatization."
+  },
+  {
+    "phrase": "clashes",
+    "neutral": "conflicts",
+    "type": "conflict framing",
+    "category": "clickbait",
+    "explanation": "Dramatizes disagreement unnecessarily."
+  }
+]

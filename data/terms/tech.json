@@ -1,0 +1,37 @@
+[
+  {
+    "phrase": "AI",
+    "neutral": "automated system",
+    "type": "hype framing",
+    "category": "tech",
+    "explanation": "Overstates actual capability of systems."
+  },
+  {
+    "phrase": "telemetry",
+    "neutral": "data collection",
+    "type": "technical euphemism",
+    "category": "tech",
+    "explanation": "Technical term that softens user tracking."
+  },
+  {
+    "phrase": "safety layer",
+    "neutral": "content filter",
+    "type": "sanitized branding",
+    "category": "tech",
+    "explanation": "Softens what is essentially content filtering."
+  },
+  {
+    "phrase": "piracy",
+    "neutral": "unauthorized copying",
+    "type": "moral framing",
+    "category": "tech",
+    "explanation": "Moralized term for intellectual property."
+  },
+  {
+    "phrase": "content moderation",
+    "neutral": "censorship",
+    "type": "framing debate",
+    "category": "tech",
+    "explanation": "Contested term for platform content control."
+  }
+]

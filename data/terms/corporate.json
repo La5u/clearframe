@@ -1,0 +1,44 @@
+[
+  {
+    "phrase": "rightsizing",
+    "neutral": "layoffs",
+    "type": "corporate euphemism",
+    "category": "corporate",
+    "explanation": "Corporate speak that softens the reality of layoffs."
+  },
+  {
+    "phrase": "laid off",
+    "neutral": "fired",
+    "type": "corporate euphemism",
+    "category": "corporate",
+    "explanation": "Corporate speak that softens firing."
+  },
+  {
+    "phrase": "restructuring",
+    "neutral": "layoffs",
+    "type": "corporate euphemism",
+    "category": "corporate",
+    "explanation": "Avoids directly saying layoffs."
+  },
+  {
+    "phrase": "sunsetting",
+    "neutral": "discontinuing",
+    "type": "corporate euphemism",
+    "category": "corporate",
+    "explanation": "Softens the end of products or support."
+  },
+  {
+    "phrase": "trusted partners",
+    "neutral": "approved third parties",
+    "type": "authority framing",
+    "category": "corporate",
+    "explanation": "Vague term that obscures who is actually trusted."
+  },
+  {
+    "phrase": "synergy",
+    "neutral": "coordination",
+    "type": "vague abstraction",
+    "category": "corporate",
+    "explanation": "Buzzword that adds nothing to the meaning."
+  }
+]

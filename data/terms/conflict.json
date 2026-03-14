@@ -1,0 +1,58 @@
+[
+  {
+    "phrase": "feud",
+    "neutral": "disagreement",
+    "type": "conflict",
+    "explanation": "Turns issues into personal conflicts.",
+    "aliases": []
+  },
+  {
+    "phrase": "clashes",
+    "neutral": "conflicts",
+    "type": "conflict",
+    "explanation": "Dramatizes disagreement unnecessarily.",
+    "aliases": []
+  },
+  {
+    "phrase": "chaos",
+    "neutral": "disorder",
+    "type": "conflict",
+    "explanation": "Exaggerates the state of disorder.",
+    "aliases": []
+  },
+  {
+    "phrase": "plot",
+    "neutral": "plan",
+    "type": "conflict",
+    "explanation": "Suggests malice where there may be none.",
+    "aliases": []
+  },
+  {
+    "phrase": "snub",
+    "neutral": "ignored",
+    "type": "conflict",
+    "explanation": "Manufactures drama from non-events.",
+    "aliases": []
+  },
+  {
+    "phrase": "spark",
+    "neutral": "cause",
+    "type": "conflict",
+    "explanation": "Adds drama where simple causation exists.",
+    "aliases": []
+  },
+  {
+    "phrase": "erupt",
+    "neutral": "begin",
+    "type": "conflict",
+    "explanation": "Explosive framing for ordinary events.",
+    "aliases": []
+  },
+  {
+    "phrase": "wipeout",
+    "neutral": "loss",
+    "type": "conflict",
+    "explanation": "Catastrophic framing for any defeat.",
+    "aliases": []
+  }
+]

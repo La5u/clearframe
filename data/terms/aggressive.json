@@ -1,0 +1,93 @@
+[
+  {
+    "phrase": "illegal aliens",
+    "neutral": "undocumented immigrants",
+    "type": "derogatory",
+    "explanation": "Label that criminalizes immigration status.",
+    "aliases": ["illegal alien"]
+  },
+  {
+    "phrase": "slam",
+    "neutral": "criticize",
+    "type": "aggression",
+    "explanation": "Conflict verb that escalates stories.",
+    "aliases": []
+  },
+  {
+    "phrase": "rips",
+    "neutral": "criticizes",
+    "type": "aggression",
+    "explanation": "Violent verb for verbal criticism.",
+    "aliases": []
+  },
+  {
+    "phrase": "torches",
+    "neutral": "criticizes",
+    "type": "aggression",
+    "explanation": "Fire metaphor for criticism.",
+    "aliases": []
+  },
+  {
+    "phrase": "blast",
+    "neutral": "criticize",
+    "type": "aggression",
+    "explanation": "Explosive criticism escalation.",
+    "aliases": []
+  },
+  {
+    "phrase": "roasts",
+    "neutral": "criticizes",
+    "type": "aggression",
+    "explanation": "Public criticism dramatization.",
+    "aliases": []
+  },
+  {
+    "phrase": "hit with",
+    "neutral": "targeted with",
+    "type": "aggression",
+    "explanation": "Violence metaphor applied to non-violent actions.",
+    "aliases": []
+  },
+  {
+    "phrase": "taken out",
+    "neutral": "killed",
+    "type": "aggression",
+    "explanation": "Softens lethal violence in reporting.",
+    "aliases": []
+  },
+  {
+    "phrase": "under fire",
+    "neutral": "criticized",
+    "type": "aggression",
+    "explanation": "War metaphor applied to criticism.",
+    "aliases": []
+  },
+  {
+    "phrase": "despicable",
+    "neutral": "contemptible",
+    "type": "moral",
+    "explanation": "Moral judgment word pushing editorial bias.",
+    "aliases": []
+  },
+  {
+    "phrase": "scandal",
+    "neutral": "controversy",
+    "type": "moral",
+    "explanation": "Preloads assumption of wrongdoing.",
+    "aliases": []
+  },
+  {
+    "phrase": "piracy",
+    "neutral": "unauthorized copying",
+    "type": "moral",
+    "explanation": "Moralized term for intellectual property.",
+    "aliases": []
+  },
+  {
+    "phrase": "government handouts",
+    "neutral": "public benefits",
+    "type": "loaded",
+    "explanation": "Loaded term for social assistance programs.",
+    "aliases": []
+  }
+]

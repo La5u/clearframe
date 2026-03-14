@@ -5,6 +5,12 @@
   "description": "Highlights euphemisms and framing terms with neutral alternatives.",
   "permissions": ["storage"],
   "host_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "search-icon.png",
+    "32": "search-icon.png",
+    "48": "search-icon.png",
+    "128": "search-icon.png"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -21,6 +27,11 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "ClearFrame"
+    "default_title": "ClearFrame",
+    "default_icon": {
+      "16": "search-icon.png",
+      "32": "search-icon.png",
+      "48": "search-icon.png"
+    }
   }
 }

@@ -1,0 +1,8 @@
+{
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "clearframe@lasu.dev",
+      "strict_min_version": "121.0"
+    }
+  }
+}

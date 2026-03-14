@@ -8,7 +8,15 @@ const DATA_DIR = path.join(ROOT, 'data', 'terms');
 const DIST_DIR = path.join(ROOT, 'dist');
 const DIST_FIREFOX_DIR = path.join(ROOT, 'dist-firefox');
 
-const ALLOWED_CATEGORIES = new Set(['media', 'politics', 'tech', 'corporate', 'clickbait']);
+const ALLOWED_CATEGORIES = new Set([
+  'euphemism',
+  'aggressive', 'aggression', 'moral', 'derogatory', 'loaded', 'partisan',
+  'sensational', 'clickbait', 'superlative', 'exaggeration', 'reveal', 'hype',
+  'framing', 'unsourced', 'uncertainty', 'authority',
+  'emotional', 'fear',
+  'conflict', 'drama', 'disaster',
+  'vague'
+]);
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -19,13 +27,13 @@ function normalizePhrase(phrase) {
 }
 
 function validateTerm(term, file) {
-  for (const key of ['phrase', 'type', 'category', 'explanation']) {
+  for (const key of ['phrase', 'type', 'explanation']) {
     if (!(key in term)) {
       throw new Error(`${file}: missing required field '${key}'`);
     }
   }
-  if (!ALLOWED_CATEGORIES.has(term.category)) {
-    throw new Error(`${file}: invalid category '${term.category}'`);
+  if (!ALLOWED_CATEGORIES.has(term.type)) {
+    throw new Error(`${file}: invalid type '${term.type}' - must be one of: ${Array.from(ALLOWED_CATEGORIES).join(', ')}`);
   }
 }
 
@@ -56,7 +64,6 @@ function loadTerms(dataDir) {
         phrase: phraseNorm,
         neutral: term.neutral || '',
         type: term.type,
-        category: term.category,
         explanation: term.explanation
       };
 
@@ -76,7 +83,6 @@ function loadTerms(dataDir) {
             phrase: aliasNorm,
             neutral: term.neutral || '',
             type: term.type,
-            category: term.category,
             explanation: term.explanation
           };
           phraseEntries.push({
@@ -103,7 +109,7 @@ function loadTerms(dataDir) {
   };
 }
 
-const SOURCE_FILES = ['manifest.json', 'content.css', 'content.js', 'popup.html', 'popup.js'];
+const SOURCE_FILES = ['manifest.json', 'content.css', 'content.js', 'popup.html', 'popup.js', 'search-icon.png'];
 
 function copySourceFiles(src, dest) {
   fs.mkdirSync(dest, { recursive: true });

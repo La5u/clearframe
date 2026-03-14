@@ -1,0 +1,44 @@
+[
+  {
+    "phrase": "sources say",
+    "neutral": "unsourced",
+    "type": "unsourced",
+    "explanation": "Anonymous sources with no way to verify.",
+    "aliases": []
+  },
+  {
+    "phrase": "experts claim",
+    "neutral": "unnamed expert",
+    "type": "unsourced",
+    "explanation": "Unnamed authority presented as fact.",
+    "aliases": []
+  },
+  {
+    "phrase": "claims",
+    "neutral": "says",
+    "type": "uncertainty",
+    "explanation": "Signals doubt about the statement's validity.",
+    "aliases": []
+  },
+  {
+    "phrase": "trusted partners",
+    "neutral": "approved third parties",
+    "type": "authority",
+    "explanation": "Vague term that obscures who is actually trusted.",
+    "aliases": []
+  },
+  {
+    "phrase": "content moderation",
+    "neutral": "censorship",
+    "type": "framing",
+    "explanation": "Contested term for platform content control.",
+    "aliases": []
+  },
+  {
+    "phrase": "laid off",
+    "neutral": "fired",
+    "type": "framing",
+    "explanation": "Corporate speak that softens firing.",
+    "aliases": []
+  }
+]

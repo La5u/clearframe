@@ -6,13 +6,7 @@
 
   const DEFAULT_SETTINGS = {
     enabled: true,
-    categories: {
-      media: true,
-      politics: true,
-      tech: true,
-      corporate: true,
-      clickbait: true
-    }
+    types: {}
   };
 
   const MATCH_TERM_KEY = '$';
@@ -31,6 +25,42 @@
     return !isWordChar(prev) && !isWordChar(next);
   }
 
+  const TYPE_MAP = {
+    euphemism: 'blue',
+    aggressive: 'red',
+    aggression: 'red',
+    moral: 'red',
+    derogatory: 'red',
+    loaded: 'red',
+    partisan: 'red',
+    sensational: 'yellow',
+    clickbait: 'yellow',
+    reveal: 'yellow',
+    hype: 'yellow',
+    superlative: 'green',
+    exaggeration: 'green',
+    framing: 'gray',
+    unsourced: 'gray',
+    uncertainty: 'gray',
+    authority: 'gray',
+    emotional: 'purple',
+    fear: 'purple',
+    conflict: 'orange',
+    drama: 'orange',
+    disaster: 'orange',
+    vague: 'gray'
+  };
+
+  function getColor(type) {
+    return TYPE_MAP[String(type || '').toLowerCase()] || 'other';
+  }
+
+  function isTypeEnabled(type) {
+    if (!settings.types) return true;
+    if (Object.keys(settings.types).length === 0) return true;
+    return settings.types[type] !== false;
+  }
+
   function compileMatcher() {
     const root = Object.create(null);
     if (!indexData?.buckets) return root;
@@ -38,7 +68,7 @@
     for (const entries of Object.values(indexData.buckets)) {
       for (const entry of entries) {
         const term = indexData.termsById[entry.termId];
-        if (!term || !settings.categories[term.category]) continue;
+        if (!term || !isTypeEnabled(term.type)) continue;
 
         let node = root;
         for (const char of entry.phraseNorm) {
@@ -91,41 +121,33 @@
     return matches;
   }
 
-  function framingGroup(type) {
-    const value = String(type || '').toLowerCase();
-    if (value.includes('euphemism')) return 'euphemism';
-    if (
-      value.includes('clickbait') ||
-      value.includes('emotional') ||
-      value.includes('sensational') ||
-      value.includes('fear') ||
-      value.includes('dramatic') ||
-      value.includes('escalation') ||
-      value.includes('caps') ||
-      value.includes('hook') ||
-      value.includes('superlative') ||
-      value.includes('exaggeration') ||
-      value.includes('intensifier') ||
-      value.includes('reveal') ||
-      value.includes('maximum') ||
-      value.includes('relief') ||
-      value.includes('hype') ||
-      value.includes('moral') ||
-      value.includes('amplification')
-    ) return 'clickbait';
-    if (
-      value.includes('aggression') ||
-      value.includes('attack') ||
-      value.includes('loaded') ||
-      value.includes('passive') ||
-      value.includes('derogatory') ||
-      value.includes('dysphemism') ||
-      value.includes('conflict') ||
-      value.includes('violence') ||
-      value.includes('violent')
-    ) return 'loaded';
-    if (value.includes('unsourced') || value.includes('authority') || value.includes('uncertainty')) return 'attribution';
-    return 'other';
+  const TYPE_TO_GROUP = {
+    euphemism: 'blue',
+    aggressive: 'red',
+    aggression: 'red',
+    moral: 'red',
+    derogatory: 'red',
+    loaded: 'red',
+    sensational: 'yellow',
+    clickbait: 'yellow',
+    superlative: 'yellow',
+    exaggeration: 'yellow',
+    reveal: 'yellow',
+    hype: 'yellow',
+    framing: 'green',
+    unsourced: 'green',
+    uncertainty: 'green',
+    authority: 'green',
+    emotional: 'purple',
+    fear: 'purple',
+    conflict: 'orange',
+    drama: 'orange',
+    disaster: 'orange',
+    vague: 'gray'
+  };
+
+  function getGroup(type) {
+    return getColor(type);
   }
 
   let tooltipEl = null;
@@ -207,7 +229,7 @@
       span.setAttribute('data-cf-mark', '1');
       span.setAttribute('data-term-id', term.phrase);
       span.className = 'cf-mark';
-      span.setAttribute('data-framing', framingGroup(term.type));
+      span.setAttribute('data-framing', getGroup(term.type));
       span.textContent = originalText;
 
       fragment.appendChild(span);
@@ -247,9 +269,6 @@
       const result = await chrome.storage.sync.get(['settings']);
       if (result.settings) {
         settings = { ...DEFAULT_SETTINGS, ...result.settings };
-        if (result.settings.categories) {
-          settings.categories = { ...DEFAULT_SETTINGS.categories, ...result.settings.categories };
-        }
       }
     } catch (e) {}
   }
@@ -277,9 +296,6 @@
     chrome.storage.onChanged.addListener((changes, area) => {
       if (area === 'sync' && changes.settings) {
         settings = { ...DEFAULT_SETTINGS, ...changes.settings.newValue };
-        if (changes.settings.newValue?.categories) {
-          settings.categories = { ...DEFAULT_SETTINGS.categories, ...changes.settings.newValue.categories };
-        }
         rebuildMatcher();
         if (settings.enabled) {
           document.querySelectorAll('[data-cf-mark]').forEach(el => {
@@ -292,8 +308,19 @@
 
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (message.type === 'CLEARFRAME_GET_COUNT') {
+        if (!settings.enabled || !compiledMatcher) {
+          sendResponse({ count: 0 });
+          return;
+        }
         const count = document.querySelectorAll('[data-cf-mark]').length;
         sendResponse({ count });
+      }
+      if (message.type === 'CLEARFRAME_SCAN') {
+        rebuildMatcher();
+        if (settings.enabled) {
+          scanPage();
+        }
+        sendResponse({ count: document.querySelectorAll('[data-cf-mark]').length });
       }
     });
   }

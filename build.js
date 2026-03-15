@@ -87,7 +87,7 @@ function build() {
   const count = Object.keys(index.termsById).length;
 
   fs.mkdirSync(path.join(ROOT, 'dist'), { recursive: true });
-  const files = ['manifest.json', 'background.js', 'popup.html', 'popup.js', 'content.css'];
+  const files = ['manifest.json', 'manifest.firefox.json', 'background.js', 'popup.html', 'popup.js', 'content.css'];
   files.forEach(f => fs.copyFileSync(path.join(ROOT, f), path.join(ROOT, 'dist', f)));
   fs.copyFileSync(path.join(ROOT, 'icon.png'), path.join(ROOT, 'dist', 'icon.png'));
 
@@ -98,6 +98,13 @@ function build() {
   const popupCode = `globalThis.ClearFrame = { types: ${JSON.stringify(TYPES)}, colorConfig: ${JSON.stringify(COLOR_CONFIG)} };`;
   const popup = fs.readFileSync(path.join(ROOT, 'popup.js'), 'utf8');
   fs.writeFileSync(path.join(ROOT, 'dist', 'popup.js'), popupCode + popup);
+
+  fs.mkdirSync(path.join(ROOT, 'dist-firefox'), { recursive: true });
+  const ffFiles = ['manifest.firefox.json', 'background.js', 'popup.html', 'popup.js', 'content.css'];
+  ffFiles.forEach(f => fs.copyFileSync(path.join(ROOT, f), path.join(ROOT, 'dist-firefox', f === 'manifest.firefox.json' ? 'manifest.json' : f)));
+  fs.copyFileSync(path.join(ROOT, 'icon.png'), path.join(ROOT, 'dist-firefox', 'icon.png'));
+  fs.writeFileSync(path.join(ROOT, 'dist-firefox', 'content.js'), code + content);
+  fs.writeFileSync(path.join(ROOT, 'dist-firefox', 'popup.js'), popupCode + popup);
 
   console.log(`Built: ${count} terms`);
 }

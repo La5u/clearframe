@@ -5,5 +5,8 @@
   "description": "Highlights biased language with neutral alternatives.",
   "scripts": {
     "build": "node build.js"
+  },
+  "dependencies": {
+    "web-ext": "^10.0.0"
   }
 }

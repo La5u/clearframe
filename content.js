@@ -6,6 +6,7 @@ const SKIP_SELECTOR = 'nav,button,select,option,[role=navigation],[role=menu],[a
 
 let settings = { enabled: true, types: {}, userTypeColors: {} };
 let matcher = null;
+const IS_TOP_FRAME = window.top === window;
 
 function isWordChar(c) { return /[a-z0-9']/i.test(c); }
 
@@ -172,18 +173,22 @@ function hideTooltip() {
   if (tooltip) tooltip.style.display = 'none';
 }
 
-chrome.storage.sync.get(['settings', 'userTypeColors'], r => {
-  settings = { enabled: true, types: {}, userTypeColors: {}, ...(r.settings || {}) };
-  if (r.userTypeColors) settings.userTypeColors = r.userTypeColors;
-  matcher = buildMatcher();
-  if (settings.enabled) {
-    clearHighlights(document);
-    scan(document.body);
-    new MutationObserver(handleMutations).observe(document.body, { childList: true, subtree: true });
-  }
-  document.addEventListener('mouseover', e => { const t = e.target.closest('.cf-highlight'); if (t) showTooltip(t); });
-  document.addEventListener('mouseout', e => { if (e.target.closest('.cf-highlight')) hideTooltip(); });
-});
+function init() {
+  chrome.storage.sync.get(['settings', 'userTypeColors'], r => {
+    settings = { enabled: true, types: {}, userTypeColors: {}, ...(r.settings || {}) };
+    if (r.userTypeColors) settings.userTypeColors = r.userTypeColors;
+    matcher = buildMatcher();
+    if (settings.enabled) {
+      clearHighlights(document);
+      scan(document.body);
+      new MutationObserver(handleMutations).observe(document.body, { childList: true, subtree: true });
+    }
+    document.addEventListener('mouseover', e => { const t = e.target.closest('.cf-highlight'); if (t) showTooltip(t); });
+    document.addEventListener('mouseout', e => { if (e.target.closest('.cf-highlight')) hideTooltip(); });
+  });
+}
+
+if (IS_TOP_FRAME) init();
 
 chrome.runtime.onMessage.addListener((msg, src, sendResponse) => {
   if (msg.type === 'GET_COUNT') {

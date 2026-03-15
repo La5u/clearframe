@@ -1,0 +1,28 @@
+.cf-highlight {
+  border-radius: 2px;
+  padding: 0 2px;
+  cursor: help;
+  box-decoration-break: clone;
+  background: rgba(var(--cf-rgb), 0.6);
+  box-shadow: inset 0 0 0 2px rgba(var(--cf-rgb), 0.85);
+}
+.cf-blue { --cf-rgb: 96,165,250; }
+.cf-red { --cf-rgb: 248,113,113; }
+.cf-yellow { --cf-rgb: 250,204,21; }
+.cf-green { --cf-rgb: 74,222,128; }
+.cf-gray { --cf-rgb: 209,213,219; }
+.cf-purple { --cf-rgb: 196,128,255; }
+.cf-orange { --cf-rgb: 251,146,60; }
+.cf-pink { --cf-rgb: 244,114,182; }
+
+#cf-tooltip {
+  position: absolute;
+  background: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  max-width: 250px;
+  z-index: 999999;
+  pointer-events: none;
+}

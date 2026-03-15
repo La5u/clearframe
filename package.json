@@ -1,14 +1,9 @@
 {
   "name": "clearframe",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "private": true,
-  "description": "Browser extension to expose framing, euphemisms, and propaganda patterns.",
+  "description": "Highlights biased language with neutral alternatives.",
   "scripts": {
-    "build": "node scripts/build-dictionary.js",
-    "check": "node scripts/build-dictionary.js --check",
-    "test": "node scripts/test-fixtures.js"
-  },
-  "engines": {
-    "node": ">=18"
+    "build": "node build.js"
   }
 }

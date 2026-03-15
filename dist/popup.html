@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --panel: #fff8ef;
+      --ink: #1a1a1a;
+      --muted: #6b6b6b;
+      --stroke: #c9c1b5;
+      --accent: #0f172a;
+      --chip-border: #b9afa1;
+      --chip-disabled: #9d9486;
+      --tab-bg: #efe6da;
+      --tab-active: #1a1a1a;
+      --tab-active-ink: #fff;
+      --shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    body.theme-dark {
+      --bg: #0d0f12;
+      --panel: #0b0d10;
+      --ink: #f9fafb;
+      --muted: #c2c5cc;
+      --stroke: #1c1f25;
+      --accent: #f9fafb;
+      --chip-border: #2a2f38;
+      --chip-disabled: #8b93a3;
+      --tab-bg: #0f1217;
+      --tab-active: #f9fafb;
+      --tab-active-ink: #0d0f12;
+      --shadow: 0 8px 20px rgba(0,0,0,0.35);
+    }
+    body {
+      width: 280px;
+      height: 420px;
+      font-family: "Avenir Next", "Segoe UI", "Trebuchet MS", sans-serif;
+      margin: 0;
+      padding: 12px;
+      font-size: 12px;
+      background: var(--bg);
+      color: var(--ink);
+      box-sizing: border-box;
+    }
+    * { box-sizing: border-box; }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border: 1px solid var(--stroke);
+      border-radius: 10px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      margin-bottom: 10px;
+    }
+    h3 { margin: 0; font-size: 14px; letter-spacing: 0.3px; }
+    .theme-btn {
+      font-size: 10px;
+      padding: 4px 8px;
+      border: 1px solid var(--stroke);
+      background: transparent;
+      color: var(--ink);
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .tab-btn {
+      font-size: 11px;
+      padding: 6px 8px;
+      border: 1px solid var(--stroke);
+      background: var(--tab-bg);
+      color: var(--ink);
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--tab-active);
+      color: var(--tab-active-ink);
+      border-color: transparent;
+    }
+    .tab-panel {
+      display: none;
+      height: 320px;
+      overflow: auto;
+      padding: 10px;
+      border: 1px solid var(--stroke);
+      border-radius: 12px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .tab-panel.active { display: block; }
+    .row { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+    .row label { flex: 1; }
+    #counter { font-size: 11px; color: var(--muted); margin-top: 8px; }
+    .main-toggle { font-weight: bold; margin-bottom: 8px; }
+    .color-group { margin-bottom: 10px; border-radius: 10px; padding: 6px; border: 1px dashed var(--stroke); }
+    .color-group-header { font-weight: bold; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .type-list { min-height: 20px; padding: 4px; border-radius: 8px; }
+    .type-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      margin: 2px;
+      border-radius: 999px;
+      font-size: 11px;
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid var(--chip-border);
+      color: var(--ink);
+    }
+    .type-chip:active { cursor: grabbing; }
+    .type-chip.disabled { opacity: 0.45; color: var(--chip-disabled); }
+    .type-chip-label { pointer-events: none; }
+    .type-chip.dragging { opacity: 0.5; }
+    .drop-zone { border: 2px dashed transparent; }
+    .drop-zone.drag-over { border-color: var(--accent); }
+    #reset-btn { font-size: 10px; margin-top: 8px; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--stroke); background: transparent; color: var(--ink); }
+    #term-list {
+      max-height: 180px;
+      overflow: auto;
+      border: 1px solid var(--stroke);
+      padding: 8px;
+      border-radius: 10px;
+      background: transparent;
+    }
+    .term-row { display: flex; justify-content: space-between; gap: 8px; padding: 2px 0; }
+    .term-count { color: var(--muted); }
+    body.theme-dark * { scrollbar-color: #3b3f46 #14161a; }
+    body.theme-dark ::-webkit-scrollbar { width: 10px; height: 10px; }
+    body.theme-dark ::-webkit-scrollbar-track { background: #14161a; }
+    body.theme-dark ::-webkit-scrollbar-thumb { background: #3b3f46; border-radius: 8px; }
+    body.theme-dark ::-webkit-scrollbar-thumb:hover { background: #4b505a; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h3>ClearFrame</h3>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="settings">Settings</button>
+    <button class="tab-btn" data-tab="terms">Detected</button>
+  </div>
+  <div class="tab-panel active" data-panel="settings">
+  <div class="row main-toggle">
+    <input type="checkbox" id="enabled">
+    <label for="enabled">Enable</label>
+  </div>
+  <div id="color-groups"></div>
+  <button id="reset-btn">Reset Colors</button>
+  <div id="counter">Loading...</div>
+  </div>
+  <div class="tab-panel" data-panel="terms">
+    <div id="term-list">Loading...</div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

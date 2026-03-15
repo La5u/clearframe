@@ -1,0 +1,17 @@
+[
+  {
+    "phrase": "lash out",
+    "neutral": "criticize",
+    "type": "tabloid-anger"
+  },
+  {
+    "phrase": "raged",
+    "neutral": "was angry",
+    "type": "tabloid-anger"
+  },
+  {
+    "phrase": "red-faced",
+    "neutral": "angry",
+    "type": "tabloid-anger"
+  }
+]

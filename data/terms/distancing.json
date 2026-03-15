@@ -1,0 +1,17 @@
+[
+  {
+    "phrase": "suspected",
+    "neutral": "said to be",
+    "type": "distancing"
+  },
+  {
+    "phrase": "linked to",
+    "neutral": "connected to",
+    "type": "distancing"
+  },
+  {
+    "phrase": "tied to",
+    "neutral": "connected to",
+    "type": "distancing"
+  }
+]

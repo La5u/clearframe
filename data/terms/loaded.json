@@ -1,0 +1,14 @@
+[
+  {
+    "phrase": "government handouts",
+    "neutral": "public benefits",
+    "type": "loaded",
+    "explanation": "Loaded term for social assistance programs.",
+    "aliases": []
+  },
+  {
+    "phrase": "tax relief",
+    "neutral": "tax cuts",
+    "type": "loaded"
+  }
+]

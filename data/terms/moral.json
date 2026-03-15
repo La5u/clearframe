@@ -1,0 +1,28 @@
+[
+  {
+    "phrase": "despicable",
+    "neutral": "contemptible",
+    "type": "moral",
+    "explanation": "Moral judgment word pushing editorial bias.",
+    "aliases": []
+  },
+  {
+    "phrase": "scandal",
+    "neutral": "controversy",
+    "type": "moral",
+    "explanation": "Preloads assumption of wrongdoing.",
+    "aliases": []
+  },
+  {
+    "phrase": "piracy",
+    "neutral": "unauthorized copying",
+    "type": "moral",
+    "explanation": "Moralized term for intellectual property.",
+    "aliases": []
+  },
+  {
+    "phrase": "evil",
+    "neutral": "harmful",
+    "type": "moral"
+  }
+]

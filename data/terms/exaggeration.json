@@ -1,0 +1,55 @@
+[
+  {
+    "phrase": "huge",
+    "neutral": "large",
+    "type": "exaggeration",
+    "explanation": "Vague intensifier without precise meaning.",
+    "aliases": []
+  },
+  {
+    "phrase": "massive",
+    "neutral": "large",
+    "type": "exaggeration",
+    "explanation": "Vague intensifier lacking specificity.",
+    "aliases": []
+  },
+  {
+    "phrase": "totally",
+    "neutral": "very",
+    "type": "exaggeration",
+    "explanation": "Adds hype without adding information.",
+    "aliases": []
+  },
+  {
+    "phrase": "up to",
+    "neutral": "as much as",
+    "type": "exaggeration",
+    "explanation": "Highlights the best case, ignores the rest.",
+    "aliases": []
+  },
+  {
+    "phrase": "countless",
+    "neutral": "many",
+    "type": "exaggeration"
+  },
+  {
+    "phrase": "staggering",
+    "neutral": "large",
+    "type": "exaggeration"
+  },
+  {
+    "phrase": "outrageous",
+    "neutral": "extreme",
+    "type": "exaggeration"
+  },
+  {
+    "phrase": "alarming",
+    "neutral": "concerning",
+    "type": "exaggeration"
+  },
+  {
+    "phrase": "unprecedented",
+    "neutral": "rare",
+    "type": "exaggeration"
+  }
+]

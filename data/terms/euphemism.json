@@ -46,7 +46,9 @@
     "neutral": "rape",
     "type": "euphemism",
     "explanation": "Softens sexual violence through clinical language.",
-    "aliases": ["non consensual encounter"]
+    "aliases": [
+      "non consensual encounter"
+    ]
   },
   {
     "phrase": "passed away",
@@ -95,7 +97,10 @@
     "neutral": "police shot someone",
     "type": "euphemism",
     "explanation": "Passive voice obscures who is responsible.",
-    "aliases": ["officer involved shooting", "officer-involved"]
+    "aliases": [
+      "officer involved shooting",
+      "officer-involved"
+    ]
   },
   {
     "phrase": "probe",
@@ -124,5 +129,10 @@
     "type": "euphemism",
     "explanation": "Preloads wrongdoing in reporting.",
     "aliases": []
+  },
+  {
+    "phrase": "economic headwinds",
+    "neutral": "economic slowdown",
+    "type": "euphemism"
   }
 ]

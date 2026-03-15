@@ -5,5 +5,10 @@
     "type": "vague",
     "explanation": "Buzzword that adds nothing to the meaning.",
     "aliases": []
+  },
+  {
+    "phrase": "innovative",
+    "neutral": "new",
+    "type": "vague"
   }
 ]

@@ -1,0 +1,17 @@
+[
+  {
+    "phrase": "regime",
+    "neutral": "government",
+    "type": "negative-framing"
+  },
+  {
+    "phrase": "junta",
+    "neutral": "government",
+    "type": "negative-framing"
+  },
+  {
+    "phrase": "puppet",
+    "neutral": "proxy",
+    "type": "negative-framing"
+  }
+]

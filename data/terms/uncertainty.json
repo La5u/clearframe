@@ -1,0 +1,14 @@
+[
+  {
+    "phrase": "claims",
+    "neutral": "says",
+    "type": "uncertainty",
+    "explanation": "Signals doubt about the statement's validity.",
+    "aliases": []
+  },
+  {
+    "phrase": "reportedly",
+    "neutral": "said to have",
+    "type": "uncertainty"
+  }
+]

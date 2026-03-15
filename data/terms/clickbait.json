@@ -1,0 +1,212 @@
+[
+  {
+    "phrase": "you won't believe",
+    "neutral": "sensational teaser",
+    "type": "clickbait",
+    "explanation": "Curiosity bait that promises more than delivery.",
+    "aliases": []
+  },
+  {
+    "phrase": "bombshell",
+    "neutral": "major development",
+    "type": "clickbait",
+    "explanation": "Inflates the significance of news.",
+    "aliases": []
+  },
+  {
+    "phrase": "shocking",
+    "neutral": "surprising",
+    "type": "clickbait",
+    "explanation": "Adds unnecessary drama to ordinary news.",
+    "aliases": []
+  },
+  {
+    "phrase": "breaking",
+    "neutral": "urgent",
+    "type": "clickbait",
+    "explanation": "False urgency in headlines.",
+    "aliases": []
+  },
+  {
+    "phrase": "stun",
+    "neutral": "surprise",
+    "type": "clickbait",
+    "explanation": "Overstates the impact of information.",
+    "aliases": [],
+    "stemmable": true
+  },
+  {
+    "phrase": "shock",
+    "neutral": "surprise",
+    "type": "clickbait",
+    "stemmable": true
+  },
+  {
+    "phrase": "jaw-dropping",
+    "neutral": "notable",
+    "type": "clickbait",
+    "explanation": "Pure hype with no substance.",
+    "aliases": []
+  },
+  {
+    "phrase": "nightmare",
+    "neutral": "difficult situation",
+    "type": "clickbait",
+    "explanation": "Uses fear to dramatize situations.",
+    "aliases": []
+  },
+  {
+    "phrase": "devastating",
+    "neutral": "serious",
+    "type": "clickbait",
+    "explanation": "Emotional wording that overstates severity.",
+    "aliases": []
+  },
+  {
+    "phrase": "exclusive",
+    "neutral": "special access",
+    "type": "clickbait",
+    "explanation": "Claims special access to create urgency.",
+    "aliases": []
+  },
+  {
+    "phrase": "finally",
+    "neutral": "now",
+    "type": "clickbait",
+    "explanation": "Pushes artificial payoff narrative.",
+    "aliases": []
+  },
+  {
+    "phrase": "chilling",
+    "neutral": "disturbing",
+    "type": "clickbait",
+    "explanation": "Fear amplification through emotive language.",
+    "aliases": []
+  },
+  {
+    "phrase": "intense",
+    "neutral": "strong",
+    "type": "clickbait",
+    "explanation": "Dramatizes severity unnecessarily.",
+    "aliases": []
+  },
+  {
+    "phrase": "desperately",
+    "neutral": "urgently",
+    "type": "clickbait",
+    "explanation": "Adds desperation framing to ordinary situations.",
+    "aliases": []
+  },
+  {
+    "phrase": "crazy",
+    "neutral": "unusual",
+    "type": "clickbait",
+    "explanation": "Sensationalist adjective lacking precision.",
+    "aliases": []
+  },
+  {
+    "phrase": "savage",
+    "neutral": "severe",
+    "type": "clickbait",
+    "explanation": "Dramatizes violence or criticism.",
+    "aliases": []
+  },
+  {
+    "phrase": "fiery",
+    "neutral": "passionate",
+    "type": "clickbait",
+    "explanation": "Dramatizes conflict through fire metaphor.",
+    "aliases": []
+  },
+  {
+    "phrase": "heartbreaking",
+    "neutral": "sad",
+    "type": "clickbait",
+    "explanation": "Sensationalist emotional manipulation.",
+    "aliases": []
+  },
+  {
+    "phrase": "stunning",
+    "neutral": "impressive",
+    "type": "clickbait",
+    "explanation": "Overstates impact or appearance.",
+    "aliases": []
+  },
+  {
+    "phrase": "insane",
+    "neutral": "extreme",
+    "type": "clickbait",
+    "explanation": "Sensationalist adjective with clinical misusage.",
+    "aliases": []
+  },
+  {
+    "phrase": "wild",
+    "neutral": "unusual",
+    "type": "clickbait",
+    "explanation": "Sensationalist adjective for ordinary events.",
+    "aliases": []
+  },
+  {
+    "phrase": "epic",
+    "neutral": "notable",
+    "type": "clickbait",
+    "explanation": "Overstates importance dramatically.",
+    "aliases": []
+  },
+  {
+    "phrase": "unbelievable",
+    "neutral": "surprising",
+    "type": "clickbait",
+    "explanation": "Sensationalist adjective overused in headlines.",
+    "aliases": []
+  },
+  {
+    "phrase": "horrifying",
+    "neutral": "disturbing",
+    "type": "clickbait",
+    "explanation": "Fear amplification through extreme language.",
+    "aliases": []
+  },
+  {
+    "phrase": "shockwaves",
+    "neutral": "repercussions",
+    "type": "clickbait",
+    "explanation": "Dramatizes impact through disaster metaphor.",
+    "aliases": []
+  },
+  {
+    "phrase": "fuming",
+    "neutral": "angry",
+    "type": "clickbait",
+    "explanation": "Inflates emotional state dramatically.",
+    "aliases": []
+  },
+  {
+    "phrase": "fury",
+    "neutral": "anger",
+    "type": "clickbait",
+    "explanation": "Inflates emotional response to news.",
+    "aliases": []
+  },
+  {
+    "phrase": "rage",
+    "neutral": "anger",
+    "type": "clickbait",
+    "explanation": "Extreme emotion word overused in headlines.",
+    "aliases": []
+  },
+  {
+    "phrase": "outrage",
+    "neutral": "criticism",
+    "type": "clickbait",
+    "explanation": "Inflates public reaction to events.",
+    "aliases": [
+      "backlash"
+    ]
+  },
+  {
+    "phrase": "must see",
+    "neutral": "notable",
+    "type": "clickbait"
+  }
+]

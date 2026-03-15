@@ -1,0 +1,14 @@
+[
+  {
+    "phrase": "trusted partners",
+    "neutral": "approved third parties",
+    "type": "authority",
+    "explanation": "Vague term that obscures who is actually trusted.",
+    "aliases": []
+  },
+  {
+    "phrase": "authorities say",
+    "neutral": "authorities said",
+    "type": "authority"
+  }
+]

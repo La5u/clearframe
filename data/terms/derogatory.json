@@ -1,0 +1,16 @@
+[
+  {
+    "phrase": "illegal aliens",
+    "neutral": "undocumented immigrants",
+    "type": "derogatory",
+    "explanation": "Label that criminalizes immigration status.",
+    "aliases": [
+      "illegal alien"
+    ]
+  },
+  {
+    "phrase": "illegals",
+    "neutral": "undocumented immigrants",
+    "type": "derogatory"
+  }
+]

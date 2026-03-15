@@ -1,0 +1,114 @@
+[
+  {
+    "phrase": "terror",
+    "neutral": "attack",
+    "type": "fear",
+    "explanation": "Fear-loaded term that escalates perception.",
+    "aliases": []
+  },
+  {
+    "phrase": "panic",
+    "neutral": "concern",
+    "type": "fear",
+    "explanation": "Inflates urgency unnecessarily.",
+    "aliases": []
+  },
+  {
+    "phrase": "fears",
+    "neutral": "concerns",
+    "type": "fear",
+    "explanation": "Amplifies anxiety about topics.",
+    "aliases": []
+  },
+  {
+    "phrase": "threat",
+    "neutral": "risk",
+    "type": "fear",
+    "explanation": "More alarming than what it describes.",
+    "aliases": []
+  },
+  {
+    "phrase": "crisis",
+    "neutral": "problem",
+    "type": "fear",
+    "explanation": "Escalates severity of situations.",
+    "aliases": [
+      "crises"
+    ]
+  },
+  {
+    "phrase": "terrifying",
+    "neutral": "concerning",
+    "type": "fear"
+  },
+  {
+    "phrase": "furious",
+    "neutral": "angry",
+    "type": "fear"
+  },
+  {
+    "phrase": "raging",
+    "neutral": "intense",
+    "type": "fear"
+  },
+  {
+    "phrase": "furiously",
+    "neutral": "angrily",
+    "type": "fear"
+  },
+  {
+    "phrase": "horrendous",
+    "neutral": "severe",
+    "type": "fear"
+  },
+  {
+    "phrase": "horrific",
+    "neutral": "severe",
+    "type": "fear"
+  },
+  {
+    "phrase": "devastated",
+    "neutral": "upset",
+    "type": "fear"
+  },
+  {
+    "phrase": "tragic",
+    "neutral": "sad",
+    "type": "fear"
+  },
+  {
+    "phrase": "tragedy",
+    "neutral": "sad event",
+    "type": "fear"
+  },
+  {
+    "phrase": "catastrophic",
+    "neutral": "severe",
+    "type": "fear"
+  },
+  {
+    "phrase": "disaster",
+    "neutral": "problem",
+    "type": "fear"
+  },
+  {
+    "phrase": "meltdown",
+    "neutral": "breakdown",
+    "type": "fear"
+  },
+  {
+    "phrase": "bloodbath",
+    "neutral": "violent incident",
+    "type": "fear"
+  },
+  {
+    "phrase": "doomsday",
+    "neutral": "worst-case",
+    "type": "fear"
+  },
+  {
+    "phrase": "urgent",
+    "neutral": "pressing",
+    "type": "fear"
+  }
+]

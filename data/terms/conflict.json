@@ -54,5 +54,10 @@
     "type": "conflict",
     "explanation": "Catastrophic framing for any defeat.",
     "aliases": []
+  },
+  {
+    "phrase": "showdown",
+    "neutral": "meeting",
+    "type": "conflict"
   }
 ]

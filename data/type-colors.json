@@ -1,0 +1,36 @@
+{
+  "colors": {
+    "yellow": {
+      "name": "Yellow",
+      "types": ["clickbait", "sensational", "hype", "reveal", "tabloid-anger"]
+    },
+    "green": {
+      "name": "Green",
+      "types": ["exaggeration", "superlative", "hype-marketing"]
+    },
+    "gray": {
+      "name": "Gray",
+      "types": ["unsourced", "authority", "uncertainty", "framing", "vague", "jargon", "loaded-framing", "distancing"]
+    },
+    "red": {
+      "name": "Red",
+      "types": ["aggressive", "aggression", "derogatory", "partisan", "dehumanizing"]
+    },
+    "pink": {
+      "name": "Pink",
+      "types": ["moral", "loaded", "moral-labeling"]
+    },
+    "orange": {
+      "name": "Orange",
+      "types": ["conflict", "drama", "disaster", "minimizing", "negative-framing"]
+    },
+    "purple": {
+      "name": "Purple",
+      "types": ["emotional", "fear"]
+    },
+    "blue": {
+      "name": "Blue",
+      "types": ["euphemism", "passive"]
+    }
+  }
+}

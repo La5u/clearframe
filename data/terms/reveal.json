@@ -1,0 +1,16 @@
+[
+  {
+    "phrase": "what's really",
+    "neutral": "what is",
+    "type": "reveal",
+    "explanation": "Suggests hidden truth that doesn't exist.",
+    "aliases": [
+      "what is really"
+    ]
+  },
+  {
+    "phrase": "the truth about",
+    "neutral": "about",
+    "type": "reveal"
+  }
+]

@@ -1,24 +1,21 @@
 [
   {
-    "phrase": "radical",
-    "neutral": "extreme",
-    "type": "partisan",
-    "explanation": "Political label used to delegitimize views.",
-    "aliases": []
-  },
-  {
     "phrase": "far-left",
     "neutral": "left",
     "type": "partisan",
     "explanation": "Political label used to discredit progressive views.",
-    "aliases": ["far left"]
+    "aliases": [
+      "far left"
+    ]
   },
   {
     "phrase": "far-right",
     "neutral": "right",
     "type": "partisan",
     "explanation": "Political label used to discredit conservative views.",
-    "aliases": ["far right"]
+    "aliases": [
+      "far right"
+    ]
   },
   {
     "phrase": "liberal",
@@ -35,10 +32,8 @@
     "aliases": []
   },
   {
-    "phrase": "extremist",
-    "neutral": "radical",
-    "type": "partisan",
-    "explanation": "Loaded term for political opponents.",
-    "aliases": []
+    "phrase": "socialist",
+    "neutral": "left",
+    "type": "partisan"
   }
 ]

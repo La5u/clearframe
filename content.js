@@ -4,11 +4,34 @@ const { index, types: TYPE_MAP } = ClearFrame;
 const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA', 'INPUT', 'CODE']);
 const SKIP_SELECTOR = 'nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true]';
 
-let settings = { enabled: true, types: {}, userTypeColors: {} };
+let settings = { enabled: true, types: { superlative: false }, userTypeColors: {} };
 let matcher = null;
 const IS_TOP_FRAME = window.top === window;
+let observer = null;
+let currentUrl = location.href;
+let scanQueue = [];
+let scanQueued = false;
+let scanVersion = 0;
+const SCAN_BATCH_SIZE = 200;
+const SCAN_BUDGET_MS = 14;
 
-function isWordChar(c) { return /[a-z0-9']/i.test(c); }
+function loadSettings(rawSettings = {}, rawTypeColors = {}) {
+  settings = { enabled: true, types: { superlative: false }, userTypeColors: {}, ...rawSettings };
+  if (!settings.types || Object.keys(settings.types).length === 0) {
+    settings.types = { superlative: false };
+  }
+  settings.userTypeColors = { ...(settings.userTypeColors || {}), ...rawTypeColors };
+}
+
+function isWordChar(c) {
+  const code = c.charCodeAt(0);
+  return (
+    (code >= 48 && code <= 57) || // 0-9
+    (code >= 65 && code <= 90) || // A-Z
+    (code >= 97 && code <= 122) || // a-z
+    code === 39
+  );
+}
 
 function buildMatcher() {
   const root = Object.create(null);
@@ -21,7 +44,7 @@ function buildMatcher() {
       for (const ch of entry.phraseNorm) {
         node = node[ch] ||= Object.create(null);
       }
-      node.$ = term;
+      node.$ = entry.termId;
     }
   }
   return root;
@@ -41,7 +64,7 @@ function findMatches(text) {
     let cursor = i + 1;
 
     if (node.$ && boundary(lower, i, cursor)) {
-      matched = { start: i, end: cursor, termId: node.$.phrase };
+      matched = { start: i, end: cursor, termId: node.$ };
     }
 
     while (cursor < lower.length) {
@@ -49,7 +72,7 @@ function findMatches(text) {
       if (!node) break;
       cursor++;
       if (node.$ && boundary(lower, i, cursor)) {
-        matched = { start: i, end: cursor, termId: node.$.phrase };
+        matched = { start: i, end: cursor, termId: node.$ };
       }
     }
 
@@ -79,7 +102,7 @@ function getColor(type) { return settings.userTypeColors?.[type] || TYPE_MAP[typ
 function skipNode(node) {
   const p = node.parentElement;
   if (!p || p.isContentEditable || p.closest('.cf-highlight') || 
-      SKIP_TAGS.has(p.tagName) || p.closest(SKIP_SELECTOR)) return true;
+      SKIP_TAGS.has(p.tagName) || p.closest(SKIP_SELECTOR) || p.closest('#cf-tooltip')) return true;
   return false;
 }
 
@@ -88,13 +111,14 @@ function updateBadge() {
   chrome.runtime.sendMessage({ type: 'COUNT', count }).catch(() => {});
 }
 
-let rescanTimer = null;
-function scheduleRescan() {
-  if (rescanTimer) return;
-  rescanTimer = setTimeout(() => {
-    rescanTimer = null;
-    scan(document.body);
-  }, 400);
+function startObserver() {
+  if (!document.body) return;
+  if (!observer) observer = new MutationObserver(handleMutations);
+  observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+}
+
+function stopObserver() {
+  if (observer) observer.disconnect();
 }
 
 function clearHighlights(root = document) {
@@ -106,6 +130,17 @@ function clearHighlights(root = document) {
     parent.replaceChild(document.createTextNode(el.textContent), el);
     parent.normalize();
   }
+}
+
+function refreshPage() {
+  if (!settings.enabled || !matcher) return;
+  stopObserver();
+  scanVersion++;
+  scanQueue = [];
+  scanQueued = false;
+  clearHighlights(document);
+  scan(document.body);
+  startObserver();
 }
 
 function annotate(textNode) {
@@ -122,6 +157,7 @@ function annotate(textNode) {
     const span = document.createElement('span');
     span.className = 'cf-highlight cf-' + getColor(term.type);
     span.textContent = text.slice(m.start, m.end);
+    span.dataset.termId = m.termId;
     span.dataset.term = term.phrase;
     span.dataset.type = term.type;
     frag.appendChild(span);
@@ -132,30 +168,70 @@ function annotate(textNode) {
   textNode.parentNode.replaceChild(frag, textNode);
 }
 
+function pumpScanQueue() {
+  scanQueued = false;
+  if (!settings.enabled || !matcher) return;
+  const start = performance.now();
+  let processed = 0;
+  while (scanQueue.length && processed < SCAN_BATCH_SIZE && performance.now() - start < SCAN_BUDGET_MS) {
+    annotate(scanQueue.shift());
+    processed++;
+  }
+  if (processed) updateBadge();
+  if (scanQueue.length) {
+    scanQueued = true;
+    const version = scanVersion;
+    setTimeout(() => {
+      if (version !== scanVersion) return;
+      pumpScanQueue();
+    }, 0);
+  }
+}
+
 function scan(root) {
   if (!settings.enabled || !matcher) return;
-  const nodes = [];
+  if (root.matches?.(SKIP_SELECTOR)) return;
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-  while (walker.nextNode()) nodes.push(walker.currentNode);
-  for (const node of nodes) annotate(node);
-  updateBadge();
+  let node = walker.nextNode();
+  let added = false;
+  while (node) {
+    const current = node;
+    node = walker.nextNode();
+    if (!skipNode(current)) {
+      scanQueue.push(current);
+      added = true;
+    }
+  }
+  if (added && !scanQueued) {
+    scanQueued = true;
+    pumpScanQueue();
+  }
 }
 
 function handleMutations(mutations) {
   if (!settings.enabled) return;
+  if (location.href !== currentUrl) {
+    currentUrl = location.href;
+    refreshPage();
+    return;
+  }
   for (const m of mutations) {
+    if (m.type === 'characterData' && m.target?.nodeType === Node.TEXT_NODE) {
+      annotate(m.target);
+      updateBadge();
+      continue;
+    }
     for (const node of m.addedNodes) {
       if (node.nodeType === Node.ELEMENT_NODE) scan(node);
       else if (node.nodeType === Node.TEXT_NODE) annotate(node);
     }
   }
-  scheduleRescan();
   updateBadge();
 }
 
 let tooltip;
 function showTooltip(el) {
-  const term = index.termsById[el.dataset.term];
+  const term = index.termsById[el.dataset.termId];
   if (!term) return;
   if (!tooltip) {
     tooltip = document.createElement('div');
@@ -175,14 +251,10 @@ function hideTooltip() {
 
 function init() {
   chrome.storage.sync.get(['settings', 'userTypeColors'], r => {
-    settings = { enabled: true, types: {}, userTypeColors: {}, ...(r.settings || {}) };
-    if (r.userTypeColors) settings.userTypeColors = r.userTypeColors;
+    loadSettings(r.settings, r.userTypeColors);
     matcher = buildMatcher();
-    if (settings.enabled) {
-      clearHighlights(document);
-      scan(document.body);
-      new MutationObserver(handleMutations).observe(document.body, { childList: true, subtree: true });
-    }
+    startObserver();
+    if (settings.enabled) refreshPage();
     document.addEventListener('mouseover', e => { const t = e.target.closest('.cf-highlight'); if (t) showTooltip(t); });
     document.addEventListener('mouseout', e => { if (e.target.closest('.cf-highlight')) hideTooltip(); });
   });
@@ -206,12 +278,11 @@ chrome.runtime.onMessage.addListener((msg, src, sendResponse) => {
     sendResponse({ terms: list });
   } else if (msg.type === 'RELOAD_SETTINGS') {
     chrome.storage.sync.get(['settings', 'userTypeColors'], r => {
-      settings = { enabled: true, types: {}, userTypeColors: {}, ...(r.settings || {}) };
-      if (r.userTypeColors) settings.userTypeColors = r.userTypeColors;
+      loadSettings(r.settings, r.userTypeColors);
       matcher = buildMatcher();
-      document.querySelectorAll('.cf-highlight').forEach(el => {
-        el.className = 'cf-highlight cf-' + getColor(el.dataset.type);
-      });
+      clearHighlights(document);
+      if (settings.enabled) refreshPage();
+      else updateBadge();
     });
   }
 });

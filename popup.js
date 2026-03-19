@@ -15,6 +15,16 @@ const COLOR_MAP = { yellow: '#fef9c3', green: '#dcfce7', gray: '#f3f4f6', red: '
 let userTypeColors = {};
 let settings = { enabled: true, types: {} };
 
+function loadSettings(rawSettings = {}, rawTypeColors = {}) {
+  const nextSettings = { enabled: true, types: { superlative: false }, userTypeColors: {}, ...rawSettings };
+  if (!nextSettings.types || Object.keys(nextSettings.types).length === 0) {
+    nextSettings.types = { superlative: false };
+  }
+  userTypeColors = { ...(nextSettings.userTypeColors || {}), ...rawTypeColors };
+  nextSettings.userTypeColors = userTypeColors;
+  settings = nextSettings;
+}
+
 function getSettings() {
   const s = { enabled: els.enabled.checked, types: {} };
   document.querySelectorAll('.type-chip').forEach(chip => {
@@ -23,12 +33,12 @@ function getSettings() {
   return s;
 }
 
-function saveSettings(s) {
+function saveSettings(reload = false) {
+  const s = getSettings();
   s.userTypeColors = userTypeColors;
   chrome.storage.sync.set({ settings: s });
+  if (reload) sendToActiveTab({ type: 'RELOAD_SETTINGS' });
 }
-
-function save() { saveSettings(getSettings()); }
 
 function sendToActiveTab(message, onResponse) {
   chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -53,16 +63,11 @@ function renderColorGroups() {
     (byColor[color] ||= []).push(type);
   }
 
-  for (const [color, config] of Object.entries(colorConfig.colors)) {
+  for (const color of Object.keys(colorConfig.colors)) {
     const group = document.createElement('div');
     group.className = 'color-group';
     group.style.background = getColorBg(color);
-    
-    const header = document.createElement('div');
-    header.className = 'color-group-header';
-    header.textContent = '';
-    group.appendChild(header);
-    
+
     const list = document.createElement('div');
     list.className = 'type-list drop-zone';
     list.dataset.color = color;
@@ -124,9 +129,8 @@ function setupDragDrop() {
   function applyDrop(type, newColor) {
     if (!type || !newColor) return;
     userTypeColors[type] = newColor;
-    save();
+    saveSettings(true);
     renderColorGroups();
-    sendToActiveTab({ type: 'RELOAD_SETTINGS' });
   }
 
   function onPointerMove(e) {
@@ -167,7 +171,7 @@ function setupDragDrop() {
       const enabled = chip.dataset.enabled === 'true';
       chip.dataset.enabled = String(!enabled);
       chip.classList.toggle('disabled', enabled);
-      save();
+      saveSettings(true);
       updateCount();
     });
   });
@@ -220,22 +224,19 @@ function setupTabs() {
 
 els.resetBtn.addEventListener('click', () => {
   userTypeColors = {};
-  saveSettings(getSettings());
+  saveSettings(true);
   renderColorGroups();
-  sendToActiveTab({ type: 'RELOAD_SETTINGS' });
 });
 
 function init() {
   try {
     chrome.storage.sync.get(['settings', 'userTypeColors'], r => {
-      settings = { enabled: true, types: {}, userTypeColors: {}, ...(r.settings || {}) };
-      userTypeColors = { ...(settings.userTypeColors || {}), ...(r.userTypeColors || {}) };
-      settings.userTypeColors = userTypeColors;
+      loadSettings(r.settings, r.userTypeColors);
       els.enabled.checked = settings.enabled !== false;
       
       renderColorGroups();
       
-      els.enabled.addEventListener('change', () => { save(); updateCount(); });
+      els.enabled.addEventListener('change', () => { saveSettings(true); updateCount(); });
       setupTabs();
       updateCount();
       updateTermsList();

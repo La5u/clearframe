@@ -1,10 +1,11 @@
 [
   {
-    "phrase": "claims",
+    "phrase": "claim",
     "neutral": "says",
     "type": "uncertainty",
     "explanation": "Signals doubt about the statement's validity.",
-    "aliases": []
+    "aliases": [],
+    "stemmable": true
   },
   {
     "phrase": "reportedly",

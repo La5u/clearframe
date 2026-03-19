@@ -2,6 +2,8 @@
 
 ClearFrame is a browser extension that highlights biased or loaded language and shows neutral alternatives.
 
+It scans pages progressively so the badge count rises as text is processed, and it remembers counts per page URL when you switch tabs.
+
 ## Build
 
 ```sh
@@ -63,3 +65,9 @@ Terms are stored in `data/terms/*.json`. Each entry includes:
 - `explanation` (optional)
 - `aliases` (optional)
 - `stemmable` (optional, opt-in stemming for simple variants)
+
+## Notes
+
+- `content.js` does the page scan and live mutation handling.
+- `background.js` stores badge counts per page URL so returning to a page restores its last known count.
+- `popup.js` controls enable/disable, type colors, and detected-term summaries.

@@ -83,6 +83,11 @@
       color: var(--tab-active-ink);
       border-color: transparent;
     }
+    .tab-count {
+      margin-left: 4px;
+      color: inherit;
+      opacity: 0.75;
+    }
     .tab-panel {
       display: none;
       height: 320px;
@@ -94,8 +99,8 @@
       box-shadow: var(--shadow);
     }
     .tab-panel.active { display: block; }
-    #counter { font-size: 11px; color: var(--muted); margin-top: 8px; }
     .color-group { margin-bottom: 10px; border-radius: 10px; padding: 6px; border: 1px dashed var(--stroke); }
+    .color-group-title { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px 2px; }
     .type-list { min-height: 20px; padding: 4px; border-radius: 8px; }
     .type-chip {
       display: inline-flex;
@@ -139,12 +144,11 @@
   </div>
   <div class="tabs">
     <button class="tab-btn active" data-tab="settings">Settings</button>
-    <button class="tab-btn" data-tab="terms">Detected</button>
+    <button class="tab-btn" data-tab="terms">Detected <span id="detected-count" class="tab-count"></span></button>
   </div>
   <div class="tab-panel active" data-panel="settings">
   <div id="color-groups"></div>
   <button id="reset-btn">Reset Colors</button>
-  <div id="counter">Loading...</div>
   </div>
   <div class="tab-panel" data-panel="terms">
     <div id="term-list">Loading...</div>

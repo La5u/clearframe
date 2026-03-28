@@ -13,5 +13,20 @@
     "phrase": "red-faced",
     "neutral": "angry",
     "type": "tabloid-anger"
+  },
+  {
+    "phrase": "fury",
+    "neutral": "anger",
+    "type": "tabloid-anger"
+  },
+  {
+    "phrase": "backlash",
+    "neutral": "criticism",
+    "type": "tabloid-anger"
+  },
+  {
+    "phrase": "outraged",
+    "neutral": "upset",
+    "type": "tabloid-anger"
   }
 ]

@@ -3,5 +3,25 @@
     "phrase": "game-changing",
     "neutral": "notable",
     "type": "hype"
+  },
+  {
+    "phrase": "breakthrough",
+    "neutral": "advance",
+    "type": "hype"
+  },
+  {
+    "phrase": "revolutionary",
+    "neutral": "new",
+    "type": "hype"
+  },
+  {
+    "phrase": "cutting-edge",
+    "neutral": "new",
+    "type": "hype"
+  },
+  {
+    "phrase": "must-have",
+    "neutral": "useful",
+    "type": "hype"
   }
 ]

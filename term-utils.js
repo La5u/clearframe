@@ -36,30 +36,35 @@ function stemVariants(word) {
 function loadTerms(dataDir) {
   const terms = {};
   const entries = [];
+  const phraseTypes = new Map();
 
-  function addTerm(phrase, term) {
+  function addTerm(phrase, term, source) {
+    const existingType = phraseTypes.get(phrase);
+    if (existingType && existingType !== term.type) {
+      throw new Error(`Duplicate term phrase "${phrase}" in ${source} conflicts with type "${existingType}"`);
+    }
+    phraseTypes.set(phrase, term.type);
     if (!terms[phrase]) {
       terms[phrase] = {
         phrase,
         type: term.type,
-        neutral: term.neutral || '',
-        explanation: term.explanation || ''
+        neutral: term.neutral || ''
       };
       entries.push({ phraseNorm: phrase, termId: phrase, length: phrase.length });
     }
   }
 
-  for (const file of fs.readdirSync(dataDir).filter(f => f.endsWith('.json'))) {
+  for (const file of fs.readdirSync(dataDir).filter(file => file.endsWith('.json')).sort()) {
     const arr = JSON.parse(fs.readFileSync(path.join(dataDir, file), 'utf8'));
     for (const term of arr) {
       const phrase = normalize(term.phrase);
-      addTerm(phrase, term);
+      addTerm(phrase, term, file);
       if (isStemmableWord(phrase, term)) {
-        for (const variant of stemVariants(phrase)) addTerm(variant, term);
+        for (const variant of stemVariants(phrase)) addTerm(variant, term, file);
       }
       for (const alias of term.aliases || []) {
         const normalizedAlias = normalize(alias);
-        if (normalizedAlias && normalizedAlias !== phrase) addTerm(normalizedAlias, term);
+        if (normalizedAlias && normalizedAlias !== phrase) addTerm(normalizedAlias, term, file);
       }
     }
   }

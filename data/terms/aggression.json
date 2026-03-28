@@ -3,59 +3,43 @@
     "phrase": "slam",
     "neutral": "criticize",
     "type": "aggression",
-    "explanation": "Conflict verb that escalates stories.",
-    "aliases": [],
     "stemmable": true
   },
   {
     "phrase": "rips",
     "neutral": "criticizes",
-    "type": "aggression",
-    "explanation": "Violent verb for verbal criticism.",
-    "aliases": []
+    "type": "aggression"
   },
   {
     "phrase": "torches",
     "neutral": "criticizes",
-    "type": "aggression",
-    "explanation": "Fire metaphor for criticism.",
-    "aliases": []
+    "type": "aggression"
   },
   {
     "phrase": "blast",
     "neutral": "criticize",
     "type": "aggression",
-    "explanation": "Explosive criticism escalation.",
-    "aliases": [],
     "stemmable": true
   },
   {
     "phrase": "roasts",
     "neutral": "criticizes",
-    "type": "aggression",
-    "explanation": "Public criticism dramatization.",
-    "aliases": []
+    "type": "aggression"
   },
   {
     "phrase": "hit with",
     "neutral": "targeted with",
-    "type": "aggression",
-    "explanation": "Violence metaphor applied to non-violent actions.",
-    "aliases": []
+    "type": "aggression"
   },
   {
     "phrase": "taken out",
     "neutral": "killed",
-    "type": "aggression",
-    "explanation": "Softens lethal violence in reporting.",
-    "aliases": []
+    "type": "aggression"
   },
   {
     "phrase": "under fire",
     "neutral": "criticized",
-    "type": "aggression",
-    "explanation": "War metaphor applied to criticism.",
-    "aliases": []
+    "type": "aggression"
   },
   {
     "phrase": "attacks",
@@ -65,6 +49,11 @@
   {
     "phrase": "scathing",
     "neutral": "harsh",
+    "type": "aggression"
+  },
+  {
+    "phrase": "ambushed",
+    "neutral": "confronted",
     "type": "aggression"
   }
 ]

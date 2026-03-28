@@ -1,22 +1,22 @@
 'use strict';
 
-const { types, colorConfig } = ClearFrame;
+const { types, categories, colorConfig } = ClearFrame;
 const els = {
   enabled: document.getElementById('enabled'),
   colorGroups: document.getElementById('color-groups'),
-  counter: document.getElementById('counter'),
   resetBtn: document.getElementById('reset-btn'),
+  detectedCount: document.getElementById('detected-count'),
   tabButtons: Array.from(document.querySelectorAll('.tab-btn')),
   tabPanels: Array.from(document.querySelectorAll('.tab-panel')),
   termList: document.getElementById('term-list')
 };
-const COLOR_MAP = { yellow: '#fef9c3', green: '#dcfce7', gray: '#f3f4f6', red: '#fee2e2', pink: '#fce7f3', orange: '#ffedd5', purple: '#f3e8ff', blue: '#dbeafe' };
-
+const COLOR_MAP = { yellow: '#fef9c3', green: '#dcfce7', gray: '#f3f4f6', red: '#fee2e2', pink: '#fce7f3', orange: '#ffedd5', purple: '#f3e8ff', blue: '#dbeafe', teal: '#ccfbf1' };
+const DEFAULT_SETTINGS = { enabled: true, types: { superlative: false }, userTypeColors: {} };
 let userTypeColors = {};
-let settings = { enabled: true, types: {} };
+let settings = { ...DEFAULT_SETTINGS, types: { ...DEFAULT_SETTINGS.types } };
 
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
-  const nextSettings = { enabled: true, types: { superlative: false }, userTypeColors: {}, ...rawSettings };
+  const nextSettings = { ...DEFAULT_SETTINGS, ...rawSettings };
   if (!nextSettings.types || Object.keys(nextSettings.types).length === 0) {
     nextSettings.types = { superlative: false };
   }
@@ -54,6 +54,19 @@ function getEffectiveColor(type) {
   return userTypeColors[type] || types[type] || 'gray';
 }
 
+function getCategory(type) {
+  return categories?.[type] || 'General';
+}
+
+function updateDetectedCount() {
+  sendToActiveTab({ type: 'GET_COUNT' }, res => {
+    const count = res?.count || 0;
+    if (els.detectedCount) {
+      els.detectedCount.textContent = `(${count})`;
+    }
+  });
+}
+
 function renderColorGroups() {
   els.colorGroups.innerHTML = '';
   
@@ -64,9 +77,14 @@ function renderColorGroups() {
   }
 
   for (const color of Object.keys(colorConfig.colors)) {
+    const config = colorConfig.colors[color];
     const group = document.createElement('div');
     group.className = 'color-group';
     group.style.background = getColorBg(color);
+
+    const heading = document.createElement('div');
+    heading.className = 'color-group-title';
+    heading.textContent = config.category || config.name || color;
 
     const list = document.createElement('div');
     list.className = 'type-list drop-zone';
@@ -75,6 +93,7 @@ function renderColorGroups() {
     const listTypes = (byColor[color] || []).sort();
     for (const type of listTypes) list.appendChild(createTypeChip(type));
     
+    group.appendChild(heading);
     group.appendChild(list);
     els.colorGroups.appendChild(group);
   }
@@ -86,6 +105,7 @@ function createTypeChip(type) {
   const chip = document.createElement('button');
   chip.className = 'type-chip';
   chip.dataset.type = type;
+  chip.dataset.category = getCategory(type);
   chip.dataset.enabled = String(settings.types?.[type] !== false);
   chip.draggable = true;
   chip.type = 'button';
@@ -114,10 +134,10 @@ function getChipBg(color) {
 
 function setupDragDrop() {
   const chips = document.querySelectorAll('.type-chip');
-  const zones = document.querySelectorAll('.drop-zone');
   let draggingType = null;
   let draggingEl = null;
   let overZone = null;
+  let dragMoved = false;
 
   function setOverZone(zone) {
     if (overZone === zone) return;
@@ -133,9 +153,18 @@ function setupDragDrop() {
     renderColorGroups();
   }
 
+  function toggleChip(chip) {
+    const enabled = chip.dataset.enabled === 'true';
+    chip.dataset.enabled = String(!enabled);
+    chip.classList.toggle('disabled', enabled);
+    saveSettings(true);
+    setTimeout(updateDetectedCount, 0);
+  }
+
   function onPointerMove(e) {
     const el = document.elementFromPoint(e.clientX, e.clientY);
     const zone = el ? el.closest('.drop-zone') : null;
+    dragMoved = true;
     setOverZone(zone);
   }
 
@@ -145,13 +174,15 @@ function setupDragDrop() {
       try { draggingEl.releasePointerCapture(e.pointerId); } catch {}
     }
     draggingEl.classList.remove('dragging');
-    if (overZone) {
+    if (dragMoved && overZone) {
       applyDrop(draggingType, overZone.dataset.color);
-    } else {
-      setOverZone(null);
+    } else if (!dragMoved) {
+      toggleChip(draggingEl);
     }
+    setOverZone(null);
     draggingType = null;
     draggingEl = null;
+    dragMoved = false;
     window.removeEventListener('pointermove', onPointerMove);
     window.removeEventListener('pointerup', onPointerUp);
   }
@@ -162,24 +193,12 @@ function setupDragDrop() {
       if (e.button !== 0) return;
       draggingType = chip.dataset.type;
       draggingEl = chip;
+      dragMoved = false;
       chip.classList.add('dragging');
       if (chip.setPointerCapture) chip.setPointerCapture(e.pointerId);
       window.addEventListener('pointermove', onPointerMove);
       window.addEventListener('pointerup', onPointerUp);
     });
-    chip.addEventListener('click', () => {
-      const enabled = chip.dataset.enabled === 'true';
-      chip.dataset.enabled = String(!enabled);
-      chip.classList.toggle('disabled', enabled);
-      saveSettings(true);
-      updateCount();
-    });
-  });
-}
-
-function updateCount() {
-  sendToActiveTab({ type: 'GET_COUNT' }, res => {
-    els.counter.textContent = (res?.count || 0) + ' words highlighted';
   });
 }
 
@@ -217,7 +236,10 @@ function setupTabs() {
       const target = btn.dataset.tab;
       els.tabButtons.forEach(b => b.classList.toggle('active', b === btn));
       els.tabPanels.forEach(panel => panel.classList.toggle('active', panel.dataset.panel === target));
-      if (target === 'terms') updateTermsList();
+      if (target === 'terms') {
+        updateDetectedCount();
+        updateTermsList();
+      }
     });
   });
 }
@@ -226,6 +248,7 @@ els.resetBtn.addEventListener('click', () => {
   userTypeColors = {};
   saveSettings(true);
   renderColorGroups();
+  updateDetectedCount();
 });
 
 function init() {
@@ -236,9 +259,9 @@ function init() {
       
       renderColorGroups();
       
-      els.enabled.addEventListener('change', () => { saveSettings(true); updateCount(); });
+      els.enabled.addEventListener('change', () => { saveSettings(true); updateDetectedCount(); });
       setupTabs();
-      updateCount();
+      updateDetectedCount();
       updateTermsList();
     });
   } catch (e) {

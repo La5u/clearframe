@@ -28,5 +28,10 @@
     "phrase": "dissidents",
     "neutral": "opponents",
     "type": "dehumanizing"
+  },
+  {
+    "phrase": "vermin",
+    "neutral": "people",
+    "type": "dehumanizing"
   }
 ]

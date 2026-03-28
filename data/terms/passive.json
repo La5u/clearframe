@@ -2,7 +2,11 @@
   {
     "phrase": "incident occurred",
     "neutral": "something happened",
-    "type": "passive",
-    "explanation": "Passive wording that hides who did what."
+    "type": "passive"
+  },
+  {
+    "phrase": "mistakes were made",
+    "neutral": "someone made mistakes",
+    "type": "passive"
   }
 ]

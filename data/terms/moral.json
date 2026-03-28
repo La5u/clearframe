@@ -2,27 +2,56 @@
   {
     "phrase": "despicable",
     "neutral": "contemptible",
-    "type": "moral",
-    "explanation": "Moral judgment word pushing editorial bias.",
-    "aliases": []
+    "type": "moral"
   },
   {
     "phrase": "scandal",
     "neutral": "controversy",
-    "type": "moral",
-    "explanation": "Preloads assumption of wrongdoing.",
-    "aliases": []
+    "type": "moral"
   },
   {
     "phrase": "piracy",
     "neutral": "unauthorized copying",
-    "type": "moral",
-    "explanation": "Moralized term for intellectual property.",
-    "aliases": []
+    "type": "moral"
   },
   {
     "phrase": "evil",
     "neutral": "harmful",
+    "type": "moral"
+  },
+  {
+    "phrase": "brutal",
+    "neutral": "harsh",
+    "type": "moral"
+  },
+  {
+    "phrase": "oppressive",
+    "neutral": "harsh",
+    "type": "moral"
+  },
+  {
+    "phrase": "heroic",
+    "neutral": "notable",
+    "type": "moral"
+  },
+  {
+    "phrase": "ruthless",
+    "neutral": "harsh",
+    "type": "moral"
+  },
+  {
+    "phrase": "corrupt",
+    "neutral": "improper",
+    "type": "moral"
+  },
+  {
+    "phrase": "controversial",
+    "neutral": "disputed",
+    "type": "moral"
+  },
+  {
+    "phrase": "sinful",
+    "neutral": "wrong",
     "type": "moral"
   }
 ]

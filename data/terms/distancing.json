@@ -5,13 +5,8 @@
     "type": "distancing"
   },
   {
-    "phrase": "linked to",
-    "neutral": "connected to",
-    "type": "distancing"
-  },
-  {
-    "phrase": "tied to",
-    "neutral": "connected to",
+    "phrase": "purportedly",
+    "neutral": "said to be",
     "type": "distancing"
   }
 ]

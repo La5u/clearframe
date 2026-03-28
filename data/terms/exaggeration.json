@@ -2,30 +2,22 @@
   {
     "phrase": "huge",
     "neutral": "large",
-    "type": "exaggeration",
-    "explanation": "Vague intensifier without precise meaning.",
-    "aliases": []
+    "type": "exaggeration"
   },
   {
     "phrase": "massive",
     "neutral": "large",
-    "type": "exaggeration",
-    "explanation": "Vague intensifier lacking specificity.",
-    "aliases": []
+    "type": "exaggeration"
   },
   {
     "phrase": "totally",
     "neutral": "very",
-    "type": "exaggeration",
-    "explanation": "Adds hype without adding information.",
-    "aliases": []
+    "type": "exaggeration"
   },
   {
     "phrase": "up to",
     "neutral": "as much as",
-    "type": "exaggeration",
-    "explanation": "Highlights the best case, ignores the rest.",
-    "aliases": []
+    "type": "exaggeration"
   },
   {
     "phrase": "countless",
@@ -50,6 +42,11 @@
   {
     "phrase": "unprecedented",
     "neutral": "rare",
+    "type": "exaggeration"
+  },
+  {
+    "phrase": "incredibly",
+    "neutral": "very",
     "type": "exaggeration"
   }
 ]

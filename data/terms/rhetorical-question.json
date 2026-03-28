@@ -1,0 +1,17 @@
+[
+  {
+    "phrase": "right?",
+    "neutral": "isn't that so?",
+    "type": "rhetorical-question"
+  },
+  {
+    "phrase": "correct?",
+    "neutral": "is that correct?",
+    "type": "rhetorical-question"
+  },
+  {
+    "phrase": "isn't it?",
+    "neutral": "is that right?",
+    "type": "rhetorical-question"
+  }
+]

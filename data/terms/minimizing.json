@@ -2,7 +2,11 @@
   {
     "phrase": "minor",
     "neutral": "small",
-    "type": "minimizing",
-    "explanation": "Downplays severity."
+    "type": "minimizing"
+  },
+  {
+    "phrase": "mere",
+    "neutral": "only",
+    "type": "minimizing"
   }
 ]

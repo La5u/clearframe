@@ -1,9 +1,19 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
+const assert = require('assert');
 const { buildMatcher, extractText, findMatches, loadTerms } = require('./term-utils');
 
 const ROOT = __dirname;
+const EXPECTED_COUNTS = {
+  'newssite.html': 223,
+  'newssite2.html': 52,
+  'newssite3.html': 186,
+  'newssite10th.html': 225,
+  'newssite10thnypost.html': 63,
+  'test-all-types.html': 31,
+  'test-all-terms.html': 141
+};
 
 function countMatches(html) {
   const index = loadTerms(path.join(ROOT, 'data', 'terms'));
@@ -12,9 +22,9 @@ function countMatches(html) {
   return findMatches(matcher, text).length;
 }
 
-const files = ['newssite.html', 'newssite2.html', 'newssite3.html', 'newssite10th.html', 'newssite10thnypost.html', 'test-all-types.html', 'test-all-terms.html'];
-for (const file of files) {
+for (const [file, expected] of Object.entries(EXPECTED_COUNTS)) {
   const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
   const count = countMatches(html);
+  assert.strictEqual(count, expected, `${file}: expected ${expected} matches, got ${count}`);
   console.log(`${file}: ${count} matches`);
 }

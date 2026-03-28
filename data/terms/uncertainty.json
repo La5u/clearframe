@@ -1,15 +1,12 @@
 [
   {
-    "phrase": "claim",
-    "neutral": "says",
-    "type": "uncertainty",
-    "explanation": "Signals doubt about the statement's validity.",
-    "aliases": [],
-    "stemmable": true
-  },
-  {
     "phrase": "reportedly",
     "neutral": "said to have",
+    "type": "uncertainty"
+  },
+  {
+    "phrase": "apparently",
+    "neutral": "seemingly",
     "type": "uncertainty"
   }
 ]

@@ -2,35 +2,48 @@
   "colors": {
     "yellow": {
       "name": "Yellow",
-      "types": ["clickbait", "sensational", "hype", "reveal", "tabloid-anger"]
+      "category": "Sensationalism",
+      "types": ["clickbait", "hype", "reveal", "tabloid-anger"]
     },
     "green": {
       "name": "Green",
-      "types": ["exaggeration", "superlative", "hype-marketing"]
+      "category": "Intensification",
+      "types": ["exaggeration", "superlative"]
     },
     "gray": {
       "name": "Gray",
-      "types": ["unsourced", "authority", "uncertainty", "framing", "vague", "jargon", "loaded-framing", "distancing"]
+      "category": "Framing and sourcing",
+      "types": ["unsourced", "authority", "uncertainty", "loaded-framing", "distancing"]
     },
     "red": {
       "name": "Red",
-      "types": ["aggressive", "aggression", "derogatory", "partisan", "dehumanizing"]
+      "category": "Hostility",
+      "types": ["aggression", "derogatory", "partisan", "dehumanizing"]
     },
     "pink": {
       "name": "Pink",
-      "types": ["moral", "loaded", "moral-labeling"]
+      "category": "Value judgment",
+      "types": ["moral", "loaded"]
     },
     "orange": {
       "name": "Orange",
-      "types": ["conflict", "drama", "disaster", "minimizing", "negative-framing"]
+      "category": "Conflict and drama",
+      "types": ["conflict", "minimizing", "negative-framing"]
     },
     "purple": {
       "name": "Purple",
-      "types": ["emotional", "fear"]
+      "category": "Urgency and fear",
+      "types": ["fear"]
     },
     "blue": {
       "name": "Blue",
+      "category": "Softening and agency hiding",
       "types": ["euphemism", "passive"]
+    },
+    "teal": {
+      "name": "Teal",
+      "category": "Style and voice",
+      "types": ["colloquialism", "repetition", "rhetorical-question"]
     }
   }
 }

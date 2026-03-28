@@ -13,5 +13,25 @@
     "phrase": "puppet",
     "neutral": "proxy",
     "type": "negative-framing"
+  },
+  {
+    "phrase": "tragedy",
+    "neutral": "bad event",
+    "type": "negative-framing"
+  },
+  {
+    "phrase": "catastrophic",
+    "neutral": "severe",
+    "type": "negative-framing"
+  },
+  {
+    "phrase": "disaster",
+    "neutral": "failure",
+    "type": "negative-framing"
+  },
+  {
+    "phrase": "bloodbath",
+    "neutral": "heavy loss",
+    "type": "negative-framing"
   }
 ]

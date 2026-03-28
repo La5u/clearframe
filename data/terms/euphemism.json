@@ -1,138 +1,42 @@
 [
   {
-    "phrase": "enhanced interrogation",
-    "neutral": "torture",
-    "type": "euphemism",
-    "explanation": "Sanitized term for torture.",
-    "aliases": []
-  },
-  {
-    "phrase": "neutralized",
-    "neutral": "killed",
-    "type": "euphemism",
-    "explanation": "Sanitized term for killing.",
-    "aliases": []
-  },
-  {
-    "phrase": "collateral damage",
-    "neutral": "civilian casualties",
-    "type": "euphemism",
-    "explanation": "Term that dehumanizes civilian harm.",
-    "aliases": []
-  },
-  {
-    "phrase": "kinetic action",
-    "neutral": "military strike",
-    "type": "euphemism",
-    "explanation": "Abstract term that obscures warfare.",
-    "aliases": []
-  },
-  {
-    "phrase": "surgical strike",
-    "neutral": "targeted bombing",
-    "type": "euphemism",
-    "explanation": "Suggests precision where there is none.",
-    "aliases": []
-  },
-  {
-    "phrase": "detained",
-    "neutral": "imprisoned",
-    "type": "euphemism",
-    "explanation": "Softens the reality of imprisonment.",
-    "aliases": []
-  },
-  {
-    "phrase": "non-consensual encounter",
-    "neutral": "rape",
-    "type": "euphemism",
-    "explanation": "Softens sexual violence through clinical language.",
-    "aliases": [
-      "non consensual encounter"
-    ]
-  },
-  {
-    "phrase": "passed away",
-    "neutral": "died",
-    "type": "euphemism",
-    "explanation": "Polite phrasing for death.",
-    "aliases": []
-  },
-  {
-    "phrase": "rightsizing",
-    "neutral": "layoffs",
-    "type": "euphemism",
-    "explanation": "Corporate speak that softens the reality of layoffs.",
-    "aliases": []
-  },
-  {
-    "phrase": "restructuring",
-    "neutral": "layoffs",
-    "type": "euphemism",
-    "explanation": "Avoids directly saying layoffs.",
-    "aliases": []
-  },
-  {
-    "phrase": "sunsetting",
-    "neutral": "discontinuing",
-    "type": "euphemism",
-    "explanation": "Softens the end of products or support.",
-    "aliases": []
-  },
-  {
-    "phrase": "telemetry",
-    "neutral": "data collection",
-    "type": "euphemism",
-    "explanation": "Technical term that softens user tracking.",
-    "aliases": []
-  },
-  {
-    "phrase": "safety layer",
-    "neutral": "content filter",
-    "type": "euphemism",
-    "explanation": "Softens what is essentially content filtering.",
-    "aliases": []
-  },
-  {
-    "phrase": "officer-involved shooting",
-    "neutral": "police shot someone",
-    "type": "euphemism",
-    "explanation": "Passive voice obscures who is responsible.",
-    "aliases": [
-      "officer involved shooting",
-      "officer-involved"
-    ]
-  },
-  {
     "phrase": "probe",
     "neutral": "investigation",
-    "type": "euphemism",
-    "explanation": "Vague official wording that obscures details.",
-    "aliases": []
+    "type": "euphemism"
   },
   {
     "phrase": "alleged",
     "neutral": "said to have",
-    "type": "euphemism",
-    "explanation": "Legal phrasing that implies guilt without stating it.",
-    "aliases": []
+    "type": "euphemism"
   },
   {
     "phrase": "secret",
     "neutral": "undisclosed",
-    "type": "euphemism",
-    "explanation": "Adds unnecessary mystery to information.",
-    "aliases": []
+    "type": "euphemism"
   },
   {
     "phrase": "exposed",
     "neutral": "revealed",
-    "type": "euphemism",
-    "explanation": "Preloads wrongdoing in reporting.",
-    "aliases": []
+    "type": "euphemism"
   },
   {
-    "phrase": "economic headwinds",
-    "neutral": "economic slowdown",
+    "phrase": "enhanced interrogation",
+    "neutral": "torture",
+    "type": "euphemism"
+  },
+  {
+    "phrase": "collateral damage",
+    "neutral": "civilian harm",
+    "type": "euphemism"
+  },
+  {
+    "phrase": "non-consensual encounter",
+    "neutral": "assault",
+    "type": "euphemism"
+  },
+  {
+    "phrase": "passed away",
+    "neutral": "died",
     "type": "euphemism"
   }
 ]

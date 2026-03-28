@@ -6,37 +6,56 @@ const { loadTerms } = require('./term-utils');
 
 const ROOT = __dirname;
 const COLOR_CONFIG = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'type-colors.json'), 'utf8'));
-
+const CHROME_FILES = ['manifest.json', 'background.js', 'popup.html', 'popup.js', 'content.css', 'icon-16.png', 'icon-32.png', 'icon-64.png', 'icon-128.png'];
+const FIREFOX_FILES = ['manifest.firefox.json', 'background.js', 'popup.html', 'popup.js', 'content.css', 'icon-16.png', 'icon-32.png', 'icon-64.png', 'icon-128.png'];
 const TYPES = {};
-for (const [color, config] of Object.entries(COLOR_CONFIG.colors)) {
-  for (const type of config.types) {
+const CATEGORIES = {};
+
+for (const [color, config] of Object.entries(COLOR_CONFIG.colors || {})) {
+  const category = config.category || config.name || color;
+  for (const type of config.types || []) {
+    if (TYPES[type] && TYPES[type] !== color) {
+      throw new Error(`Type "${type}" is assigned to multiple colors`);
+    }
     TYPES[type] = color;
+    CATEGORIES[type] = category;
   }
 }
 
 function build() {
   const index = loadTerms(path.join(ROOT, 'data', 'terms'));
+  for (const term of Object.values(index.termsById)) {
+    if (!TYPES[term.type]) {
+      throw new Error(`Term type "${term.type}" is missing from data/type-colors.json`);
+    }
+  }
   const count = Object.keys(index.termsById).length;
 
-  fs.mkdirSync(path.join(ROOT, 'dist'), { recursive: true });
-  const files = ['manifest.json', 'manifest.firefox.json', 'background.js', 'popup.html', 'popup.js', 'content.css'];
-  files.forEach(f => fs.copyFileSync(path.join(ROOT, f), path.join(ROOT, 'dist', f)));
-  fs.copyFileSync(path.join(ROOT, 'icon.png'), path.join(ROOT, 'dist', 'icon.png'));
+  const distDir = path.join(ROOT, 'dist');
+  const firefoxDir = path.join(ROOT, 'dist-firefox');
+  fs.rmSync(distDir, { recursive: true, force: true });
+  fs.rmSync(firefoxDir, { recursive: true, force: true });
 
-  const code = `globalThis.ClearFrame = { index: ${JSON.stringify(index)}, types: ${JSON.stringify(TYPES)}, colorConfig: ${JSON.stringify(COLOR_CONFIG)} };`;
+  fs.mkdirSync(distDir, { recursive: true });
+  CHROME_FILES.forEach(file => fs.copyFileSync(path.join(ROOT, file), path.join(distDir, file)));
+  fs.copyFileSync(path.join(ROOT, 'icon.png'), path.join(distDir, 'icon.png'));
+
+  const code = `globalThis.ClearFrame = { index: ${JSON.stringify(index)}, types: ${JSON.stringify(TYPES)}, categories: ${JSON.stringify(CATEGORIES)}, colorConfig: ${JSON.stringify(COLOR_CONFIG)} };`;
   const content = fs.readFileSync(path.join(ROOT, 'content.js'), 'utf8');
-  fs.writeFileSync(path.join(ROOT, 'dist', 'content.js'), code + content);
+  fs.writeFileSync(path.join(distDir, 'content.js'), code + content);
 
-  const popupCode = `globalThis.ClearFrame = { types: ${JSON.stringify(TYPES)}, colorConfig: ${JSON.stringify(COLOR_CONFIG)} };`;
+  const popupCode = `globalThis.ClearFrame = { types: ${JSON.stringify(TYPES)}, categories: ${JSON.stringify(CATEGORIES)}, colorConfig: ${JSON.stringify(COLOR_CONFIG)} };`;
   const popup = fs.readFileSync(path.join(ROOT, 'popup.js'), 'utf8');
-  fs.writeFileSync(path.join(ROOT, 'dist', 'popup.js'), popupCode + popup);
+  fs.writeFileSync(path.join(distDir, 'popup.js'), popupCode + popup);
 
-  fs.mkdirSync(path.join(ROOT, 'dist-firefox'), { recursive: true });
-  const ffFiles = ['manifest.firefox.json', 'background.js', 'popup.html', 'popup.js', 'content.css'];
-  ffFiles.forEach(f => fs.copyFileSync(path.join(ROOT, f), path.join(ROOT, 'dist-firefox', f === 'manifest.firefox.json' ? 'manifest.json' : f)));
-  fs.copyFileSync(path.join(ROOT, 'icon.png'), path.join(ROOT, 'dist-firefox', 'icon.png'));
-  fs.writeFileSync(path.join(ROOT, 'dist-firefox', 'content.js'), code + content);
-  fs.writeFileSync(path.join(ROOT, 'dist-firefox', 'popup.js'), popupCode + popup);
+  fs.mkdirSync(firefoxDir, { recursive: true });
+  FIREFOX_FILES.forEach(file => {
+    const target = file === 'manifest.firefox.json' ? 'manifest.json' : file;
+    fs.copyFileSync(path.join(ROOT, file), path.join(firefoxDir, target));
+  });
+  fs.copyFileSync(path.join(ROOT, 'icon.png'), path.join(firefoxDir, 'icon.png'));
+  fs.writeFileSync(path.join(firefoxDir, 'content.js'), code + content);
+  fs.writeFileSync(path.join(firefoxDir, 'popup.js'), popupCode + popup);
 
   function zipDir(dir, outName) {
     const cwd = path.join(ROOT, dir);

@@ -2,27 +2,26 @@
   {
     "phrase": "biggest",
     "neutral": "largest",
-    "type": "superlative",
-    "explanation": "Inflates importance without evidence.",
-    "aliases": []
+    "type": "superlative"
   },
   {
     "phrase": "worst",
     "neutral": "most severe",
-    "type": "superlative",
-    "explanation": "Inflates severity without basis.",
-    "aliases": []
+    "type": "superlative"
   },
   {
     "phrase": "most",
     "neutral": "many or highest",
-    "type": "superlative",
-    "explanation": "Broad superlative without specificity.",
-    "aliases": []
+    "type": "superlative"
   },
   {
     "phrase": "best",
     "neutral": "strong",
+    "type": "superlative"
+  },
+  {
+    "phrase": "ultimate",
+    "neutral": "final",
     "type": "superlative"
   }
 ]

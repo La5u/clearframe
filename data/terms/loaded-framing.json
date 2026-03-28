@@ -13,5 +13,25 @@
     "phrase": "elitist",
     "neutral": "elite",
     "type": "loaded-framing"
+  },
+  {
+    "phrase": "rightsizing",
+    "neutral": "downsizing",
+    "type": "loaded-framing"
+  },
+  {
+    "phrase": "sunsetting",
+    "neutral": "ending",
+    "type": "loaded-framing"
+  },
+  {
+    "phrase": "officer-involved shooting",
+    "neutral": "shooting involving police",
+    "type": "loaded-framing"
+  },
+  {
+    "phrase": "self-styled",
+    "neutral": "self-described",
+    "type": "loaded-framing"
   }
 ]

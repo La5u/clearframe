@@ -18,7 +18,7 @@
     "red": {
       "name": "Red",
       "category": "Hostility",
-      "types": ["aggression", "derogatory", "partisan", "dehumanizing"]
+      "types": ["aggression", "derogatory", "dehumanizing"]
     },
     "pink": {
       "name": "Pink",
@@ -43,7 +43,7 @@
     "teal": {
       "name": "Teal",
       "category": "Style and voice",
-      "types": ["colloquialism", "repetition", "rhetorical-question"]
+      "types": ["colloquialism", "idiom", "repetition", "rhetorical-question"]
     }
   }
 }

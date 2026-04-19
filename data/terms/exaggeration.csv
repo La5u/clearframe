@@ -1,0 +1,11 @@
+phrase,type,neutral,aliases,stemmable,regex,remove
+huge,exaggeration,large,,,,
+massive,exaggeration,large,,,,
+totally,exaggeration,completely,,,,
+up to,exaggeration,as much as,,,\bup to(?=\s+\d),
+countless,exaggeration,many,,,,
+staggering,exaggeration,large,,,,
+eye-watering,exaggeration,high,,adjective,,
+outrageous,exaggeration,,,,,true
+alarming,exaggeration,concerning,,,,
+incredibly,exaggeration,very,,,,

@@ -1,0 +1,4 @@
+phrase,type,neutral,aliases,stemmable,regex,remove
+right?,rhetorical-question,,,,,
+correct?,rhetorical-question,,,,,
+isn't it?,rhetorical-question,,,,,

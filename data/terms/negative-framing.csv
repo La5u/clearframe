@@ -1,0 +1,8 @@
+phrase,type,neutral,aliases,stemmable,regex,remove
+regime,negative-framing,government,,,,
+junta,negative-framing,military government,,,,
+puppet,negative-framing,,,,,
+tragedy,negative-framing,,,,,
+catastrophic,negative-framing,severe,,,,
+disaster,negative-framing,,,,,
+bloodbath,negative-framing,,,,,

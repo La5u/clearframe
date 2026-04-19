@@ -1,0 +1,10 @@
+phrase,type,neutral,aliases,stemmable,regex,remove
+feud,conflict,,,,,
+clash,conflict,,,verb,,
+chaos,conflict,disorder,,,,
+plot,conflict,plan,,,,
+snub,conflict,ignored,,,,
+spark,conflict,,,,,
+erupt,conflict,begin,,,,
+wipeout,conflict,loss,,,,
+showdown,conflict,,,,,

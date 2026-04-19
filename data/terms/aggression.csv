@@ -1,0 +1,11 @@
+phrase,type,neutral,aliases,stemmable,regex,remove
+slam,aggression,,,verb,,
+rip,aggression,,,verb,,
+torch,aggression,criticizes,,verb,,
+blast,aggression,criticize,,verb,,
+roast,aggression,,,verb,,
+hit with,aggression,,,,,
+taken out,aggression,,,,,
+under fire,aggression,criticized,,,,
+scathing,aggression,harsh,,,,
+ambush,aggression,,,verb,,

@@ -1,0 +1,12 @@
+phrase,type,neutral,aliases,stemmable,regex,remove
+despicable,moral,,contemptible,,,
+scandal,moral,,,,,
+piracy,moral,copyright infringement,,,,
+evil,moral,,,,,
+brutal,moral,harsh,,,,
+oppressive,moral,harsh,,,,
+heroic,moral,,,,,
+ruthless,moral,harsh,,,,
+corrupt,moral,,,,,
+controversial,moral,,,,,
+sinful,moral,,,,,

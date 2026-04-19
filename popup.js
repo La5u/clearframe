@@ -3,15 +3,24 @@
 const { types, categories, colorConfig } = ClearFrame;
 const els = {
   enabled: document.getElementById('enabled'),
+  replaceTerms: document.getElementById('replace-terms'),
   colorGroups: document.getElementById('color-groups'),
   resetBtn: document.getElementById('reset-btn'),
   detectedCount: document.getElementById('detected-count'),
-  tabButtons: Array.from(document.querySelectorAll('.tab-btn')),
-  tabPanels: Array.from(document.querySelectorAll('.tab-panel')),
   termList: document.getElementById('term-list')
 };
-const COLOR_MAP = { yellow: '#fef9c3', green: '#dcfce7', gray: '#f3f4f6', red: '#fee2e2', pink: '#fce7f3', orange: '#ffedd5', purple: '#f3e8ff', blue: '#dbeafe', teal: '#ccfbf1' };
-const DEFAULT_SETTINGS = { enabled: true, types: { superlative: false }, userTypeColors: {} };
+const COLOR_MAP = {
+  yellow: '#fef9c3',
+  green: '#dcfce7',
+  gray: '#f3f4f6',
+  red: '#fee2e2',
+  pink: '#fce7f3',
+  orange: '#ffedd5',
+  purple: '#f3e8ff',
+  blue: '#dbeafe',
+  teal: '#ccfbf1'
+};
+const DEFAULT_SETTINGS = { enabled: true, replaceTerms: false, types: { superlative: false }, userTypeColors: {} };
 let userTypeColors = {};
 let settings = { ...DEFAULT_SETTINGS, types: { ...DEFAULT_SETTINGS.types } };
 
@@ -26,7 +35,11 @@ function loadSettings(rawSettings = {}, rawTypeColors = {}) {
 }
 
 function getSettings() {
-  const s = { enabled: els.enabled.checked, types: {} };
+  const s = {
+    enabled: els.enabled.checked,
+    replaceTerms: els.replaceTerms.checked,
+    types: {}
+  };
   document.querySelectorAll('.type-chip').forEach(chip => {
     s.types[chip.dataset.type] = chip.dataset.enabled === 'true';
   });
@@ -67,9 +80,65 @@ function updateDetectedCount() {
   });
 }
 
+function updateTermsList() {
+  if (!els.termList) return;
+  els.termList.textContent = 'Loading...';
+  sendToActiveTab({ type: 'GET_TERMS' }, res => {
+    const terms = res?.terms || [];
+    if (!terms.length) {
+      els.termList.textContent = 'No matches on this page.';
+      return;
+    }
+    const frag = document.createDocumentFragment();
+    terms.forEach(t => {
+      const row = document.createElement('div');
+      row.className = 'term-row';
+      const name = document.createElement('span');
+      name.textContent = t.term;
+      const count = document.createElement('span');
+      count.className = 'term-count';
+      count.textContent = String(t.count);
+      row.appendChild(name);
+      row.appendChild(count);
+      frag.appendChild(row);
+    });
+    els.termList.innerHTML = '';
+    els.termList.appendChild(frag);
+  });
+}
+
+function getColorHex(color) {
+  return COLOR_MAP[color] || '#ccc';
+}
+
+function getColorBg(color) {
+  return getColorHex(color) + '80';
+}
+
+function getChipBg(color) {
+  return COLOR_MAP[color] || '#fff';
+}
+
+function createTypeChip(type) {
+  const chip = document.createElement('button');
+  chip.className = 'type-chip';
+  chip.dataset.type = type;
+  chip.dataset.category = getCategory(type);
+  chip.dataset.enabled = String(settings.types?.[type] !== false);
+  chip.type = 'button';
+  chip.style.background = getChipBg(getEffectiveColor(type));
+  if (chip.dataset.enabled !== 'true') chip.classList.add('disabled');
+
+  const label = document.createElement('span');
+  label.className = 'type-chip-label';
+  label.textContent = type;
+  chip.appendChild(label);
+  return chip;
+}
+
 function renderColorGroups() {
   els.colorGroups.innerHTML = '';
-  
+
   const byColor = {};
   for (const type of Object.keys(types)) {
     const color = userTypeColors[type] || types[type];
@@ -89,47 +158,18 @@ function renderColorGroups() {
     const list = document.createElement('div');
     list.className = 'type-list drop-zone';
     list.dataset.color = color;
-    
+
     const listTypes = (byColor[color] || []).sort();
-    for (const type of listTypes) list.appendChild(createTypeChip(type));
-    
+    for (const type of listTypes) {
+      list.appendChild(createTypeChip(type));
+    }
+
     group.appendChild(heading);
     group.appendChild(list);
     els.colorGroups.appendChild(group);
   }
-  
+
   setupDragDrop();
-}
-
-function createTypeChip(type) {
-  const chip = document.createElement('button');
-  chip.className = 'type-chip';
-  chip.dataset.type = type;
-  chip.dataset.category = getCategory(type);
-  chip.dataset.enabled = String(settings.types?.[type] !== false);
-  chip.draggable = true;
-  chip.type = 'button';
-  chip.style.background = getChipBg(getEffectiveColor(type));
-  if (chip.dataset.enabled !== 'true') chip.classList.add('disabled');
-  
-  const label = document.createElement('span');
-  label.className = 'type-chip-label';
-  label.textContent = type;
-  
-  chip.appendChild(label);
-  return chip;
-}
-
-function getColorHex(color) {
-  return COLOR_MAP[color] || '#ccc';
-}
-
-function getColorBg(color) {
-  return getColorHex(color) + '80';
-}
-
-function getChipBg(color) {
-  return COLOR_MAP[color] || '#fff';
 }
 
 function setupDragDrop() {
@@ -188,7 +228,6 @@ function setupDragDrop() {
   }
 
   chips.forEach(chip => {
-    chip.draggable = false;
     chip.addEventListener('pointerdown', e => {
       if (e.button !== 0) return;
       draggingType = chip.dataset.type;
@@ -202,53 +241,12 @@ function setupDragDrop() {
   });
 }
 
-function updateTermsList() {
-  if (!els.termList) return;
-  els.termList.textContent = 'Loading...';
-  sendToActiveTab({ type: 'GET_TERMS' }, res => {
-    const terms = res?.terms || [];
-    if (!terms.length) {
-      els.termList.textContent = 'No matches on this page.';
-      return;
-    }
-    const frag = document.createDocumentFragment();
-    terms.forEach(t => {
-      const row = document.createElement('div');
-      row.className = 'term-row';
-      const name = document.createElement('span');
-      name.textContent = t.term;
-      const count = document.createElement('span');
-      count.className = 'term-count';
-      count.textContent = String(t.count);
-      row.appendChild(name);
-      row.appendChild(count);
-      frag.appendChild(row);
-    });
-    els.termList.innerHTML = '';
-    els.termList.appendChild(frag);
-  });
-}
-
-function setupTabs() {
-  if (!els.tabButtons.length) return;
-  els.tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      els.tabButtons.forEach(b => b.classList.toggle('active', b === btn));
-      els.tabPanels.forEach(panel => panel.classList.toggle('active', panel.dataset.panel === target));
-      if (target === 'terms') {
-        updateDetectedCount();
-        updateTermsList();
-      }
-    });
-  });
-}
-
 els.resetBtn.addEventListener('click', () => {
   userTypeColors = {};
   saveSettings(true);
   renderColorGroups();
   updateDetectedCount();
+  updateTermsList();
 });
 
 function init() {
@@ -256,11 +254,11 @@ function init() {
     chrome.storage.sync.get(['settings', 'userTypeColors'], r => {
       loadSettings(r.settings, r.userTypeColors);
       els.enabled.checked = settings.enabled !== false;
-      
+      els.replaceTerms.checked = settings.replaceTerms === true;
       renderColorGroups();
-      
-      els.enabled.addEventListener('change', () => { saveSettings(true); updateDetectedCount(); });
-      setupTabs();
+
+      els.enabled.addEventListener('change', () => { saveSettings(true); updateDetectedCount(); updateTermsList(); });
+      els.replaceTerms.addEventListener('change', () => { saveSettings(true); updateDetectedCount(); updateTermsList(); });
       updateDetectedCount();
       updateTermsList();
     });

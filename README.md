@@ -29,7 +29,7 @@ npm test
 ```
 
 Test fixtures:
-- `test-all-terms.html` includes every term (141 matches expected).
+- `test-all-terms.html` includes every term row (146 matches expected).
 - `test-all-types.html` includes every type at least once.
 
 The build step also validates the data model:
@@ -53,12 +53,12 @@ Current detector subtypes (grouped by broad color-coded category):
 - exaggeration
 - fear
 - hype
+- idiom
 - loaded
 - loaded-framing
 - minimizing
 - moral
 - negative-framing
-- partisan
 - passive
 - reveal
 - repetition
@@ -80,12 +80,12 @@ Current category map:
 - yellow / sensationalism: `clickbait`, `hype`, `reveal`, `tabloid-anger`
 - green / intensification: `exaggeration`, `superlative`
 - gray / framing and sourcing: `unsourced`, `authority`, `uncertainty`, `loaded-framing`, `distancing`
-- red / hostility: `aggression`, `derogatory`, `partisan`, `dehumanizing`
+- red / hostility: `aggression`, `derogatory`, `dehumanizing`
 - pink / value judgment: `moral`, `loaded`
 - orange / conflict and drama: `conflict`, `minimizing`, `negative-framing`
 - purple / urgency and fear: `fear`
 - blue / softening and agency hiding: `euphemism`, `passive`
-- teal / style and voice: `colloquialism`, `repetition`, `rhetorical-question`
+- teal / style and voice: `colloquialism`, `idiom`, `repetition`, `rhetorical-question`
 
 ## Scope
 
@@ -122,6 +122,8 @@ ClearFrame now includes a small first pass at literary-device-adjacent signals, 
 Currently realistic device-style detectors:
 - `colloquialism`
   Detects informal contractions or conversational wording such as `ain't`, `gotta`, `kinda`, `y'all`.
+- `idiom`
+  Detects narrow, surface-detectable idioms such as `gone to ground` and `holed up`.
 - `repetition`
   Detects stock repeated-emphasis phrases such as `again and again`, `over and over`, `time after time`.
 - `rhetorical-question`
@@ -150,31 +152,33 @@ That last rule is enforced during the build. If the same normalized phrase appea
 
 ## Data
 
-Terms are stored in `data/terms/*.json`. Each entry includes:
-- `phrase` (required)
-- `type` (required)
-- `neutral` (optional)
-- `aliases` (optional, exact alternate forms)
-- `stemmable` (optional, opt-in stemming for simple variants)
+Terms are stored in `data/terms/*.csv` with a header row:
+- `phrase`
+- `type`
+- `neutral`
+- `aliases` as a `|`-separated list inside one CSV cell
+- `stemmable` as the word type used for inflection, if any (`noun`, `verb`, or `adjective`)
+- `regex`
+- `remove`
+
+Use CSV escaping for commas, quotes, or leading/trailing spaces in fields. Use `regex` for context-sensitive matches like `up to(?=\\s+\\d)`.
 
 Color categories and subtype groupings live in `data/type-colors.json`.
 
-Example term:
+Example row:
 
-```json
-{
-  "phrase": "far-left",
-  "type": "partisan",
-  "neutral": "left",
-  "aliases": ["far left"]
-}
+```csv
+phrase,type,neutral,aliases,stemmable,regex,remove
+ain't,colloquialism,is not,,,,,
 ```
 
 Guidelines for adding terms:
 - keep each exact phrase in one subtype only
 - use `aliases` for punctuation or spacing variants, not for loosely related ideas
 - prefer phrases over broad single words when a word is highly context-dependent
-- only use `stemmable` when inflected forms are genuinely safe
+- only use `stemmable` when inflected forms are genuinely safe, and set it to the word type that should inflect
+- stemmed entries are expanded into regex-backed inflections, so `secret` can match `secrets` and `eye-watering` can match `eye-wateringly`
+- in replace mode, stemmed terms keep the same inflection pattern on the replacement text when it is available
 
 ## Architecture
 

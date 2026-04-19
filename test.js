@@ -6,20 +6,20 @@ const { buildMatcher, extractText, findMatches, loadTerms } = require('./term-ut
 
 const ROOT = __dirname;
 const EXPECTED_COUNTS = {
-  'newssite.html': 223,
-  'newssite2.html': 52,
-  'newssite3.html': 186,
-  'newssite10th.html': 225,
-  'newssite10thnypost.html': 63,
-  'test-all-types.html': 31,
-  'test-all-terms.html': 141
+  'newssite.html': 373,
+  'newssite2.html': 71,
+  'newssite3.html': 288,
+  'newssite10th.html': 349,
+  'newssite10thnypost.html': 74,
+  'test-all-types.html': 147,
+  'test-all-terms.html': 146
 };
 
 function countMatches(html) {
   const index = loadTerms(path.join(ROOT, 'data', 'terms'));
   const matcher = buildMatcher(index);
   const text = extractText(html);
-  return findMatches(matcher, text).length;
+  return findMatches(matcher, text, index.termsById, index.regexTerms).length;
 }
 
 for (const [file, expected] of Object.entries(EXPECTED_COUNTS)) {

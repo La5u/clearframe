@@ -1,4 +1,4 @@
 phrase,type,neutral,aliases,stemmable,regex,remove
-government handouts,loaded,public benefits,,,,
-tax relief,loaded,tax cuts,,,,
-taxpayer-funded,loaded,publicly funded,,,,
+government handouts,loaded,,,,,
+tax relief,loaded,,,,,
+taxpayer-funded,loaded,,,,,

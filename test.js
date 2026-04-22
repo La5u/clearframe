@@ -6,13 +6,13 @@ const { buildMatcher, extractText, findMatches, loadTerms } = require('./term-ut
 
 const ROOT = __dirname;
 const EXPECTED_COUNTS = {
-  'newssite.html': 373,
-  'newssite2.html': 71,
-  'newssite3.html': 288,
-  'newssite10th.html': 349,
-  'newssite10thnypost.html': 74,
-  'test-all-types.html': 147,
-  'test-all-terms.html': 146
+  'newssite.html': 397,
+  'newssite2.html': 77,
+  'newssite3.html': 312,
+  'newssite10th.html': 368,
+  'newssite10thnypost.html': 75,
+  'test-all-types.html': 169,
+  'test-all-terms.html': 135
 };
 
 function countMatches(html) {

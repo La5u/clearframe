@@ -3,12 +3,12 @@
     "yellow": {
       "name": "Yellow",
       "category": "Sensationalism",
-      "types": ["clickbait", "hype", "reveal", "tabloid-anger"]
+      "types": ["clickbait", "hype", "reveal"]
     },
     "green": {
       "name": "Green",
       "category": "Intensification",
-      "types": ["exaggeration", "superlative"]
+      "types": ["absolute", "exaggeration", "superlative"]
     },
     "gray": {
       "name": "Gray",
@@ -18,7 +18,7 @@
     "red": {
       "name": "Red",
       "category": "Hostility",
-      "types": ["aggression", "derogatory", "dehumanizing"]
+      "types": ["aggression", "derogatory"]
     },
     "pink": {
       "name": "Pink",

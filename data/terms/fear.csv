@@ -1,8 +1,8 @@
 phrase,type,neutral,aliases,stemmable,regex,remove
-threat,fear,risk,,,,
-urgent,fear,pressing,,,,
-terror,fear,fear,,,,
-panic,fear,worry,,,,
+threat,fear,,,,,
+urgent,fear,,,,,
+terror,fear,,,,,
+panic,fear,,,,,
 dangerous,fear,,,,,
 terrify,fear,,,verb,,
 horrify,fear,,,verb,,

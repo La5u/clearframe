@@ -1,0 +1,6 @@
+phrase,type,neutral,aliases,stemmable,regex,remove
+always,absolute,,,,,
+never,absolute,,,,,
+must,absolute,,,,,
+inexcusable,absolute,,,,,
+fundamental,absolute,,,,,

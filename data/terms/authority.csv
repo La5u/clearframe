@@ -1,4 +1,7 @@
 phrase,type,neutral,aliases,stemmable,regex,remove
 trusted partners,authority,third parties,,,,
+according to,authority,,,,,
+according to insiders,authority,,,,,
 authorities say,authority,,,,,
 experts say,authority,,,,,
+experts warn,authority,,,,,

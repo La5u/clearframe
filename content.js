@@ -11,7 +11,7 @@ const SUPPORTS_HIGHLIGHTS = !!(globalThis.Highlight && globalThis.CSS?.highlight
 const DEFAULT_SETTINGS = {
   enabled: true,
   replaceTerms: false,
-  types: { superlative: false },
+  types: { absolute: false, moral: false, superlative: false },
   userTypeColors: {}
 };
 
@@ -27,30 +27,25 @@ let rerenderFrame = 0;
 const originalNodeText = new WeakMap();
 const internallyMutatedNodes = new WeakSet();
 
+const {
+  pluralizeWord,
+  pastTenseWord,
+  ingWord,
+  adverbWord
+} = require('./stemmer');
+
+const { buildMatcher, findMatches } = require('./matcher');
+
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
   const next = { ...DEFAULT_SETTINGS, ...rawSettings };
   next.types = { ...(next.types || {}) };
   if (!Object.keys(next.types).length) {
+    next.types.absolute = false;
+    next.types.moral = false;
     next.types.superlative = false;
   }
   next.userTypeColors = { ...(next.userTypeColors || {}), ...rawTypeColors };
   settings = next;
-}
-
-function isWordChar(c) {
-  const code = c.charCodeAt(0);
-  return (
-    (code >= 48 && code <= 57) ||
-    (code >= 65 && code <= 90) ||
-    (code >= 97 && code <= 122) ||
-    code === 39
-  );
-}
-
-function boundary(text, start, end) {
-  const prev = start > 0 ? text[start - 1] : ' ';
-  const next = end < text.length ? text[end] : ' ';
-  return !isWordChar(prev) && !isWordChar(next);
 }
 
 function isEnabled(type) {
@@ -70,51 +65,6 @@ function getHighlightName(type, mode = 'highlight') {
   return mode === 'underline'
     ? HIGHLIGHT_PREFIX + color + UNDERLINE_SUFFIX
     : HIGHLIGHT_PREFIX + color;
-}
-
-const IRREGULAR_VERB_FORMS = {
-  break: { past: 'broke' },
-  sunset: { past: 'sunset' }
-};
-
-function isConsonant(code) {
-  return code >= 97 && code <= 122 && ![97, 101, 105, 111, 117].includes(code);
-}
-
-function shouldDoubleFinalConsonant(word) {
-  if (word.length < 3 || word.length > 4) return false;
-  if (/(w|x|y)$/i.test(word)) return false;
-  if (/(ck|ch|sh|th|ph|gh|qu)$/i.test(word)) return false;
-  const last = word.charCodeAt(word.length - 1);
-  const mid = word.charCodeAt(word.length - 2);
-  const prev = word.charCodeAt(word.length - 3);
-  return isConsonant(last) && !isConsonant(mid) && isConsonant(prev);
-}
-
-function pluralizeWord(word) {
-  if (/(s|x|z|ch|sh)$/i.test(word)) return word + 'es';
-  if (/[^aeiou]y$/i.test(word)) return word.slice(0, -1) + 'ies';
-  return word + 's';
-}
-
-function pastTenseWord(word) {
-  if (IRREGULAR_VERB_FORMS[word]?.past) return IRREGULAR_VERB_FORMS[word].past;
-  if (word.endsWith('e')) return word + 'd';
-  if (/[^aeiou]y$/i.test(word)) return word.slice(0, -1) + 'ied';
-  if (shouldDoubleFinalConsonant(word)) return word + word[word.length - 1] + 'ed';
-  return word + 'ed';
-}
-
-function ingWord(word) {
-  if (word.endsWith('ie')) return word.slice(0, -2) + 'ying';
-  if (word.endsWith('e')) return word.slice(0, -1) + 'ing';
-  if (shouldDoubleFinalConsonant(word)) return word + word[word.length - 1] + 'ing';
-  return word + 'ing';
-}
-
-function adverbWord(word) {
-  if (word.endsWith('y') && !/[aeiou]y$/i.test(word)) return word.slice(0, -1) + 'ily';
-  return word + 'ly';
 }
 
 function applyStemmedReplacement(sourceText, basePhrase, replacement, stemType) {
@@ -145,107 +95,12 @@ function setNodeText(node, text) {
   node.nodeValue = text;
 }
 
-function buildMatcher() {
-  const root = Object.create(null);
-  if (!index.buckets) return root;
-
-  for (const entries of Object.values(index.buckets)) {
-    for (const entry of entries) {
-      const term = index.termsById[entry.termId];
-      if (!term || !isEnabled(term.type)) continue;
-
-      let node = root;
-      for (const ch of entry.phraseNorm) {
-        node = node[ch] ||= Object.create(null);
-      }
-      node.$ = entry.termId;
-    }
-  }
-
-  return root;
+function initMatcher() {
+  return buildMatcher(index, term => isEnabled(term.type));
 }
 
-function collectPhraseMatches(text) {
-  if (!matcher) return [];
-
-  const matches = [];
-  const lower = text.toLowerCase();
-  let indexPos = 0;
-
-  while (indexPos < lower.length) {
-    let node = matcher[lower[indexPos]];
-    if (!node) {
-      indexPos++;
-      continue;
-    }
-
-    let matched = null;
-    let cursor = indexPos + 1;
-
-    if (node.$ && boundary(lower, indexPos, cursor)) {
-      matched = { start: indexPos, end: cursor, termId: node.$ };
-    }
-
-    while (cursor < lower.length) {
-      node = node[lower[cursor]];
-      if (!node) break;
-      cursor++;
-      if (node.$ && boundary(lower, indexPos, cursor)) {
-        matched = { start: indexPos, end: cursor, termId: node.$ };
-      }
-    }
-
-    if (matched) {
-      matches.push(matched);
-      indexPos = matched.end;
-    } else {
-      indexPos++;
-    }
-  }
-
-  return matches;
-}
-
-const regexCache = new Map();
-
-function getRegexMatcher(pattern) {
-  if (!pattern) return null;
-  if (!regexCache.has(pattern)) {
-    regexCache.set(pattern, new RegExp(pattern, 'giu'));
-  }
-  return regexCache.get(pattern);
-}
-
-function collectRegexMatches(text) {
-  const matches = [];
-  for (const term of index.regexTerms || []) {
-    const compiled = getRegexMatcher(term.pattern);
-    if (!compiled) continue;
-    compiled.lastIndex = 0;
-    for (const match of text.matchAll(compiled)) {
-      if (!match[0]) continue;
-      matches.push({
-        start: match.index,
-        end: match.index + match[0].length,
-        termId: term.termId
-      });
-    }
-  }
-  return matches;
-}
-
-function findMatches(text) {
-  const matches = [...collectPhraseMatches(text), ...collectRegexMatches(text)]
-    .sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
-
-  const accepted = [];
-  let cursor = 0;
-  for (const match of matches) {
-    if (match.start < cursor) continue;
-    accepted.push(match);
-    cursor = match.end;
-  }
-  return accepted;
+function initFindMatches(text) {
+  return findMatches(matcher, text, index.termsById, index.regexTerms || []);
 }
 
 function skipNode(node) {
@@ -351,7 +206,7 @@ function handleHoverMove(e) {
 }
 
 function buildNodePlan(text) {
-  const matches = findMatches(text);
+  const matches = initFindMatches(text);
   if (!matches.length) {
     return { displayText: text, plannedHighlights: [], matches };
   }
@@ -508,7 +363,7 @@ function hasRenderableMutation(mutations) {
 function init() {
   chrome.storage.sync.get(['settings', 'userTypeColors'], r => {
     loadSettings(r.settings, r.userTypeColors);
-    matcher = buildMatcher();
+    matcher = initMatcher();
     const start = () => {
       renderHighlights();
     };
@@ -557,7 +412,7 @@ chrome.runtime.onMessage.addListener((msg, src, sendResponse) => {
   if (msg.type === 'RELOAD_SETTINGS') {
     chrome.storage.sync.get(['settings', 'userTypeColors'], r => {
       loadSettings(r.settings, r.userTypeColors);
-      matcher = buildMatcher();
+      matcher = initMatcher();
       renderHighlights();
     });
   }

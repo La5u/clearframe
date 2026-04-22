@@ -10,24 +10,25 @@ const els = {
   termList: document.getElementById('term-list')
 };
 const COLOR_MAP = {
-  yellow: '#fef9c3',
-  green: '#dcfce7',
-  gray: '#f3f4f6',
-  red: '#fee2e2',
-  pink: '#fce7f3',
-  orange: '#ffedd5',
-  purple: '#f3e8ff',
-  blue: '#dbeafe',
-  teal: '#ccfbf1'
+  yellow: '#fff7cc',
+  green: '#e7f8ea',
+  gray: '#f1f1f1',
+  red: '#fde8e8',
+  pink: '#fdebf3',
+  orange: '#fff0df',
+  purple: '#f2eaff',
+  blue: '#e8f1ff',
+  teal: '#e5faf7'
 };
-const DEFAULT_SETTINGS = { enabled: true, replaceTerms: false, types: { superlative: false }, userTypeColors: {} };
+const DEFAULT_SETTINGS = { enabled: true, replaceTerms: false, types: { absolute: false, moral: false, superlative: false }, userTypeColors: {} };
 let userTypeColors = {};
 let settings = { ...DEFAULT_SETTINGS, types: { ...DEFAULT_SETTINGS.types } };
+let dragState = null;
 
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
   const nextSettings = { ...DEFAULT_SETTINGS, ...rawSettings };
   if (!nextSettings.types || Object.keys(nextSettings.types).length === 0) {
-    nextSettings.types = { superlative: false };
+    nextSettings.types = { absolute: false, moral: false, superlative: false };
   }
   userTypeColors = { ...(nextSettings.userTypeColors || {}), ...rawTypeColors };
   nextSettings.userTypeColors = userTypeColors;
@@ -35,21 +36,21 @@ function loadSettings(rawSettings = {}, rawTypeColors = {}) {
 }
 
 function getSettings() {
-  const s = {
+  const next = {
     enabled: els.enabled.checked,
     replaceTerms: els.replaceTerms.checked,
     types: {}
   };
   document.querySelectorAll('.type-chip').forEach(chip => {
-    s.types[chip.dataset.type] = chip.dataset.enabled === 'true';
+    next.types[chip.dataset.type] = chip.dataset.enabled === 'true';
   });
-  return s;
+  return next;
 }
 
 function saveSettings(reload = false) {
-  const s = getSettings();
-  s.userTypeColors = userTypeColors;
-  chrome.storage.sync.set({ settings: s });
+  const next = getSettings();
+  next.userTypeColors = userTypeColors;
+  chrome.storage.sync.set({ settings: next });
   if (reload) sendToActiveTab({ type: 'RELOAD_SETTINGS' });
 }
 
@@ -112,11 +113,7 @@ function getColorHex(color) {
 }
 
 function getColorBg(color) {
-  return getColorHex(color) + '80';
-}
-
-function getChipBg(color) {
-  return COLOR_MAP[color] || '#fff';
+  return `${getColorHex(color)}cc`;
 }
 
 function createTypeChip(type) {
@@ -126,7 +123,7 @@ function createTypeChip(type) {
   chip.dataset.category = getCategory(type);
   chip.dataset.enabled = String(settings.types?.[type] !== false);
   chip.type = 'button';
-  chip.style.background = getChipBg(getEffectiveColor(type));
+  chip.style.background = getColorHex(getEffectiveColor(type));
   if (chip.dataset.enabled !== 'true') chip.classList.add('disabled');
 
   const label = document.createElement('span');
@@ -138,12 +135,11 @@ function createTypeChip(type) {
 
 function renderColorGroups() {
   els.colorGroups.innerHTML = '';
-
-  const byColor = {};
-  for (const type of Object.keys(types)) {
+  const byColor = Object.keys(types).reduce((acc, type) => {
     const color = userTypeColors[type] || types[type];
-    (byColor[color] ||= []).push(type);
-  }
+    (acc[color] ||= []).push(type);
+    return acc;
+  }, {});
 
   for (const color of Object.keys(colorConfig.colors)) {
     const config = colorConfig.colors[color];
@@ -172,67 +168,53 @@ function renderColorGroups() {
   setupDragDrop();
 }
 
+function setOverZone(zone) {
+  if (dragState?.overZone === zone) return;
+  dragState?.overZone?.classList.remove('drag-over');
+  if (zone) zone.classList.add('drag-over');
+  if (dragState) dragState.overZone = zone;
+}
+
+function applyDrop(type, newColor) {
+  if (!type || !newColor) return;
+  userTypeColors[type] = newColor;
+  saveSettings(true);
+  renderColorGroups();
+}
+
+function toggleChip(chip) {
+  const enabled = chip.dataset.enabled === 'true';
+  chip.dataset.enabled = String(!enabled);
+  chip.classList.toggle('disabled', enabled);
+  saveSettings(true);
+  setTimeout(updateDetectedCount, 0);
+}
+
+function onPointerMove(e) {
+  if (!dragState) return;
+  dragState.moved = true;
+  setOverZone(document.elementFromPoint(e.clientX, e.clientY)?.closest('.drop-zone') || null);
+}
+
+function onPointerUp(e) {
+  if (!dragState?.chip) return;
+  if (dragState.chip.releasePointerCapture) {
+    try { dragState.chip.releasePointerCapture(e.pointerId); } catch {}
+  }
+  dragState.chip.classList.remove('dragging');
+  if (dragState.moved && dragState.overZone) applyDrop(dragState.type, dragState.overZone.dataset.color);
+  else if (!dragState.moved) toggleChip(dragState.chip);
+  setOverZone(null);
+  dragState = null;
+  window.removeEventListener('pointermove', onPointerMove);
+  window.removeEventListener('pointerup', onPointerUp);
+}
+
 function setupDragDrop() {
-  const chips = document.querySelectorAll('.type-chip');
-  let draggingType = null;
-  let draggingEl = null;
-  let overZone = null;
-  let dragMoved = false;
-
-  function setOverZone(zone) {
-    if (overZone === zone) return;
-    if (overZone) overZone.classList.remove('drag-over');
-    overZone = zone;
-    if (overZone) overZone.classList.add('drag-over');
-  }
-
-  function applyDrop(type, newColor) {
-    if (!type || !newColor) return;
-    userTypeColors[type] = newColor;
-    saveSettings(true);
-    renderColorGroups();
-  }
-
-  function toggleChip(chip) {
-    const enabled = chip.dataset.enabled === 'true';
-    chip.dataset.enabled = String(!enabled);
-    chip.classList.toggle('disabled', enabled);
-    saveSettings(true);
-    setTimeout(updateDetectedCount, 0);
-  }
-
-  function onPointerMove(e) {
-    const el = document.elementFromPoint(e.clientX, e.clientY);
-    const zone = el ? el.closest('.drop-zone') : null;
-    dragMoved = true;
-    setOverZone(zone);
-  }
-
-  function onPointerUp(e) {
-    if (!draggingEl) return;
-    if (draggingEl.releasePointerCapture) {
-      try { draggingEl.releasePointerCapture(e.pointerId); } catch {}
-    }
-    draggingEl.classList.remove('dragging');
-    if (dragMoved && overZone) {
-      applyDrop(draggingType, overZone.dataset.color);
-    } else if (!dragMoved) {
-      toggleChip(draggingEl);
-    }
-    setOverZone(null);
-    draggingType = null;
-    draggingEl = null;
-    dragMoved = false;
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerup', onPointerUp);
-  }
-
-  chips.forEach(chip => {
+  document.querySelectorAll('.type-chip').forEach(chip => {
     chip.addEventListener('pointerdown', e => {
       if (e.button !== 0) return;
-      draggingType = chip.dataset.type;
-      draggingEl = chip;
-      dragMoved = false;
+      dragState = { chip, type: chip.dataset.type, overZone: null, moved: false };
       chip.classList.add('dragging');
       if (chip.setPointerCapture) chip.setPointerCapture(e.pointerId);
       window.addEventListener('pointermove', onPointerMove);

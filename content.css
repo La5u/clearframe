@@ -1,110 +1,49 @@
-::highlight(clearframe-yellow) {
-  background-color: rgba(250, 204, 21, 0.42);
-}
-
-::highlight(clearframe-yellow-underline) {
-  background-color: transparent;
-  text-decoration: underline;
-  text-decoration-color: rgba(202, 138, 4, 0.95);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
-}
-
-::highlight(clearframe-green) {
-  background-color: rgba(74, 222, 128, 0.42);
-}
-
-::highlight(clearframe-green-underline) {
-  background-color: transparent;
-  text-decoration: underline;
-  text-decoration-color: rgba(22, 163, 74, 0.95);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
-}
-
-::highlight(clearframe-gray) {
-  background-color: rgba(209, 213, 219, 0.5);
-}
-
-::highlight(clearframe-gray-underline) {
-  background-color: transparent;
-  text-decoration: underline;
-  text-decoration-color: rgba(107, 114, 128, 0.95);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
-}
-
-::highlight(clearframe-red) {
-  background-color: rgba(248, 113, 113, 0.42);
-}
-
-::highlight(clearframe-red-underline) {
-  background-color: transparent;
-  text-decoration: underline;
-  text-decoration-color: rgba(220, 38, 38, 0.95);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
-}
-
-::highlight(clearframe-pink) {
-  background-color: rgba(244, 114, 182, 0.42);
-}
-
-::highlight(clearframe-pink-underline) {
-  background-color: transparent;
-  text-decoration: underline;
-  text-decoration-color: rgba(219, 39, 119, 0.95);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
-}
-
-::highlight(clearframe-orange) {
-  background-color: rgba(251, 146, 60, 0.42);
-}
-
-::highlight(clearframe-orange-underline) {
-  background-color: transparent;
-  text-decoration: underline;
-  text-decoration-color: rgba(234, 88, 12, 0.95);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
-}
-
-::highlight(clearframe-purple) {
-  background-color: rgba(196, 128, 255, 0.42);
-}
-
-::highlight(clearframe-purple-underline) {
-  background-color: transparent;
-  text-decoration: underline;
-  text-decoration-color: rgba(147, 51, 234, 0.95);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
-}
-
-::highlight(clearframe-blue) {
-  background-color: rgba(96, 165, 250, 0.42);
-}
-
-::highlight(clearframe-blue-underline) {
-  background-color: transparent;
-  text-decoration: underline;
-  text-decoration-color: rgba(37, 99, 235, 0.95);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
-}
-
+::highlight(clearframe-yellow),
+::highlight(clearframe-green),
+::highlight(clearframe-gray),
+::highlight(clearframe-red),
+::highlight(clearframe-pink),
+::highlight(clearframe-orange),
+::highlight(clearframe-purple),
+::highlight(clearframe-blue),
 ::highlight(clearframe-teal) {
-  background-color: rgba(45, 212, 191, 0.42);
+  background-color: var(--cf-highlight);
 }
 
+::highlight(clearframe-yellow-underline),
+::highlight(clearframe-green-underline),
+::highlight(clearframe-gray-underline),
+::highlight(clearframe-red-underline),
+::highlight(clearframe-pink-underline),
+::highlight(clearframe-orange-underline),
+::highlight(clearframe-purple-underline),
+::highlight(clearframe-blue-underline),
 ::highlight(clearframe-teal-underline) {
   background-color: transparent;
   text-decoration: underline;
-  text-decoration-color: rgba(20, 184, 166, 0.95);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
+  text-decoration-color: var(--cf-underline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 1px;
 }
+
+::highlight(clearframe-yellow),
+::highlight(clearframe-yellow-underline) { --cf-highlight: rgba(250, 204, 21, 0.24); --cf-underline: rgba(202, 138, 4, 0.78); }
+::highlight(clearframe-green),
+::highlight(clearframe-green-underline) { --cf-highlight: rgba(74, 222, 128, 0.24); --cf-underline: rgba(22, 163, 74, 0.78); }
+::highlight(clearframe-gray),
+::highlight(clearframe-gray-underline) { --cf-highlight: rgba(209, 213, 219, 0.28); --cf-underline: rgba(107, 114, 128, 0.78); }
+::highlight(clearframe-red),
+::highlight(clearframe-red-underline) { --cf-highlight: rgba(248, 113, 113, 0.24); --cf-underline: rgba(220, 38, 38, 0.78); }
+::highlight(clearframe-pink),
+::highlight(clearframe-pink-underline) { --cf-highlight: rgba(244, 114, 182, 0.24); --cf-underline: rgba(219, 39, 119, 0.78); }
+::highlight(clearframe-orange),
+::highlight(clearframe-orange-underline) { --cf-highlight: rgba(251, 146, 60, 0.24); --cf-underline: rgba(234, 88, 12, 0.78); }
+::highlight(clearframe-purple),
+::highlight(clearframe-purple-underline) { --cf-highlight: rgba(196, 128, 255, 0.24); --cf-underline: rgba(147, 51, 234, 0.78); }
+::highlight(clearframe-blue),
+::highlight(clearframe-blue-underline) { --cf-highlight: rgba(96, 165, 250, 0.24); --cf-underline: rgba(37, 99, 235, 0.78); }
+::highlight(clearframe-teal),
+::highlight(clearframe-teal-underline) { --cf-highlight: rgba(45, 212, 191, 0.24); --cf-underline: rgba(20, 184, 166, 0.78); }
 
 #cf-tooltip {
   position: fixed;

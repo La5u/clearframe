@@ -29,7 +29,7 @@ npm test
 ```
 
 Test fixtures:
-- `test-all-terms.html` includes every term row (146 matches expected).
+- `test-all-terms.html` includes every term row (135 matches expected).
 - `test-all-types.html` includes every type at least once.
 
 The build step also validates the data model:
@@ -41,12 +41,12 @@ The build step also validates the data model:
 
 Current detector subtypes (grouped by broad color-coded category):
 
+- absolute
 - aggression
 - authority
 - clickbait
 - conflict
 - colloquialism
-- dehumanizing
 - derogatory
 - distancing
 - euphemism
@@ -64,7 +64,6 @@ Current detector subtypes (grouped by broad color-coded category):
 - repetition
 - rhetorical-question
 - superlative
-- tabloid-anger
 - uncertainty
 - unsourced
 
@@ -77,10 +76,10 @@ The taxonomy is intentionally two-level:
 Categories drive color in the UI. Subtypes drive the actual term list and tooltip label.
 
 Current category map:
-- yellow / sensationalism: `clickbait`, `hype`, `reveal`, `tabloid-anger`
-- green / intensification: `exaggeration`, `superlative`
+- yellow / sensationalism: `clickbait`, `hype`, `reveal`
+- green / intensification: `absolute`, `exaggeration`, `superlative`
 - gray / framing and sourcing: `unsourced`, `authority`, `uncertainty`, `loaded-framing`, `distancing`
-- red / hostility: `aggression`, `derogatory`, `dehumanizing`
+- red / hostility: `aggression`, `derogatory`
 - pink / value judgment: `moral`, `loaded`
 - orange / conflict and drama: `conflict`, `minimizing`, `negative-framing`
 - purple / urgency and fear: `fear`
@@ -110,6 +109,11 @@ Categories are color-based and broad on purpose:
 - purple: urgency and fear
 - blue: softening and agency hiding
 - teal: style and voice
+
+Disabled by default:
+- `absolute`
+- `moral`
+- `superlative`
 
 Merged subtypes:
 - `hype-marketing` is folded into `hype`
@@ -197,6 +201,10 @@ Current intentional limits:
 - no shadow-DOM-specific matching logic beyond what the page exposes in normal text nodes
 
 These constraints keep the extension explainable, local, and fast.
+
+## TODO
+
+- Replace remaining ALL-CAPS words and phrases with normal-case equivalents.
 
 ## Notes
 

@@ -2,18 +2,18 @@ const fs = require('fs');
 const path = require('path');
 
 const {
+  buildMatcher,
+  findMatches,
+  normalize
+} = require('./matcher');
+
+const {
   shouldDoubleFinalConsonant,
   pluralizeWord,
   pastTenseWord,
   ingWord,
   adverbWord
 } = require('./stemmer');
-
-const {
-  buildMatcher,
-  findMatches,
-  normalize
-} = require('./matcher');
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

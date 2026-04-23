@@ -27,14 +27,9 @@ let rerenderFrame = 0;
 const originalNodeText = new WeakMap();
 const internallyMutatedNodes = new WeakSet();
 
-const {
-  pluralizeWord,
-  pastTenseWord,
-  ingWord,
-  adverbWord
-} = require('./stemmer');
-
 const { buildMatcher, findMatches } = require('./matcher');
+const { normalizeRenderedText } = require('./display-utils');
+const { pluralizeWord, pastTenseWord, ingWord, adverbWord } = require('./stemmer');
 
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
   const next = { ...DEFAULT_SETTINGS, ...rawSettings };
@@ -222,17 +217,15 @@ function buildNodePlan(text) {
 
     displayText += text.slice(cursor, match.start);
     const replaceable = settings.replaceTerms && term.hasNeutral;
-    const replacement = replaceable
-      ? applyStemmedReplacement(sourceText, term.phrase, term.neutral, term.stemType || '')
-      : sourceText;
+    let replacement;
+    if (replaceable) replacement = applyStemmedReplacement(sourceText, term.phrase, term.neutral, term.stemType || '');
+    else replacement = sourceText;
     const start = displayText.length;
     displayText += replacement;
     const end = displayText.length;
 
     if (replaceable) {
-      if (replacement.length > 0 && !term.remove) {
-        plannedHighlights.push({ start, end, term, mode: 'underline', sourceText });
-      }
+      if (replacement.length > 0 && !term.remove) plannedHighlights.push({ start, end, term, mode: 'underline', sourceText });
     } else {
       plannedHighlights.push({ start, end, term, mode: 'highlight', sourceText });
     }
@@ -241,7 +234,7 @@ function buildNodePlan(text) {
   }
 
   displayText += text.slice(cursor);
-  return { displayText, plannedHighlights, matches };
+  return { displayText: normalizeRenderedText(displayText, settings.replaceTerms), plannedHighlights, matches };
 }
 
 function restoreOriginalTextNodes() {
@@ -288,7 +281,7 @@ function renderHighlights() {
     }
 
     const { displayText, plannedHighlights, matches } = buildNodePlan(sourceText);
-    const didReplace = settings.replaceTerms && displayText !== sourceText;
+    const didReplace = displayText !== sourceText;
     const nextText = didReplace ? displayText : sourceText;
 
     if (didReplace) {

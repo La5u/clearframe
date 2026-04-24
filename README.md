@@ -29,8 +29,9 @@ npm test
 ```
 
 Test fixtures:
-- `test-all-terms.html` includes every term row (135 matches expected).
-- `test-all-types.html` includes every type at least once.
+- `tests/fixtures/test-all-terms.html` includes every term row (135 matches expected).
+- `tests/fixtures/test-all-types.html` includes every type at least once.
+- `tests/fixtures/newssite4.html` covers the Daily Mail-style fixture used for regression checks.
 
 The build step also validates the data model:
 - duplicate phrases cannot appear across different types
@@ -190,7 +191,7 @@ Main files:
 - `build.js` loads term data, validates taxonomy consistency, and writes `dist/` plus `dist-firefox/`.
 - `term-utils.js` normalizes terms, expands aliases and stemmed variants, and validates duplicate phrases.
 - `content.js` scans page text nodes, applies CSS highlights, tracks match counts, and renders hover tooltips.
-- `popup.js` loads settings, renders the category buckets, and shows detected-term counts.
+- `popup.js` loads settings, renders the category buckets, shows detected-term counts, and powers the Customize / Detected tabs.
 
 ## Limits
 
@@ -210,4 +211,4 @@ These constraints keep the extension explainable, local, and fast.
 
 - `content.js` does the page scan, live mutation handling, and tooltip display.
 - `background.js` keeps the badge in sync with the active tab.
-- `popup.js` controls enable/disable, type colors, and detected-term summaries.
+- `popup.js` controls enable/disable, type colors, detected-term summaries, and the popup footer/version link.

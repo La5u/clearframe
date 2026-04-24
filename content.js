@@ -11,6 +11,7 @@ const SUPPORTS_HIGHLIGHTS = !!(globalThis.Highlight && globalThis.CSS?.highlight
 const DEFAULT_SETTINGS = {
   enabled: true,
   replaceTerms: false,
+  removeTerms: false,
   types: { absolute: false, moral: false, superlative: false },
   userTypeColors: {}
 };
@@ -18,7 +19,7 @@ const DEFAULT_SETTINGS = {
 let settings = { ...DEFAULT_SETTINGS, types: { ...DEFAULT_SETTINGS.types } };
 let matcher = null;
 let totalMatches = 0;
-let termCounts = Object.create(null);
+let termStats = Object.create(null);
 let highlightRecords = [];
 let activeHover = null;
 let hoverFrame = 0;
@@ -28,8 +29,72 @@ const originalNodeText = new WeakMap();
 const internallyMutatedNodes = new WeakSet();
 
 const { buildMatcher, findMatches } = require('./matcher');
-const { normalizeRenderedText } = require('./display-utils');
+const { lowerAllCapsLongWords } = require('./display-utils');
 const { pluralizeWord, pastTenseWord, ingWord, adverbWord } = require('./stemmer');
+const ALL_CAPS_TERM_ID = '__clearframe_all_caps__';
+const ALL_CAPS_TERM = {
+  phrase: 'caps emphasis',
+  type: 'clickbait',
+  neutral: 'Caps normalized.',
+  stemType: '',
+  regex: '',
+  remove: false,
+  hasNeutral: true
+};
+const ALL_CAPS_MIN_LENGTH = 4;
+const ALL_CAPS_COMMON_WORDS = new Set([
+  'AND',
+  'ALL',
+  'THE',
+  'THIS',
+  'THAT',
+  'WITH',
+  'FROM',
+  'INTO',
+  'OVER',
+  'YOUR',
+  'YOURS',
+  'ONLY',
+  'VERY',
+  'JUST',
+  'MORE',
+  'MOST',
+  'NOT',
+  'BUT',
+  'FOR',
+  'OUT',
+  'OUR',
+  'ARE',
+  'YOU',
+  'NOW',
+  'SEE'
+]);
+const ALL_CAPS_ACRONYMS = new Set([
+  'ABBA',
+  'AI',
+  'BBC',
+  'CBS',
+  'CDC',
+  'CEO',
+  'EU',
+  'FDA',
+  'FBI',
+  'GOP',
+  'IRS',
+  'LAX',
+  'MLB',
+  'NBA',
+  'NHL',
+  'NFL',
+  'NYP',
+  'NATO',
+  'SEC',
+  'UN',
+  'UK',
+  'USA',
+  'UFC',
+  'WWE'
+]);
 
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
   const next = { ...DEFAULT_SETTINGS, ...rawSettings };
@@ -62,6 +127,22 @@ function getHighlightName(type, mode = 'highlight') {
     : HIGHLIGHT_PREFIX + color;
 }
 
+function getTermById(termId) {
+  return index.termsById[termId] || (termId === ALL_CAPS_TERM_ID ? ALL_CAPS_TERM : null);
+}
+
+function getAllCapsAction(text) {
+  const normalized = text.toUpperCase();
+  if (ALL_CAPS_COMMON_WORDS.has(normalized)) return 'all-caps';
+  if (normalized.length < ALL_CAPS_MIN_LENGTH) return null;
+  if (ALL_CAPS_ACRONYMS.has(normalized)) return null;
+  return /^[A-Z]{4,}$/.test(normalized) ? 'all-caps' : null;
+}
+
+function isAllCapsText(text) {
+  return getAllCapsAction(text) === 'all-caps';
+}
+
 function applyStemmedReplacement(sourceText, basePhrase, replacement, stemType) {
   const source = sourceText.toLowerCase();
   const base = basePhrase.toLowerCase();
@@ -77,11 +158,65 @@ function applyStemmedReplacement(sourceText, basePhrase, replacement, stemType) 
     if (source === adverbWord(base)) next = adverbWord(replacement);
   }
 
-  if (/^[A-Z]/.test(sourceText) && next) {
-    next = next[0].toUpperCase() + next.slice(1);
+  return next ? next.toLowerCase() : next;
+}
+
+function getReplacementForTerm(term, sourceText) {
+  if (term.phrase === ALL_CAPS_TERM.phrase) {
+    return lowerAllCapsLongWords(sourceText);
+  }
+  return applyStemmedReplacement(sourceText, term.phrase, term.neutral, term.stemType || '');
+}
+
+function findAllCapsMatches(text) {
+  const matches = [];
+  const pattern = /\b[A-Z0-9]{2,}\b/g;
+  for (const match of text.matchAll(pattern)) {
+    if (typeof match.index !== 'number' || !match[0]) continue;
+    if (!getAllCapsAction(match[0])) continue;
+    matches.push({
+      start: match.index,
+      end: match.index + match[0].length,
+      termId: ALL_CAPS_TERM_ID,
+      virtual: true
+    });
+  }
+  return matches;
+}
+
+function overlaps(a, b) {
+  return a.start < b.end && b.start < a.end;
+}
+
+function resolveMatches(matches) {
+  const accepted = [];
+
+  for (const match of matches) {
+    const overlappingIndexes = [];
+    for (let i = 0; i < accepted.length; i++) {
+      if (overlaps(match, accepted[i])) overlappingIndexes.push(i);
+    }
+
+    if (!overlappingIndexes.length) {
+      accepted.push(match);
+      continue;
+    }
+
+    if (match.virtual) {
+      continue;
+    }
+
+    for (let i = overlappingIndexes.length - 1; i >= 0; i--) {
+      const acceptedMatch = accepted[overlappingIndexes[i]];
+      if (acceptedMatch.virtual) accepted.splice(overlappingIndexes[i], 1);
+    }
+
+    if (!accepted.some(existing => overlaps(match, existing))) {
+      accepted.push(match);
+    }
   }
 
-  return next;
+  return accepted.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
 }
 
 function setNodeText(node, text) {
@@ -118,8 +253,8 @@ function clearRegistry() {
   }
 }
 
-function updateBadge() {
-  chrome.runtime.sendMessage({ type: 'COUNT', count: totalMatches }).catch(() => {});
+function updateBadge(count = totalMatches, loading = false) {
+  chrome.runtime.sendMessage({ type: 'COUNT', count, loading }).catch(() => {});
 }
 
 function buildHighlightRegistry(rangesByName) {
@@ -202,39 +337,60 @@ function handleHoverMove(e) {
 
 function buildNodePlan(text) {
   const matches = initFindMatches(text);
-  if (!matches.length) {
-    return { displayText: text, plannedHighlights: [], matches };
+  const allCapsMatches = findAllCapsMatches(text);
+  const combinedMatches = resolveMatches([...matches, ...allCapsMatches].sort((a, b) => {
+    if (a.start !== b.start) return a.start - b.start;
+    const lengthDelta = (b.end - b.start) - (a.end - a.start);
+    if (lengthDelta !== 0) return lengthDelta;
+    return Number(!!a.virtual) - Number(!!b.virtual);
+  }));
+
+  if (!combinedMatches.length) {
+    return { displayText: text, plannedHighlights: [], matches: combinedMatches };
   }
 
   let cursor = 0;
   let displayText = '';
   const plannedHighlights = [];
+  const displaySource = settings.replaceTerms
+    ? lowerAllCapsLongWords(text)
+    : text;
 
-  for (const match of matches) {
-    const term = index.termsById[match.termId];
+  for (const match of combinedMatches) {
+    const term = getTermById(match.termId);
     if (!term) continue;
     const sourceText = text.slice(match.start, match.end);
+    const sourceIsAllCaps = isAllCapsText(sourceText);
 
-    displayText += text.slice(cursor, match.start);
-    const replaceable = settings.replaceTerms && term.hasNeutral;
-    let replacement;
-    if (replaceable) replacement = applyStemmedReplacement(sourceText, term.phrase, term.neutral, term.stemType || '');
-    else replacement = sourceText;
+    displayText += displaySource.slice(cursor, match.start);
     const start = displayText.length;
+    const shouldRemove = term.remove && settings.removeTerms;
+    const shouldReplace = !shouldRemove && settings.replaceTerms && term.hasNeutral;
+    const action = shouldRemove ? 'removed' : shouldReplace ? 'replaced' : 'highlighted';
+    let replacement = sourceText;
+
+    if (shouldRemove) {
+      replacement = '';
+    } else if (shouldReplace) {
+      replacement = getReplacementForTerm(term, sourceText);
+    } else if (sourceIsAllCaps) {
+      replacement = displaySource.slice(match.start, match.end);
+    }
+
     displayText += replacement;
     const end = displayText.length;
 
-    if (replaceable) {
-      if (replacement.length > 0 && !term.remove) plannedHighlights.push({ start, end, term, mode: 'underline', sourceText });
-    } else {
-      plannedHighlights.push({ start, end, term, mode: 'highlight', sourceText });
+    if (action === 'replaced') {
+      plannedHighlights.push({ start, end, term, mode: 'underline', sourceText, action });
+    } else if (action === 'highlighted') {
+      plannedHighlights.push({ start, end, term, mode: 'highlight', sourceText, action });
     }
 
     cursor = match.end;
   }
 
-  displayText += text.slice(cursor);
-  return { displayText: normalizeRenderedText(displayText, settings.replaceTerms), plannedHighlights, matches };
+  displayText += displaySource.slice(cursor);
+  return { displayText, plannedHighlights, matches: combinedMatches };
 }
 
 function restoreOriginalTextNodes() {
@@ -248,7 +404,7 @@ function restoreOriginalTextNodes() {
 }
 
 function renderHighlights() {
-  termCounts = Object.create(null);
+  termStats = Object.create(null);
   totalMatches = 0;
   highlightRecords = [];
 
@@ -295,9 +451,15 @@ function renderHighlights() {
     }
 
     for (const match of matches) {
-      const term = index.termsById[match.termId];
+      const term = getTermById(match.termId);
       if (!term) continue;
-      termCounts[term.phrase] = (termCounts[term.phrase] || 0) + 1;
+      const matchedText = sourceText.slice(match.start, match.end);
+      const sourceIsAllCaps = isAllCapsText(matchedText);
+      const shouldRemove = term.remove && settings.removeTerms;
+      const shouldReplace = !shouldRemove && settings.replaceTerms && term.hasNeutral;
+      const action = shouldRemove ? 'removed' : shouldReplace ? 'replaced' : 'highlighted';
+      const bucket = termStats[term.phrase] || (termStats[term.phrase] = { highlighted: 0, replaced: 0, removed: 0 });
+      bucket[action]++;
       totalMatches++;
     }
 
@@ -313,7 +475,8 @@ function renderHighlights() {
         phrase: entry.term.phrase,
         sourceText: entry.sourceText,
         neutral: entry.term.neutral || '',
-        mode: entry.mode
+        mode: entry.mode,
+        action: entry.action || (entry.mode === 'underline' ? 'replaced' : 'highlighted')
       });
 
       const name = getHighlightName(entry.term.type, entry.mode);
@@ -395,10 +558,17 @@ chrome.runtime.onMessage.addListener((msg, src, sendResponse) => {
   }
 
   if (msg.type === 'GET_TERMS') {
-    const terms = Object.entries(termCounts)
-      .map(([term, count]) => ({ term, count }))
-      .sort((a, b) => b.count - a.count || a.term.localeCompare(b.term));
-    sendResponse({ terms });
+    const groups = { highlighted: [], replaced: [], removed: [] };
+    for (const [term, counts] of Object.entries(termStats)) {
+      for (const action of Object.keys(groups)) {
+        const count = counts[action] || 0;
+        if (count > 0) groups[action].push({ term, count });
+      }
+    }
+    for (const action of Object.keys(groups)) {
+      groups[action].sort((a, b) => b.count - a.count || a.term.localeCompare(b.term));
+    }
+    sendResponse({ groups });
     return;
   }
 

@@ -140,11 +140,11 @@ function loadTerms(dataDir) {
     }
     phraseTypes.set(phrase, term.type);
     if (!terms[phrase]) {
-      const hasNeutral = term.remove === true || term.neutral !== '';
+      const hasNeutral = term.neutral !== '';
       terms[phrase] = {
         phrase,
         type: term.type,
-        neutral: term.remove === true ? '' : (term.neutral || ''),
+        neutral: term.neutral || '',
         hasNeutral,
         stemType: term.stemType || '',
         regex: term.regex || '',

@@ -1,16 +1,17 @@
 phrase,type,neutral,aliases,stemmable,regex,remove
-finally,clickbait,,,,,
+finally,clickbait,now,,,,true
 devastate,clickbait,,,verb,,
 bombshell,clickbait,,,,,
 shock,clickbait,,,verb,,true
 exclusive,clickbait,,,,,true
+inside-story,clickbait,,,,,true
 jaw-dropping,clickbait,surprising,,,,
-break,clickbait,,,verb,,
-must-see,clickbait,,,,,
-must-watch,clickbait,,,,,
+breaking,clickbait,,,,,
+must-see,clickbait,,,,,true
+must-watch,clickbait,,,,,true
 shocking,clickbait,,,,,
 stunning,clickbait,,,,,
 nightmare,clickbait,,,,,
 you won't believe,clickbait,,,,,
-wild,clickbait,,,,,
+wild,clickbait,,,,,true
 reveal,clickbait,disclose,,verb,,

@@ -40,6 +40,11 @@
       "category": "Softening and agency hiding",
       "types": ["euphemism", "passive"]
     },
+    "brown": {
+      "name": "Brown",
+      "category": "Dysphemism",
+      "types": ["dysphemism"]
+    },
     "teal": {
       "name": "Teal",
       "category": "Style and voice",

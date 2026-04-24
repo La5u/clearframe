@@ -1,11 +1,11 @@
 {
   "name": "clearframe",
-  "version": "0.6.0",
+  "version": "0.8.0",
   "private": true,
   "description": "Highlights authorial choices with neutral alternatives.",
   "scripts": {
     "build": "node build.js",
-    "test": "node test.js"
+    "test": "node tests/run.js"
   },
   "dependencies": {
     "web-ext": "^10.0.0"

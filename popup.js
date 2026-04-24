@@ -4,10 +4,18 @@ const { types, categories, colorConfig } = ClearFrame;
 const els = {
   enabled: document.getElementById('enabled'),
   replaceTerms: document.getElementById('replace-terms'),
+  removeTerms: document.getElementById('remove-terms'),
   colorGroups: document.getElementById('color-groups'),
   resetBtn: document.getElementById('reset-btn'),
   detectedCount: document.getElementById('detected-count'),
-  termList: document.getElementById('term-list')
+  customizeTab: document.getElementById('customize-tab'),
+  detectedTab: document.getElementById('detected-tab'),
+  customizePanel: document.getElementById('customize-panel'),
+  detectedPanel: document.getElementById('detected-panel'),
+  termTabs: document.getElementById('term-tabs'),
+  termPanels: document.getElementById('term-panels'),
+  popupVersion: document.getElementById('popup-version'),
+  githubLink: document.getElementById('github-link')
 };
 const COLOR_MAP = {
   yellow: '#fff7cc',
@@ -18,9 +26,10 @@ const COLOR_MAP = {
   orange: '#fff0df',
   purple: '#f2eaff',
   blue: '#e8f1ff',
-  teal: '#e5faf7'
+  teal: '#e5faf7',
+  brown: '#f2e6dc'
 };
-const DEFAULT_SETTINGS = { enabled: true, replaceTerms: false, types: { absolute: false, moral: false, superlative: false }, userTypeColors: {} };
+const DEFAULT_SETTINGS = { enabled: true, replaceTerms: false, removeTerms: false, types: { absolute: false, moral: false, superlative: false }, userTypeColors: {} };
 let userTypeColors = {};
 let settings = { ...DEFAULT_SETTINGS, types: { ...DEFAULT_SETTINGS.types } };
 let dragState = null;
@@ -39,6 +48,7 @@ function getSettings() {
   const next = {
     enabled: els.enabled.checked,
     replaceTerms: els.replaceTerms.checked,
+    removeTerms: els.removeTerms.checked,
     types: {}
   };
   document.querySelectorAll('.type-chip').forEach(chip => {
@@ -82,30 +92,86 @@ function updateDetectedCount() {
 }
 
 function updateTermsList() {
-  if (!els.termList) return;
-  els.termList.textContent = 'Loading...';
+  if (!els.termTabs || !els.termPanels) return;
+  els.termTabs.textContent = '';
+  els.termPanels.textContent = '';
+  const actions = ['highlighted', 'replaced', 'removed'];
   sendToActiveTab({ type: 'GET_TERMS' }, res => {
-    const terms = res?.terms || [];
-    if (!terms.length) {
-      els.termList.textContent = 'No matches on this page.';
+    const groups = res?.groups || {};
+    const panes = new Map();
+    let firstAction = null;
+    let hasAny = false;
+
+    for (const action of actions) {
+      const items = groups[action] || [];
+      if (items.length) hasAny = true;
+      const tab = document.createElement('button');
+      tab.type = 'button';
+      tab.className = 'term-tab';
+      tab.dataset.action = action;
+      tab.textContent = `${action[0].toUpperCase() + action.slice(1)} (${items.length})`;
+      const panel = document.createElement('div');
+      panel.className = 'term-panel';
+      panel.dataset.action = action;
+      const list = document.createElement('div');
+      list.className = 'term-list';
+
+      if (!items.length) {
+        list.textContent = 'No matches.';
+      } else {
+        const frag = document.createDocumentFragment();
+        for (const item of items) {
+          const row = document.createElement('div');
+          row.className = 'term-row';
+          const name = document.createElement('span');
+          name.textContent = item.term;
+          const count = document.createElement('span');
+          count.className = 'term-count';
+          count.textContent = String(item.count);
+          row.appendChild(name);
+          row.appendChild(count);
+          frag.appendChild(row);
+        }
+        list.appendChild(frag);
+      }
+
+      panel.appendChild(list);
+      panes.set(action, { tab, panel });
+      if (!firstAction) firstAction = action;
+      els.termTabs.appendChild(tab);
+      els.termPanels.appendChild(panel);
+    }
+
+    function setActive(action) {
+      for (const [name, { tab, panel }] of panes.entries()) {
+        const active = name === action;
+        tab.classList.toggle('active', active);
+        panel.classList.toggle('active', active);
+      }
+    }
+
+    for (const { tab } of panes.values()) {
+      tab.addEventListener('click', () => setActive(tab.dataset.action));
+    }
+
+    if (hasAny && firstAction) {
+      setActive(firstAction);
       return;
     }
-    const frag = document.createDocumentFragment();
-    terms.forEach(t => {
-      const row = document.createElement('div');
-      row.className = 'term-row';
-      const name = document.createElement('span');
-      name.textContent = t.term;
-      const count = document.createElement('span');
-      count.className = 'term-count';
-      count.textContent = String(t.count);
-      row.appendChild(name);
-      row.appendChild(count);
-      frag.appendChild(row);
-    });
-    els.termList.innerHTML = '';
-    els.termList.appendChild(frag);
+    els.termTabs.textContent = '';
+    els.termPanels.textContent = 'No matches on this page.';
   });
+}
+
+function setTopTab(name) {
+  const customize = name === 'customize';
+  els.customizeTab?.classList.toggle('active', customize);
+  els.detectedTab?.classList.toggle('active', !customize);
+  els.customizeTab?.setAttribute('aria-selected', String(customize));
+  els.detectedTab?.setAttribute('aria-selected', String(!customize));
+  els.customizePanel?.classList.toggle('active', customize);
+  els.detectedPanel?.classList.toggle('active', !customize);
+  if (!customize) updateTermsList();
 }
 
 function getColorHex(color) {
@@ -235,12 +301,20 @@ function init() {
   try {
     chrome.storage.sync.get(['settings', 'userTypeColors'], r => {
       loadSettings(r.settings, r.userTypeColors);
+      const manifestVersion = chrome.runtime.getManifest().version;
+      if (els.popupVersion) els.popupVersion.textContent = `v${manifestVersion}`;
+      if (els.githubLink) els.githubLink.href = 'https://github.com/la5u/clearframe';
       els.enabled.checked = settings.enabled !== false;
       els.replaceTerms.checked = settings.replaceTerms === true;
+      els.removeTerms.checked = settings.removeTerms === true;
       renderColorGroups();
+      setTopTab('customize');
 
       els.enabled.addEventListener('change', () => { saveSettings(true); updateDetectedCount(); updateTermsList(); });
       els.replaceTerms.addEventListener('change', () => { saveSettings(true); updateDetectedCount(); updateTermsList(); });
+      els.removeTerms.addEventListener('change', () => { saveSettings(true); updateDetectedCount(); updateTermsList(); });
+      els.customizeTab?.addEventListener('click', () => setTopTab('customize'));
+      els.detectedTab?.addEventListener('click', () => setTopTab('detected'));
       updateDetectedCount();
       updateTermsList();
     });

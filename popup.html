@@ -24,6 +24,9 @@
       font-size: 12px;
       background: var(--bg);
       color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
     .header {
       display: flex;
@@ -80,9 +83,41 @@
       color: var(--ink);
       font-weight: 700;
     }
-    .panel {
-      max-height: 345px;
+    .top-tabs {
+      display: flex;
+      gap: 6px;
+      margin: 0 0 10px;
+    }
+    .top-tab {
+      flex: 1 1 0;
+      padding: 7px 8px;
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      background: #f7f7f7;
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+    .top-tab.active {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+    .top-panel {
+      display: none;
+    }
+    .top-panel.active {
+      display: block;
+    }
+    .content {
+      flex: 1 1 auto;
+      min-height: 0;
       overflow: auto;
+    }
+    .panel {
+      overflow: visible;
       padding: 0;
       background: var(--panel);
     }
@@ -93,6 +128,13 @@
       gap: 10px;
       padding: 10px 0;
       margin-bottom: 8px;
+      border-bottom: 1px solid var(--stroke);
+    }
+    .setting-stack {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
       border-bottom: 1px solid var(--stroke);
     }
     .setting-copy {
@@ -175,8 +217,59 @@
       color: var(--muted);
       font-size: 11px;
     }
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--stroke);
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .footer a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
     .detected-section {
       margin-top: 10px;
+    }
+    .term-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .term-tab {
+      flex: 1 1 calc(33.333% - 4px);
+      min-width: 0;
+      padding: 5px 6px;
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      background: #fafafa;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      white-space: normal;
+      text-align: center;
+    }
+    .term-tab.active {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+    .term-panel {
+      display: none;
+    }
+    .term-panel.active {
+      display: block;
     }
     .term-list {
       max-height: 140px;
@@ -205,29 +298,54 @@
       <span class="track" aria-hidden="true"></span>
     </label>
   </div>
-  <div class="count-row">
-    <span>Detected on page</span>
-    <span class="count-value" id="detected-count">(0)</span>
-  </div>
-  <div class="panel">
-    <div class="setting-row">
-      <div class="setting-copy">
-        <div class="setting-title">Replace mode</div>
-        <p class="setting-help">Replace terms with neutral alternatives when available.</p>
+  <div class="content">
+    <div class="count-row">
+      <span>Detected on page</span>
+      <span class="count-value" id="detected-count">(0)</span>
+    </div>
+    <div class="top-tabs" role="tablist" aria-label="ClearFrame sections">
+      <button class="top-tab active" id="customize-tab" type="button" role="tab" aria-selected="true" aria-controls="customize-panel">Customize</button>
+      <button class="top-tab" id="detected-tab" type="button" role="tab" aria-selected="false" aria-controls="detected-panel">Detected</button>
+    </div>
+    <div class="panel top-panel active" id="customize-panel" role="tabpanel" aria-labelledby="customize-tab">
+      <div class="setting-stack">
+        <div class="setting-row">
+          <div class="setting-copy">
+            <div class="setting-title">Replace mode</div>
+            <p class="setting-help">Replace terms with neutral alternatives when available.</p>
+          </div>
+          <label class="toggle" aria-label="Replace matched terms with neutral alternatives">
+            <input type="checkbox" id="replace-terms">
+            <span class="track" aria-hidden="true"></span>
+          </label>
+        </div>
+        <div class="setting-row" style="border-bottom: 0; margin-bottom: 0; padding-bottom: 0;">
+          <div class="setting-copy">
+            <div class="setting-title">Remove mode</div>
+            <p class="setting-help">Remove terms marked for deletion instead of replacing them.</p>
+          </div>
+          <label class="toggle" aria-label="Remove matched terms marked for deletion">
+            <input type="checkbox" id="remove-terms">
+            <span class="track" aria-hidden="true"></span>
+          </label>
+        </div>
       </div>
-      <label class="toggle" aria-label="Replace matched terms with neutral alternatives">
-        <input type="checkbox" id="replace-terms">
-        <span class="track" aria-hidden="true"></span>
-      </label>
+      <div class="section-title">Types</div>
+      <div id="color-groups"></div>
+      <button id="reset-btn" type="button">Reset Colors</button>
+      <p class="muted">Tap a type to enable or disable it. Drag a type to a different color group to change its color.</p>
     </div>
-    <div class="section-title">Types</div>
-    <div id="color-groups"></div>
-    <button id="reset-btn" type="button">Reset Colors</button>
-    <div class="detected-section">
-      <div class="section-title">Detected terms</div>
-      <div id="term-list" class="term-list">Loading...</div>
+    <div class="panel top-panel" id="detected-panel" role="tabpanel" aria-labelledby="detected-tab">
+      <div class="detected-section">
+        <div class="section-title">Detected terms</div>
+        <div id="term-tabs" class="term-tabs"></div>
+        <div id="term-panels"></div>
+      </div>
     </div>
-    <p class="muted">Tap a type to enable or disable it. Drag a type to a different color group to change its color.</p>
+  </div>
+  <div class="footer">
+    <span id="popup-version">v0.8.0</span>
+    <a id="github-link" href="https://github.com/la5u/clearframe" target="_blank" rel="noreferrer">GitHub</a>
   </div>
   <script src="popup.js"></script>
 </body>

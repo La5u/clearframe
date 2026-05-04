@@ -1,30 +1,18 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { normalize } from './matcher.js';
+import { adverbWord, pastTenseWord, ingWord } from './stemmer.js';
 
-const {
-  buildMatcher,
-  findMatches,
-  normalize
-} = require('./matcher');
-
-const {
-  shouldDoubleFinalConsonant,
-  pluralizeWord,
-  pastTenseWord,
-  ingWord,
-  adverbWord
-} = require('./stemmer');
-
-function escapeRegex(value) {
+export function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function buildStemRegex(word, stemType) {
+export function buildStemRegex(word, stemType) {
   const variants = stemVariants(word, stemType).map(escapeRegex);
   return `\\b(?:${variants.join('|')})\\b`;
 }
 
-function stemVariants(word, stemType) {
+export function stemVariants(word, stemType) {
   const out = new Set([word]);
   const consonantY = /[^aeiou]y$/;
 
@@ -46,7 +34,7 @@ function pluralWord(w, consonantY) {
   return w + 's';
 }
 
-function parseCsv(text) {
+export function parseCsv(text) {
   const rows = [];
   let row = [];
   let field = '';
@@ -127,7 +115,7 @@ function parseStemTypeCell(value) {
   throw new Error(`Unsupported stem type "${value}"`);
 }
 
-function loadTerms(dataDir) {
+export function loadTerms(dataDir) {
   const terms = {};
   const entries = [];
   const regexTerms = [];
@@ -210,7 +198,7 @@ function loadTerms(dataDir) {
   return { termsById: terms, buckets, regexTerms };
 }
 
-function extractText(html) {
+export function extractText(html) {
   return html
     .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
@@ -220,12 +208,5 @@ function extractText(html) {
     .replace(/\s+/g, ' ');
 }
 
-module.exports = {
-  buildMatcher,
-  buildStemRegex,
-  extractText,
-  findMatches,
-  loadTerms,
-  normalize,
-  stemVariants
-};
+export { buildMatcher, findMatches } from './matcher.js';
+export { adverbWord, pastTenseWord, ingWord } from './stemmer.js';

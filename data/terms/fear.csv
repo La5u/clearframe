@@ -1,9 +1,9 @@
 phrase,type,neutral,aliases,stemmable,regex,remove
-threat,fear,,,,,
-urgent,fear,,,,,
-terror,fear,,,,,
-panic,fear,,,,,
-dangerous,fear,,,,,
 terrify,fear,,,verb,,
 horrify,fear,,,verb,,
 frighten,fear,,,verb,,
+chilling,fear,,,,,true
+heartbreaking,fear,,,,,true
+living hell,fear,,,,,true
+nightmare,clickbait,,,,,true
+

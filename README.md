@@ -189,9 +189,13 @@ Guidelines for adding terms:
 
 Main files:
 - `build.js` loads term data, validates taxonomy consistency, and writes `dist/` plus `dist-firefox/`.
-- `term-utils.js` normalizes terms, expands aliases and stemmed variants, and validates duplicate phrases.
-- `content.js` scans page text nodes, applies CSS highlights, tracks match counts, and renders hover tooltips.
-- `popup.js` loads settings, renders the category buckets, shows detected-term counts, and powers the Customize / Detected tabs.
+- `src/content.js` scans page text nodes, applies CSS highlights, tracks match counts, and renders hover tooltips.
+- `src/popup.js` loads settings, renders the category buckets, shows detected-term counts, and powers the Customize / Detected tabs.
+- `src/background.js` keeps the badge in sync with the active tab.
+- `src/core/term-utils.js` normalizes terms, expands aliases and stemmed variants, and validates duplicate phrases.
+- `src/core/matcher.js` does phrase and regex matching.
+- `src/ui/` contains popup HTML and content CSS.
+- `media/` contains extension icons.
 
 ## Limits
 
@@ -209,6 +213,6 @@ These constraints keep the extension explainable, local, and fast.
 
 ## Notes
 
-- `content.js` does the page scan, live mutation handling, and tooltip display.
-- `background.js` keeps the badge in sync with the active tab.
-- `popup.js` controls enable/disable, type colors, detected-term summaries, and the popup footer/version link.
+- `src/content.js` does the page scan, live mutation handling, and tooltip display.
+- `src/background.js` keeps the badge in sync with the active tab.
+- `src/popup.js` controls enable/disable, type colors, detected-term summaries, and the popup footer/version link.

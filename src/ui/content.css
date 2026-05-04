@@ -18,7 +18,8 @@
 ::highlight(clearframe-orange-underline),
 ::highlight(clearframe-purple-underline),
 ::highlight(clearframe-blue-underline),
-::highlight(clearframe-teal-underline) {
+::highlight(clearframe-teal-underline),
+::highlight(clearframe-all-caps-underline) {
   background-color: transparent;
   text-decoration: underline;
   text-decoration-color: var(--cf-underline);
@@ -44,6 +45,12 @@
 ::highlight(clearframe-blue-underline) { --cf-highlight: rgba(96, 165, 250, 0.24); --cf-underline: rgba(37, 99, 235, 0.78); }
 ::highlight(clearframe-teal),
 ::highlight(clearframe-teal-underline) { --cf-highlight: rgba(45, 212, 191, 0.24); --cf-underline: rgba(20, 184, 166, 0.78); }
+
+::highlight(clearframe-all-caps-underline) {
+  --cf-underline: rgba(125, 211, 252, 0.42);
+  text-decoration-thickness: 0.75px;
+  text-underline-offset: 2px;
+}
 
 #cf-tooltip {
   position: fixed;

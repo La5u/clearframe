@@ -1,12 +1,22 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
-const { spawnSync } = require('child_process');
-const { loadTerms } = require('./term-utils');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { spawnSync } from 'child_process';
+import { loadTerms } from './src/core/term-utils.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const ROOT = __dirname;
+const SRC = path.join(ROOT, 'src');
 const COLOR_CONFIG = readJson('data/type-colors.json');
-const SHARED_FILES = ['background.js', 'popup.html', 'popup.js', 'content.css', 'icon-16.png', 'icon-32.png', 'icon-64.png', 'icon-128.png'];
+const STATIC_FILES = [
+  ['src/background.js', 'background.js'],
+  ['src/ui/popup.html', 'popup.html'],
+  ['src/ui/content.css', 'content.css']
+];
+const MEDIA_FILES = ['icon.png', 'icon-16.png', 'icon-32.png', 'icon-64.png', 'icon-128.png'];
 const TARGETS = [
   { dir: 'dist', archive: 'dist.zip', manifest: 'manifest.json' },
   { dir: 'dist-firefox', archive: 'dist-firefox.zip', manifest: 'manifest.firefox.json', manifestOut: 'manifest.json' }
@@ -35,47 +45,40 @@ function buildTypeMaps(colorConfig) {
   return { types, categories };
 }
 
-function inlineRequires(content, filePath) {
-  const requirePattern = /const\s+\{[^}]+\}\s*=\s*require\(['"](\.\/[^'"]+)['"]\);?/;
-  const seen = new Set();
-  let result = content;
+function resolveImportPath(fromFile, importPath) {
+  const dir = path.dirname(fromFile);
+  const resolved = path.resolve(dir, importPath);
+  return fs.existsSync(resolved) ? resolved : `${resolved}.js`;
+}
 
-  while (true) {
-    const match = result.match(requirePattern);
-    if (!match) return result;
-
-    const fullPath = resolveRequire(filePath, match[1]);
-    if (seen.has(fullPath)) {
-      result = result.replace(match[0], '');
+function inlineESImports(content, filePath, processed) {
+  const importPattern = /import\s+(?:(\w+)\s*,\s*)?\{?([^}]+)\}?\s*from\s*['"]([^'"]+)['"];?/g;
+  let match;
+  const imports = [];
+  while ((match = importPattern.exec(content)) !== null) {
+    imports.push({ fullMatch: match[0], importPath: match[3] });
+  }
+  for (const imp of imports) {
+    const resolvedPath = resolveImportPath(filePath, imp.importPath);
+    if (processed.has(resolvedPath)) {
+      content = content.replace(imp.fullMatch, '');
       continue;
     }
-
-    seen.add(fullPath);
-    result = result.replace(match[0], moduleToInline(fullPath));
+    processed.add(resolvedPath);
+    let importedContent = fs.readFileSync(resolvedPath, 'utf8');
+    importedContent = inlineESImports(importedContent, resolvedPath, processed);
+    importedContent = importedContent.replace(/^export\s+default\s+(\w+)/gm, '').replace(/^export\s+/gm, '').replace(/export\s*\{[^}]+\}\s*from\s*['"][^'"]+['"];?/g, '');
+    content = content.replace(imp.fullMatch, importedContent);
   }
+  return content;
 }
 
-function resolveRequire(fromFile, request) {
-  const base = path.resolve(path.dirname(fromFile), request);
-  return fs.existsSync(base) || base.endsWith('.js') ? base : `${base}.js`;
-}
-
-function moduleToInline(file) {
-  const source = fs.readFileSync(file, 'utf8');
-  const cleaned = source
-    .replace(/^const\s+\{[^}]+\}\s*=\s*require\(['"]\.\/[^'"]+['"]\);?\n?/gm, '')
-    .replace(/^'use strict';?\n?/g, '')
-    .replace(/^module\.exports\s*=\s*\{[\s\S]*?\};?\n?/gm, '')
-    .trim();
-  const exportsMatch = source.match(/module\.exports\s*=\s*\{([\s\S]*?)\};?/);
-  if (!exportsMatch) return `${cleaned}\n`;
-
-  const names = exportsMatch[1]
-    .split(',')
-    .map(part => part.trim())
-    .filter(Boolean);
-
-  return `const { ${names.join(', ')} } = (() => {\n${cleaned}\nreturn { ${names.join(', ')} };\n})();\n`;
+function bundleRuntime(globals, file) {
+  const filePath = path.join(SRC, file);
+  let source = fs.readFileSync(filePath, 'utf8');
+  const processed = new Set();
+  source = inlineESImports(source, filePath, processed);
+  return `globalThis.ClearFrame = ${JSON.stringify(globals)};\n${source}`;
 }
 
 function resetDir(dir) {
@@ -85,12 +88,6 @@ function resetDir(dir) {
 
 function copyFile(from, to) {
   fs.copyFileSync(path.join(ROOT, from), path.join(ROOT, to));
-}
-
-function bundleRuntime(globals, file) {
-  const source = fs.readFileSync(path.join(ROOT, file), 'utf8');
-  const bundled = file === 'content.js' ? inlineRequires(source, path.join(ROOT, file)) : source;
-  return `globalThis.ClearFrame = ${JSON.stringify(globals)};\n${bundled}`;
 }
 
 function zipDir(dir, outName) {
@@ -124,10 +121,13 @@ function build() {
   for (const target of TARGETS) {
     resetDir(path.join(ROOT, target.dir));
     copyFile(target.manifest, `${target.dir}/${target.manifestOut || 'manifest.json'}`);
-    for (const file of SHARED_FILES) {
-      copyFile(file, `${target.dir}/${file}`);
+    for (const [from, to] of STATIC_FILES) {
+      copyFile(from, `${target.dir}/${to}`);
     }
-    copyFile('icon.png', `${target.dir}/icon.png`);
+    fs.mkdirSync(path.join(ROOT, target.dir, 'media'), { recursive: true });
+    for (const file of MEDIA_FILES) {
+      copyFile(`media/${file}`, `${target.dir}/media/${file}`);
+    }
     fs.writeFileSync(path.join(ROOT, target.dir, 'content.js'), contentBundle);
     fs.writeFileSync(path.join(ROOT, target.dir, 'popup.js'), popupBundle);
     zipDir(target.dir, target.archive);

@@ -1,5 +1,7 @@
 phrase,type,neutral,aliases,stemmable,regex,remove
-what's really,reveal,what's,what is really,,,
-the truth about,reveal,,,,,
-inside scoop,reveal,,,,,
+what's really,reveal,what's,what is really,,,true
+the truth about,reveal,,,,,true
+inside scoop,reveal,,,,,true
 secret,reveal,,,noun,,
+bombshell,clickbait,,,,,true
+

@@ -2,3 +2,5 @@ phrase,type,neutral,aliases,stemmable,regex,remove
 government handouts,loaded,,,,,
 tax relief,loaded,,,,,
 taxpayer-funded,loaded,,,,,
+furious,negative-framing,angry,,,,
+

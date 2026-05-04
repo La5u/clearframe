@@ -2,6 +2,7 @@
   "name": "clearframe",
   "version": "0.8.0",
   "private": true,
+  "type": "module",
   "description": "Highlights authorial choices with neutral alternatives.",
   "scripts": {
     "build": "node build.js",

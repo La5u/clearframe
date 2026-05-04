@@ -4,9 +4,13 @@ massive,exaggeration,large,,,,
 totally,exaggeration,completely,,,,
 up to,exaggeration,as much as,,,\bup to(?=\s+\d),
 countless,exaggeration,many,,,,
-staggering,exaggeration,large,,,,
-eye-watering,exaggeration,,,adjective,,
+staggering,exaggeration,large,,,,true
+eye-watering,exaggeration,,,adjective,,true
+eye-popping,exaggeration,,,,,true
+breath-taking,exaggeration,breathtaking,breathtaking,,,true
 outrageous,exaggeration,,,,,true
 alarming,exaggeration,concerning,,,,
-incredibly,exaggeration,very,,,,
+incredibly,exaggeration,very,,,,true
 incredible,exaggeration,,,,,true
+severe,negative-framing,,,,,
+

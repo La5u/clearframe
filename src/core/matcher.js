@@ -1,10 +1,10 @@
-const { boundary, boundaryAt } = require('./stemmer');
+import { boundary, boundaryAt } from './stemmer.js';
 
-function normalize(phrase) {
+export function normalize(phrase) {
   return phrase.trim().replace(/\s+/g, ' ').toLowerCase();
 }
 
-function buildMatcher(index, isTermEnabled = () => true) {
+export function buildMatcher(index, isTermEnabled = () => true) {
   const root = Object.create(null);
   if (!index.buckets) return root;
 
@@ -24,7 +24,7 @@ function buildMatcher(index, isTermEnabled = () => true) {
   return root;
 }
 
-function collectPhraseMatches(matcher, text, useBoundaryAt = false) {
+export function collectPhraseMatches(matcher, text, useBoundaryAt = false) {
   if (!matcher) return [];
 
   const matches = [];
@@ -68,7 +68,7 @@ function collectPhraseMatches(matcher, text, useBoundaryAt = false) {
 
 const regexCache = new Map();
 
-function getRegexMatcher(pattern) {
+export function getRegexMatcher(pattern) {
   if (!pattern) return null;
   if (!regexCache.has(pattern)) {
     regexCache.set(pattern, new RegExp(pattern, 'giu'));
@@ -76,7 +76,7 @@ function getRegexMatcher(pattern) {
   return regexCache.get(pattern);
 }
 
-function collectRegexMatches(text, regexTerms, termsById = null) {
+export function collectRegexMatches(text, regexTerms, termsById = null) {
   const matches = [];
   for (const term of regexTerms || []) {
     const pattern = term.pattern || termsById?.[term.termId]?.regex;
@@ -95,13 +95,13 @@ function collectRegexMatches(text, regexTerms, termsById = null) {
   return matches;
 }
 
-function collectMatches(matcher, text, termsById = null, regexTerms = [], useBoundaryAt = false) {
+export function collectMatches(matcher, text, termsById = null, regexTerms = [], useBoundaryAt = false) {
   const phraseMatches = collectPhraseMatches(matcher, text, useBoundaryAt);
   const regexMatches = collectRegexMatches(text, regexTerms, termsById);
   return [...phraseMatches, ...regexMatches].sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
 }
 
-function findMatches(matcher, text, termsById = null, regexTerms = [], useBoundaryAt = false) {
+export function findMatches(matcher, text, termsById = null, regexTerms = [], useBoundaryAt = false) {
   const matches = collectMatches(matcher, text, termsById, regexTerms, useBoundaryAt);
   const accepted = [];
   let cursor = 0;
@@ -114,14 +114,3 @@ function findMatches(matcher, text, termsById = null, regexTerms = [], useBounda
 
   return accepted;
 }
-
-module.exports = {
-  buildMatcher,
-  collectPhraseMatches,
-  collectRegexMatches,
-  collectMatches,
-  findMatches,
-  getRegexMatcher,
-  normalize,
-  regexCache
-};

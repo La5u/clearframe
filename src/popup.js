@@ -1,4 +1,5 @@
 'use strict';
+import { DEFAULT_SETTINGS, normalizeSettings } from './core/settings-utils.js';
 
 const { types, categories, colorConfig } = ClearFrame;
 const els = {
@@ -29,19 +30,13 @@ const COLOR_MAP = {
   teal: '#e5faf7',
   brown: '#f2e6dc'
 };
-const DEFAULT_SETTINGS = { enabled: true, replaceTerms: false, removeTerms: false, types: { absolute: false, moral: false, superlative: false }, userTypeColors: {} };
 let userTypeColors = {};
-let settings = { ...DEFAULT_SETTINGS, types: { ...DEFAULT_SETTINGS.types } };
+let settings = normalizeSettings(DEFAULT_SETTINGS);
 let dragState = null;
 
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
-  const nextSettings = { ...DEFAULT_SETTINGS, ...rawSettings };
-  if (!nextSettings.types || Object.keys(nextSettings.types).length === 0) {
-    nextSettings.types = { absolute: false, moral: false, superlative: false };
-  }
-  userTypeColors = { ...(nextSettings.userTypeColors || {}), ...rawTypeColors };
-  nextSettings.userTypeColors = userTypeColors;
-  settings = nextSettings;
+  settings = normalizeSettings(rawSettings, rawTypeColors);
+  userTypeColors = settings.userTypeColors;
 }
 
 function getSettings() {

@@ -1,12 +1,17 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
-const assert = require('assert');
+import fs from 'fs';
+import path from 'path';
+import assert from 'assert';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-const { buildMatcher, extractText, findMatches, loadTerms } = require('../term-utils');
-const { lowerAllCapsLongWords } = require('../display-utils');
-const { EXPECTED_COUNTS } = require('./fixtures');
+import { buildMatcher, extractText, findMatches, loadTerms } from '../src/core/term-utils.js';
+import { lowerAllCapsLongWords, matchReplacementCase } from '../src/core/display-utils.js';
+import { normalizeSettings } from '../src/core/settings-utils.js';
+import { EXPECTED_COUNTS } from './fixtures.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const ROOT = path.resolve(__dirname, '..');
 const TERMS_DIR = path.join(ROOT, 'data', 'terms');
 const index = loadTerms(TERMS_DIR);
@@ -25,9 +30,24 @@ for (const [file, expected] of Object.entries(EXPECTED_COUNTS)) {
   console.log(`${file}: ${count} matches`);
 }
 
-assert.strictEqual(lowerAllCapsLongWords('THIS IS IMPORTANT'), 'this is important');
-assert.strictEqual(lowerAllCapsLongWords('USA AND NATO'), 'USA and NATO');
-assert.strictEqual(lowerAllCapsLongWords('AD FEATURE'), 'ad feature');
-assert.strictEqual(lowerAllCapsLongWords('NOW SEE'), 'now see');
-assert.strictEqual(lowerAllCapsLongWords('ALSO MIXED Case EXTRAORDINARY'), 'also mixed Case extraordinary');
 assert.strictEqual(lowerAllCapsLongWords('EXCLUSIVE'), 'exclusive');
+assert.strictEqual(lowerAllCapsLongWords('ITV BREAKING'), 'ITV breaking');
+assert.strictEqual(lowerAllCapsLongWords('FIFA BREAKING'), 'FIFA breaking');
+assert.strictEqual(lowerAllCapsLongWords("DON'T"), "don't");
+assert.strictEqual(lowerAllCapsLongWords("IT'S NEW"), "it's new");
+assert.strictEqual(matchReplacementCase('revealed', 'disclosed'), 'disclosed');
+assert.strictEqual(matchReplacementCase('Revealed', 'disclosed'), 'Disclosed');
+assert.strictEqual(matchReplacementCase('REVEALED', 'disclosed'), 'DISCLOSED');
+
+assert.deepStrictEqual(
+  normalizeSettings({ types: {} }).types,
+  { absolute: false, moral: false, superlative: false }
+);
+assert.deepStrictEqual(
+  normalizeSettings({ types: { loaded: false } }).types,
+  { absolute: false, moral: false, superlative: false, loaded: false }
+);
+assert.deepStrictEqual(
+  normalizeSettings({ userTypeColors: { hype: 'red' } }, { moral: 'blue' }).userTypeColors,
+  { hype: 'red', moral: 'blue' }
+);

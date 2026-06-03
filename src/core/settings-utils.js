@@ -2,8 +2,8 @@ export const DEFAULT_SETTINGS = {
   enabled: true,
   replaceTerms: false,
   removeTerms: false,
-  types: { absolute: false, moral: false, superlative: false },
-  userTypeColors: {}
+  types: { absolute: false, exaggeration: false, superlative: false },
+  userTypeColors: {},
 };
 
 export function normalizeSettings(rawSettings = {}, rawTypeColors = {}) {

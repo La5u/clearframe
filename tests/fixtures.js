@@ -6,5 +6,5 @@ export const EXPECTED_COUNTS = {
   'newssite10th.html': 348,
   'newssite10thnypost.html': 68,
   'test-all-types.html': 159,
-  'test-all-terms.html': 127
+  'test-all-terms.html': 127,
 };

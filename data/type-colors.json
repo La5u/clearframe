@@ -3,7 +3,7 @@
     "yellow": {
       "name": "Yellow",
       "category": "Sensationalism",
-      "types": ["clickbait", "hype", "reveal"]
+      "types": ["all-caps", "clickbait", "hype", "reveal"]
     },
     "green": {
       "name": "Green",

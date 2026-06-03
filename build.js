@@ -3,23 +3,23 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { spawnSync } from 'child_process';
+import * as esbuild from 'esbuild';
 import { loadTerms } from './src/core/term-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const ROOT = __dirname;
-const SRC = path.join(ROOT, 'src');
 const COLOR_CONFIG = readJson('data/type-colors.json');
 const STATIC_FILES = [
   ['src/background.js', 'background.js'],
   ['src/ui/popup.html', 'popup.html'],
-  ['src/ui/content.css', 'content.css']
+  ['src/ui/content.css', 'content.css'],
 ];
 const MEDIA_FILES = ['icon.png', 'icon-16.png', 'icon-32.png', 'icon-64.png', 'icon-128.png'];
 const TARGETS = [
   { dir: 'dist', archive: 'dist.zip', manifest: 'manifest.json' },
-  { dir: 'dist-firefox', archive: 'dist-firefox.zip', manifest: 'manifest.firefox.json', manifestOut: 'manifest.json' }
+  { dir: 'dist-firefox', archive: 'dist-firefox.zip', manifest: 'manifest.firefox.json', manifestOut: 'manifest.json' },
 ];
 const { types: TYPES, categories: CATEGORIES } = buildTypeMaps(COLOR_CONFIG);
 
@@ -30,7 +30,6 @@ function readJson(file) {
 function buildTypeMaps(colorConfig) {
   const types = {};
   const categories = {};
-
   for (const [color, config] of Object.entries(colorConfig.colors || {})) {
     const category = config.category || config.name || color;
     for (const type of config.types || []) {
@@ -41,44 +40,7 @@ function buildTypeMaps(colorConfig) {
       categories[type] = category;
     }
   }
-
   return { types, categories };
-}
-
-function resolveImportPath(fromFile, importPath) {
-  const dir = path.dirname(fromFile);
-  const resolved = path.resolve(dir, importPath);
-  return fs.existsSync(resolved) ? resolved : `${resolved}.js`;
-}
-
-function inlineESImports(content, filePath, processed) {
-  const importPattern = /import\s+(?:(\w+)\s*,\s*)?\{?([^}]+)\}?\s*from\s*['"]([^'"]+)['"];?/g;
-  let match;
-  const imports = [];
-  while ((match = importPattern.exec(content)) !== null) {
-    imports.push({ fullMatch: match[0], importPath: match[3] });
-  }
-  for (const imp of imports) {
-    const resolvedPath = resolveImportPath(filePath, imp.importPath);
-    if (processed.has(resolvedPath)) {
-      content = content.replace(imp.fullMatch, '');
-      continue;
-    }
-    processed.add(resolvedPath);
-    let importedContent = fs.readFileSync(resolvedPath, 'utf8');
-    importedContent = inlineESImports(importedContent, resolvedPath, processed);
-    importedContent = importedContent.replace(/^export\s+default\s+(\w+)/gm, '').replace(/^export\s+/gm, '').replace(/export\s*\{[^}]+\}\s*from\s*['"][^'"]+['"];?/g, '');
-    content = content.replace(imp.fullMatch, importedContent);
-  }
-  return content;
-}
-
-function bundleRuntime(globals, file) {
-  const filePath = path.join(SRC, file);
-  let source = fs.readFileSync(filePath, 'utf8');
-  const processed = new Set();
-  source = inlineESImports(source, filePath, processed);
-  return `globalThis.ClearFrame = ${JSON.stringify(globals)};\n${source}`;
 }
 
 function resetDir(dir) {
@@ -92,31 +54,53 @@ function copyFile(from, to) {
 
 function zipDir(dir, outName) {
   const cwd = path.join(ROOT, dir);
-  if (!fs.existsSync(cwd)) return;
+  if (!fs.existsSync(cwd)) {
+    return;
+  }
   const out = path.join(ROOT, outName);
   const res = spawnSync('zip', ['-r', out, '.'], { cwd, stdio: 'ignore' });
-  if (res.error) return;
+  if (res.error) {
+    throw res.error;
+  }
 }
 
-function build() {
+async function bundle(entryPoint, globals) {
+  const result = await esbuild.build({
+    entryPoints: [path.join(ROOT, entryPoint)],
+    bundle: true,
+    format: 'iife',
+    platform: 'browser',
+    target: ['chrome105'],
+    conditions: ['extension'],
+    mainFields: ['module', 'main'],
+    resolveExtensions: ['.mjs', '.js'],
+    logLevel: 'silent',
+    banner: {
+      js: `globalThis.ClearFrame = ${  JSON.stringify(globals)  };\n`,
+    },
+    legalComments: 'none',
+    treeShaking: true,
+    write: false,
+  });
+
+  return result.outputFiles[0].text;
+}
+
+async function build() {
   const index = loadTerms(path.join(ROOT, 'data', 'terms'));
   for (const term of Object.values(index.termsById)) {
     if (!TYPES[term.type]) {
       throw new Error(`Term type "${term.type}" is missing from data/type-colors.json`);
     }
   }
-  const count = Object.keys(index.termsById).length;
-  const contentBundle = bundleRuntime({
-    index,
-    types: TYPES,
-    categories: CATEGORIES,
-    colorConfig: COLOR_CONFIG
-  }, 'content.js');
-  const popupBundle = bundleRuntime({
-    types: TYPES,
-    categories: CATEGORIES,
-    colorConfig: COLOR_CONFIG
-  }, 'popup.js');
+
+  const contentGlobals = { index, types: TYPES, categories: CATEGORIES, colorConfig: COLOR_CONFIG };
+  const popupGlobals = { types: TYPES, categories: CATEGORIES, colorConfig: COLOR_CONFIG };
+
+  const [contentBundle, popupBundle] = await Promise.all([
+    bundle('src/content.js', contentGlobals),
+    bundle('src/popup.js', popupGlobals),
+  ]);
 
   for (const target of TARGETS) {
     resetDir(path.join(ROOT, target.dir));
@@ -133,7 +117,7 @@ function build() {
     zipDir(target.dir, target.archive);
   }
 
-  console.log(`Built: ${count} terms`);
+  console.log(`Built: ${Object.keys(index.termsById).length} terms`);
 }
 
-build();
+void build();

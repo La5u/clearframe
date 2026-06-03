@@ -1,10 +1,10 @@
 phrase,type,neutral,aliases,stemmable,regex,remove
-huge,exaggeration,large,,,,
-massive,exaggeration,large,,,,
-totally,exaggeration,completely,,,,
-up to,exaggeration,as much as,,,\bup to(?=\s+\d),
+huge,exaggeration,,,,,
+massive,exaggeration,,,,,
+totally,exaggeration,,,,,
+up to,exaggeration,,,,\bup to(?=\s+\d),
 countless,exaggeration,many,,,,
-staggering,exaggeration,large,,,,true
+staggering,exaggeration,,,,,true
 eye-watering,exaggeration,,,adjective,,true
 eye-popping,exaggeration,,,,,true
 breath-taking,exaggeration,breathtaking,breathtaking,,,true

@@ -19,7 +19,8 @@
 ::highlight(clearframe-purple-underline),
 ::highlight(clearframe-blue-underline),
 ::highlight(clearframe-teal-underline),
-::highlight(clearframe-all-caps-underline) {
+::highlight(clearframe-all-caps-underline),
+::highlight(clearframe-multiple) {
   background-color: transparent;
   text-decoration: underline;
   text-decoration-color: var(--cf-underline);
@@ -52,6 +53,17 @@
   text-underline-offset: 2px;
 }
 
+::highlight(clearframe-multiple) {
+  background-color: rgba(147, 51, 234, 0.42);
+  text-decoration-color: rgba(88, 28, 135, 0.95);
+  text-underline-offset: 2px;
+}
+
+::highlight(clearframe-selected) {
+  background-color: CanvasText;
+  color: Canvas;
+}
+
 #cf-tooltip {
   position: fixed;
   z-index: 999999;
@@ -63,6 +75,7 @@
   color: #fff;
   font-size: 12px;
   line-height: 1.35;
+  white-space: pre-line;
   pointer-events: none;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
 }

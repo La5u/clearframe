@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noImplicitAny": false,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "#core/*": ["src/core/*"],
+      "#ui/*": ["src/ui/*"],
+      "#types": ["src/types/*"]
+    },
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "ignoreDeprecations": "6.0",
+    "types": ["node", "chrome"]
+  },
+  "include": ["src/**/*.js", "build.js", "tests/*.js", "src/types/**/*.d.ts"],
+  "exclude": ["node_modules", "dist", "dist-firefox", "tests/*_files", "dist-ts"]
+}

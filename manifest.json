@@ -1,9 +1,10 @@
 {
   "manifest_version": 3,
   "name": "ClearFrame",
-  "version": "0.8.0",
-  "description": "Highlights authorial choices with neutral alternatives.",
-  "permissions": ["storage"],
+  "version": "0.9.0",
+"description": "Highlights authorial choices with neutral alternatives.",
+"minimum_chrome_version": "105",
+"permissions": ["storage"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js",

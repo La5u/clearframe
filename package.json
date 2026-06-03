@@ -1,14 +1,22 @@
 {
   "name": "clearframe",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "type": "module",
   "description": "Highlights authorial choices with neutral alternatives.",
   "scripts": {
     "build": "node build.js",
-    "test": "node tests/run.js"
+    "test": "node tests/run.js",
+    "typecheck": "tsc --noEmit",
+    "ci": "npm run build && npm run typecheck && npm test"
   },
   "dependencies": {
     "web-ext": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.42",
+    "@types/node": "^25.9.1",
+    "esbuild": "^0.28.0",
+    "typescript": "^6.0.3"
   }
 }

@@ -1,5 +1,5 @@
 export const COMMON_SHORT_WORDS = new Set([
-  'AD', 'AH', 'AM', 'AN', 'AS', 'AT', 'BE', 'BY', 'DO', 'GO', 'HE', 'HI', 'IF', 'IN', 'IS', 'IT',
+  'AD', 'AH', 'AN', 'AS', 'AT', 'BE', 'BY', 'DO', 'GO', 'HE', 'HI', 'IF', 'IN', 'IS', 'IT',
   'ME', 'MY', 'NO', 'OF', 'OH', 'ON', 'OR', 'SO', 'TO', 'UP', 'US', 'WE',
   'ACT', 'ADD', 'AGE', 'AGO', 'AID', 'AIM', 'AIR', 'ALL', 'AND', 'ANY', 'APE', 'ARE', 'ARM', 'ART',
   'ASK', 'BAD', 'BAG', 'BAR', 'BED', 'BET', 'BIG', 'BIT', 'BOY', 'BUS', 'BUY', 'CAN', 'CAR', 'CAT',
@@ -9,5 +9,9 @@ export const COMMON_SHORT_WORDS = new Set([
   'MAD', 'MAN', 'MAP', 'MAY', 'MEN', 'MET', 'MOM', 'NEW', 'NOR', 'NOT', 'NOW', 'ODD', 'OFF', 'OLD',
   'ONE', 'OUR', 'OUT', 'OWN', 'PAY', 'PET', 'POP', 'PUT', 'RAN', 'RED', 'RIP', 'ROW', 'RUN', 'SAD',
   'SAW', 'SAY', 'SEE', 'SET', 'SHE', 'SIR', 'SIT', 'SKY', 'SON', 'SUN', 'TAX', 'TEA', 'THE', 'TOO',
-  'TOP', 'TRY', 'WAR', 'WAY', 'WHO', 'WHY', 'WIN', 'YES', 'YET', 'YOU',
+  'TOP', 'TRY', 'WAR', 'WAS', 'WAY', 'WHO', 'WHY', 'WIN', 'YES', 'YET', 'YOU', 'HIT', 'ITS'
+]);
+
+export const COMMON_SHORT_PHRASES = new Set([
+  'I AM'
 ]);

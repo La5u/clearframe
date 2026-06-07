@@ -1,34 +1,16 @@
 export const ALL_CAPS_ACRONYMS = new Set([
   'ABBA',
-  'AI',
+  'NASA',
   'APEX',
-  'BBC',
-  'CBS',
-  'CDC',
-  'CEO',
-  'EU',
-  'FDA',
-  'FBI',
   'FIFA',
-  'GOP',
+
   'GPQA',
-  'IRS',
-  'ITV',
-  'LAX',
+
   'MBZUAI',
-  'MLB',
   'MMMU',
-  'NBA',
-  'NHL',
-  'NFL',
+
   'NVIDIA',
-  'NYP',
+
   'NATO',
-  'SEC',
-  'UN',
-  'UK',
-  'US',
-  'USA',
-  'UFC',
-  'WWE',
+
 ]);

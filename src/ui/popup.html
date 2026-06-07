@@ -14,14 +14,24 @@
       --chip-disabled: #8d8d8d;
     }
     * { box-sizing: border-box; }
+    button,
+    input {
+      font: inherit;
+    }
+    button {
+      appearance: none;
+      -webkit-appearance: none;
+      line-height: 1.2;
+    }
     body {
       width: 284px;
       min-height: 320px;
       max-height: 480px;
       margin: 0;
       padding: 12px;
-      font-family: "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 12px;
+      line-height: 1.3;
       background: var(--bg);
       color: var(--ink);
       display: flex;
@@ -351,7 +361,7 @@
     </div>
   </div>
   <div class="footer">
-    <span id="popup-version">v0.9.0</span>
+    <span id="popup-version">v1.0.0</span>
     <a id="github-link" href="https://github.com/la5u/clearframe" target="_blank" rel="noreferrer">GitHub</a>
   </div>
   <script type="module" src="popup.js"></script>

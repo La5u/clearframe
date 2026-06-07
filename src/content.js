@@ -1,9 +1,10 @@
 'use strict';
 import { buildMatcher, findMatches } from './core/matcher.js';
-import { getAllCapsAction, lowerAllCapsLongWords, matchReplacementCase } from './core/display-utils.js';
+import { lowerAllCapsLongWords, matchReplacementCase } from './core/display-utils.js';
 import { pluralizeWord, pastTenseWord, ingWord, adverbWord } from './core/stemmer.js';
 import { DEFAULT_SETTINGS, normalizeSettings } from './core/settings-utils.js';
 import { chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from './core/match-plan.js';
+import { ALL_CAPS_TERM_ID, findAllCapsMatches } from './core/all-caps.js';
 
 const { index, types: TYPE_MAP, categories: TYPE_CATEGORIES } = ClearFrame;
 const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA', 'INPUT', 'CODE']);
@@ -21,6 +22,7 @@ const TYPE_INTENSITY = { absolute: 0.5, aggression: 0.75, 'all-caps': 0.5, autho
 const MAX_HIGHLIGHT_ALPHA = 0.32;
 const MAX_UNDERLINE_ALPHA = 0.84;
 const RUNTIME_SHORTCUTS = { c: 'enabled', r: 'replaceTerms', x: 'removeTerms' };
+const FULL_RENDER_BUDGET_MS = 12;
 
 let matcher = null;
 let totalMatches = 0;
@@ -28,17 +30,19 @@ let termStats = Object.create(null);
 let highlightRecords = [];
 let highlightRecordsByNode = new WeakMap();
 let activeHover = null;
+let pinnedTooltipRecord = null;
 let hoverReveal = null;
 let rerenderFrame = 0;
 let renderPending = false;
+let fullRenderJob = null;
 const navigationIndexes = new Map();
+const highlightSets = new Map();
 let activeHighlightStyleNames = new Set();
 const originalNodeText = new WeakMap();
 const internallyMutatedNodes = new WeakSet();
 let dirtyNodes = null;
 
 let settings = normalizeSettings(DEFAULT_SETTINGS);
-const ALL_CAPS_TERM_ID = '__clearframe_all_caps__';
 const ALL_CAPS_TERM = { phrase: 'caps emphasis', type: 'all-caps', neutral: 'Caps normalized.', stemType: '', regex: '', remove: false, hasNeutral: true };
 
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
@@ -91,28 +95,6 @@ function getReplacementForTerm(term, src) {
   return term.phrase === ALL_CAPS_TERM.phrase ? lowerAllCapsLongWords(src) : applyStemmedReplacement(src, term.phrase, term.neutral, term.stemType || '');
 }
 
-function findAllCapsMatches(text) {
-  const matches = [];
-  let pending = null;
-  for (const m of text.matchAll(/\b[A-Z0-9]+(?:'[A-Z0-9]+)*\b/g)) {
-    if (typeof m.index !== 'number' || !m[0] || !getAllCapsAction(m[0])) {
-      continue;
-    }
-    const start = m.index, end = m.index + m[0].length;
-    if (pending && /^[\s:;,.!?'"()[\]{}-]+$/.test(text.slice(pending.end, start))) {
-      pending.end = end; continue;
-    }
-    if (pending) {
-      matches.push(pending);
-    }
-    pending = { start, end, termId: ALL_CAPS_TERM_ID, virtual: true };
-  }
-  if (pending) {
-    matches.push(pending);
-  }
-  return matches;
-}
-
 function setNodeText(node, text) {
   if (node.nodeValue !== text) {
     internallyMutatedNodes.add(node); node.nodeValue = text;
@@ -144,6 +126,7 @@ function clearRegistry() {
   CSS.highlights.delete(ALL_CAPS_HIGHLIGHT_NAME);
   CSS.highlights.delete(MULTI_HIGHLIGHT_NAME);
   CSS.highlights.delete(SELECTED_HIGHLIGHT_NAME);
+  highlightSets.clear();
 }
 
 function getTypeIntensity(type) {
@@ -223,7 +206,55 @@ function getActiveHighlightNames(rangesByName) {
   return names;
 }
 
-function buildHighlightRegistry(rangesByName) {
+function getHighlightSet(name) {
+  let hl = highlightSets.get(name);
+  if (!hl) {
+    hl = new Highlight();
+    highlightSets.set(name, hl);
+    CSS.highlights.set(name, hl);
+  }
+  return hl;
+}
+
+function syncActiveHighlightStyles() {
+  const activeNames = new Set();
+  for (const [name, hl] of highlightSets) {
+    if (hl.size > 0) {
+      activeNames.add(name); continue;
+    }
+    CSS.highlights.delete(name);
+    highlightSets.delete(name);
+  }
+  activeHighlightStyleNames = activeNames;
+  if (!activeNames.size) {
+    removeHighlightStyles();
+    return;
+  }
+  syncHighlightStyles(activeNames);
+}
+
+function addHighlightRanges(rangesByName) {
+  if (!SUPPORTS_HIGHLIGHTS) {
+    return;
+  }
+  for (const [name, ranges] of rangesByName) {
+    if (!ranges.length) {
+      continue;
+    }
+    const hl = getHighlightSet(name);
+    ranges.forEach(r => hl.add(r));
+  }
+  syncActiveHighlightStyles();
+}
+
+function removeHighlightRecordRange(record) {
+  if (!SUPPORTS_HIGHLIGHTS) {
+    return;
+  }
+  highlightSets.get(record.highlightName)?.delete(record.range);
+}
+
+function replaceHighlightRegistry(rangesByName) {
   if (!SUPPORTS_HIGHLIGHTS) {
     return;
   }
@@ -239,9 +270,8 @@ function buildHighlightRegistry(rangesByName) {
     if (!ranges.length) {
       continue;
     }
-    const hl = new Highlight();
+    const hl = getHighlightSet(name);
     ranges.forEach(r => hl.add(r));
-    CSS.highlights.set(name, hl);
   }
 }
 
@@ -288,7 +318,13 @@ function isPointInsideHoverReveal(x, y) {
   return hit;
 }
 
-function hideTooltip() {
+function hideTooltip(force = false) {
+  if (pinnedTooltipRecord && !force) {
+    return;
+  }
+  if (force) {
+    pinnedTooltipRecord = null;
+  }
   restoreHoverReveal(); activeHover = null; const t = document.getElementById('cf-tooltip'); if (t) {
     t.style.display = 'none';
   }
@@ -378,23 +414,25 @@ function findRecordAtPoint(node, offset) {
   return null;
 }
 
-function handleHoverMove(e) {
-  if (!settings.enabled || !highlightRecords.length) {
-    return;
-  }
+function findRecordAtViewportPoint(x, y) {
   const rawCaret = document.caretPositionFromPoint
-    ? document.caretPositionFromPoint(e.clientX, e.clientY)
-    : document.caretRangeFromPoint?.(e.clientX, e.clientY);
+    ? document.caretPositionFromPoint(x, y)
+    : document.caretRangeFromPoint?.(x, y);
   const cp = /** @type {CaretPosition | null} */ (rawCaret);
   const range = /** @type {Range | null} */ (rawCaret);
   const node = cp?.offsetNode || range?.startContainer;
   const offset = cp?.offset ?? range?.startOffset;
-  if (!node || typeof offset !== 'number') {
-    if (activeHover) {
-      hideTooltip();
-    } return;
+  return node && typeof offset === 'number' ? findRecordAtPoint(node, offset) : null;
+}
+
+function handleHoverMove(e) {
+  if (pinnedTooltipRecord) {
+    return;
   }
-  const record = findRecordAtPoint(node, offset);
+  if (!settings.enabled || !highlightRecords.length) {
+    return;
+  }
+  const record = findRecordAtViewportPoint(e.clientX, e.clientY);
   if (!record) {
     if (!isPointInsideHoverReveal(e.clientX, e.clientY) && activeHover) {
       hideTooltip();
@@ -406,6 +444,26 @@ function handleHoverMove(e) {
   restoreHoverReveal();
   activeHover = record;
   showTooltip(record, e.clientX, e.clientY);
+}
+
+function handleTooltipClick(e) {
+  if (isTooltipNode(e.target)) {
+    return;
+  }
+  const record = findRecordAtViewportPoint(e.clientX, e.clientY);
+  if (record) {
+    pinnedTooltipRecord = record;
+    if (activeHover !== record) {
+      restoreHoverReveal();
+    }
+    activeHover = record;
+    showTooltip(record, e.clientX, e.clientY);
+    return;
+  }
+  if (pinnedTooltipRecord) {
+    pinnedTooltipRecord = null;
+    hideTooltip(true);
+  }
 }
 
 function getTermAction(term) {
@@ -558,58 +616,148 @@ function processNode(node, rangesByName, records, visibilityCache) {
   }
 }
 
-function renderHighlights() {
-  const full = dirtyNodes === null;
-  if (full) {
-    termStats = Object.create(null); totalMatches = 0; highlightRecords = []; highlightRecordsByNode = new WeakMap();
-    navigationIndexes.clear();
+function resetFullRenderState() {
+  termStats = Object.create(null); totalMatches = 0; highlightRecords = []; highlightRecordsByNode = new WeakMap();
+  navigationIndexes.clear();
+  clearRegistry();
+}
+
+function cancelFullRender() {
+  if (!fullRenderJob) {
+    return;
   }
+  fullRenderJob.cancelled = true;
+  if (fullRenderJob.scheduledType === 'idle' && typeof cancelIdleCallback === 'function') {
+    cancelIdleCallback(fullRenderJob.scheduledId);
+  } else if (fullRenderJob.scheduledType === 'frame') {
+    cancelAnimationFrame(fullRenderJob.scheduledId);
+  }
+  fullRenderJob = null;
+}
+
+function shouldContinueFullRenderChunk(startTime, processed, deadline) {
+  if (processed === 0) {
+    return true;
+  }
+  if (deadline && typeof deadline.timeRemaining === 'function') {
+    return deadline.timeRemaining() > 1;
+  }
+  return performance.now() - startTime < FULL_RENDER_BUDGET_MS;
+}
+
+function scheduleFullRenderChunk(job) {
+  if (typeof requestIdleCallback === 'function') {
+    job.scheduledType = 'idle';
+    job.scheduledId = requestIdleCallback(deadline => runFullRenderChunk(job, deadline), { timeout: 100 });
+  } else {
+    job.scheduledType = 'frame';
+    job.scheduledId = requestAnimationFrame(() => runFullRenderChunk(job, null));
+  }
+}
+
+function finishFullRender(job) {
+  if (fullRenderJob !== job || job.cancelled) {
+    return;
+  }
+  highlightRecords = job.records;
+  replaceHighlightRegistry(job.rangesByName);
+  fullRenderJob = null;
+  updateBadge();
+  if (dirtyNodes?.size > 0) {
+    scheduleRender();
+  } else {
+    dirtyNodes = null;
+    renderPending = false;
+  }
+}
+
+function runFullRenderChunk(job, deadline) {
+  if (fullRenderJob !== job || job.cancelled) {
+    return;
+  }
+  const startTime = performance.now();
+  let processed = 0;
+  while (shouldContinueFullRenderChunk(startTime, processed, deadline)) {
+    const next = job.walker.nextNode();
+    if (!next) {
+      finishFullRender(job);
+      return;
+    }
+    processNode(job.walker.currentNode, job.rangesByName, job.records, job.visibilityCache);
+    processed++;
+  }
+  scheduleFullRenderChunk(job);
+}
+
+function startFullRender() {
+  cancelFullRender();
+  resetFullRenderState();
   if (!settings.enabled || !matcher || !document.body) {
     if (!settings.enabled && document.body) {
       restoreOriginalTextNodes();
     }
     clearHighlightPresentation(); updateBadge(); dirtyNodes = null; return;
   }
+  dirtyNodes = new Set();
+  fullRenderJob = {
+    cancelled: false,
+    rangesByName: new Map(),
+    records: [],
+    visibilityCache: new WeakMap(),
+    walker: document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT),
+  };
+  scheduleFullRenderChunk(fullRenderJob);
+}
+
+function renderHighlights() {
+  const full = dirtyNodes === null;
+  if (full) {
+    startFullRender();
+    return;
+  }
+  if (!settings.enabled || !matcher || !document.body) {
+    cancelFullRender();
+    if (!settings.enabled && document.body) {
+      restoreOriginalTextNodes();
+    }
+    clearHighlightPresentation(); updateBadge(); dirtyNodes = null; return;
+  }
+  cancelFullRender();
   const rangesByName = new Map(), newRecords = [];
   const visibilityCache = new WeakMap();
-  if (full) {
-    const nodes = [];
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    while (walker.nextNode()) {
-      nodes.push(walker.currentNode);
+  const nodes = [...dirtyNodes].filter(n => n.parentElement && !skipNode(n, visibilityCache));
+  dirtyNodes = null;
+  const nodeSet = new Set(nodes);
+  highlightRecords = highlightRecords.filter(r => {
+    if (!r.node.isConnected || !r.node.parentElement) {
+      removeHighlightRecordRange(r);
+      return false;
     }
-    nodes.forEach(n => processNode(n, rangesByName, newRecords, visibilityCache));
-    highlightRecords = newRecords;
-  } else {
-    const nodes = [...dirtyNodes].filter(n => n.parentElement && !skipNode(n, visibilityCache));
-    dirtyNodes = null;
-    const nodeSet = new Set(nodes);
-    highlightRecords = highlightRecords.filter(r => {
-      if (!r.node.isConnected || !r.node.parentElement) {
-        return false;
-      }
-      if (nodeSet.has(r.node)) {
-        return false;
-      }
-      addRange(rangesByName, r.highlightName, r.range);
-      return true;
-    });
-    nodeSet.forEach(n => {
-      highlightRecordsByNode.delete(n); const cur = n.nodeValue || ''; const src = originalNodeText.get(n) ?? cur; if (!src || src.trim().length < 2) {
-        if (originalNodeText.has(n) && cur !== src) {
-          setNodeText(n, src);
-        } originalNodeText.delete(n);
-      }
-    });
-    nodes.forEach(n => processNode(n, rangesByName, newRecords, visibilityCache));
-    highlightRecords.push(...newRecords);
-  }
-  buildHighlightRegistry(rangesByName);
+    if (nodeSet.has(r.node)) {
+      removeHighlightRecordRange(r);
+      return false;
+    }
+    return true;
+  });
+  nodeSet.forEach(n => {
+    highlightRecordsByNode.delete(n); const cur = n.nodeValue || ''; const src = originalNodeText.get(n) ?? cur; if (!src || src.trim().length < 2) {
+      if (originalNodeText.has(n) && cur !== src) {
+        setNodeText(n, src);
+      } originalNodeText.delete(n);
+    }
+  });
+  nodes.forEach(n => processNode(n, rangesByName, newRecords, visibilityCache));
+  highlightRecords.push(...newRecords);
+  addHighlightRanges(rangesByName);
   updateBadge();
 }
 
 function scheduleRender() {
   if (hoverReveal) {
+    renderPending = true;
+    return;
+  }
+  if (fullRenderJob) {
     renderPending = true;
     return;
   }
@@ -639,7 +787,7 @@ function toggleRuntimeSetting(key) {
   settings = normalizeSettings({ ...settings, [key]: !settings[key] });
   saveRuntimeSettings();
   matcher = initMatcher();
-  hideTooltip();
+  hideTooltip(true);
   dirtyNodes = null;
   renderHighlights();
 }
@@ -726,9 +874,10 @@ function init() {
     });
     mo.observe(document.body || document.documentElement, { childList: true, subtree: true, characterData: true });
     document.addEventListener('mousemove', handleHoverMove, { passive: true });
+    document.addEventListener('click', handleTooltipClick, true);
     document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('scroll', hideTooltip, true);
-    window.addEventListener('blur', hideTooltip);
+    document.addEventListener('scroll', () => hideTooltip(), true);
+    window.addEventListener('blur', () => hideTooltip(true));
   });
 }
 

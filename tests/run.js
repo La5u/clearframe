@@ -6,7 +6,8 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 import { buildMatcher, extractText, findMatches, loadTerms } from '../src/core/term-utils.js';
-import { lowerAllCapsLongWords, matchReplacementCase } from '../src/core/display-utils.js';
+import { ALL_CAPS_TERM_ID, findAllCapsMatches } from '../src/core/all-caps.js';
+import { getAllCapsAction, getContextualAllCapsAction, lowerAllCapsLongWords, matchReplacementCase } from '../src/core/display-utils.js';
 import { COMMON_SHORT_WORDS } from '../src/core/commonShortWords.js';
 import { chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from '../src/core/match-plan.js';
 import { normalizeSettings } from '../src/core/settings-utils.js';
@@ -38,12 +39,35 @@ assert.strictEqual(lowerAllCapsLongWords('ITV BREAKING'), 'ITV breaking');
 assert.strictEqual(lowerAllCapsLongWords('FIFA BREAKING'), 'FIFA breaking');
 assert.strictEqual(lowerAllCapsLongWords("DON'T"), "don't");
 assert.strictEqual(lowerAllCapsLongWords("IT'S NEW"), "it's new");
+assert.strictEqual(getAllCapsAction('AM'), null);
+assert.strictEqual(getAllCapsAction('I AM'), 'all-caps');
+assert.strictEqual(lowerAllCapsLongWords('5 AM'), '5 AM');
+assert.strictEqual(lowerAllCapsLongWords('I AM'), 'i am');
+assert.strictEqual(getContextualAllCapsAction('abc I', 4, 5), null);
+assert.strictEqual(getContextualAllCapsAction('abc A', 4, 5), 'all-caps');
+assert.strictEqual(getContextualAllCapsAction('abc. I', 5, 6), null);
+assert.strictEqual(getContextualAllCapsAction('I', 0, 1), null);
+assert.deepStrictEqual(findAllCapsMatches('I DO NOT'), [
+  { start: 2, end: 8, termId: ALL_CAPS_TERM_ID, virtual: true },
+]);
+assert.deepStrictEqual(findAllCapsMatches('abc A'), [
+  { start: 4, end: 5, termId: ALL_CAPS_TERM_ID, virtual: true },
+]);
+assert.deepStrictEqual(findAllCapsMatches('With A Custom Assistant'), []);
+assert.deepStrictEqual(findAllCapsMatches('NOT A REAL HAMSTER'), [
+  { start: 0, end: 18, termId: ALL_CAPS_TERM_ID, virtual: true },
+]);
+assert.deepStrictEqual(findAllCapsMatches('abc I'), []);
+assert.deepStrictEqual(findAllCapsMatches('5 AM'), []);
+assert.deepStrictEqual(findAllCapsMatches('I AM'), [
+  { start: 0, end: 4, termId: ALL_CAPS_TERM_ID, virtual: true },
+]);
 assert.ok(COMMON_SHORT_WORDS.size >= 100);
 assert.ok([...COMMON_SHORT_WORDS].every(word => word.length === 2 || word.length === 3));
 assert.ok([...COMMON_SHORT_WORDS].every(word => word === word.toUpperCase()));
 assert.ok(!COMMON_SHORT_WORDS.has('A'));
 assert.ok(!COMMON_SHORT_WORDS.has('ONLY'));
-assert.strictEqual(lowerAllCapsLongWords('THE US AND YOU'), 'the US and you');
+assert.strictEqual(lowerAllCapsLongWords('THE US AND YOU'), 'the us and you');
 assert.strictEqual(matchReplacementCase('revealed', 'disclosed'), 'disclosed');
 assert.strictEqual(matchReplacementCase('Revealed', 'disclosed'), 'Disclosed');
 assert.strictEqual(matchReplacementCase('REVEALED', 'disclosed'), 'DISCLOSED');

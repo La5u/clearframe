@@ -8,6 +8,9 @@ interface ClearFrameTerm {
   stemType: string;
   regex: string;
   remove: boolean;
+  confidence?: string;
+  provenance?: string[];
+  contexts?: string[];
 }
 
 interface ClearFrameIndex {

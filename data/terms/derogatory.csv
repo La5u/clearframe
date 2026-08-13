@@ -1,8 +1,8 @@
-phrase,type,neutral,aliases,stemmable,regex,remove
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts
 illegal aliens,derogatory,illegal immigrants,illegal alien,,,
 trash,derogatory,poor quality,,,,
 horde,derogatory,large groups,,noun,,
-elite,derogatory,,,noun,,
+elite,derogatory,,,noun,,,evaluative
 mob,derogatory,,,noun,,
 radical,derogatory,,,,,
 extremist,derogatory,,,,,

@@ -1,0 +1,8 @@
+{"id":"emotion-person-001","domain":"news","text":"She was devastated by the announcement.","span":"devastated","labels":["emotionalIntensity"],"detect":true,"rewordSafe":false,"note":"Sense is emotional but replacement strength remains contextual."}
+{"id":"emotion-damage-001","domain":"news","text":"The coastal town was devastated by the storm.","span":"devastated","labels":[],"detect":false,"rewordSafe":false,"note":"Physical destruction sense; protects against a global emotional rule."}
+{"id":"clickbait-001","domain":"headline","text":"You won't believe what happened next.","span":"You won't believe what happened next","labels":["sensationalism"],"detect":true,"rewordSafe":false}
+{"id":"idiom-001","domain":"essay","text":"At the end of the day, the evidence remained incomplete.","span":"At the end of the day","labels":["figurativeLanguage"],"detect":true,"rewordSafe":true,"reword":"Ultimately"}
+{"id":"idiom-literal-001","domain":"narrative","text":"They submitted the form at the end of the day.","span":"at the end of the day","labels":[],"detect":false,"rewordSafe":false}
+{"id":"anaphora-001","domain":"speech","text":"We will study, we will question, we will improve.","span":"we will","labels":["rhetoricalForm"],"detect":true,"rewordSafe":false}
+{"id":"loaded-001","domain":"news","text":"The regime finally admitted the failure.","span":"finally admitted","labels":["loadedFraming"],"detect":true,"rewordSafe":false}
+{"id":"certainty-001","domain":"opinion","text":"This policy will obviously solve every problem.","span":"obviously","labels":["certainty","subjectivity"],"detect":true,"rewordSafe":true,"reword":"likely"}

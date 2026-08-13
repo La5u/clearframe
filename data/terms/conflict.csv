@@ -1,11 +1,14 @@
-phrase,type,neutral,aliases,stemmable,regex,remove
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts
 feud,conflict,,,,,
 clash,conflict,,,verb,,
 chaos,conflict,,,,,
 plot,conflict,,,,,
 snub,conflict,ignored,,,,
-spark,conflict,,,,,
-erupt,conflict,begin,,,,
+spark,conflict,,,verb,,,headline
+spark rumors,conflict,,sparks rumors|sparked rumors|sparking rumors|spark rumours|sparks rumours|sparked rumours|sparking rumours,,,,publication
+spark speculation,conflict,,sparks speculation|sparked speculation|sparking speculation,,,,publication
+erupt,conflict,begin,,verb,,,headline
+rages on,conflict,continues,,,,,publication
 wipeout,conflict,loss,,,,
 showdown,conflict,,,,,
 takeover,conflict,acquisition,take over,,,

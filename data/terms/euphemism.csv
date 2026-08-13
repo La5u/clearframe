@@ -1,5 +1,5 @@
-phrase,type,neutral,aliases,stemmable,regex,remove
-probe,euphemism,investigation,,,,
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts
+probe,euphemism,investigation,,,,,publication
 enhanced interrogation,euphemism,torture,,,,
 collateral damage,euphemism,civilian harm,,,,
 non-consensual encounter,euphemism,assault,,,,

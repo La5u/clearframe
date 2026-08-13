@@ -5,48 +5,63 @@ import { pluralizeWord, pastTenseWord, ingWord, adverbWord } from './core/stemme
 import { DEFAULT_SETTINGS, normalizeSettings } from './core/settings-utils.js';
 import { chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from './core/match-plan.js';
 import { ALL_CAPS_TERM_ID, findAllCapsMatches } from './core/all-caps.js';
+import { CONTEXTUAL_TERMS, classifyPageContext, findContextualMatches } from './core/contextual.js';
+import { shouldKeepLexicalMatch } from './core/context-filter.js';
 
 const { index, types: TYPE_MAP, categories: TYPE_CATEGORIES } = ClearFrame;
 const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA', 'INPUT', 'CODE']);
-const SKIP_SELECTOR = 'nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true],#cf-tooltip';
+const SKIP_SELECTOR = 'nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true],#cf-tooltip,#cf-suggestion';
 const HIGHLIGHT_PREFIX = 'clearframe-';
 const ALL_CAPS_HIGHLIGHT_NAME = 'clearframe-all-caps-underline';
 const MULTI_HIGHLIGHT_NAME = 'clearframe-multiple';
 const SELECTED_HIGHLIGHT_NAME = 'clearframe-selected';
-const TYPE_HIGHLIGHT_NAMES = Object.keys(TYPE_MAP).flatMap(t => [getHighlightName(t), getHighlightName(t, 'underline')]);
+const TYPE_HIGHLIGHT_NAMES = Object.keys(TYPE_MAP).flatMap(type => [getHighlightName(type), getHighlightName(type, 'underline')]);
 const SUPPORTS_HIGHLIGHTS = !!(globalThis.Highlight && globalThis.CSS?.highlights);
 const COLOR_RGB = { yellow: '250, 204, 21', green: '74, 222, 128', gray: '209, 213, 219', red: '248, 113, 113', pink: '244, 114, 182', orange: '251, 146, 60', purple: '196, 128, 255', blue: '96, 165, 250', teal: '45, 212, 191', brown: '161, 98, 7' };
 const UNDERLINE_RGB = { yellow: '202, 138, 4', green: '22, 163, 74', gray: '107, 114, 128', red: '220, 38, 38', pink: '219, 39, 119', orange: '234, 88, 12', purple: '147, 51, 234', blue: '37, 99, 235', teal: '20, 184, 166', brown: '120, 53, 15' };
-const DEFAULT_TYPE_INTENSITY = 0.65;
 const TYPE_INTENSITY = { absolute: 0.5, aggression: 0.75, 'all-caps': 0.5, authority: 0.65, clickbait: 0.85, colloquialism: 0.35, conflict: 0.65, derogatory: 0.95, distancing: 0.7, dysphemism: 0.8, euphemism: 0.75, exaggeration: 0.7, fear: 0.9, hype: 0.65, idiom: 0.35, loaded: 0.9, 'loaded-framing': 0.85, minimizing: 0.6, moral: 0.8, 'negative-framing': 0.75, passive: 0.7, repetition: 0.45, reveal: 0.3, 'rhetorical-question': 0.4, superlative: 0.65, uncertainty: 0.65, unsourced: 0.8 };
-const MAX_HIGHLIGHT_ALPHA = 0.32;
-const MAX_UNDERLINE_ALPHA = 0.84;
-const RUNTIME_SHORTCUTS = { c: 'enabled', r: 'replaceTerms', x: 'removeTerms' };
-const FULL_RENDER_BUDGET_MS = 12;
+const RUNTIME_SHORTCUTS = { r: 'replaceTerms', x: 'removeTerms', f: 'feedbackEnabled' };
+const ALL_CAPS_TERM = { phrase: 'caps emphasis', type: 'all-caps', neutral: 'Caps normalized.', stemType: '', regex: '', remove: false, hasNeutral: true };
 
+let settings = normalizeSettings(DEFAULT_SETTINGS);
 let matcher = null;
+// A NodeResult owns all retained state for one analyzed text node.
+/** @type {Map<Text, {node: Text, originalText: string, displayedText: string, records: any[]}>} */
+const nodeResults = new Map();
 let totalMatches = 0;
+/** @type {Record<string, Record<string, number>>} */
 let termStats = Object.create(null);
-let highlightRecords = [];
-let highlightRecordsByNode = new WeakMap();
+let activeHighlightNames = new Set();
+const highlightSets = new Map();
 let activeHover = null;
 let pinnedTooltipRecord = null;
 let hoverReveal = null;
-let rerenderFrame = 0;
-let renderPending = false;
-let fullRenderJob = null;
+let hoverFrame = 0;
+let pendingHoverEvent = null;
+let pageObserver = null;
+let analysisTimer = 0;
+const pendingMutationNodes = new Set();
+let pendingDisconnectedCleanup = false;
+const internalMutationCounts = new WeakMap();
 const navigationIndexes = new Map();
-const highlightSets = new Map();
-let activeHighlightStyleNames = new Set();
-const originalNodeText = new WeakMap();
-const internallyMutatedNodes = new WeakSet();
-let dirtyNodes = null;
+const PAGE_CONTEXT = classifyPageContext(location.hostname);
 
-let settings = normalizeSettings(DEFAULT_SETTINGS);
-const ALL_CAPS_TERM = { phrase: 'caps emphasis', type: 'all-caps', neutral: 'Caps normalized.', stemType: '', regex: '', remove: false, hasNeutral: true };
+function getSettingsKey(value) {
+  return JSON.stringify({ replaceTerms: value.replaceTerms === true, removeTerms: value.removeTerms === true, monochrome: value.monochrome === true, feedbackEnabled: value.feedbackEnabled === true, types: value.types || {}, userTypeColors: value.userTypeColors || {} });
+}
 
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
   settings = normalizeSettings(rawSettings, rawTypeColors);
+  matcher = buildMatcher(index, term => isEnabled(term.type));
+}
+
+function applySettings(rawSettings = {}, rawTypeColors = {}) {
+  const previousKey = getSettingsKey(settings);
+  loadSettings(rawSettings, rawTypeColors);
+  if (!settings.feedbackEnabled) hideSuggestion();
+  if (previousKey !== getSettingsKey(settings) && document.body) {
+    analyzePage();
+  }
 }
 
 function isEnabled(type) {
@@ -54,7 +69,7 @@ function isEnabled(type) {
 }
 
 function getColor(type) {
-  return settings.userTypeColors?.[type] || TYPE_MAP[type] || 'gray';
+  return settings.monochrome ? 'gray' : settings.userTypeColors?.[type] || TYPE_MAP[type] || 'gray';
 }
 
 function getCategory(type) {
@@ -62,854 +77,658 @@ function getCategory(type) {
 }
 
 function getHighlightName(type, mode = 'highlight') {
-  const safe = String(type).replace(/[^a-z0-9-]/gi, '-');
-  return HIGHLIGHT_PREFIX + safe + (mode === 'underline' ? '-underline' : '');
+  return HIGHLIGHT_PREFIX + String(type).replace(/[^a-z0-9-]/gi, '-') + (mode === 'underline' ? '-underline' : '');
 }
 
 function getTermById(id) {
-  return index.termsById[id] || (id === ALL_CAPS_TERM_ID ? ALL_CAPS_TERM : null);
+  return index.termsById[id] || CONTEXTUAL_TERMS[id] || (id === ALL_CAPS_TERM_ID ? ALL_CAPS_TERM : null);
 }
 
 function applyStemmedReplacement(src, base, replacement, stemType) {
-  const source = src.toLowerCase(), b = base.toLowerCase();
+  const source = src.toLowerCase(), normalizedBase = base.toLowerCase();
   let next = replacement;
-  if (stemType === 'noun') {
-    if (source === pluralizeWord(b)) {
-      next = pluralizeWord(replacement);
-    }
+  if (stemType === 'noun' && source === pluralizeWord(normalizedBase)) {
+    next = pluralizeWord(replacement);
   } else if (stemType === 'verb') {
-    if (source === pluralizeWord(b)) {
-      next = pluralizeWord(replacement);
-    } else if (source === pastTenseWord(b)) {
-      next = pastTenseWord(replacement);
-    } else if (source === ingWord(b)) {
-      next = ingWord(replacement);
-    }
-  } else if (stemType === 'adjective' && source === adverbWord(b)) {
+    if (source === pluralizeWord(normalizedBase)) next = pluralizeWord(replacement);
+    else if (source === pastTenseWord(normalizedBase)) next = pastTenseWord(replacement);
+    else if (source === ingWord(normalizedBase)) next = ingWord(replacement);
+  } else if (stemType === 'adjective' && source === adverbWord(normalizedBase)) {
     next = adverbWord(replacement);
   }
   return matchReplacementCase(src, next);
 }
 
 function getReplacementForTerm(term, src) {
-  return term.phrase === ALL_CAPS_TERM.phrase ? lowerAllCapsLongWords(src) : applyStemmedReplacement(src, term.phrase, term.neutral, term.stemType || '');
+  return term.phrase === ALL_CAPS_TERM.phrase
+    ? lowerAllCapsLongWords(src)
+    : applyStemmedReplacement(src, term.phrase, term.neutral, term.stemType || '');
 }
 
-function setNodeText(node, text) {
-  if (node.nodeValue !== text) {
-    internallyMutatedNodes.add(node); node.nodeValue = text;
-  }
+function isProcessableNode(node) {
+  const parent = node.parentElement;
+  return !!parent && !parent.isContentEditable && !SKIP_TAGS.has(parent.tagName) && !parent.closest(SKIP_SELECTOR);
 }
 
-function replaceNodeText(node, start, end, text) {
-  internallyMutatedNodes.add(node);
-  node.replaceData(start, end - start, text);
-}
-
-function initMatcher() {
-  return buildMatcher(index, t => isEnabled(t.type));
-}
-function initFindMatches(text) {
-  return findMatches(matcher, text, index.termsById, index.regexTerms || [], false, t => isEnabled(t.type));
-}
-
-function skipNode(node, visibilityCache) {
-  const p = node.parentElement;
-  return !p || p.isContentEditable || SKIP_TAGS.has(p.tagName) || !!p.closest(SKIP_SELECTOR) || !isVisibleElement(p, visibilityCache);
-}
-
-function clearRegistry() {
-  if (!SUPPORTS_HIGHLIGHTS) {
-    return;
-  }
-  TYPE_HIGHLIGHT_NAMES.forEach(n => CSS.highlights.delete(n));
-  CSS.highlights.delete(ALL_CAPS_HIGHLIGHT_NAME);
-  CSS.highlights.delete(MULTI_HIGHLIGHT_NAME);
-  CSS.highlights.delete(SELECTED_HIGHLIGHT_NAME);
-  highlightSets.clear();
-}
-
-function getTypeIntensity(type) {
-  return TYPE_INTENSITY[type] ?? DEFAULT_TYPE_INTENSITY;
-}
-function alphaForIntensity(max, type) {
-  return Math.max(0.08, Math.min(max, max * getTypeIntensity(type)));
-}
-
-function buildTypeHighlightRule(type, mode) {
-  const c = getColor(type);
-  const hRgb = COLOR_RGB[c] || COLOR_RGB.gray, uRgb = UNDERLINE_RGB[c] || UNDERLINE_RGB.gray;
-  const hA = alphaForIntensity(MAX_HIGHLIGHT_ALPHA, type).toFixed(3), uA = alphaForIntensity(MAX_UNDERLINE_ALPHA, type).toFixed(3);
-  const h = getHighlightName(type), u = getHighlightName(type, 'underline');
-  if (mode === 'underline') {
-    return `::highlight(${u}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(${uRgb},${uA});text-decoration-thickness:1px;text-underline-offset:1px}`;
-  }
-  return `::highlight(${h}){background-color:rgba(${hRgb},${hA})}`;
-}
-
-function syncHighlightStyles(activeNames, includeSelected = false) {
-  let el = document.getElementById('cf-highlight-styles');
-  if (!el) {
-    el = document.createElement('style'); el.id = 'cf-highlight-styles'; (document.head || document.documentElement).appendChild(el);
-  }
-  const rules = [];
-  for (const type of Object.keys(TYPE_MAP)) {
-    if (activeNames.has(getHighlightName(type))) {
-      rules.push(buildTypeHighlightRule(type, 'highlight'));
-    }
-    if (activeNames.has(getHighlightName(type, 'underline'))) {
-      rules.push(buildTypeHighlightRule(type, 'underline'));
-    }
-  }
-  if (activeNames.has(ALL_CAPS_HIGHLIGHT_NAME)) {
-    rules.push(`::highlight(${ALL_CAPS_HIGHLIGHT_NAME}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(125,211,252,.42);text-decoration-thickness:.75px;text-underline-offset:2px}`);
-  }
-  if (activeNames.has(MULTI_HIGHLIGHT_NAME)) {
-    rules.push(`::highlight(${MULTI_HIGHLIGHT_NAME}){background-color:rgba(147,51,234,.42);text-decoration:underline;text-decoration-color:rgba(88,28,135,.95);text-decoration-thickness:1px;text-underline-offset:2px}`);
-  }
-  if (includeSelected) {
-    rules.push(`::highlight(${SELECTED_HIGHLIGHT_NAME}){background-color:CanvasText;color:Canvas}`);
-  }
-  el.textContent = rules.join('\n');
-}
-
-function removeHighlightStyles() {
-  document.getElementById('cf-highlight-styles')?.remove();
-}
-
-function clearHighlightPresentation() {
-  clearRegistry();
-  removeHighlightStyles();
-  activeHighlightStyleNames = new Set();
-}
-
-function updateBadge(count = totalMatches) {
-  chrome.runtime.sendMessage({ type: 'COUNT', count }).catch(() => {});
-}
-
-function addRange(map, name, range) {
-  const list = map.get(name);
-  if (list) {
-    list.push(range);
-  } else {
-    map.set(name, [range]);
-  }
-}
-
-function getActiveHighlightNames(rangesByName) {
-  const names = new Set();
-  for (const [name, ranges] of rangesByName) {
-    if (ranges.length > 0) {
-      names.add(name);
-    }
-  }
-  return names;
-}
-
-function getHighlightSet(name) {
-  let hl = highlightSets.get(name);
-  if (!hl) {
-    hl = new Highlight();
-    highlightSets.set(name, hl);
-    CSS.highlights.set(name, hl);
-  }
-  return hl;
-}
-
-function syncActiveHighlightStyles() {
-  const activeNames = new Set();
-  for (const [name, hl] of highlightSets) {
-    if (hl.size > 0) {
-      activeNames.add(name); continue;
-    }
-    CSS.highlights.delete(name);
-    highlightSets.delete(name);
-  }
-  activeHighlightStyleNames = activeNames;
-  if (!activeNames.size) {
-    removeHighlightStyles();
-    return;
-  }
-  syncHighlightStyles(activeNames);
-}
-
-function addHighlightRanges(rangesByName) {
-  if (!SUPPORTS_HIGHLIGHTS) {
-    return;
-  }
-  for (const [name, ranges] of rangesByName) {
-    if (!ranges.length) {
-      continue;
-    }
-    const hl = getHighlightSet(name);
-    ranges.forEach(r => hl.add(r));
-  }
-  syncActiveHighlightStyles();
-}
-
-function removeHighlightRecordRange(record) {
-  if (!SUPPORTS_HIGHLIGHTS) {
-    return;
-  }
-  highlightSets.get(record.highlightName)?.delete(record.range);
-}
-
-function replaceHighlightRegistry(rangesByName) {
-  if (!SUPPORTS_HIGHLIGHTS) {
-    return;
-  }
-  clearRegistry();
-  const activeNames = getActiveHighlightNames(rangesByName);
-  activeHighlightStyleNames = activeNames;
-  if (!activeNames.size) {
-    removeHighlightStyles();
-    return;
-  }
-  syncHighlightStyles(activeNames);
-  for (const [name, ranges] of rangesByName) {
-    if (!ranges.length) {
-      continue;
-    }
-    const hl = getHighlightSet(name);
-    ranges.forEach(r => hl.add(r));
-  }
-}
-
-function restoreHoverReveal() {
-  if (!hoverReveal) {
-    return;
-  }
-  if (hoverReveal.node.nodeValue === hoverReveal.revealedText) {
-    replaceNodeText(hoverReveal.node, hoverReveal.record.startOffset, hoverReveal.revealEndOffset, hoverReveal.record.replacementText);
-    hoverReveal.record.range.setStart(hoverReveal.node, hoverReveal.record.startOffset);
-    hoverReveal.record.range.setEnd(hoverReveal.node, hoverReveal.record.endOffset);
-  }
-  hoverReveal = null;
-}
-
-function revealOriginalText(record) {
-  if (record.action !== 'replaced' || !record.sourceText || !record.replacementText || hoverReveal?.record === record) {
-    return;
-  }
-  restoreHoverReveal();
-  const display = record.node.nodeValue || '';
-  if (display.slice(record.startOffset, record.endOffset) !== record.replacementText) {
-    return;
-  }
-  const revealed = display.slice(0, record.startOffset) + record.sourceText + display.slice(record.endOffset);
-  hoverReveal = { record, node: record.node, displayText: display, revealedText: revealed, revealEndOffset: record.startOffset + record.sourceText.length };
-  replaceNodeText(record.node, record.startOffset, record.endOffset, record.sourceText);
-  record.range.setStart(record.node, record.startOffset);
-  record.range.setEnd(record.node, hoverReveal.revealEndOffset);
-}
-
-function isPointInsideHoverReveal(x, y) {
-  if (!hoverReveal) {
-    return false;
-  }
-  const len = hoverReveal.node.nodeValue?.length || 0, start = Math.min(hoverReveal.record.startOffset, len), end = Math.min(hoverReveal.revealEndOffset, len);
-  if (start >= end) {
-    return false;
-  }
-  const r = document.createRange();
-  r.setStart(hoverReveal.node, start); r.setEnd(hoverReveal.node, end);
-  const hit = [...r.getClientRects()].some(rect => x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
-  r.detach?.();
-  return hit;
-}
-
-function hideTooltip(force = false) {
-  if (pinnedTooltipRecord && !force) {
-    return;
-  }
-  if (force) {
-    pinnedTooltipRecord = null;
-  }
-  restoreHoverReveal(); activeHover = null; const t = document.getElementById('cf-tooltip'); if (t) {
-    t.style.display = 'none';
-  }
-  if (renderPending) {
-    scheduleRender();
-  }
-}
-
-function scrollRecordIntoView(record) {
-  if (!record?.node?.isConnected) {
-    return;
-  }
-  const rect = record.range.getBoundingClientRect();
-  if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-    return;
-  }
-  const scrollingElement = document.scrollingElement || document.documentElement;
-  scrollingElement.scrollTop += rect.top - (window.innerHeight / 2) + (rect.height / 2);
-}
-
-function isVisibleElement(element, cache) {
-  const seen = [];
-  for (let current = element; current; current = current.parentElement) {
-    if (cache?.has(current)) {
-      const cached = cache.get(current);
-      seen.forEach(el => cache.set(el, cached));
-      return cached;
-    }
-    seen.push(current);
-    const style = window.getComputedStyle(current);
-    if (
-      style.display === 'none' ||
-      style.visibility === 'hidden' ||
-      style.visibility === 'collapse' ||
-      style.contentVisibility === 'hidden'
-    ) {
-      cache?.set(current, false);
-      seen.forEach(el => cache?.set(el, false));
-      return false;
-    }
-  }
-  seen.forEach(el => cache?.set(el, true));
-  return true;
-}
-
-function navigateToTerm(term, action) {
-  const records = highlightRecords.filter(record =>
-    (record.term === term && record.action === action) ||
-    record.terms?.some(item => item.phrase === term && item.action === action),
-  );
-  if (!records.length) {
-    return;
-  }
-  const key = `${action}\n${term}`;
-  const index = ((navigationIndexes.get(key) ?? -1) + 1) % records.length;
-  navigationIndexes.set(key, index);
-  const record = records[index];
-  scrollRecordIntoView(record);
-  if (SUPPORTS_HIGHLIGHTS) {
-    syncHighlightStyles(activeHighlightStyleNames, true);
-    CSS.highlights.set(SELECTED_HIGHLIGHT_NAME, new Highlight(record.range));
-  }
-}
-
-function showTooltip(record, x, y) {
-  let tip = document.getElementById('cf-tooltip');
-  if (!tip) {
-    tip = document.createElement('div'); tip.id = 'cf-tooltip'; document.body.appendChild(tip);
-  }
-  const terms = record.terms?.length ? record.terms : [{ type: record.type, category: record.category }];
-  tip.textContent = terms.map(term => `${term.type} - ${term.category}`).join('\n');
-  tip.style.display = 'block';
-  revealOriginalText(record);
-  const r = record.range.getBoundingClientRect();
-  const left = Number.isFinite(r.left) && r.width > 0 ? r.left : x;
-  tip.style.left = `${Math.max(8, left)}px`;
-  tip.style.top = `${Math.max(8, (Number.isFinite(r.top) && r.height > 0 ? r.top : y) - tip.offsetHeight - 8)}px`;
-}
-
-function findRecordAtPoint(node, offset) {
-  const records = highlightRecordsByNode.get(node) || [];
-  for (let i = records.length - 1; i >= 0; i--) {
-    if (records[i].range.isPointInRange(node, offset)) {
-      return records[i];
-    }
-  }
-  return null;
-}
-
-function findRecordAtViewportPoint(x, y) {
-  const rawCaret = document.caretPositionFromPoint
-    ? document.caretPositionFromPoint(x, y)
-    : document.caretRangeFromPoint?.(x, y);
-  const cp = /** @type {CaretPosition | null} */ (rawCaret);
-  const range = /** @type {Range | null} */ (rawCaret);
-  const node = cp?.offsetNode || range?.startContainer;
-  const offset = cp?.offset ?? range?.startOffset;
-  return node && typeof offset === 'number' ? findRecordAtPoint(node, offset) : null;
-}
-
-function handleHoverMove(e) {
-  if (pinnedTooltipRecord) {
-    return;
-  }
-  if (!settings.enabled || !highlightRecords.length) {
-    return;
-  }
-  const record = findRecordAtViewportPoint(e.clientX, e.clientY);
-  if (!record) {
-    if (!isPointInsideHoverReveal(e.clientX, e.clientY) && activeHover) {
-      hideTooltip();
-    } return;
-  }
-  if (activeHover === record) {
-    return;
-  }
-  restoreHoverReveal();
-  activeHover = record;
-  showTooltip(record, e.clientX, e.clientY);
-}
-
-function handleTooltipClick(e) {
-  if (isTooltipNode(e.target)) {
-    return;
-  }
-  const record = findRecordAtViewportPoint(e.clientX, e.clientY);
-  if (record) {
-    pinnedTooltipRecord = record;
-    if (activeHover !== record) {
-      restoreHoverReveal();
-    }
-    activeHover = record;
-    showTooltip(record, e.clientX, e.clientY);
-    return;
-  }
-  if (pinnedTooltipRecord) {
-    pinnedTooltipRecord = null;
-    hideTooltip(true);
-  }
+function isLikelyHeadline(parent, text) {
+  if (parent?.closest('h1,h2,h3,[role=heading],[slot=title],a#video-title,[class*=headline],[class*=title]')) return true;
+  if (PAGE_CONTEXT !== 'publication' || text.trim().length < 20) return false;
+  const link = parent?.closest('a[href]');
+  if (!link || link.closest('nav,footer,[role=navigation],[class*=share],[class*=comment]')) return false;
+  return !!parent.closest('strong,b,[class*=pufftext],[data-headline]') || link.getAttribute('itemprop') === 'url';
 }
 
 function getTermAction(term) {
-  const remove = term.remove && settings.removeTerms;
-  const replace = !remove && settings.replaceTerms && term.hasNeutral;
-  return remove ? 'removed' : replace ? 'replaced' : 'highlighted';
+  if (term.remove && settings.removeTerms) return 'removed';
+  if (settings.replaceTerms && term.hasNeutral) return 'replaced';
+  return 'highlighted';
 }
 
 function getReplacementText(term, src, action) {
-  if (action === 'removed') {
-    return '';
-  }
-  if (action === 'replaced') {
-    return getReplacementForTerm(term, src);
-  }
+  if (action === 'removed') return '';
+  if (action === 'replaced') return getReplacementForTerm(term, src);
   return src;
-}
-
-function getModeForEntry(term, action, terms = [term]) {
-  if (action === 'highlighted') {
-    if (terms.length > 1) {
-      return 'multiple';
-    }
-    return 'highlight';
-  }
-  if (action !== 'replaced') {
-    return null;
-  }
-  if (terms.length > 1) {
-    return 'multiple';
-  }
-  return term.phrase === ALL_CAPS_TERM.phrase ? 'all-caps-underline' : 'underline';
-}
-
-function getHighlightNameForMode(type, mode) {
-  if (mode === 'all-caps-underline') {
-    return ALL_CAPS_HIGHLIGHT_NAME;
-  }
-  if (mode === 'multiple') {
-    return MULTI_HIGHLIGHT_NAME;
-  }
-  return getHighlightName(type, mode);
-}
-
-function incrementTermStat(term, action) {
-  (termStats[term.phrase] ||= { highlighted: 0, replaced: 0, removed: 0 })[action]++;
-  totalMatches++;
 }
 
 function getTermsForMatch(match) {
   return (match.termIds || [match.termId]).map(getTermById).filter(Boolean);
 }
 
-function processNodePlan(text) {
-  const matches = initFindMatches(text);
-  const allCaps = isEnabled(ALL_CAPS_TERM.type) ? findAllCapsMatches(text) : [];
-  const combined = resolveMatchGroups([...matches, ...allCaps]);
-  if (!combined.length) {
-    return { displayText: text, entries: [], matches: combined };
-  }
+function getHighlightNameForEntry(term, action, terms) {
+  if (action === 'removed') return null;
+  if (terms.length > 1) return MULTI_HIGHLIGHT_NAME;
+  if (action === 'highlighted') return getHighlightName(term.type);
+  return term.phrase === ALL_CAPS_TERM.phrase ? ALL_CAPS_HIGHLIGHT_NAME : getHighlightName(term.type, 'underline');
+}
 
+function processText(text, context = {}) {
+  const matches = findMatches(matcher, text, index.termsById, index.regexTerms || [], false,
+    term => isEnabled(term.type),
+    (termId, start, end) => shouldKeepLexicalMatch(getTermById(termId), text.slice(start, end), text, context));
+  const allCaps = isEnabled(ALL_CAPS_TERM.type) ? findAllCapsMatches(text) : [];
+  const contextual = findContextualMatches(text, context).filter(match => isEnabled(getTermById(match.termId)?.type));
+  const combined = resolveMatchGroups([...matches, ...allCaps, ...contextual]);
   let cursor = 0, displayText = '';
   const entries = [];
-  for (const m of combined) {
-    const terms = getTermsForMatch(m);
+  for (const match of combined) {
+    const terms = getTermsForMatch(match);
     const term = chooseReplacementTerm(terms, getTermAction, ALL_CAPS_TERM.phrase);
-    if (!term) {
-      continue;
-    }
-    const src = text.slice(m.start, m.end);
-    displayText += text.slice(cursor, m.start);
-    const start = displayText.length, action = getTermAction(term), replacementSrc = getReplacementSourceText(term, terms, src, ALL_CAPS_TERM.phrase, lowerAllCapsLongWords), replacement = getReplacementText(term, replacementSrc, action);
-    displayText += replacement;
-    const end = displayText.length, mode = getModeForEntry(term, action, terms);
-    if (mode) {
-      entries.push({ start, end, term, terms, mode, action, sourceText: src, replacementText: replacement, highlightName: getHighlightNameForMode(term.type, mode) });
-    }
-    cursor = m.end;
+    if (!term) continue;
+    const sourceText = text.slice(match.start, match.end);
+    const action = getTermAction(term);
+    const replacementSource = getReplacementSourceText(term, terms, sourceText, ALL_CAPS_TERM.phrase, lowerAllCapsLongWords);
+    const replacementText = getReplacementText(term, replacementSource, action);
+    displayText += text.slice(cursor, match.start);
+    const start = displayText.length;
+    displayText += replacementText;
+    entries.push({ start, end: displayText.length, term, terms, action, sourceText, replacementText, highlightName: getHighlightNameForEntry(term, action, terms) });
+    cursor = match.end;
   }
   displayText += text.slice(cursor);
   return { displayText, entries, matches: combined };
 }
 
-function restoreOriginalTextNodes() {
-  const walker = document.createTreeWalker(document.body || document.documentElement, NodeFilter.SHOW_TEXT);
-  while (walker.nextNode()) {
-    const n = walker.currentNode; if (originalNodeText.has(n)) {
-      setNodeText(n, originalNodeText.get(n)); originalNodeText.delete(n);
+function restoreAnalysis() {
+  restoreHoverReveal();
+  for (const result of nodeResults.values()) {
+    if (result.node.isConnected && result.node.nodeValue === result.displayedText && result.displayedText !== result.originalText) {
+      result.node.nodeValue = result.originalText;
     }
   }
 }
 
-function processNode(node, rangesByName, records, visibilityCache) {
-  if (skipNode(node, visibilityCache)) {
-    return;
-  }
-  const current = node.nodeValue || '';
-  const source = originalNodeText.get(node) ?? current;
-  if (!source || source.trim().length < 2) {
-    if (originalNodeText.has(node) && current !== source) {
-      setNodeText(node, source);
-    }
-    originalNodeText.delete(node);
-    return;
-  }
-  const { displayText, entries, matches } = processNodePlan(source);
-  if (displayText !== source) {
-    originalNodeText.set(node, source);
-  } else {
-    originalNodeText.delete(node);
-  }
-  if (current !== displayText) {
-    setNodeText(node, displayText);
-  }
-  for (const m of matches) {
-    for (const t of getTermsForMatch(m)) {
-      incrementTermStat(t, getTermAction(t));
+function clearHighlightPresentation() {
+  if (SUPPORTS_HIGHLIGHTS) {
+    for (const name of [...TYPE_HIGHLIGHT_NAMES, ALL_CAPS_HIGHLIGHT_NAME, MULTI_HIGHLIGHT_NAME, SELECTED_HIGHLIGHT_NAME]) {
+      CSS.highlights.delete(name);
     }
   }
-  for (const e of entries) {
-    const range = document.createRange();
-    range.setStart(node, e.start); range.setEnd(node, e.end);
-    const rec = {
-      range,
-      node,
-      startOffset: e.start,
-      endOffset: e.end,
-      term: e.term.phrase,
-      terms: e.terms.map(term => ({
-        phrase: term.phrase,
-        type: term.type,
-        category: getCategory(term.type),
-        action: getTermAction(term),
-      })),
-      type: e.term.type,
-      category: getCategory(e.term.type),
-      action: e.action,
-      sourceText: e.sourceText,
-      replacementText: e.replacementText,
-      highlightName: e.highlightName,
-    };
-    records.push(rec);
-    const nr = highlightRecordsByNode.get(node);
-    if (nr) {
-      nr.push(rec);
-    } else {
-      highlightRecordsByNode.set(node, [rec]);
-    }
-    addRange(rangesByName, e.highlightName, range);
-  }
+  document.getElementById('cf-highlight-styles')?.remove();
+  activeHighlightNames = new Set();
+  highlightSets.clear();
 }
 
-function resetFullRenderState() {
-  termStats = Object.create(null); totalMatches = 0; highlightRecords = []; highlightRecordsByNode = new WeakMap();
+function resetAnalysis() {
+  hideTooltip(true);
+  restoreAnalysis();
+  clearHighlightPresentation();
+  nodeResults.clear();
   navigationIndexes.clear();
-  clearRegistry();
-}
-
-function cancelFullRender() {
-  if (!fullRenderJob) {
-    return;
-  }
-  fullRenderJob.cancelled = true;
-  if (fullRenderJob.scheduledType === 'idle' && typeof cancelIdleCallback === 'function') {
-    cancelIdleCallback(fullRenderJob.scheduledId);
-  } else if (fullRenderJob.scheduledType === 'frame') {
-    cancelAnimationFrame(fullRenderJob.scheduledId);
-  }
-  fullRenderJob = null;
-}
-
-function shouldContinueFullRenderChunk(startTime, processed, deadline) {
-  if (processed === 0) {
-    return true;
-  }
-  if (deadline && typeof deadline.timeRemaining === 'function') {
-    return deadline.timeRemaining() > 1;
-  }
-  return performance.now() - startTime < FULL_RENDER_BUDGET_MS;
-}
-
-function scheduleFullRenderChunk(job) {
-  if (typeof requestIdleCallback === 'function') {
-    job.scheduledType = 'idle';
-    job.scheduledId = requestIdleCallback(deadline => runFullRenderChunk(job, deadline), { timeout: 100 });
-  } else {
-    job.scheduledType = 'frame';
-    job.scheduledId = requestAnimationFrame(() => runFullRenderChunk(job, null));
-  }
-}
-
-function finishFullRender(job) {
-  if (fullRenderJob !== job || job.cancelled) {
-    return;
-  }
-  highlightRecords = job.records;
-  replaceHighlightRegistry(job.rangesByName);
-  fullRenderJob = null;
+  totalMatches = 0;
+  termStats = Object.create(null);
   updateBadge();
-  if (dirtyNodes?.size > 0) {
-    scheduleRender();
-  } else {
-    dirtyNodes = null;
-    renderPending = false;
+}
+
+function processTarget(target) {
+  const node = target.node;
+  if (!node.isConnected || !isProcessableNode(node)) return;
+  const originalText = node.nodeValue || '';
+  const startOffset = Math.max(0, Math.min(target.start ?? 0, originalText.length));
+  const endOffset = Math.max(startOffset, Math.min(target.end ?? originalText.length, originalText.length));
+  const source = originalText.slice(startOffset, endOffset);
+  if (source.trim().length < 2) return;
+  const parent = node.parentElement;
+  const conversational = !!parent?.closest('shreddit-comment,[data-testid*=comment],ytd-comment-thread-renderer,ytd-comments,#comments');
+  const headline = isLikelyHeadline(parent, source);
+  const plan = processText(source, { headline, conversational, pageContext: PAGE_CONTEXT });
+  const displayedNodeText = originalText.slice(0, startOffset) + plan.displayText + originalText.slice(endOffset);
+  if (displayedNodeText !== originalText) node.nodeValue = displayedNodeText;
+
+  /** @type {{node: Text, originalText: string, displayedText: string, records: any[]}} */
+  const result = { node, originalText, displayedText: displayedNodeText, records: [] };
+  for (const entry of plan.entries) {
+    const start = startOffset + entry.start, end = startOffset + entry.end;
+    const range = document.createRange();
+    range.setStart(node, start); range.setEnd(node, end);
+    result.records.push({
+      range, node, startOffset: start, endOffset: end,
+      term: entry.term.phrase,
+      terms: entry.terms,
+      type: entry.term.type, category: getCategory(entry.term.type), action: entry.action,
+      sourceText: entry.sourceText, replacementText: entry.replacementText, highlightName: entry.highlightName,
+      matchContext: { headline, conversational, pageContext: PAGE_CONTEXT },
+    });
+  }
+  if (result.records.length || displayedNodeText !== originalText) {
+    nodeResults.set(node, result);
   }
 }
 
-function runFullRenderChunk(job, deadline) {
-  if (fullRenderJob !== job || job.cancelled) {
-    return;
-  }
-  const startTime = performance.now();
-  let processed = 0;
-  while (shouldContinueFullRenderChunk(startTime, processed, deadline)) {
-    const next = job.walker.nextNode();
-    if (!next) {
-      finishFullRender(job);
-      return;
+function rebuildSummary() {
+  totalMatches = 0;
+  termStats = Object.create(null);
+  for (const result of nodeResults.values()) {
+    for (const record of result.records) {
+      const target = (termStats[record.sourceText] ||= { highlighted: 0, replaced: 0, removed: 0 });
+      target[record.action]++; totalMatches++;
     }
-    processNode(job.walker.currentNode, job.rangesByName, job.records, job.visibilityCache);
-    processed++;
   }
-  scheduleFullRenderChunk(job);
 }
 
-function startFullRender() {
-  cancelFullRender();
-  resetFullRenderState();
-  if (!settings.enabled || !matcher || !document.body) {
-    if (!settings.enabled && document.body) {
-      restoreOriginalTextNodes();
-    }
-    clearHighlightPresentation(); updateBadge(); dirtyNodes = null; return;
-  }
-  dirtyNodes = new Set();
-  fullRenderJob = {
-    cancelled: false,
-    rangesByName: new Map(),
-    records: [],
-    visibilityCache: new WeakMap(),
-    walker: document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT),
-  };
-  scheduleFullRenderChunk(fullRenderJob);
+function getAllRecords() {
+  return [...nodeResults.values()].flatMap(result => result.records);
+}
+
+function buildHighlightRule(name) {
+  if (settings.monochrome && name === ALL_CAPS_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(0,0,0,.65);text-decoration-thickness:1px;text-underline-offset:2px}`;
+  if (settings.monochrome && name === MULTI_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:rgba(0,0,0,.20);text-decoration:underline;text-decoration-color:rgba(0,0,0,.75);text-decoration-thickness:1px;text-underline-offset:2px}`;
+  if (name === ALL_CAPS_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(125,211,252,.42);text-decoration-thickness:.75px;text-underline-offset:2px}`;
+  if (name === MULTI_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:rgba(147,51,234,.42);text-decoration:underline;text-decoration-color:rgba(88,28,135,.95);text-decoration-thickness:1px;text-underline-offset:2px}`;
+  const underline = name.endsWith('-underline');
+  const typeName = name.slice(HIGHLIGHT_PREFIX.length, underline ? -'-underline'.length : undefined);
+  const color = getColor(typeName);
+  const rgb = (underline ? UNDERLINE_RGB : COLOR_RGB)[color] || (underline ? UNDERLINE_RGB.gray : COLOR_RGB.gray);
+  const intensity = TYPE_INTENSITY[typeName] ?? 0.65;
+  const alpha = Math.max(0.08, Math.min(underline ? 0.84 : 0.32, (underline ? 0.84 : 0.32) * intensity)).toFixed(3);
+  return underline
+    ? `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(${rgb},${alpha});text-decoration-thickness:1px;text-underline-offset:1px}`
+    : `::highlight(${name}){background-color:rgba(${rgb},${alpha})}`;
 }
 
 function renderHighlights() {
-  const full = dirtyNodes === null;
-  if (full) {
-    startFullRender();
-    return;
+  clearHighlightPresentation();
+  if (!SUPPORTS_HIGHLIGHTS) return;
+  const rangesByName = new Map();
+  for (const record of getAllRecords()) {
+    if (!record.highlightName || record.range.collapsed) continue;
+    const ranges = rangesByName.get(record.highlightName) || [];
+    ranges.push(record.range);
+    rangesByName.set(record.highlightName, ranges);
   }
-  if (!settings.enabled || !matcher || !document.body) {
-    cancelFullRender();
-    if (!settings.enabled && document.body) {
-      restoreOriginalTextNodes();
-    }
-    clearHighlightPresentation(); updateBadge(); dirtyNodes = null; return;
+  activeHighlightNames = new Set(rangesByName.keys());
+  for (const [name, ranges] of rangesByName) {
+    const highlight = new Highlight(...ranges);
+    highlightSets.set(name, highlight); CSS.highlights.set(name, highlight);
   }
-  cancelFullRender();
-  const rangesByName = new Map(), newRecords = [];
-  const visibilityCache = new WeakMap();
-  const nodes = [...dirtyNodes].filter(n => n.parentElement && !skipNode(n, visibilityCache));
-  dirtyNodes = null;
-  const nodeSet = new Set(nodes);
-  highlightRecords = highlightRecords.filter(r => {
-    if (!r.node.isConnected || !r.node.parentElement) {
-      removeHighlightRecordRange(r);
-      return false;
-    }
-    if (nodeSet.has(r.node)) {
-      removeHighlightRecordRange(r);
-      return false;
-    }
-    return true;
-  });
-  nodeSet.forEach(n => {
-    highlightRecordsByNode.delete(n); const cur = n.nodeValue || ''; const src = originalNodeText.get(n) ?? cur; if (!src || src.trim().length < 2) {
-      if (originalNodeText.has(n) && cur !== src) {
-        setNodeText(n, src);
-      } originalNodeText.delete(n);
-    }
-  });
-  nodes.forEach(n => processNode(n, rangesByName, newRecords, visibilityCache));
-  highlightRecords.push(...newRecords);
-  addHighlightRanges(rangesByName);
-  updateBadge();
+  if (activeHighlightNames.size) {
+    const style = document.createElement('style');
+    style.id = 'cf-highlight-styles';
+    style.textContent = [...activeHighlightNames].map(buildHighlightRule).join('\n');
+    (document.head || document.documentElement).appendChild(style);
+  }
 }
 
-function scheduleRender() {
-  if (hoverReveal) {
-    renderPending = true;
-    return;
-  }
-  if (fullRenderJob) {
-    renderPending = true;
-    return;
-  }
-  if (rerenderFrame) {
-    return;
-  }
-  renderPending = false;
-  rerenderFrame = requestAnimationFrame(() => {
-    rerenderFrame = 0;
-    if (hoverReveal) {
-      renderPending = true;
-      return;
+function syncHighlightStyles() {
+  document.getElementById('cf-highlight-styles')?.remove();
+  activeHighlightNames = new Set(highlightSets.keys());
+  if (!activeHighlightNames.size) return;
+  const style = document.createElement('style'); style.id = 'cf-highlight-styles';
+  style.textContent = [...activeHighlightNames].map(buildHighlightRule).join('\n');
+  (document.head || document.documentElement).appendChild(style);
+}
+
+function removeResultHighlights(result) {
+  if (!SUPPORTS_HIGHLIGHTS) return false;
+  let namesChanged = false;
+  for (const record of result?.records || []) {
+    const highlight = highlightSets.get(record.highlightName);
+    if (!highlight) continue;
+    highlight.delete(record.range);
+    if (highlight.size === 0) {
+      highlightSets.delete(record.highlightName); CSS.highlights.delete(record.highlightName); namesChanged = true;
     }
-    renderHighlights();
-  });
+  }
+  return namesChanged;
 }
 
-function isEditableEventTarget(target) {
-  return target instanceof Element && (/** @type {HTMLElement} */(target).isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
+function addResultHighlights(result) {
+  if (!SUPPORTS_HIGHLIGHTS) return false;
+  let namesChanged = false;
+  for (const record of result?.records || []) {
+    if (!record.highlightName || record.range.collapsed) continue;
+    let highlight = highlightSets.get(record.highlightName);
+    if (!highlight) {
+      highlight = new Highlight(); highlightSets.set(record.highlightName, highlight);
+      CSS.highlights.set(record.highlightName, highlight); namesChanged = true;
+    }
+    highlight.add(record.range);
+  }
+  return namesChanged;
 }
 
-function saveRuntimeSettings() {
-  void chrome.storage.sync.set({ settings });
-}
-
-function toggleRuntimeSetting(key) {
-  settings = normalizeSettings({ ...settings, [key]: !settings[key] });
-  saveRuntimeSettings();
-  matcher = initMatcher();
-  hideTooltip(true);
-  dirtyNodes = null;
+function analyzeTargets(targets) {
+  resetAnalysis();
+  for (const target of targets) if (target.node?.isConnected) processTarget(target);
+  rebuildSummary();
   renderHighlights();
+  updateBadge();
+  return totalMatches;
 }
 
-function handleKeyDown(e) {
-  if (isEditableEventTarget(e.target) || !e.altKey || !e.shiftKey || e.ctrlKey || e.metaKey || e.repeat) {
+function analyzePage() {
+  if (!document.body) return 0;
+  pageObserver?.disconnect();
+  const count = analyzeTargets(getTextTargets(document.body));
+  pageObserver?.takeRecords();
+  pageObserver?.observe(document.body, { childList: true, subtree: true, characterData: true });
+  return count;
+}
+
+function analyzeMutations() {
+  analysisTimer = 0;
+  pageObserver?.disconnect();
+  let highlightNamesChanged = false;
+  if (pendingDisconnectedCleanup) {
+    for (const node of nodeResults.keys()) {
+      if (!node.isConnected) {
+        const changed = removeResultHighlights(nodeResults.get(node));
+        highlightNamesChanged ||= changed; nodeResults.delete(node);
+      }
+    }
+  }
+  for (const node of pendingMutationNodes) {
+    const removedNames = removeResultHighlights(nodeResults.get(node));
+    highlightNamesChanged ||= removedNames;
+    if (!node.isConnected || !isProcessableNode(node)) {
+      nodeResults.delete(node);
+      continue;
+    }
+    nodeResults.delete(node);
+    processTarget({ node });
+    const addedNames = addResultHighlights(nodeResults.get(node));
+    highlightNamesChanged ||= addedNames;
+  }
+  pendingMutationNodes.clear();
+  pendingDisconnectedCleanup = false;
+  rebuildSummary();
+  if (highlightNamesChanged) syncHighlightStyles();
+  updateBadge();
+  pageObserver?.takeRecords();
+  pageObserver?.observe(document.body, { childList: true, subtree: true, characterData: true });
+}
+
+function getTextTargets(root) {
+  if (!root) return [];
+  const targets = [];
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (isProcessableNode(node) && (node.nodeValue || '').trim().length >= 2) targets.push({ node });
+  }
+  return targets;
+}
+
+function updateBadge() {
+  chrome.runtime.sendMessage({ type: 'COUNT', count: totalMatches }).catch(() => {});
+}
+
+function restoreHoverReveal() {
+  if (!hoverReveal) return;
+  const { record, node, revealedText } = hoverReveal;
+  if (node.nodeValue === revealedText) {
+    internalMutationCounts.set(node, (internalMutationCounts.get(node) || 0) + 1);
+    node.replaceData(record.startOffset, record.sourceText.length, record.replacementText);
+    record.range.setStart(node, record.startOffset); record.range.setEnd(node, record.endOffset);
+  }
+  hoverReveal = null;
+}
+
+function revealOriginalText(record) {
+  if (record.action !== 'replaced' || !record.sourceText || !record.replacementText || hoverReveal?.record === record) return;
+  restoreHoverReveal();
+  const display = record.node.nodeValue || '';
+  if (display.slice(record.startOffset, record.endOffset) !== record.replacementText) return;
+  const revealedText = display.slice(0, record.startOffset) + record.sourceText + display.slice(record.endOffset);
+  hoverReveal = { record, node: record.node, revealedText };
+  internalMutationCounts.set(record.node, (internalMutationCounts.get(record.node) || 0) + 1);
+  record.node.replaceData(record.startOffset, record.endOffset - record.startOffset, record.sourceText);
+  record.range.setStart(record.node, record.startOffset); record.range.setEnd(record.node, record.startOffset + record.sourceText.length);
+}
+
+function isPointInsideHoverReveal(x, y) {
+  return !!hoverReveal && [...hoverReveal.record.range.getClientRects()].some(rect =>
+    x >= rect.left - 2 && x <= rect.right + 2 && y >= rect.top - 2 && y <= rect.bottom + 2,
+  );
+}
+
+function hideTooltip(force = false) {
+  if (pinnedTooltipRecord && !force) return;
+  if (force) pinnedTooltipRecord = null;
+  restoreHoverReveal(); activeHover = null;
+  const tooltip = document.getElementById('cf-tooltip');
+  if (tooltip) tooltip.style.display = 'none';
+}
+
+function feedbackContext(record) {
+  const text = record.node.nodeValue || '';
+  const start = Math.max(0, record.startOffset - 120);
+  const end = Math.min(text.length, record.endOffset + 120);
+  return text.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
+function saveFeedback(record, verdict, status) {
+  const item = {
+    schemaVersion: 1,
+    verdict,
+    wording: record.sourceText,
+    replacement: record.replacementText,
+    action: record.action,
+    rules: (record.terms || []).map(term => term.phrase),
+    types: (record.terms || []).map(term => term.type),
+    matchContext: record.matchContext,
+    context: feedbackContext(record),
+    pageContext: PAGE_CONTEXT,
+    hostname: location.hostname,
+    createdAt: new Date().toISOString(),
+  };
+  chrome.storage.local.get({ clearframeFeedback: [] }, result => {
+    const feedback = Array.isArray(result.clearframeFeedback) ? result.clearframeFeedback.slice(-499) : [];
+    feedback.push(item);
+    chrome.storage.local.set({ clearframeFeedback: feedback }, () => {
+      status.textContent = chrome.runtime.lastError ? 'Could not save' : 'Saved locally';
+    });
+  });
+}
+
+function showTooltip(record, x, y) {
+  let tooltip = document.getElementById('cf-tooltip');
+  if (!tooltip) {
+    tooltip = document.createElement('div'); tooltip.id = 'cf-tooltip'; document.body.appendChild(tooltip);
+  }
+  const terms = record.terms?.length ? record.terms : [{ type: record.type }];
+  tooltip.textContent = '';
+  const info = document.createElement('div');
+  info.textContent = terms.map(term => `${term.type} - ${getCategory(term.type)}${term.confidence && term.confidence !== 'high' ? ` (${term.confidence})` : ''}`).join('\n');
+  tooltip.appendChild(info);
+  tooltip.classList.toggle('pinned', pinnedTooltipRecord === record);
+  if (pinnedTooltipRecord === record && settings.feedbackEnabled) {
+    const actions = document.createElement('div'); actions.className = 'cf-feedback-actions';
+    const status = document.createElement('span'); status.className = 'cf-feedback-status';
+    for (const [label, verdict] of [['Wrong context', 'wrong-context'], ['Wrong category', 'wrong-category'], ['Bad reword', 'bad-reword'], ['Too broad', 'too-broad'], ['Bad rule', 'bad-rule']]) {
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = label;
+      button.addEventListener('click', event => { event.stopPropagation(); saveFeedback(record, verdict, status); });
+      actions.appendChild(button);
+    }
+    actions.appendChild(status); tooltip.appendChild(actions);
+  }
+  tooltip.style.display = 'block';
+  revealOriginalText(record);
+  const rect = record.range.getBoundingClientRect();
+  const anchorLeft = Number.isFinite(rect.left) && rect.width > 0 ? rect.left : x;
+  const anchorTop = Number.isFinite(rect.top) && rect.height > 0 ? rect.top : y;
+  const anchorBottom = Number.isFinite(rect.bottom) && rect.height > 0 ? rect.bottom : y;
+  const left = Math.min(Math.max(8, anchorLeft), Math.max(8, window.innerWidth - tooltip.offsetWidth - 8));
+  const above = anchorTop - tooltip.offsetHeight - 8;
+  const top = above >= 8 ? above : Math.min(anchorBottom + 8, Math.max(8, window.innerHeight - tooltip.offsetHeight - 8));
+  tooltip.style.left = `${left}px`;
+  tooltip.style.top = `${top}px`;
+}
+
+function findRecordAtCaret(caret, x, y) {
+  const node = caret?.offsetNode || caret?.startContainer;
+  const offset = caret?.offset ?? caret?.startOffset;
+  if (!node || typeof offset !== 'number') return null;
+  const records = nodeResults.get(node)?.records || [];
+  for (let i = records.length - 1; i >= 0; i--) {
+    const record = records[i];
+    if (record.range.isPointInRange(node, offset) ||
+        (offset > 0 && record.range.isPointInRange(node, offset - 1)) ||
+        [...record.range.getClientRects()].some(rect => x >= rect.left - 2 && x <= rect.right + 2 && y >= rect.top - 2 && y <= rect.bottom + 2)) return record;
+  }
+  return null;
+}
+
+function findRecordAtPoint(x, y) {
+  const position = /** @type {any} */ (document.caretPositionFromPoint?.(x, y));
+  const range = /** @type {any} */ (document.caretRangeFromPoint?.(x, y));
+  const direct = findRecordAtCaret(position, x, y) || findRecordAtCaret(range, x, y);
+  if (direct) return direct;
+
+  // Some sites place non-text descendants over the visible text. Check nearby
+  // text nodes without scanning every match on the page.
+  let element = document.elementFromPoint(x, y);
+  for (let depth = 0; element && depth < 5; depth++, element = element.parentElement) {
+    for (const node of element.childNodes) {
+      if (!(node instanceof Text)) continue;
+      for (const record of nodeResults.get(node)?.records || []) {
+        if ([...record.range.getClientRects()].some(rect => x >= rect.left - 2 && x <= rect.right + 2 && y >= rect.top - 2 && y <= rect.bottom + 2)) return record;
+      }
+    }
+  }
+  return null;
+}
+
+function processHoverMove(event) {
+  if (pinnedTooltipRecord || !nodeResults.size) return;
+  const record = findRecordAtPoint(event.clientX, event.clientY);
+  if (!record) {
+    if (activeHover && !isPointInsideHoverReveal(event.clientX, event.clientY)) hideTooltip();
     return;
   }
-  const s = RUNTIME_SHORTCUTS[e.key.toLowerCase()];
-  if (!s) {
-    return;
+  if (activeHover === record) return;
+  restoreHoverReveal(); activeHover = record; showTooltip(record, event.clientX, event.clientY);
+}
+
+function handleHoverMove(event) {
+  pendingHoverEvent = event;
+  if (hoverFrame) return;
+  hoverFrame = requestAnimationFrame(() => {
+    hoverFrame = 0;
+    const next = pendingHoverEvent; pendingHoverEvent = null;
+    if (next) processHoverMove(next);
+  });
+}
+
+function handleTooltipClick(event) {
+  if (event.target instanceof Element && event.target.closest('#cf-tooltip')) return;
+  const record = findRecordAtPoint(event.clientX, event.clientY);
+  if (record) {
+    pinnedTooltipRecord = record; activeHover = record; showTooltip(record, event.clientX, event.clientY);
+  } else if (pinnedTooltipRecord) {
+    hideTooltip(true);
   }
-  e.preventDefault();
-  toggleRuntimeSetting(s);
 }
 
-function isTooltipNode(node) {
-  return node instanceof Element && (node.id === 'cf-tooltip' || !!node.closest?.('#cf-tooltip'));
+function hideSuggestion() {
+  document.getElementById('cf-suggestion')?.remove();
 }
 
-function isSkippedMutationNode(node, visibilityCache) {
-  if (isTooltipNode(node)) {
+function selectionContext(range) {
+  const node = range.startContainer;
+  const text = node.nodeType === Node.TEXT_NODE ? node.nodeValue || '' : node.textContent || '';
+  const offset = node.nodeType === Node.TEXT_NODE ? range.startOffset : 0;
+  return text.slice(Math.max(0, offset - 120), Math.min(text.length, offset + 240)).replace(/\s+/g, ' ').trim();
+}
+
+function saveSuggestion(wording, context, element, status) {
+  const item = {
+    schemaVersion: 1, wording, context, pageContext: PAGE_CONTEXT, hostname: location.hostname,
+    matchContext: { headline: isLikelyHeadline(element, wording), conversational: !!element.closest('shreddit-comment,[data-testid*=comment],ytd-comment-thread-renderer,ytd-comments,#comments') },
+    createdAt: new Date().toISOString(),
+  };
+  chrome.storage.local.get({ clearframeSuggestions: [] }, result => {
+    const suggestions = Array.isArray(result.clearframeSuggestions) ? result.clearframeSuggestions.slice(-499) : [];
+    suggestions.push(item);
+    chrome.storage.local.set({ clearframeSuggestions: suggestions }, () => {
+      status.textContent = chrome.runtime.lastError ? 'Could not save' : 'Saved locally';
+    });
+  });
+}
+
+function handleSelectionSuggestion(event) {
+  if (!settings.feedbackEnabled || event.target instanceof Element && event.target.closest('#cf-tooltip,#cf-suggestion')) return;
+  hideSuggestion();
+  const selection = getSelection();
+  const wording = selection?.toString().replace(/\s+/g, ' ').trim() || '';
+  if (!selection || selection.isCollapsed || wording.length < 2 || wording.length > 240 || !selection.rangeCount) return;
+  const range = selection.getRangeAt(0);
+  const element = range.commonAncestorContainer instanceof Element ? range.commonAncestorContainer : range.commonAncestorContainer.parentElement;
+  if (!element || element.closest('input,textarea,[contenteditable=true],#cf-tooltip,#cf-suggestion')) return;
+  const rect = range.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  const panel = document.createElement('div'); panel.id = 'cf-suggestion';
+  const preview = document.createElement('div'); preview.className = 'cf-suggestion-preview'; preview.textContent = wording;
+  const suggest = document.createElement('button'); suggest.type = 'button'; suggest.textContent = 'Suggest wording';
+  const cancel = document.createElement('button'); cancel.type = 'button'; cancel.textContent = 'Cancel';
+  const status = document.createElement('span'); status.className = 'cf-feedback-status';
+  suggest.addEventListener('click', click => { click.stopPropagation(); saveSuggestion(wording, selectionContext(range), element, status); });
+  cancel.addEventListener('click', click => { click.stopPropagation(); hideSuggestion(); });
+  panel.append(preview, suggest, cancel, status); document.body.appendChild(panel);
+  panel.style.left = `${Math.min(Math.max(8, rect.left), Math.max(8, innerWidth - panel.offsetWidth - 8))}px`;
+  panel.style.top = `${Math.min(rect.bottom + 7, Math.max(8, innerHeight - panel.offsetHeight - 8))}px`;
+}
+
+function navigateToTerm(term, action) {
+  const records = getAllRecords().filter(record => record.sourceText === term && record.action === action && record.node.isConnected);
+  if (!records.length) return;
+  const key = `${action}\n${term}`;
+  const nextIndex = ((navigationIndexes.get(key) ?? -1) + 1) % records.length;
+  navigationIndexes.set(key, nextIndex);
+  const record = records[nextIndex];
+  record.node.parentElement?.scrollIntoView({ block: 'center', behavior: 'auto' });
+  if (SUPPORTS_HIGHLIGHTS && !record.range.collapsed) {
+    const style = document.getElementById('cf-highlight-styles');
+    if (style) style.textContent = [...activeHighlightNames].map(buildHighlightRule).join('\n') + `\n::highlight(${SELECTED_HIGHLIGHT_NAME}){background-color:CanvasText;color:Canvas}`;
+    CSS.highlights.set(SELECTED_HIGHLIGHT_NAME, new Highlight(record.range));
+  }
+}
+
+function saveRuntimeSettings(nextSettings) {
+  chrome.storage.sync.set({ settings: nextSettings }, () => {
+    const error = chrome.runtime.lastError;
+    if (error) console.error('ClearFrame settings write failed:', error.message);
+  });
+}
+
+function handleKeyDown(event) {
+  const target = event.target;
+  if (target instanceof Element && (/** @type {HTMLElement} */ (target).isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))) return;
+  if (!event.altKey || !event.shiftKey || event.ctrlKey || event.metaKey || event.repeat) return;
+  const setting = RUNTIME_SHORTCUTS[event.key.toLowerCase()];
+  if (!setting) return;
+  event.preventDefault();
+  saveRuntimeSettings(normalizeSettings({ ...settings, [setting]: !settings[setting] }));
+}
+
+function getTermGroups() {
+  /** @type {Record<string, Array<{term: string, count: number}>>} */
+  const groups = { highlighted: [], replaced: [], removed: [] };
+  for (const [term, counts] of Object.entries(termStats)) {
+    for (const action of Object.keys(groups)) {
+      if (counts[action] > 0) groups[action].push({ term, count: counts[action] });
+    }
+  }
+  for (const items of Object.values(groups)) items.sort((a, b) => b.count - a.count || a.term.localeCompare(b.term));
+  return groups;
+}
+
+function isClearFrameNode(node) {
+  const element = node instanceof Element ? node : node.parentElement;
+  return !!element?.closest('#cf-tooltip,#cf-suggestion,#cf-highlight-styles');
+}
+
+function mutationChangesText(mutation) {
+  if (isClearFrameNode(mutation.target)) return false;
+  if (mutation.type === 'characterData') {
+    const remaining = internalMutationCounts.get(mutation.target) || 0;
+    if (remaining > 0) {
+      if (remaining === 1) internalMutationCounts.delete(mutation.target);
+      else internalMutationCounts.set(mutation.target, remaining - 1);
+      return false;
+    }
     return true;
   }
-  const el = node instanceof Element ? node : node?.parentElement;
-  return !el || el.isContentEditable || SKIP_TAGS.has(el.tagName) || !!el.closest(SKIP_SELECTOR) || !isVisibleElement(el, visibilityCache);
+  return [...mutation.addedNodes, ...mutation.removedNodes].some(node => !isClearFrameNode(node) && (node.textContent || '').trim().length >= 2);
 }
 
-function hasMeaningfulText(node) {
-  return (node.textContent || node.nodeValue || '').trim().length >= 2;
+function scheduleMutationAnalysis(mutations) {
+  for (const mutation of mutations) {
+    if (!mutationChangesText(mutation)) continue;
+    if (mutation.type === 'characterData' && mutation.target instanceof Text) {
+      pendingMutationNodes.add(mutation.target);
+      continue;
+    }
+    pendingDisconnectedCleanup ||= mutation.removedNodes.length > 0;
+    for (const added of mutation.addedNodes) {
+      if (added instanceof Text) pendingMutationNodes.add(added);
+      else for (const target of getTextTargets(added)) pendingMutationNodes.add(target.node);
+    }
+  }
+  if (!pendingMutationNodes.size && !pendingDisconnectedCleanup) return;
+  if (!analysisTimer) analysisTimer = window.setTimeout(analyzeMutations, 120);
 }
 
 function init() {
-  chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ r) => {
-    loadSettings(r.settings, r.userTypeColors);
-    matcher = initMatcher();
+  loadSettings(DEFAULT_SETTINGS);
+  chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ result) => {
+    loadSettings(result.settings, result.userTypeColors);
     const start = () => {
-      dirtyNodes = null; renderHighlights();
+      pageObserver = new MutationObserver(mutations => {
+        scheduleMutationAnalysis(mutations);
+      });
+      analyzePage();
     };
-    if (document.body) {
-      start();
-    } else {
-      document.addEventListener('DOMContentLoaded', start, { once: true });
-    }
-
-    const mo = new MutationObserver(mutations => {
-      if (!settings.enabled) {
-        return;
-      }
-      if (dirtyNodes === null) {
-        dirtyNodes = new Set();
-      }
-      const visibilityCache = new WeakMap();
-      for (const m of mutations) {
-        if (m.type === 'characterData') {
-          if (internallyMutatedNodes.has(m.target)) {
-            internallyMutatedNodes.delete(m.target);
-          } else {
-            originalNodeText.delete(m.target);
-            if (!isSkippedMutationNode(m.target, visibilityCache) && hasMeaningfulText(m.target)) {
-              dirtyNodes.add(m.target);
-            }
-          }
-        } else {
-          for (const n of m.addedNodes) {
-            if (n.nodeType === Node.TEXT_NODE) {
-              if (!isSkippedMutationNode(n, visibilityCache) && hasMeaningfulText(n)) {
-                dirtyNodes.add(n);
-              }
-            } else if (n.nodeType === Node.ELEMENT_NODE) {
-              const w = document.createTreeWalker(n, NodeFilter.SHOW_TEXT);
-              while (w.nextNode()) {
-                const tn = w.currentNode; if (!isSkippedMutationNode(tn, visibilityCache) && hasMeaningfulText(tn)) {
-                  dirtyNodes.add(tn);
-                }
-              }
-            }
-          }
-        }
-      }
-      if (dirtyNodes.size > 0) {
-        scheduleRender();
-      }
-    });
-    mo.observe(document.body || document.documentElement, { childList: true, subtree: true, characterData: true });
-    document.addEventListener('mousemove', handleHoverMove, { passive: true });
-    document.addEventListener('click', handleTooltipClick, true);
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('scroll', () => hideTooltip(), true);
-    window.addEventListener('blur', () => hideTooltip(true));
+    if (document.body) start();
+    else document.addEventListener('DOMContentLoaded', start, { once: true });
   });
+  document.addEventListener('mousemove', handleHoverMove, { capture: true, passive: true });
+  document.addEventListener('click', handleTooltipClick, true);
+  document.addEventListener('mouseup', handleSelectionSuggestion, true);
+  document.addEventListener('keydown', handleKeyDown);
+  document.addEventListener('scroll', () => { hideTooltip(); hideSuggestion(); }, true);
+  window.addEventListener('blur', () => { hideTooltip(true); hideSuggestion(); });
 }
 
-if (window.top === window) {
-  init();
-}
+if (window.top === window) init();
 
-chrome.runtime.onMessage.addListener((msg, _src, sendResponse) => {
-  if (msg.type === 'GET_COUNT') {
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName === 'sync' && changes.settings && matcher) applySettings(changes.settings.newValue || {});
+});
+
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message.type === 'GET_COUNT') {
     sendResponse({ count: totalMatches }); return;
   }
-  if (msg.type === 'GET_TERMS') {
-    const groups = { highlighted: [], replaced: [], removed: [] };
-    for (const [term, counts] of Object.entries(termStats)) {
-      for (const action of Object.keys(groups)) {
-        const c = counts[action] || 0; if (c > 0) {
-          groups[action].push({ term, count: c });
-        }
-      }
-    }
-    for (const action of Object.keys(groups)) {
-      groups[action].sort((a, b) => b.count - a.count || a.term.localeCompare(b.term));
-    }
-    sendResponse({ groups }); return;
+  if (message.type === 'GET_TERMS') {
+    sendResponse({ groups: getTermGroups() }); return;
   }
-  if (msg.type === 'NAVIGATE_TERM') {
-    navigateToTerm(msg.term, msg.action);
-    return;
+  if (message.type === 'NAVIGATE_TERM') {
+    navigateToTerm(message.term, message.action); return;
   }
-  if (msg.type === 'RELOAD_SETTINGS') {
-    chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ r) => {
-      loadSettings(r.settings, r.userTypeColors); matcher = initMatcher(); dirtyNodes = null; renderHighlights();
+  if (message.type === 'RELOAD_SETTINGS') {
+    chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ result) => {
+      applySettings(result.settings, result.userTypeColors); sendResponse({ ok: true });
     });
+    return true;
   }
 });

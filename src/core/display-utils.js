@@ -22,9 +22,7 @@ export function getAllCapsAction(text) {
 export function getContextualAllCapsAction(text, start, end) {
   const value = String(text || '');
   const word = value.slice(start, end).toUpperCase();
-  if (!CONTEXTUAL_SHORT_WORDS.has(word)) {
-    return null;
-  }
+  if (!CONTEXTUAL_SHORT_WORDS.has(word)) return null;
   return /[A-Za-z0-9]+(?:'[A-Za-z0-9]+)*\s+$/.test(value.slice(0, start)) ? 'all-caps' : null;
 }
 

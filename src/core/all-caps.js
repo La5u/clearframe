@@ -12,6 +12,9 @@ function hasNextTitleCaseWord(text, end) {
 }
 
 function isContextualAllCaps(text, start, end) {
+  if (text.slice(start, end) === 'A' && (/-levels?\b/i.test(text.slice(end, end + 8)) || /\b(?:an|grade|grade of|earned|received|scored|got)\s+$/i.test(text.slice(Math.max(0, start - 20), start)))) {
+    return false;
+  }
   if (text.slice(start, end) === 'A' && hasNextTitleCaseWord(text, end)) {
     return false;
   }

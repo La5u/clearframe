@@ -4,14 +4,20 @@ import { DEFAULT_SETTINGS, normalizeSettings } from './core/settings-utils.js';
 const { types, categories, colorConfig } = ClearFrame;
 const $ = (id) => /** @type {HTMLElement} */(document.getElementById(id));
 const els = {
-  enabled: /** @type {HTMLInputElement} */ ($('enabled')),
   replaceTerms: /** @type {HTMLInputElement} */ ($('replace-terms')),
   removeTerms: /** @type {HTMLInputElement} */ ($('remove-terms')),
+  monochrome: /** @type {HTMLInputElement} */ ($('monochrome')),
+  feedbackEnabled: /** @type {HTMLInputElement} */ ($('feedback-enabled')),
+  feedbackToolsActions: $('feedback-tools-actions'),
+  copyFeedback: /** @type {HTMLButtonElement} */ ($('copy-feedback')),
+  feedbackCopyStatus: $('feedback-copy-status'),
   colorGroups: $('color-groups'),
   resetBtn: $('reset-btn'),
   detectedCount: $('detected-count'),
+  generalTab: $('general-tab'),
   customizeTab: $('customize-tab'),
   detectedTab: $('detected-tab'),
+  generalPanel: $('general-panel'),
   customizePanel: $('customize-panel'),
   detectedPanel: $('detected-panel'),
   termTabs: $('term-tabs'),
@@ -23,31 +29,71 @@ const COLOR_MAP = { yellow: '#fff7cc', green: '#e7f8ea', gray: '#f1f1f1', red: '
 let userTypeColors = {};
 let settings = normalizeSettings(DEFAULT_SETTINGS);
 let dragState = null;
+let activeTabId = null;
 
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
   settings = normalizeSettings(rawSettings, rawTypeColors); userTypeColors = settings.userTypeColors;
 }
 
 function getSettings() {
-  const next = { enabled: els.enabled.checked, replaceTerms: els.replaceTerms.checked, removeTerms: els.removeTerms.checked, types: {} };
+  const next = { replaceTerms: els.replaceTerms.checked, removeTerms: els.removeTerms.checked, monochrome: els.monochrome.checked, feedbackEnabled: els.feedbackEnabled.checked, types: {} };
   document.querySelectorAll('.type-chip').forEach(chip => {
     next.types[/** @type {HTMLElement} */(chip).dataset.type] = /** @type {HTMLElement} */(chip).dataset.enabled === 'true';
   });
   return next;
 }
 
-function saveSettings(reload = false) {
+function saveSettings() {
   const next = getSettings();
   next.userTypeColors = userTypeColors;
-  void chrome.storage.sync.set({ settings: next });
-  if (reload) {
+  settings = normalizeSettings(next);
+  chrome.storage.sync.set({ settings: next }, () => {
+    const writeError = chrome.runtime.lastError;
+    if (writeError) {
+      console.error('ClearFrame settings write failed:', writeError.message);
+      return;
+    }
     sendToActiveTab({ type: 'RELOAD_SETTINGS' });
+    // Migrate the legacy top-level color setting after its values have been
+    // copied into settings.userTypeColors.
+    chrome.storage.sync.remove('userTypeColors', () => {
+      const removeError = chrome.runtime.lastError;
+      if (removeError) {
+        console.error('ClearFrame settings migration failed:', removeError.message);
+        return;
+      }
+    });
+  });
+}
+
+function updateFeedbackTools() {
+  els.feedbackToolsActions.style.display = els.feedbackEnabled.checked ? 'block' : 'none';
+}
+
+async function copyFeedback() {
+  const data = await chrome.storage.local.get({ clearframeFeedback: [], clearframeSuggestions: [] });
+  const output = {
+    feedback: Array.isArray(data.clearframeFeedback) ? data.clearframeFeedback : [],
+    suggestions: Array.isArray(data.clearframeSuggestions) ? data.clearframeSuggestions : [],
+  };
+  const count = output.feedback.length + output.suggestions.length;
+  try {
+    await navigator.clipboard.writeText(JSON.stringify(output, null, 2));
+    els.feedbackCopyStatus.textContent = `Copied ${count}`;
+  } catch {
+    els.feedbackCopyStatus.textContent = 'Copy failed';
   }
+}
+
+function updateActiveTabId() {
+  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+    activeTabId = tabs[0]?.id ?? null;
+  });
 }
 
 function sendToActiveTab(message, onResponse) {
   chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-    if (!tabs[0]?.id) {
+    if (typeof tabs[0]?.id !== 'number') {
       return;
     }
     chrome.tabs.sendMessage(tabs[0].id, message, res => {
@@ -103,7 +149,7 @@ function updateTermsList() {
         list.textContent = 'No matches.';
       }
       panel.appendChild(list); panes.set(action, { tab, panel });
-      if (!firstAction) {
+      if (items.length && !firstAction) {
         firstAction = action;
       }
       els.termTabs.appendChild(tab); els.termPanels.appendChild(panel);
@@ -125,20 +171,22 @@ function updateTermsList() {
 }
 
 function setTopTab(name) {
-  const c = name === 'customize';
-  els.customizeTab?.classList.toggle('active', c); els.detectedTab?.classList.toggle('active', !c);
-  els.customizeTab?.setAttribute('aria-selected', String(c)); els.detectedTab?.setAttribute('aria-selected', String(!c));
-  els.customizePanel?.classList.toggle('active', c); els.detectedPanel?.classList.toggle('active', !c);
-  if (!c) {
-    updateTermsList();
+  const tabs = { general: els.generalTab, customize: els.customizeTab, detected: els.detectedTab };
+  const panels = { general: els.generalPanel, customize: els.customizePanel, detected: els.detectedPanel };
+  for (const key of Object.keys(tabs)) {
+    const active = key === name;
+    tabs[key]?.classList.toggle('active', active);
+    tabs[key]?.setAttribute('aria-selected', String(active));
+    panels[key]?.classList.toggle('active', active);
   }
+  if (name === 'detected') updateTermsList();
 }
 
 function createTypeChip(type) {
   const chip = /** @type {any} */(document.createElement('button'));
   chip.className = 'type-chip'; chip.dataset.type = type; chip.dataset.category = getCategory(type);
   chip.dataset.enabled = String(settings.types?.[type] !== false); chip.type = 'button';
-  chip.style.background = getColorHex(getEffectiveColor(type));
+  chip.style.background = getColorHex(settings.monochrome ? 'gray' : getEffectiveColor(type));
   if (chip.dataset.enabled !== 'true') {
     chip.classList.add('disabled');
   }
@@ -176,13 +224,13 @@ function setOverZone(zone) {
 function applyDrop(type, newColor) {
   if (!type || !newColor) {
     return;
-  } userTypeColors[type] = newColor; saveSettings(true); renderColorGroups();
+  } userTypeColors[type] = newColor; saveSettings(); renderColorGroups();
 }
 
 function toggleChip(chip) {
   const enabled = chip.dataset.enabled === 'true';
   chip.dataset.enabled = String(!enabled); chip.classList.toggle('disabled', enabled);
-  saveSettings(true); setTimeout(updateDetectedCount, 0);
+  saveSettings();
 }
 
 function onPointerMove(e) {
@@ -229,7 +277,7 @@ function setupDragDrop() {
 }
 
 els.resetBtn.addEventListener('click', () => {
-  userTypeColors = {}; saveSettings(true); renderColorGroups(); updateDetectedCount(); updateTermsList();
+  userTypeColors = {}; saveSettings(); renderColorGroups();
 });
 
 function init() {
@@ -243,17 +291,24 @@ function init() {
       if (els.githubLink) {
         els.githubLink.href = 'https://github.com/la5u/clearframe';
       }
-      els.enabled.checked = settings.enabled !== false; els.replaceTerms.checked = settings.replaceTerms === true; els.removeTerms.checked = settings.removeTerms === true;
-      renderColorGroups(); setTopTab('customize');
-      els.enabled.addEventListener('change', () => {
-        saveSettings(true); updateDetectedCount(); updateTermsList();
-      });
+      els.replaceTerms.checked = settings.replaceTerms === true; els.removeTerms.checked = settings.removeTerms === true; els.monochrome.checked = settings.monochrome === true; els.feedbackEnabled.checked = settings.feedbackEnabled === true;
+      updateFeedbackTools();
+      updateActiveTabId();
+      renderColorGroups(); setTopTab('general');
       els.replaceTerms.addEventListener('change', () => {
-        saveSettings(true); updateDetectedCount(); updateTermsList();
+        saveSettings();
       });
       els.removeTerms.addEventListener('change', () => {
-        saveSettings(true); updateDetectedCount(); updateTermsList();
+        saveSettings();
       });
+      els.monochrome.addEventListener('change', () => {
+        saveSettings(); renderColorGroups();
+      });
+      els.feedbackEnabled.addEventListener('change', () => {
+        saveSettings(); updateFeedbackTools();
+      });
+      els.copyFeedback.addEventListener('click', copyFeedback);
+      els.generalTab?.addEventListener('click', () => setTopTab('general'));
       els.customizeTab?.addEventListener('click', () => setTopTab('customize'));
       els.detectedTab?.addEventListener('click', () => setTopTab('detected'));
       updateDetectedCount(); updateTermsList();
@@ -264,5 +319,17 @@ function init() {
     }
   }
 }
+
+chrome.runtime.onMessage.addListener((msg, sender) => {
+  if (msg.type !== 'COUNT' || sender.tab?.id !== activeTabId) {
+    return;
+  }
+  if (els.detectedCount) {
+    els.detectedCount.textContent = `(${typeof msg.count === 'number' ? msg.count : 0})`;
+  }
+  if (els.detectedPanel?.classList.contains('active')) {
+    updateTermsList();
+  }
+});
 
 init();

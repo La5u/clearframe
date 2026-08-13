@@ -14,7 +14,7 @@ function setBadge(count) {
 function refreshActiveBadge() {
   chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
     const tab = tabs[0];
-    if (!tab?.id) {
+    if (typeof tab?.id !== 'number') {
       setBadge(null); return;
     }
     chrome.tabs.sendMessage(tab.id, { type: 'GET_COUNT' }, res => {
@@ -28,7 +28,7 @@ function refreshActiveBadge() {
 
 chrome.runtime.onMessage.addListener((msg, sender) => {
   const tabId = sender.tab?.id;
-  if (msg.type !== 'COUNT' || !tabId) {
+  if (msg.type !== 'COUNT' || typeof tabId !== 'number') {
     return;
   }
   chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -39,12 +39,19 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 });
 
 chrome.tabs.onActivated.addListener(refreshActiveBadge);
-chrome.tabs.onUpdated.addListener((_tabId, info) => {
-  if (info.status === 'loading') {
-    setBadge(null);
+chrome.tabs.onUpdated.addListener((tabId, info) => {
+  if (info.status !== 'loading' && info.status !== 'complete') {
+    return;
   }
-  if (info.status === 'complete') {
-    refreshActiveBadge();
-  }
+  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+    if (tabs[0]?.id !== tabId) {
+      return;
+    }
+    if (info.status === 'loading') {
+      setBadge(null);
+    } else {
+      refreshActiveBadge();
+    }
+  });
 });
 refreshActiveBadge();

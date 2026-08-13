@@ -1,81 +1,63 @@
-::highlight(clearframe-yellow),
-::highlight(clearframe-green),
-::highlight(clearframe-gray),
-::highlight(clearframe-red),
-::highlight(clearframe-pink),
-::highlight(clearframe-orange),
-::highlight(clearframe-purple),
-::highlight(clearframe-blue),
-::highlight(clearframe-teal) {
-  background-color: var(--cf-highlight);
-}
-
-::highlight(clearframe-yellow-underline),
-::highlight(clearframe-green-underline),
-::highlight(clearframe-gray-underline),
-::highlight(clearframe-red-underline),
-::highlight(clearframe-pink-underline),
-::highlight(clearframe-orange-underline),
-::highlight(clearframe-purple-underline),
-::highlight(clearframe-blue-underline),
-::highlight(clearframe-teal-underline),
-::highlight(clearframe-all-caps-underline),
-::highlight(clearframe-multiple) {
-  background-color: transparent;
-  text-decoration: underline;
-  text-decoration-color: var(--cf-underline);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 1px;
-}
-
-::highlight(clearframe-yellow),
-::highlight(clearframe-yellow-underline) { --cf-highlight: rgba(250, 204, 21, 0.24); --cf-underline: rgba(202, 138, 4, 0.78); }
-::highlight(clearframe-green),
-::highlight(clearframe-green-underline) { --cf-highlight: rgba(74, 222, 128, 0.24); --cf-underline: rgba(22, 163, 74, 0.78); }
-::highlight(clearframe-gray),
-::highlight(clearframe-gray-underline) { --cf-highlight: rgba(209, 213, 219, 0.28); --cf-underline: rgba(107, 114, 128, 0.78); }
-::highlight(clearframe-red),
-::highlight(clearframe-red-underline) { --cf-highlight: rgba(248, 113, 113, 0.24); --cf-underline: rgba(220, 38, 38, 0.78); }
-::highlight(clearframe-pink),
-::highlight(clearframe-pink-underline) { --cf-highlight: rgba(244, 114, 182, 0.24); --cf-underline: rgba(219, 39, 119, 0.78); }
-::highlight(clearframe-orange),
-::highlight(clearframe-orange-underline) { --cf-highlight: rgba(251, 146, 60, 0.24); --cf-underline: rgba(234, 88, 12, 0.78); }
-::highlight(clearframe-purple),
-::highlight(clearframe-purple-underline) { --cf-highlight: rgba(196, 128, 255, 0.24); --cf-underline: rgba(147, 51, 234, 0.78); }
-::highlight(clearframe-blue),
-::highlight(clearframe-blue-underline) { --cf-highlight: rgba(96, 165, 250, 0.24); --cf-underline: rgba(37, 99, 235, 0.78); }
-::highlight(clearframe-teal),
-::highlight(clearframe-teal-underline) { --cf-highlight: rgba(45, 212, 191, 0.24); --cf-underline: rgba(20, 184, 166, 0.78); }
-
-::highlight(clearframe-all-caps-underline) {
-  --cf-underline: rgba(125, 211, 252, 0.42);
-  text-decoration-thickness: 0.75px;
-  text-underline-offset: 2px;
-}
-
-::highlight(clearframe-multiple) {
-  background-color: rgba(147, 51, 234, 0.42);
-  text-decoration-color: rgba(88, 28, 135, 0.95);
-  text-underline-offset: 2px;
-}
-
-::highlight(clearframe-selected) {
-  background-color: CanvasText;
-  color: Canvas;
-}
-
 #cf-tooltip {
-  position: fixed;
-  z-index: 999999;
+  position: fixed !important;
+  z-index: 2147483647 !important;
   display: none;
-  max-width: 280px;
+  max-width: min(280px, calc(100vw - 16px));
   padding: 6px 10px;
-  border-radius: 8px;
-  background: rgba(17, 24, 39, 0.96);
-  color: #fff;
-  font-size: 12px;
+  border: 1px solid #000;
+  border-radius: 0;
+  background: #fff;
+  color: #000;
+  font-size: 14px;
   line-height: 1.35;
   white-space: pre-line;
   pointer-events: none;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
 }
+
+#cf-tooltip.pinned { pointer-events: auto; }
+#cf-tooltip .cf-feedback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid #000;
+}
+#cf-tooltip .cf-feedback-actions button {
+  border: 1px solid #000;
+  border-radius: 0;
+  background: #fff;
+  color: #000;
+  font: inherit;
+  cursor: pointer;
+}
+#cf-tooltip .cf-feedback-status { width: 100%; font-size: 12px; }
+
+#cf-suggestion {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  max-width: min(320px, calc(100vw - 16px));
+  padding: 7px;
+  border: 1px solid #000;
+  border-radius: 0;
+  background: #fff;
+  color: #000;
+  font: 14px/1.35 sans-serif;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+}
+#cf-suggestion .cf-suggestion-preview {
+  overflow: hidden;
+  margin-bottom: 7px;
+  max-height: 3.8em;
+  font-weight: 700;
+}
+#cf-suggestion button {
+  margin-right: 5px;
+  border: 1px solid #000;
+  border-radius: 0;
+  background: #fff;
+  color: #000;
+  font: inherit;
+}
+#cf-suggestion .cf-feedback-status { display: block; margin-top: 5px; font-size: 12px; }

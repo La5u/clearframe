@@ -3,6 +3,8 @@ import path from 'path';
 import { normalize } from './matcher.js';
 import { adverbWord, pastTenseWord, ingWord } from './stemmer.js';
 
+const ALLOWED_CONTEXTS = new Set(['headline', 'body', 'publication', 'discussion', 'video', 'conversation', 'evaluative']);
+
 export function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -93,10 +95,13 @@ function parseStemTypeCell(value) {
   throw new Error(`Unsupported stem type "${value}"`);
 }
 
-export function loadTerms(dataDir) {
+export function loadTerms(dataDir, extraTerms = []) {
   const terms = {}, entries = [], regexTerms = [], phraseTypes = new Map();
 
   function addTerm(phrase, term, source) {
+    for (const context of term.contexts || []) {
+      if (!ALLOWED_CONTEXTS.has(context)) throw new Error(`Unsupported context "${context}" for term "${phrase}" in ${source}`);
+    }
     const existingType = phraseTypes.get(phrase);
     if (existingType && existingType !== term.type) {
       throw new Error(`Duplicate term phrase "${phrase}" in ${source} conflicts with type "${existingType}"`);
@@ -106,7 +111,15 @@ export function loadTerms(dataDir) {
       return;
     }
     const hasNeutral = term.neutral !== '';
-    terms[phrase] = { phrase, type: term.type, neutral: term.neutral || '', hasNeutral, stemType: term.stemType || '', regex: term.regex || '', remove: term.remove === true };
+    if (term.regex) {
+      try {
+        new RegExp(term.regex, 'giu');
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        throw new Error(`Invalid regex for term "${phrase}" in ${source}: ${message}`);
+      }
+    }
+    terms[phrase] = { phrase: normalize(term.phrase), type: term.type, neutral: term.neutral || '', hasNeutral, stemType: term.stemType || '', regex: term.regex || '', remove: term.remove === true, confidence: term.confidence || 'high', provenance: term.provenance || [], contexts: term.contexts || [] };
     if (term.regex) {
       regexTerms.push({ termId: phrase, pattern: term.regex });
     } else {
@@ -127,7 +140,7 @@ export function loadTerms(dataDir) {
       } return i;
     };
     idx('phrase'); idx('type');
-    const phI = idx('phrase'), tyI = idx('type'), neI = headers.indexOf('neutral'), alI = headers.indexOf('aliases'), stI = headers.indexOf('stemmable'), reI = headers.indexOf('regex'), rmI = headers.indexOf('remove');
+    const phI = idx('phrase'), tyI = idx('type'), neI = headers.indexOf('neutral'), alI = headers.indexOf('aliases'), stI = headers.indexOf('stemmable'), reI = headers.indexOf('regex'), rmI = headers.indexOf('remove'), cxI = headers.indexOf('contexts');
 
     for (const row of bodyRows) {
       if (!row.some(c => c.trim().length > 0)) {
@@ -141,12 +154,15 @@ export function loadTerms(dataDir) {
         stemType: parseStemTypeCell(stI >= 0 ? row[stI] || '' : ''),
         regex: reI >= 0 ? row[reI] || '' : '',
         remove: rmI >= 0 ? parseBooleanCell(row[rmI] || '') : false,
+        contexts: splitAliases(cxI >= 0 ? row[cxI] || '' : ''),
       };
-      if (term.stemType && !term.regex) {
-        term.regex = buildStemRegex(normalize(term.phrase), term.stemType);
-      }
       const phrase = normalize(term.phrase);
       addTerm(phrase, term, file);
+      if (term.stemType && !term.regex) {
+        for (const variant of stemVariants(phrase, term.stemType)) {
+          if (variant !== phrase) addTerm(variant, term, file);
+        }
+      }
       for (const v of hyphenVariants(term.phrase)) {
         const nv = normalize(v); if (nv && nv !== phrase) {
           addTerm(nv, term, file);
@@ -157,6 +173,18 @@ export function loadTerms(dataDir) {
           addTerm(na, term, file);
         }
       }
+    }
+  }
+
+  for (const term of extraTerms) {
+    const phrase = normalize(term.phrase);
+    addTerm(phrase, term, 'data/rules/*.jsonl');
+    for (const variant of term.stemType && !term.regex ? stemVariants(phrase, term.stemType) : []) {
+      if (variant !== phrase) addTerm(variant, term, 'data/rules/*.jsonl');
+    }
+    for (const alias of term.aliases || []) {
+      const normalizedAlias = normalize(alias);
+      if (normalizedAlias && normalizedAlias !== phrase) addTerm(normalizedAlias, term, 'data/rules/*.jsonl');
     }
   }
 

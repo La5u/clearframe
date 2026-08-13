@@ -1,11 +1,11 @@
-phrase,type,neutral,aliases,stemmable,regex,remove
-slam,aggression,,,verb,,
-rip,aggression,,,verb,,
-torch,aggression,criticizes,,verb,,
-blast,aggression,,,verb,,
-roast,aggression,,,verb,,
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts
+slam,aggression,,,verb,,,headline
+rip,aggression,,,verb,,,headline
+torch,aggression,criticizes,,verb,,,headline
+blast,aggression,,,verb,,,headline
+roast,aggression,,,verb,,,headline
 hit with,aggression,,,,,
 taken out,aggression,,,,,
 under fire,aggression,,,,,
 scathing,aggression,harsh,,,,
-ambush,aggression,,,verb,,
+ambush,aggression,,,verb,,,headline

@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { spawnSync } from 'child_process';
 import * as esbuild from 'esbuild';
 import { loadTerms } from './src/core/term-utils.js';
+import { approvedRuleTerms } from './tools/rule-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,9 +59,13 @@ function zipDir(dir, outName) {
     return;
   }
   const out = path.join(ROOT, outName);
+  fs.rmSync(out, { force: true });
   const res = spawnSync('zip', ['-r', out, '.'], { cwd, stdio: 'ignore' });
   if (res.error) {
     throw res.error;
+  }
+  if (res.status !== 0) {
+    throw new Error(`zip failed for ${dir} with status ${res.status}`);
   }
 }
 
@@ -80,6 +85,7 @@ async function bundle(entryPoint, globals) {
     },
     legalComments: 'none',
     treeShaking: true,
+    minify: true,
     write: false,
   });
 
@@ -87,7 +93,7 @@ async function bundle(entryPoint, globals) {
 }
 
 async function build() {
-  const index = loadTerms(path.join(ROOT, 'data', 'terms'));
+  const index = loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT));
   for (const term of Object.values(index.termsById)) {
     if (!TYPES[term.type]) {
       throw new Error(`Term type "${term.type}" is missing from data/type-colors.json`);
@@ -117,7 +123,8 @@ async function build() {
     zipDir(target.dir, target.archive);
   }
 
-  console.log(`Built: ${Object.keys(index.termsById).length} terms`);
+  const sizes = TARGETS.map(target => `${target.archive}=${(fs.statSync(path.join(ROOT, target.archive)).size / 1024).toFixed(1)}KiB`).join(', ');
+  console.log(`Built: ${Object.keys(index.termsById).length} terms; ${sizes}`);
 }
 
 void build();

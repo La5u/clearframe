@@ -1,6 +1,6 @@
-phrase,type,neutral,aliases,stemmable,regex,remove
-what's really,reveal,what's,what is really,,,true
-the truth about,reveal,,,,,true
-inside scoop,reveal,,,,,true
-secret,reveal,,,noun,,
-reveal,reveal,,,verb,,
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts
+what's really,reveal,what's,what is really,,,true,headline
+the truth about,reveal,,,,,true,headline
+inside scoop,reveal,,,,,true,headline
+secret,reveal,,secretly,noun,,,headline
+reveal,reveal,,revelation|revelations,verb,,,headline

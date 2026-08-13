@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "wiki-neutrality-corpus",
+      "name": "Wiki Neutrality Corpus",
+      "role": "mining",
+      "url": "https://nlp.stanford.edu/projects/bias/bias_data.zip",
+      "archive": "bias_data.zip",
+      "bytes": 109612243,
+      "sha256": "8a197e78ba560fedb2aefa570d7ed0ee3968c7c6151d1446ec09b085ae5baf3f",
+      "license": "MIT code repository; Wikipedia-derived text requires separate CC BY-SA attribution review",
+      "licenseUrl": "https://github.com/rpryzant/neutralizing-bias/blob/master/LICENSE",
+      "citation": "Pryzant et al., Automatically Neutralizing Subjective Bias in Text",
+      "notes": "Mine minimal biased-to-neutral edits; never promote raw pairs directly."
+    },
+    {
+      "id": "open-english-wordnet",
+      "name": "Open English WordNet 2025",
+      "role": "candidate-support",
+      "url": "https://en-word.net/downloads/english-wordnet-2025-json.zip",
+      "archive": "english-wordnet-2025-json.zip",
+      "bytes": 9986555,
+      "sha256": "7d749f6e2c39e6970e4997839dcf6e42fd281f3c2fae0171d2192bae8cfa4b51",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "citation": "Open English WordNet 2025"
+    },
+    {
+      "id": "emobank",
+      "name": "EmoBank",
+      "role": "development",
+      "url": "https://github.com/JULIELab/EmoBank/archive/248ce2a43e165a66d31aeaed83cff9641d6654e0.zip",
+      "archive": "emobank.zip",
+      "bytes": 1574210,
+      "sha256": "81b3dc02df3e6ddb52790a3453fbd1a3d752ccad73a281397240a18525ba7e1f",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://github.com/JULIELab/EmoBank#license",
+      "citation": "Buechel and Hahn, 2017"
+    },
+    {
+      "id": "magpie-idioms",
+      "name": "MAGPIE idiom corpus",
+      "role": "development",
+      "url": "https://github.com/hslh/magpie-corpus/archive/7fa677b82b9a772dfa54bbdd0fb414412d73db3b.zip",
+      "archive": "magpie-idioms.zip",
+      "bytes": 45812502,
+      "sha256": "23f289b01923f999bb7ef0220992c5e0d519b3ac1e09efa900f7b3c009fc564e",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://github.com/hslh/magpie-corpus/blob/master/LICENSE",
+      "citation": "Haagsma, Bos and Nissim, 2020"
+    },
+    {
+      "id": "semeval-propaganda-2020",
+      "name": "SemEval-2020 Task 11 propaganda corpus",
+      "role": "development",
+      "url": "https://zenodo.org/records/3952415/files/datasets-v2.tgz?download=1",
+      "archive": "semeval-propaganda-2020.tgz",
+      "bytes": 1142202,
+      "sha256": "fd2d2c358d42b2e326e7f6f148007b384f0a0ffac5ab6db21e3889313a8516bb",
+      "license": "unverified-data-license",
+      "licenseUrl": "https://propaganda.qcri.org/semeval2020-task11/data/",
+      "citation": "Da San Martino et al., 2020",
+      "notes": "Local research only until the dataset's own redistribution terms are confirmed."
+    },
+    {
+      "id": "webis-clickbait-2022",
+      "name": "Webis Clickbait 2022",
+      "role": "development",
+      "url": "https://zenodo.org/records/8136637/files/webis-clickbait-22.zip?download=1",
+      "archive": "webis-clickbait-22.zip",
+      "bytes": 11308939,
+      "sha256": "30acf935efc82e4f99d45943827c4e14551d1554bc43514c90e4948c1514586b",
+      "license": "verify-record-rights-before-rule-derivation",
+      "licenseUrl": "https://zenodo.org/records/8136637",
+      "citation": "Hagen et al., 2022",
+      "notes": "Local research only; the Zenodo record has no explicit reusable license value."
+    },
+    {
+      "id": "babe",
+      "name": "Bias Annotations By Experts",
+      "role": "evaluation-only",
+      "url": "https://github.com/Media-Bias-Group/Neural-Media-Bias-Detection-Using-Distant-Supervision-With-BABE/archive/fb79f646dcabf1746f5ebedc06ed8dd61ba78188.zip",
+      "archive": "babe-evaluation-only.zip",
+      "bytes": 63782322,
+      "sha256": "2653ae46eeb2dded1a11e4f4c6772034465d336792de44ae7df6f05fe79d299a",
+      "license": "AGPL-3.0 repository",
+      "licenseUrl": "https://github.com/Media-Bias-Group/Neural-Media-Bias-Detection-Using-Distant-Supervision-With-BABE/blob/main/LICENSE",
+      "citation": "Spinde et al., 2021",
+      "notes": "Sealed evaluation only: never mining, training, tuning, vocabulary fitting, threshold selection, or rule review."
+    }
+  ]
+}

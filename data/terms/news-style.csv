@@ -1,0 +1,26 @@
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts
+dodge,negative-framing,avoid,,verb,,,publication
+nepo baby,derogatory,,nepo babies,,,,publication
+sacked,colloquialism,dismissed,,,,,publication
+disgruntled,negative-framing,dissatisfied,,,,,publication
+mask slipped,idiom,revealed their attitude,,,,,publication
+mask slips,idiom,reveals their attitude,,,,,publication
+mask has slipped,idiom,has revealed their attitude,,,,,publication
+mask is slipping,idiom,is revealing their attitude,,,,,publication
+glamorous,hype,stylish,,,,,publication
+blew up at,colloquialism,angrily confronted,blows up at|blown up at,,,,publication
+blew up online,idiom,became popular online,blows up online|blown up online,,,,publication
+blew up in his face,idiom,backfired,blew up in her face|blew up in their face,,,,publication
+hotly anticipated,hype,anticipated,,,,,publication
+surprising,hype,unexpected,,,,,headline
+liar,derogatory,,liars,,,,publication
+tells lies,derogatory,makes false statements,,,,,publication
+told lies,derogatory,made false statements,,,,,publication
+telling lies,derogatory,making false statements,,,,,publication
+accused of lying,loaded-framing,accused of making false statements,,,,,publication
+stark reality,negative-framing,reality,,,,,publication
+vicious,loaded,,,,,,publication
+victimhood claim,loaded-framing,,,,,,publication
+raises eyebrows,unsourced,,raise eyebrows|raised eyebrows|raising eyebrows,,,,publication
+one big problem,clickbait,,,,,,headline
+pummel,aggression,,,verb,,,headline

@@ -58,21 +58,37 @@ export function adverbWord(word) {
   if (word.endsWith('y') && !/[aeiou]y$/i.test(word)) {
     return `${word.slice(0, -1)  }ily`;
   }
+  if (word.endsWith('ic')) {
+    return `${word  }ally`;
+  }
+  if (/[^aeiou]le$/i.test(word)) {
+    return `${word.slice(0, -1)  }y`;
+  }
+  if (word.endsWith('ll')) {
+    return `${word  }y`;
+  }
+  if (word.endsWith('ue')) {
+    return `${word.slice(0, -1)  }ly`;
+  }
   return `${word  }ly`;
 }
 
 export function isWordChar(c) {
   const code = c.charCodeAt(0);
-  return (code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || code === 39;
+  return (code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
 }
 
 export function boundary(text, start, end) {
-  return !isWordChar(start > 0 ? text[start - 1] : ' ') && !isWordChar(end < text.length ? text[end] : ' ');
+  return !isWordCharAt(text, start - 1) && !isWordCharAt(text, end);
 }
 
 export function isWordCharAt(text, index) {
-  const c = text[index], code = c.charCodeAt(0);
-  return (code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || c === '\'';
+  const c = text[index];
+  if (!c) return false;
+  if (c === '\'' || c === '’') {
+    return isWordChar(text[index - 1] || ' ') && isWordChar(text[index + 1] || ' ');
+  }
+  return isWordChar(c);
 }
 
 export function boundaryAt(text, start, end) {

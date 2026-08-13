@@ -25,7 +25,7 @@ export function buildMatcher(index, isTermEnabled = _term => true) {
   return root;
 }
 
-export function collectPhraseMatches(matcher, text, useBoundaryAt = false) {
+export function collectPhraseMatches(matcher, text, useBoundaryAt = false, keepMatch = (_termId, _start, _end) => true) {
   if (!matcher) {
     return [];
   }
@@ -38,7 +38,7 @@ export function collectPhraseMatches(matcher, text, useBoundaryAt = false) {
     }
     let matched = null, cursor = pos + 1;
     const boundaryFn = useBoundaryAt ? boundaryAt : boundary;
-    if (node.$ && boundaryFn(lower, pos, cursor)) {
+    if (node.$ && boundaryFn(lower, pos, cursor) && keepMatch(node.$, pos, cursor)) {
       matched = { start: pos, end: cursor, termId: node.$ };
     }
     while (cursor < lower.length) {
@@ -47,7 +47,7 @@ export function collectPhraseMatches(matcher, text, useBoundaryAt = false) {
         break;
       }
       cursor++;
-      if (node.$ && boundaryFn(lower, pos, cursor)) {
+      if (node.$ && boundaryFn(lower, pos, cursor) && keepMatch(node.$, pos, cursor)) {
         matched = { start: pos, end: cursor, termId: node.$ };
       }
     }
@@ -72,7 +72,7 @@ export function getRegexMatcher(pattern) {
   return regexCache.get(pattern);
 }
 
-export function collectRegexMatches(text, regexTerms, termsById, isTermEnabled = _term => true) {
+export function collectRegexMatches(text, regexTerms, termsById, isTermEnabled = _term => true, keepMatch = (_termId, _start, _end) => true) {
   const matches = [];
   for (const term of regexTerms || []) {
     const td = termsById ? /** @type {any} */ (termsById[term.termId]) : null;
@@ -88,20 +88,22 @@ export function collectRegexMatches(text, regexTerms, termsById, isTermEnabled =
     for (const m of text.matchAll(compiled)) {
       if (!m[0]) {
         continue;
-      } matches.push({ start: m.index, end: m.index + m[0].length, termId: term.termId });
+      }
+      const end = m.index + m[0].length;
+      if (keepMatch(term.termId, m.index, end)) matches.push({ start: m.index, end, termId: term.termId });
     }
   }
   return matches;
 }
 
-export function collectMatches(matcher, text, termsById, regexTerms = [], useBoundaryAt = false, isTermEnabled = _term => true) {
-  const phrase = collectPhraseMatches(matcher, text, useBoundaryAt);
-  const regex = collectRegexMatches(text, regexTerms, termsById, isTermEnabled);
+export function collectMatches(matcher, text, termsById, regexTerms = [], useBoundaryAt = false, isTermEnabled = _term => true, keepMatch = (_termId, _start, _end) => true) {
+  const phrase = collectPhraseMatches(matcher, text, useBoundaryAt, keepMatch);
+  const regex = collectRegexMatches(text, regexTerms, termsById, isTermEnabled, keepMatch);
   return [...phrase, ...regex].sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
 }
 
-export function findMatches(matcher, text, termsById, regexTerms = [], useBoundaryAt = false, isTermEnabled = _term => true) {
-  const all = collectMatches(matcher, text, termsById, regexTerms, useBoundaryAt, isTermEnabled);
+export function findMatches(matcher, text, termsById, regexTerms = [], useBoundaryAt = false, isTermEnabled = _term => true, keepMatch = (_termId, _start, _end) => true) {
+  const all = collectMatches(matcher, text, termsById, regexTerms, useBoundaryAt, isTermEnabled, keepMatch);
   const accepted = [];
   let cursor = 0;
   for (const m of all) {

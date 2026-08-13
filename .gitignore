@@ -5,3 +5,6 @@ dist-ts/
 *.zip
 *.tsbuildinfo
 .eslintcache
+research/raw/
+research/cache/
+research/reports/

@@ -15,38 +15,38 @@ function sameSpan(a, b) {
 }
 
 function groupFor(match) {
-  return { ...match, termIds: match.termIds || [match.termId] };
+  return { ...match, termIds: match.termIds || [match.termId], structural: match.structural || match.virtual === true };
 }
 
 export function resolveMatchGroups(matches) {
   const accepted = [];
   for (const match of matches.sort(compareMatches)) {
-    const exact = accepted.find(item => sameSpan(item, match));
-    if (exact) {
-      if (!exact.termIds.includes(match.termId)) {
-        exact.termIds.push(match.termId);
+    const last = accepted[accepted.length - 1];
+    if (last && sameSpan(last, match)) {
+      if (!last.termIds.includes(match.termId)) {
+        last.termIds.push(match.termId);
       }
       continue;
     }
-
-    const overlapping = accepted.reduce((acc, item, index) => (overlaps(match, item) ? acc.concat(index) : acc), []);
-    if (!overlapping.length) {
+    if (!last || !overlaps(last, match)) {
       accepted.push(groupFor(match));
       continue;
     }
-    if (match.virtual) {
+    if (last.structural || last.virtual || match.virtual) {
+      const lexical = last.virtual ? match : last;
+      const virtual = last.virtual ? last : match;
+      accepted[accepted.length - 1] = {
+        ...lexical,
+        start: Math.min(last.start, match.start),
+        end: Math.max(last.end, match.end),
+        termIds: [...new Set([...(lexical.termIds || [lexical.termId]), ...(virtual.termIds || [virtual.termId])])],
+        virtual: false,
+        structural: true,
+      };
       continue;
-    }
-    for (let i = overlapping.length - 1; i >= 0; i--) {
-      if (accepted[overlapping[i]].virtual) {
-        accepted.splice(overlapping[i], 1);
-      }
-    }
-    if (!accepted.some(item => overlaps(match, item))) {
-      accepted.push(groupFor(match));
     }
   }
-  return accepted.sort(compareMatches);
+  return accepted;
 }
 
 export function chooseReplacementTerm(terms, getTermAction, allCapsPhrase) {

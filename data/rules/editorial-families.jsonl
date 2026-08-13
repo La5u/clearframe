@@ -1,0 +1,64 @@
+{"id":"editorial-urgent-warning","phrase":"urgent warning","type":"fear","status":"approved","confidence":"medium","aliases":["stark warning"],"sources":["clearframe-manual"]}
+{"id":"editorial-act-now","phrase":"act now","type":"clickbait","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-cancer-scare","phrase":"cancer scare","type":"fear","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-tone-deaf","phrase":"tone-deaf","type":"loaded-framing","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-tax-grab","phrase":"tax grab","type":"loaded-framing","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-drastic","phrase":"drastic","type":"exaggeration","status":"approved","confidence":"medium","stemType":"adjective","sources":["clearframe-manual"]}
+{"id":"editorial-dramatic","phrase":"dramatic","type":"exaggeration","status":"approved","confidence":"medium","stemType":"adjective","sources":["clearframe-manual"]}
+{"id":"editorial-carnage","phrase":"carnage","type":"fear","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-growing-row","phrase":"growing row","type":"conflict","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-unprecedented","phrase":"unprecedented","type":"hype","status":"approved","confidence":"medium","contexts":["headline"],"sources":["clearframe-manual"]}
+{"id":"editorial-all-time-low","phrase":"all-time low","type":"superlative","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-warzone","phrase":"warzone","type":"conflict","status":"approved","confidence":"medium","aliases":["war zone"],"sources":["clearframe-manual"]}
+{"id":"editorial-craven-surrender","phrase":"craven surrender","type":"loaded-framing","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-spells-trouble","phrase":"spells trouble","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-merciless-trolls","phrase":"merciless trolls","type":"aggression","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-foul-mouthed","phrase":"foul-mouthed","type":"derogatory","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-flawless","phrase":"flawless","type":"hype","status":"approved","confidence":"medium","stemType":"adjective","sources":["clearframe-manual"]}
+{"id":"editorial-star-studded","phrase":"star-studded","type":"hype","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-rave-reviews","phrase":"rave reviews","type":"hype","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-sizzling","phrase":"sizzling","type":"hype","status":"approved","confidence":"medium","aliases":["sizzling snap","sizzling snaps"],"sources":["clearframe-manual"]}
+{"id":"editorial-excruciating-moment","phrase":"excruciating moment","type":"fear","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-blistering-takedown","phrase":"blistering takedown","type":"aggression","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-disgraced","phrase":"disgraced","type":"loaded-framing","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-shows-off","phrase":"shows off","type":"hype","status":"approved","confidence":"contextual","aliases":["show off","showed off","showing off"],"sources":["clearframe-manual"]}
+{"id":"editorial-fire-back","phrase":"fire back","type":"aggression","status":"approved","confidence":"medium","aliases":["fires back","fired back","firing back"],"sources":["clearframe-manual"]}
+{"id":"editorial-hit-back","phrase":"hit back","type":"aggression","status":"approved","confidence":"medium","aliases":["hits back","hitting back"],"sources":["clearframe-manual"]}
+{"id":"editorial-worlds-first","phrase":"world's first","type":"superlative","status":"approved","confidence":"medium","aliases":["world’s first"],"sources":["clearframe-manual"]}
+{"id":"editorial-explosive","phrase":"explosive","type":"hype","status":"approved","confidence":"medium","stemType":"adjective","sources":["clearframe-manual"]}
+{"id":"editorial-miracle","phrase":"miracle","type":"hype","status":"approved","confidence":"medium","aliases":["miraculous","miracle recovery"],"sources":["clearframe-manual"]}
+{"id":"editorial-horrendous","phrase":"horrendous","type":"fear","status":"approved","confidence":"medium","stemType":"adjective","sources":["clearframe-manual"]}
+{"id":"editorial-racy","phrase":"racy","type":"loaded-framing","status":"approved","confidence":"medium","aliases":["racier"],"sources":["clearframe-manual"]}
+{"id":"editorial-raunchy","phrase":"raunchy","type":"loaded-framing","status":"approved","confidence":"medium","aliases":["raunchier"],"sources":["clearframe-manual"]}
+{"id":"editorial-sultry","phrase":"sultry","type":"loaded-framing","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-superstar","phrase":"superstar","type":"hype","status":"approved","confidence":"contextual","sources":["clearframe-manual"]}
+{"id":"editorial-warning","phrase":"warning","type":"fear","status":"approved","confidence":"contextual","aliases":["warnings","warn","warns","warned","warning"],"sources":["clearframe-manual"]}
+{"id":"editorial-fury","phrase":"fury","type":"aggression","status":"approved","confidence":"medium","aliases":["fuming","fumes","furiously"],"sources":["clearframe-manual"]}
+{"id":"editorial-desperate","phrase":"desperate","type":"negative-framing","status":"approved","confidence":"medium","stemType":"adjective","sources":["clearframe-manual"]}
+{"id":"editorial-panic","phrase":"panic","type":"fear","status":"approved","confidence":"medium","aliases":["panicked","panicking","panic attacks"],"sources":["clearframe-manual"]}
+{"id":"editorial-worry","phrase":"worry","type":"uncertainty","status":"approved","confidence":"contextual","aliases":["worries","worried","worrying"],"sources":["clearframe-manual"]}
+{"id":"editorial-eviscerate","phrase":"eviscerate","type":"aggression","status":"approved","confidence":"medium","stemType":"verb","sources":["clearframe-manual"]}
+{"id":"editorial-flaunt","phrase":"flaunt","type":"hype","status":"approved","confidence":"contextual","stemType":"verb","sources":["clearframe-manual"]}
+{"id":"editorial-heartbreak","phrase":"heartbreak","type":"fear","status":"approved","confidence":"medium","aliases":["heartbroken","heartbreakingly"],"sources":["clearframe-manual"]}
+{"id":"editorial-disastrous","phrase":"disastrous","type":"negative-framing","status":"approved","confidence":"medium","stemType":"adjective","sources":["clearframe-manual"]}
+{"id":"editorial-harrowing","phrase":"harrowing","type":"fear","status":"approved","confidence":"medium","aliases":["harrowingly"],"sources":["clearframe-manual"]}
+{"id":"editorial-legendary","phrase":"legendary","type":"hype","status":"approved","confidence":"contextual","sources":["clearframe-manual"]}
+{"id":"editorial-iconic","phrase":"iconic","type":"hype","status":"approved","confidence":"contextual","sources":["clearframe-manual"]}
+{"id":"editorial-adorable","phrase":"adorable","type":"hype","status":"approved","confidence":"contextual","stemType":"adjective","sources":["clearframe-manual"]}
+{"id":"editorial-youthful","phrase":"youthful","type":"hype","status":"approved","confidence":"contextual","stemType":"adjective","sources":["clearframe-manual"]}
+{"id":"editorial-controversial","phrase":"controversial","type":"loaded-framing","status":"approved","confidence":"contextual","aliases":["controversy"],"sources":["clearframe-manual"]}
+{"id":"editorial-rumoured","phrase":"rumoured","type":"uncertainty","status":"approved","confidence":"medium","aliases":["rumored","rumour","rumours","rumor","rumors"],"sources":["clearframe-manual"]}
+{"id":"editorial-ridicule","phrase":"ridicule","type":"derogatory","status":"approved","confidence":"medium","stemType":"verb","sources":["clearframe-manual"]}
+{"id":"editorial-foolproof","phrase":"foolproof","type":"hype","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-lost-marbles","phrase":"lost its marbles","type":"idiom","status":"approved","confidence":"medium","aliases":["lost his marbles","lost her marbles","lose your marbles"],"sources":["clearframe-manual"]}
+{"id":"editorial-grow-backbone","phrase":"grow a backbone","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-raking-it-in","phrase":"raking it in","type":"idiom","status":"approved","confidence":"medium","aliases":["rake it in","rakes it in","raked it in"],"sources":["clearframe-manual"]}
+{"id":"editorial-feel-pinch","phrase":"feel the pinch","type":"idiom","status":"approved","confidence":"medium","aliases":["feels the pinch","felt the pinch","feeling the pinch"],"sources":["clearframe-manual"]}
+{"id":"editorial-over-moon","phrase":"over the moon","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-strength-to-strength","phrase":"from strength to strength","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-draw-line","phrase":"draw a line under","type":"idiom","status":"approved","confidence":"medium","aliases":["draws a line under","drew a line under"],"sources":["clearframe-manual"]}
+{"id":"editorial-olive-branch","phrase":"olive branch","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-run-for-money","phrase":"run for its money","type":"idiom","status":"approved","confidence":"medium","aliases":["run for their money","run for your money"],"sources":["clearframe-manual"]}
+{"id":"editorial-lift-lid","phrase":"lift the lid on","type":"idiom","status":"approved","confidence":"medium","aliases":["lifts the lid on","lifted the lid on","lifting the lid on"],"sources":["clearframe-manual"]}
+{"id":"editorial-record-straight","phrase":"set the record straight","type":"idiom","status":"approved","confidence":"medium","aliases":["sets the record straight","setting the record straight"],"sources":["clearframe-manual"]}
+{"id":"editorial-chip-old-block","phrase":"chip off the old block","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"]}

@@ -4,16 +4,13 @@
   <meta charset="utf-8">
   <style>
     :root {
-      --bg: #ffffff;
-      --panel: #ffffff;
-      --ink: #111111;
-      --muted: #666666;
-      --stroke: #e5e5e5;
-      --accent: #111111;
-      --chip-border: #d8d8d8;
-      --chip-disabled: #8d8d8d;
+      --ink: #000;
+      --stroke: #bbb;
     }
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      border-radius: 0 !important;
+    }
     button,
     input {
       font: inherit;
@@ -21,186 +18,151 @@
     button {
       appearance: none;
       -webkit-appearance: none;
-      line-height: 1.2;
+      color: var(--ink);
     }
     body {
-      width: 284px;
-      min-height: 320px;
-      max-height: 480px;
+      width: 320px;
+      min-height: 340px;
+      max-height: 560px;
       margin: 0;
-      padding: 12px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 12px;
-      line-height: 1.3;
-      background: var(--bg);
-      color: var(--ink);
+      padding: 14px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      background: #fff;
+      color: var(--ink);
+      font: 14px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 0 0 10px;
-      margin-bottom: 10px;
+      padding-bottom: 10px;
       border-bottom: 1px solid var(--stroke);
     }
     h3 {
       margin: 0;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .toggle {
-      position: relative;
-      width: 34px;
-      height: 18px;
-      cursor: pointer;
-      flex: 0 0 auto;
-    }
-    .toggle input { display: none; }
-    .toggle .track {
-      position: absolute;
-      inset: 0;
-      border: 1px solid var(--stroke);
-      border-radius: 999px;
-      background: #f3f3f3;
-    }
-    .toggle .track::after {
-      content: "";
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--ink);
-      transition: transform 0.12s ease;
-    }
-    .toggle input:checked + .track::after {
-      transform: translateX(16px);
-    }
-    .count-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 2px 8px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-    .count-value {
-      color: var(--ink);
+      font-size: 18px;
       font-weight: 700;
-    }
-    .top-tabs {
-      display: flex;
-      gap: 6px;
-      margin: 0 0 10px;
-    }
-    .top-tab {
-      flex: 1 1 0;
-      padding: 7px 8px;
-      border: 1px solid var(--stroke);
-      border-radius: 8px;
-      background: #f7f7f7;
-      color: var(--muted);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-    }
-    .top-tab.active {
-      background: #111;
-      color: #fff;
-      border-color: #111;
-    }
-    .top-panel {
-      display: none;
-    }
-    .top-panel.active {
-      display: block;
     }
     .content {
       flex: 1 1 auto;
       min-height: 0;
       overflow: auto;
     }
-    .panel {
-      overflow: visible;
-      padding: 0;
-      background: var(--panel);
+    .top-tabs,
+    .term-tabs {
+      display: flex;
+      align-items: center;
+      margin: 12px 0;
     }
+    .top-tab,
+    .term-tab {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .top-tab {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .top-tab:not(:last-child)::after,
+    .term-tab:not(:last-child)::after {
+      content: "|";
+      padding: 0 8px;
+      font-weight: 400;
+    }
+    .top-tab.active,
+    .term-tab.active {
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .top-panel,
+    .term-panel {
+      display: none;
+    }
+    .top-panel.active,
+    .term-panel.active {
+      display: block;
+    }
+    .count-row,
     .setting-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      padding: 10px 0;
-      margin-bottom: 8px;
+      gap: 12px;
+      padding: 12px 0;
       border-bottom: 1px solid var(--stroke);
     }
-    .setting-stack {
-      display: grid;
-      gap: 8px;
-      margin-bottom: 8px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--stroke);
-    }
-    .setting-copy {
-      min-width: 0;
-      flex: 1 1 auto;
-    }
+    .count-value,
     .setting-title {
-      margin: 0 0 2px;
-      font-size: 11px;
       font-weight: 700;
     }
-    .setting-help {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.35;
+    .toggle {
+      position: relative;
+      width: 38px;
+      height: 20px;
+      flex: 0 0 auto;
+      cursor: pointer;
+    }
+    .toggle input {
+      position: absolute;
+      opacity: 0;
+    }
+    .toggle .track {
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--ink);
+      background: #fff;
+    }
+    .toggle .track::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      background: var(--ink);
+      transition: transform 0.12s ease;
+    }
+    .toggle input:checked + .track::after {
+      transform: translateX(18px);
     }
     .section-title {
-      margin: 10px 0 6px;
-      font-size: 10px;
+      margin: 12px 0 8px;
+      font-size: 13px;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
+      letter-spacing: 0.03em;
     }
     .color-group {
-      margin-bottom: 8px;
-      padding: 6px;
+      margin-bottom: 9px;
+      padding: 7px;
       border: 1px solid var(--stroke);
-      border-radius: 8px;
     }
     .color-group-title {
       margin: 0 0 6px 2px;
-      font-size: 10px;
-      font-weight: 700;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
     }
     .type-list {
-      min-height: 20px;
-      padding: 4px;
-      border-radius: 8px;
+      min-height: 24px;
+      padding: 3px;
     }
     .type-chip {
       display: inline-flex;
       align-items: center;
-      padding: 4px 8px;
       margin: 2px;
-      border: 1px solid var(--chip-border);
-      border-radius: 999px;
+      padding: 5px 8px;
+      border: 1px solid var(--ink);
       color: var(--ink);
-      font-size: 11px;
+      font-size: 13px;
       cursor: pointer;
     }
     .type-chip.disabled {
-      opacity: 0.45;
-      color: var(--chip-disabled);
+      opacity: 0.4;
     }
     .type-chip.dragging {
       opacity: 0.5;
@@ -212,152 +174,139 @@
       border: 2px dashed transparent;
     }
     .drop-zone.drag-over {
-      border-color: var(--accent);
+      border-color: var(--ink);
     }
     #reset-btn {
-      margin-top: 8px;
+      margin-top: 4px;
+      padding: 5px 0;
+      border: 0;
+      border-bottom: 1px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    #feedback-tools-actions {
+      display: none;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--stroke);
+    }
+    #copy-feedback {
       padding: 6px 8px;
-      border: 1px solid var(--stroke);
-      border-radius: 8px;
+      border: 1px solid var(--ink);
       background: #fff;
       color: var(--ink);
-      font-size: 10px;
     }
+    #feedback-copy-status { margin-left: 8px; font-size: 12px; }
     .muted {
-      color: var(--muted);
-      font-size: 11px;
-    }
-    .footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: 10px;
-      padding-top: 8px;
-      border-top: 1px solid var(--stroke);
-      color: var(--muted);
-      font-size: 10px;
-    }
-    .footer a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .footer a:hover {
-      text-decoration: underline;
-    }
-    .detected-section {
-      margin-top: 10px;
+      color: var(--ink);
+      font-size: 13px;
     }
     .term-tabs {
-      display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
+      margin-top: 0;
     }
     .term-tab {
-      flex: 1 1 calc(33.333% - 4px);
-      min-width: 0;
-      padding: 5px 6px;
-      border: 1px solid var(--stroke);
-      border-radius: 8px;
-      background: #fafafa;
-      color: var(--muted);
-      font-size: 9px;
-      line-height: 1.1;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      white-space: normal;
-      text-align: center;
-    }
-    .term-tab.active {
-      background: #111;
-      color: #fff;
-      border-color: #111;
-    }
-    .term-panel {
-      display: none;
-    }
-    .term-panel.active {
-      display: block;
+      font-size: 13px;
     }
     .term-list {
-      max-height: 140px;
+      max-height: 300px;
       overflow: auto;
-      border: 1px solid var(--stroke);
-      padding: 8px;
-      border-radius: 8px;
-      background: #fff;
+      border-top: 1px solid var(--stroke);
+      border-bottom: 1px solid var(--stroke);
+      padding: 7px 0;
     }
     .term-row {
       display: flex;
       justify-content: space-between;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
-      padding: 2px 0;
+      padding: 5px 2px;
       border: 0;
       background: transparent;
-      color: inherit;
+      color: var(--ink);
       cursor: pointer;
-      font: inherit;
       text-align: left;
     }
+    .term-row:hover {
+      text-decoration: underline;
+    }
     .term-count {
-      color: var(--muted);
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 9px;
+      border-top: 1px solid var(--stroke);
+      color: var(--ink);
+      font-size: 12px;
+    }
+    .footer a {
+      color: var(--ink);
     }
   </style>
 </head>
 <body>
   <div class="header">
     <h3>ClearFrame</h3>
-    <label class="toggle" aria-label="Enable ClearFrame">
-      <input type="checkbox" id="enabled">
-      <span class="track" aria-hidden="true"></span>
-    </label>
   </div>
   <div class="content">
-    <div class="count-row">
-      <span>Detected on page</span>
-      <span class="count-value" id="detected-count">(0)</span>
-    </div>
     <div class="top-tabs" role="tablist" aria-label="ClearFrame sections">
-      <button class="top-tab active" id="customize-tab" type="button" role="tab" aria-selected="true" aria-controls="customize-panel">Customize</button>
+      <button class="top-tab active" id="general-tab" type="button" role="tab" aria-selected="true" aria-controls="general-panel">General</button>
+      <button class="top-tab" id="customize-tab" type="button" role="tab" aria-selected="false" aria-controls="customize-panel">Customize</button>
       <button class="top-tab" id="detected-tab" type="button" role="tab" aria-selected="false" aria-controls="detected-panel">Detected</button>
     </div>
-    <div class="panel top-panel active" id="customize-panel" role="tabpanel" aria-labelledby="customize-tab">
-      <div class="setting-stack">
-        <div class="setting-row">
-          <div class="setting-copy">
-            <div class="setting-title">Replace mode</div>
-            <p class="setting-help">Replace terms with neutral alternatives when available.</p>
-          </div>
-          <label class="toggle" aria-label="Replace matched terms with neutral alternatives">
-            <input type="checkbox" id="replace-terms">
-            <span class="track" aria-hidden="true"></span>
-          </label>
-        </div>
-        <div class="setting-row" style="border-bottom: 0; margin-bottom: 0; padding-bottom: 0;">
-          <div class="setting-copy">
-            <div class="setting-title">Remove mode</div>
-            <p class="setting-help">Remove terms marked for deletion instead of replacing them.</p>
-          </div>
-          <label class="toggle" aria-label="Remove matched terms marked for deletion">
-            <input type="checkbox" id="remove-terms">
-            <span class="track" aria-hidden="true"></span>
-          </label>
-        </div>
+    <div class="top-panel active" id="general-panel" role="tabpanel" aria-labelledby="general-tab">
+      <div class="count-row">
+        <span>Detected on page</span>
+        <span class="count-value" id="detected-count">(0)</span>
       </div>
+      <div class="setting-row">
+        <span class="setting-title">Reword</span>
+        <label class="toggle" aria-label="Reword matched terms">
+          <input type="checkbox" id="replace-terms">
+          <span class="track" aria-hidden="true"></span>
+        </label>
+      </div>
+      <div class="setting-row">
+        <span class="setting-title">Remove mode</span>
+        <label class="toggle" aria-label="Remove matched terms marked for deletion">
+          <input type="checkbox" id="remove-terms">
+          <span class="track" aria-hidden="true"></span>
+        </label>
+      </div>
+      <div class="setting-row">
+        <span class="setting-title">Monochrome highlights</span>
+        <label class="toggle" aria-label="Use one highlight color">
+          <input type="checkbox" id="monochrome">
+          <span class="track" aria-hidden="true"></span>
+        </label>
+      </div>
+      <div class="setting-row">
+        <span class="setting-title">Feedback tools</span>
+        <label class="toggle" aria-label="Enable local feedback and text suggestions">
+          <input type="checkbox" id="feedback-enabled">
+          <span class="track" aria-hidden="true"></span>
+        </label>
+      </div>
+      <div id="feedback-tools-actions">
+        <button id="copy-feedback" type="button">Copy saved feedback</button>
+        <span id="feedback-copy-status" aria-live="polite"></span>
+      </div>
+    </div>
+    <div class="top-panel" id="customize-panel" role="tabpanel" aria-labelledby="customize-tab">
       <div class="section-title">Types</div>
       <div id="color-groups"></div>
-      <button id="reset-btn" type="button">Reset Colors</button>
-      <p class="muted">Tap a type to enable or disable it. Drag a type to a different color group to change its color.</p>
+      <button id="reset-btn" type="button">Reset colors</button>
+      <p class="muted">Tap a type to enable or disable it. Drag it to change its color.</p>
     </div>
-    <div class="panel top-panel" id="detected-panel" role="tabpanel" aria-labelledby="detected-tab">
-      <div class="detected-section">
-        <div class="section-title">Detected terms</div>
-        <div id="term-tabs" class="term-tabs"></div>
-        <div id="term-panels"></div>
-      </div>
+    <div class="top-panel" id="detected-panel" role="tabpanel" aria-labelledby="detected-tab">
+      <div class="section-title">Detected words</div>
+      <div id="term-tabs" class="term-tabs"></div>
+      <div id="term-panels"></div>
     </div>
   </div>
   <div class="footer">

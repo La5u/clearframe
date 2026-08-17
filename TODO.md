@@ -7,6 +7,7 @@
 - [x] List exact matched wording and navigate back to each occurrence.
 - [ ] Make headline treatment the clearest, highest-confidence experience.
 - [ ] Add short, uncertainty-aware explanations for detected cues.
+- [ ] Reword replacements to sentence case / title case based on the surrounding headline or lead-in.
 - [ ] Let users dismiss false positives and remember those decisions locally.
 
 ## Detection quality

@@ -25,7 +25,7 @@ const els = {
   popupVersion: $('popup-version'),
   githubLink: /** @type {HTMLAnchorElement} */ ($('github-link')),
 };
-const COLOR_MAP = { yellow: '#fff7cc', green: '#e7f8ea', gray: '#f1f1f1', red: '#fde8e8', pink: '#fdebf3', orange: '#fff0df', purple: '#f2eaff', blue: '#e8f1ff', teal: '#e5faf7', brown: '#f2e6dc' };
+const COLOR_MAP = Object.fromEntries(Object.entries(colorConfig.colors || {}).map(([color, config]) => [color, config.hex]));
 let userTypeColors = {};
 let settings = normalizeSettings(DEFAULT_SETTINGS);
 let dragState = null;
@@ -53,7 +53,9 @@ function saveSettings() {
       console.error('ClearFrame settings write failed:', writeError.message);
       return;
     }
-    sendToActiveTab({ type: 'RELOAD_SETTINGS' });
+    // Apply the new value immediately as well as persisting it. The storage
+    // change event can be delayed while a selection event is already queued.
+    sendToActiveTab({ type: 'APPLY_SETTINGS', settings: next });
     // Migrate the legacy top-level color setting after its values have been
     // copied into settings.userTypeColors.
     chrome.storage.sync.remove('userTypeColors', () => {

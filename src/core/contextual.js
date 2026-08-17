@@ -1,7 +1,7 @@
 export const CONTEXTUAL_TERMS = {
   '__clearframe_headline_question__': { phrase: 'headline question', type: 'rhetorical-question', confidence: 'medium' },
   '__clearframe_direct_address__': { phrase: 'direct address', type: 'clickbait', confidence: 'contextual' },
-  '__clearframe_quoted_wording__': { phrase: 'quoted wording', type: 'distancing', confidence: 'exploratory' },
+  '__clearframe_quoted_wording__': { phrase: 'quoted wording', type: 'quote', confidence: 'exploratory' },
   '__clearframe_transformation__': { phrase: 'from-to transformation', type: 'hype', confidence: 'contextual' },
   '__clearframe_history_claim__': { phrase: 'history superlative', type: 'superlative', confidence: 'contextual' },
   '__clearframe_list_promise__': { phrase: 'list promise', type: 'clickbait', confidence: 'contextual' },

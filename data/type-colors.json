@@ -1,54 +1,122 @@
 {
+  "intensity": {
+    "absolute": 0.5,
+    "aggression": 0.75,
+    "all-caps": 0.5,
+    "authority": 0.65,
+    "clickbait": 0.85,
+    "colloquialism": 0.35,
+    "conflict": 0.65,
+    "derogatory": 0.95,
+    "distancing": 0.7,
+    "dysphemism": 0.8,
+    "euphemism": 0.75,
+    "exaggeration": 0.7,
+    "fear": 0.9,
+    "hype": 0.65,
+    "idiom": 0.35,
+    "loaded": 0.9,
+    "loaded-framing": 0.85,
+    "minimizing": 0.6,
+    "moral": 0.8,
+    "negative-framing": 0.75,
+    "passive": 0.7,
+    "quote": 0.15,
+    "repetition": 0.45,
+    "reveal": 0.3,
+    "rhetorical-question": 0.4,
+    "superlative": 0.65,
+    "uncertainty": 0.65,
+    "unsourced": 0.8
+  },
   "colors": {
     "yellow": {
       "name": "Yellow",
       "category": "Sensationalism",
-      "types": ["all-caps", "clickbait", "hype", "reveal"]
+      "types": ["all-caps", "clickbait", "hype", "reveal"],
+      "rgb": "250, 204, 21",
+      "underline": "202, 138, 4",
+      "hex": "#fff7cc"
     },
     "green": {
       "name": "Green",
       "category": "Intensification",
-      "types": ["absolute", "exaggeration", "superlative"]
+      "types": ["absolute", "exaggeration", "superlative"],
+      "rgb": "74, 222, 128",
+      "underline": "22, 163, 74",
+      "hex": "#e7f8ea"
     },
     "gray": {
       "name": "Gray",
       "category": "Framing and sourcing",
-      "types": ["unsourced", "authority", "uncertainty", "loaded-framing", "distancing"]
+      "types": ["unsourced", "authority", "uncertainty", "loaded-framing", "distancing"],
+      "rgb": "209, 213, 219",
+      "underline": "107, 114, 128",
+      "hex": "#f1f1f1"
     },
     "red": {
       "name": "Red",
       "category": "Hostility",
-      "types": ["aggression", "derogatory"]
+      "types": ["aggression", "derogatory"],
+      "rgb": "248, 113, 113",
+      "underline": "220, 38, 38",
+      "hex": "#fde8e8"
     },
     "pink": {
       "name": "Pink",
       "category": "Value judgment",
-      "types": ["moral", "loaded"]
+      "types": ["moral", "loaded"],
+      "rgb": "244, 114, 182",
+      "underline": "219, 39, 119",
+      "hex": "#fdebf3"
     },
     "orange": {
       "name": "Orange",
       "category": "Conflict and drama",
-      "types": ["conflict", "minimizing", "negative-framing"]
+      "types": ["conflict", "minimizing", "negative-framing"],
+      "rgb": "251, 146, 60",
+      "underline": "234, 88, 12",
+      "hex": "#fff0df"
     },
     "purple": {
       "name": "Purple",
       "category": "Urgency and fear",
-      "types": ["fear"]
+      "types": ["fear"],
+      "rgb": "196, 128, 255",
+      "underline": "147, 51, 234",
+      "hex": "#f2eaff"
     },
     "blue": {
       "name": "Blue",
       "category": "Softening and agency hiding",
-      "types": ["euphemism", "passive"]
+      "types": ["euphemism", "passive"],
+      "rgb": "96, 165, 250",
+      "underline": "37, 99, 235",
+      "hex": "#e8f1ff"
     },
     "brown": {
       "name": "Brown",
       "category": "Dysphemism",
-      "types": ["dysphemism"]
+      "types": ["dysphemism"],
+      "rgb": "161, 98, 7",
+      "underline": "120, 53, 15",
+      "hex": "#f2e6dc"
     },
     "teal": {
       "name": "Teal",
       "category": "Style and voice",
-      "types": ["colloquialism", "idiom", "repetition", "rhetorical-question"]
+      "types": ["colloquialism", "idiom", "repetition", "rhetorical-question"],
+      "rgb": "45, 212, 191",
+      "underline": "20, 184, 166",
+      "hex": "#e5faf7"
+    },
+    "slate": {
+      "name": "Slate",
+      "category": "Quotes",
+      "types": ["quote"],
+      "rgb": "163, 178, 199",
+      "underline": "100, 116, 139",
+      "hex": "#eef2f6"
     }
   }
 }

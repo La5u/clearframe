@@ -8,20 +8,22 @@ import { ALL_CAPS_TERM_ID, findAllCapsMatches } from './core/all-caps.js';
 import { CONTEXTUAL_TERMS, classifyPageContext, findContextualMatches } from './core/contextual.js';
 import { shouldKeepLexicalMatch } from './core/context-filter.js';
 
-const { index, types: TYPE_MAP, categories: TYPE_CATEGORIES } = ClearFrame;
+const { index, types: TYPE_MAP, categories: TYPE_CATEGORIES, colors, underlines, intensity } = ClearFrame;
 const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA', 'INPUT', 'CODE']);
-const SKIP_SELECTOR = 'nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true],#cf-tooltip,#cf-suggestion';
+const MEDIA_UI_SELECTOR = '.ytp-caption-window-container,.ytp-caption-segment,.caption-window,.vjs-text-track-display,.jw-captions,.jw-text-track-display,.plyr__captions,.ytp-chrome-controls,.vjs-control-bar,.jw-controlbar,.plyr__controls,[data-testid=video-subtitles]';
+const PROTECTED_TEXT_SELECTOR = 'ytd-transcript-segment-renderer,ytd-transcript-segment-list-renderer,.ytd-transcript-segment-renderer,yt-live-chat-app,yt-live-chat-renderer,[aria-live=polite],[aria-live=assertive],[role=status],[role=alert]';
+const SKIP_SELECTOR = `nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true],#cf-tooltip,#cf-suggestion,${MEDIA_UI_SELECTOR}`;
 const HIGHLIGHT_PREFIX = 'clearframe-';
 const ALL_CAPS_HIGHLIGHT_NAME = 'clearframe-all-caps-underline';
-const MULTI_HIGHLIGHT_NAME = 'clearframe-multiple';
 const SELECTED_HIGHLIGHT_NAME = 'clearframe-selected';
 const TYPE_HIGHLIGHT_NAMES = Object.keys(TYPE_MAP).flatMap(type => [getHighlightName(type), getHighlightName(type, 'underline')]);
 const SUPPORTS_HIGHLIGHTS = !!(globalThis.Highlight && globalThis.CSS?.highlights);
-const COLOR_RGB = { yellow: '250, 204, 21', green: '74, 222, 128', gray: '209, 213, 219', red: '248, 113, 113', pink: '244, 114, 182', orange: '251, 146, 60', purple: '196, 128, 255', blue: '96, 165, 250', teal: '45, 212, 191', brown: '161, 98, 7' };
-const UNDERLINE_RGB = { yellow: '202, 138, 4', green: '22, 163, 74', gray: '107, 114, 128', red: '220, 38, 38', pink: '219, 39, 119', orange: '234, 88, 12', purple: '147, 51, 234', blue: '37, 99, 235', teal: '20, 184, 166', brown: '120, 53, 15' };
-const TYPE_INTENSITY = { absolute: 0.5, aggression: 0.75, 'all-caps': 0.5, authority: 0.65, clickbait: 0.85, colloquialism: 0.35, conflict: 0.65, derogatory: 0.95, distancing: 0.7, dysphemism: 0.8, euphemism: 0.75, exaggeration: 0.7, fear: 0.9, hype: 0.65, idiom: 0.35, loaded: 0.9, 'loaded-framing': 0.85, minimizing: 0.6, moral: 0.8, 'negative-framing': 0.75, passive: 0.7, repetition: 0.45, reveal: 0.3, 'rhetorical-question': 0.4, superlative: 0.65, uncertainty: 0.65, unsourced: 0.8 };
+const COLOR_RGB = colors;
+const UNDERLINE_RGB = underlines;
+const TYPE_INTENSITY = intensity;
+const TYPE_PRIORITY = ['derogatory', 'aggression', 'fear', 'loaded', 'moral', 'dysphemism', 'clickbait', 'loaded-framing', 'unsourced', 'euphemism', 'passive', 'negative-framing', 'conflict', 'exaggeration', 'superlative', 'hype', 'authority', 'uncertainty', 'distancing', 'minimizing', 'all-caps', 'absolute', 'repetition', 'rhetorical-question', 'colloquialism', 'idiom', 'reveal', 'quote'];
 const RUNTIME_SHORTCUTS = { r: 'replaceTerms', x: 'removeTerms', f: 'feedbackEnabled' };
-const ALL_CAPS_TERM = { phrase: 'caps emphasis', type: 'all-caps', neutral: 'Caps normalized.', stemType: '', regex: '', remove: false, hasNeutral: true };
+const ALL_CAPS_TERM = { phrase: 'caps emphasis', type: 'all-caps', neutral: 'Caps normalized.', stemType: '', regex: '', remove: false };
 
 let settings = normalizeSettings(DEFAULT_SETTINGS);
 let matcher = null;
@@ -55,10 +57,18 @@ function loadSettings(rawSettings = {}, rawTypeColors = {}) {
   matcher = buildMatcher(index, term => isEnabled(term.type));
 }
 
+function isFeedbackEnabled() {
+  return settings.feedbackEnabled === true;
+}
+
 function applySettings(rawSettings = {}, rawTypeColors = {}) {
   const previousKey = getSettingsKey(settings);
   loadSettings(rawSettings, rawTypeColors);
-  if (!settings.feedbackEnabled) hideSuggestion();
+  if (!isFeedbackEnabled()) {
+    hideSuggestion();
+    if (pinnedTooltipRecord) hideTooltip(true);
+    document.querySelector('#cf-tooltip .cf-feedback-actions')?.remove();
+  }
   if (previousKey !== getSettingsKey(settings) && document.body) {
     analyzePage();
   }
@@ -76,12 +86,27 @@ function getCategory(type) {
   return TYPE_CATEGORIES?.[type] || 'General';
 }
 
+function getTypeRank(type) {
+  const index = TYPE_PRIORITY.indexOf(type);
+  return index === -1 ? TYPE_PRIORITY.length : index;
+}
+
+function getMostImportantType(terms) {
+  let best = terms[0]?.type;
+  for (const term of terms) {
+    if (getTypeRank(term.type) < getTypeRank(best)) best = term.type;
+  }
+  return best;
+}
+
 function getHighlightName(type, mode = 'highlight') {
   return HIGHLIGHT_PREFIX + String(type).replace(/[^a-z0-9-]/gi, '-') + (mode === 'underline' ? '-underline' : '');
 }
 
 function getTermById(id) {
-  return index.termsById[id] || CONTEXTUAL_TERMS[id] || (id === ALL_CAPS_TERM_ID ? ALL_CAPS_TERM : null);
+  const term = index.termsById[id];
+  if (term && !term.phrase) term.phrase = id;
+  return term || CONTEXTUAL_TERMS[id] || (id === ALL_CAPS_TERM_ID ? ALL_CAPS_TERM : null);
 }
 
 function applyStemmedReplacement(src, base, replacement, stemType) {
@@ -118,9 +143,10 @@ function isLikelyHeadline(parent, text) {
   return !!parent.closest('strong,b,[class*=pufftext],[data-headline]') || link.getAttribute('itemprop') === 'url';
 }
 
-function getTermAction(term) {
+function getTermAction(term, preserveText = false) {
+  if (preserveText) return 'highlighted';
   if (term.remove && settings.removeTerms) return 'removed';
-  if (settings.replaceTerms && term.hasNeutral) return 'replaced';
+  if (settings.replaceTerms && term.neutral) return 'replaced';
   return 'highlighted';
 }
 
@@ -136,7 +162,7 @@ function getTermsForMatch(match) {
 
 function getHighlightNameForEntry(term, action, terms) {
   if (action === 'removed') return null;
-  if (terms.length > 1) return MULTI_HIGHLIGHT_NAME;
+  if (terms.length > 1) return getHighlightName(getMostImportantType(terms));
   if (action === 'highlighted') return getHighlightName(term.type);
   return term.phrase === ALL_CAPS_TERM.phrase ? ALL_CAPS_HIGHLIGHT_NAME : getHighlightName(term.type, 'underline');
 }
@@ -150,12 +176,13 @@ function processText(text, context = {}) {
   const combined = resolveMatchGroups([...matches, ...allCaps, ...contextual]);
   let cursor = 0, displayText = '';
   const entries = [];
+  const termAction = term => getTermAction(term, context.preserveText === true);
   for (const match of combined) {
     const terms = getTermsForMatch(match);
-    const term = chooseReplacementTerm(terms, getTermAction, ALL_CAPS_TERM.phrase);
+    const term = chooseReplacementTerm(terms, termAction, ALL_CAPS_TERM.phrase);
     if (!term) continue;
     const sourceText = text.slice(match.start, match.end);
-    const action = getTermAction(term);
+    const action = termAction(term);
     const replacementSource = getReplacementSourceText(term, terms, sourceText, ALL_CAPS_TERM.phrase, lowerAllCapsLongWords);
     const replacementText = getReplacementText(term, replacementSource, action);
     displayText += text.slice(cursor, match.start);
@@ -165,7 +192,7 @@ function processText(text, context = {}) {
     cursor = match.end;
   }
   displayText += text.slice(cursor);
-  return { displayText, entries, matches: combined };
+  return { displayText, entries };
 }
 
 function restoreAnalysis() {
@@ -179,7 +206,7 @@ function restoreAnalysis() {
 
 function clearHighlightPresentation() {
   if (SUPPORTS_HIGHLIGHTS) {
-    for (const name of [...TYPE_HIGHLIGHT_NAMES, ALL_CAPS_HIGHLIGHT_NAME, MULTI_HIGHLIGHT_NAME, SELECTED_HIGHLIGHT_NAME]) {
+    for (const name of [...TYPE_HIGHLIGHT_NAMES, ALL_CAPS_HIGHLIGHT_NAME, SELECTED_HIGHLIGHT_NAME]) {
       CSS.highlights.delete(name);
     }
   }
@@ -210,7 +237,8 @@ function processTarget(target) {
   const parent = node.parentElement;
   const conversational = !!parent?.closest('shreddit-comment,[data-testid*=comment],ytd-comment-thread-renderer,ytd-comments,#comments');
   const headline = isLikelyHeadline(parent, source);
-  const plan = processText(source, { headline, conversational, pageContext: PAGE_CONTEXT });
+  const preserveText = !!parent?.closest(PROTECTED_TEXT_SELECTOR);
+  const plan = processText(source, { headline, conversational, preserveText, pageContext: PAGE_CONTEXT });
   const displayedNodeText = originalText.slice(0, startOffset) + plan.displayText + originalText.slice(endOffset);
   if (displayedNodeText !== originalText) node.nodeValue = displayedNodeText;
 
@@ -226,7 +254,7 @@ function processTarget(target) {
       terms: entry.terms,
       type: entry.term.type, category: getCategory(entry.term.type), action: entry.action,
       sourceText: entry.sourceText, replacementText: entry.replacementText, highlightName: entry.highlightName,
-      matchContext: { headline, conversational, pageContext: PAGE_CONTEXT },
+      matchContext: { headline, conversational, preserveText, pageContext: PAGE_CONTEXT },
     });
   }
   if (result.records.length || displayedNodeText !== originalText) {
@@ -251,9 +279,7 @@ function getAllRecords() {
 
 function buildHighlightRule(name) {
   if (settings.monochrome && name === ALL_CAPS_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(0,0,0,.65);text-decoration-thickness:1px;text-underline-offset:2px}`;
-  if (settings.monochrome && name === MULTI_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:rgba(0,0,0,.20);text-decoration:underline;text-decoration-color:rgba(0,0,0,.75);text-decoration-thickness:1px;text-underline-offset:2px}`;
   if (name === ALL_CAPS_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(125,211,252,.42);text-decoration-thickness:.75px;text-underline-offset:2px}`;
-  if (name === MULTI_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:rgba(147,51,234,.42);text-decoration:underline;text-decoration-color:rgba(88,28,135,.95);text-decoration-thickness:1px;text-underline-offset:2px}`;
   const underline = name.endsWith('-underline');
   const typeName = name.slice(HIGHLIGHT_PREFIX.length, underline ? -'-underline'.length : undefined);
   const color = getColor(typeName);
@@ -326,8 +352,9 @@ function addResultHighlights(result) {
   return namesChanged;
 }
 
-function analyzeTargets(targets) {
+function analyzeTargets(root) {
   resetAnalysis();
+  const targets = getTextTargets(root);
   for (const target of targets) if (target.node?.isConnected) processTarget(target);
   rebuildSummary();
   renderHighlights();
@@ -337,8 +364,14 @@ function analyzeTargets(targets) {
 
 function analyzePage() {
   if (!document.body) return 0;
+  if (analysisTimer) {
+    window.clearTimeout(analysisTimer);
+    analysisTimer = 0;
+  }
+  pendingMutationNodes.clear();
+  pendingDisconnectedCleanup = false;
   pageObserver?.disconnect();
-  const count = analyzeTargets(getTextTargets(document.body));
+  const count = analyzeTargets(document.body);
   pageObserver?.takeRecords();
   pageObserver?.observe(document.body, { childList: true, subtree: true, characterData: true });
   return count;
@@ -471,7 +504,7 @@ function showTooltip(record, x, y) {
   info.textContent = terms.map(term => `${term.type} - ${getCategory(term.type)}${term.confidence && term.confidence !== 'high' ? ` (${term.confidence})` : ''}`).join('\n');
   tooltip.appendChild(info);
   tooltip.classList.toggle('pinned', pinnedTooltipRecord === record);
-  if (pinnedTooltipRecord === record && settings.feedbackEnabled) {
+  if (pinnedTooltipRecord === record && isFeedbackEnabled()) {
     const actions = document.createElement('div'); actions.className = 'cf-feedback-actions';
     const status = document.createElement('span'); status.className = 'cf-feedback-status';
     for (const [label, verdict] of [['Wrong context', 'wrong-context'], ['Wrong category', 'wrong-category'], ['Bad reword', 'bad-reword'], ['Too broad', 'too-broad'], ['Bad rule', 'bad-rule']]) {
@@ -529,6 +562,11 @@ function findRecordAtPoint(x, y) {
 }
 
 function processHoverMove(event) {
+  const selection = getSelection();
+  if (selection && !selection.isCollapsed) {
+    if (activeHover || pinnedTooltipRecord) hideTooltip(true);
+    return;
+  }
   if (pinnedTooltipRecord || !nodeResults.size) return;
   const record = findRecordAtPoint(event.clientX, event.clientY);
   if (!record) {
@@ -551,6 +589,10 @@ function handleHoverMove(event) {
 
 function handleTooltipClick(event) {
   if (event.target instanceof Element && event.target.closest('#cf-tooltip')) return;
+  // A drag-selection can still be non-collapsed when the browser dispatches a
+  // click. Do not turn that selection into a term tooltip.
+  const selection = getSelection();
+  if (selection && !selection.isCollapsed) return;
   const record = findRecordAtPoint(event.clientX, event.clientY);
   if (record) {
     pinnedTooltipRecord = record; activeHover = record; showTooltip(record, event.clientX, event.clientY);
@@ -586,9 +628,21 @@ function saveSuggestion(wording, context, element, status) {
 }
 
 function handleSelectionSuggestion(event) {
-  if (!settings.feedbackEnabled || event.target instanceof Element && event.target.closest('#cf-tooltip,#cf-suggestion')) return;
+  if (event.target instanceof Element && event.target.closest('#cf-tooltip,#cf-suggestion')) return;
+  // Remove a stale panel even if settings changed before the storage event
+  // reached this content script. The setting is checked again immediately
+  // before creating a new one.
   hideSuggestion();
   const selection = getSelection();
+  if (selection && !selection.isCollapsed) {
+    pendingHoverEvent = null;
+    if (hoverFrame) {
+      cancelAnimationFrame(hoverFrame);
+      hoverFrame = 0;
+    }
+    hideTooltip(true);
+  }
+  if (!isFeedbackEnabled()) return;
   const wording = selection?.toString().replace(/\s+/g, ' ').trim() || '';
   if (!selection || selection.isCollapsed || wording.length < 2 || wording.length > 240 || !selection.rangeCount) return;
   const range = selection.getRangeAt(0);
@@ -690,22 +744,24 @@ function scheduleMutationAnalysis(mutations) {
 
 function init() {
   loadSettings(DEFAULT_SETTINGS);
+  const start = () => {
+    pageObserver = new MutationObserver(mutations => {
+      scheduleMutationAnalysis(mutations);
+    });
+    analyzePage();
+  };
+  if (document.body) start();
+  else document.addEventListener('DOMContentLoaded', start, { once: true });
   chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ result) => {
+    if (getSettingsKey(settings) === getSettingsKey(normalizeSettings(result.settings, result.userTypeColors))) return;
     loadSettings(result.settings, result.userTypeColors);
-    const start = () => {
-      pageObserver = new MutationObserver(mutations => {
-        scheduleMutationAnalysis(mutations);
-      });
-      analyzePage();
-    };
-    if (document.body) start();
-    else document.addEventListener('DOMContentLoaded', start, { once: true });
+    if (document.body) analyzePage();
   });
   document.addEventListener('mousemove', handleHoverMove, { capture: true, passive: true });
   document.addEventListener('click', handleTooltipClick, true);
   document.addEventListener('mouseup', handleSelectionSuggestion, true);
   document.addEventListener('keydown', handleKeyDown);
-  document.addEventListener('scroll', () => { hideTooltip(); hideSuggestion(); }, true);
+  document.addEventListener('scroll', () => { hideTooltip(true); hideSuggestion(); }, true);
   window.addEventListener('blur', () => { hideTooltip(true); hideSuggestion(); });
 }
 
@@ -724,6 +780,10 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   }
   if (message.type === 'NAVIGATE_TERM') {
     navigateToTerm(message.term, message.action); return;
+  }
+  if (message.type === 'APPLY_SETTINGS') {
+    applySettings(message.settings, message.settings?.userTypeColors);
+    sendResponse({ ok: true }); return;
   }
   if (message.type === 'RELOAD_SETTINGS') {
     chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ result) => {

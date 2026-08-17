@@ -35,6 +35,8 @@ browser.stderr.on('data', data => { browserError += data; });
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 let feedbackEnabledForRun = false;
+let replaceEnabledForRun = false;
+let feedbackToggleTested = false;
 async function waitForFile(file) {
   for (let i = 0; i < 100; i++) { if (fs.existsSync(file)) return fs.readFileSync(file, 'utf8'); await delay(100); }
   throw new Error(`Chromium did not start: ${browserError}`);
@@ -115,13 +117,23 @@ async function testSite(cdp, url) {
     native = await cdp.evaluate(findNative);
   }
   const nativeTooltip = native ? await hover(cdp, native) : null;
+  await cdp.evaluate(`(() => { const el=document.createElement('p'); el.id='clearframe-feedback-disabled-smoke'; el.textContent='selection should not open a feedback panel'; el.style='position:fixed;left:20px;top:20px;z-index:2147483646;background:white;color:black;font:20px sans-serif;padding:8px;margin:0'; document.body.appendChild(el); const range=document.createRange(); range.selectNodeContents(el.firstChild); const selection=getSelection(); selection.removeAllRanges(); selection.addRange(range); document.dispatchEvent(new MouseEvent('mouseup',{bubbles:true,clientX:30,clientY:30})); return document.querySelectorAll('#cf-suggestion button').length; })()`);
+  await delay(100);
+  const disabledSuggestionButtons = await cdp.evaluate(`document.querySelectorAll('#cf-suggestion button').length`);
+  await cdp.evaluate(`document.querySelector('#clearframe-feedback-disabled-smoke')?.remove(); getSelection()?.removeAllRanges()`);
   if (!feedbackEnabledForRun) {
     await cdp.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'F', code: 'KeyF', modifiers: 9 });
     await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'F', code: 'KeyF', modifiers: 9 });
     await delay(350); feedbackEnabledForRun = true;
   }
-  await cdp.evaluate(`(() => { const el=document.createElement('h2'); el.id='clearframe-smoke'; el.textContent='BREAKING NEWS: shocking warning reveals the secret'; el.style='position:fixed;left:20px;bottom:20px;z-index:2147483646;background:white;color:black;font:20px sans-serif;padding:8px;margin:0'; const suggestion=document.createElement('p'); suggestion.id='clearframe-suggestion-smoke'; suggestion.textContent='needlessly dramatic wording'; suggestion.style='position:fixed;left:20px;bottom:70px;z-index:2147483646;background:white;color:black;font:20px sans-serif'; document.body.append(el,suggestion); })()`);
+  if (!replaceEnabledForRun) {
+    await cdp.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'R', code: 'KeyR', modifiers: 9 });
+    await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'R', code: 'KeyR', modifiers: 9 });
+    await delay(350); replaceEnabledForRun = true;
+  }
+  await cdp.evaluate(`(() => { const el=document.createElement('h2'); el.id='clearframe-smoke'; el.textContent='BREAKING NEWS: shocking warning reveals the secret'; el.style='position:fixed;left:20px;bottom:20px;z-index:2147483646;background:white;color:black;font:20px sans-serif;padding:8px;margin:0'; const suggestion=document.createElement('p'); suggestion.id='clearframe-suggestion-smoke'; suggestion.textContent='needlessly dramatic wording'; suggestion.style='position:fixed;left:20px;bottom:70px;z-index:2147483646;background:white;color:black;font:20px sans-serif'; const captions=document.createElement('div'); captions.id='clearframe-caption-smoke'; captions.className='ytp-caption-window-container'; captions.textContent='They passed away'; const transcript=document.createElement('div'); transcript.id='clearframe-transcript-smoke'; transcript.className='ytd-transcript-segment-renderer'; transcript.textContent='They passed away'; document.body.append(el,suggestion,captions,transcript); })()`);
   await delay(2000);
+  const protectedText = await cdp.evaluate(`({ caption:document.querySelector('#clearframe-caption-smoke')?.textContent, transcript:document.querySelector('#clearframe-transcript-smoke')?.textContent })`);
   const injected = await cdp.evaluate(`(() => { const n=document.querySelector('#clearframe-smoke').firstChild, at=n.nodeValue.indexOf('shocking'), r=document.createRange(); r.setStart(n,at);r.setEnd(n,at+8);const b=r.getBoundingClientRect();return{x:b.left+b.width/2,y:b.top+b.height/2}; })()`);
   const injectionState = await cdp.evaluate(`(() => { const el=document.querySelector('#clearframe-smoke'), hit=document.elementFromPoint(${injected.x},${injected.y}); return { highlightStyle:!!document.querySelector('#cf-highlight-styles'), hit:hit?.id||hit?.tagName, connected:!!el?.isConnected }; })()`);
   const injectedTooltip = await hover(cdp, injected);
@@ -143,14 +155,27 @@ async function testSite(cdp, url) {
     await cdp.evaluate(`document.querySelector('#cf-suggestion button')?.click()`); await delay(150);
     suggestionStatus = await cdp.evaluate(`document.querySelector('#cf-suggestion .cf-feedback-status')?.textContent || ''`);
   }
+  let feedbackToggleState = null;
+  if (!feedbackToggleTested && feedbackEnabledForRun) {
+    await cdp.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'F', code: 'KeyF', modifiers: 9 });
+    await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'F', code: 'KeyF', modifiers: 9 });
+    await delay(400);
+    feedbackToggleState = await cdp.evaluate(`({ panel:!!document.querySelector('#cf-suggestion'), actions:document.querySelectorAll('#cf-tooltip .cf-feedback-actions button').length })`);
+    await cdp.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'F', code: 'KeyF', modifiers: 9 });
+    await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'F', code: 'KeyF', modifiers: 9 });
+    await delay(400);
+    feedbackToggleTested = true;
+  }
   const errors = cdp.events.filter(event => event.method === 'Runtime.exceptionThrown' || event.method === 'Log.entryAdded').map(event =>
     event.params?.exceptionDetails?.exception?.description || event.params?.exceptionDetails?.text || event.params?.entry?.text,
   );
   const feedbackPass = feedbackButtons === 0 || (feedbackButtons === 5 && feedbackStatus === 'Saved locally');
   const suggestionPass = suggestionButtons === 0 || (suggestionButtons === 2 && suggestionStatus === 'Saved locally');
-  const injectedPass = !!injectedTooltip && injectedTooltip.display !== 'none' && injectedTooltip.onScreen && feedbackPass && suggestionPass;
+  const feedbackDisabledPass = disabledSuggestionButtons === 0 && (!feedbackToggleState || (!feedbackToggleState.panel && feedbackToggleState.actions === 0));
+  const protectedPass = protectedText.caption === 'They passed away' && protectedText.transcript === 'They passed away';
+  const injectedPass = !!injectedTooltip && injectedTooltip.display !== 'none' && injectedTooltip.onScreen && feedbackPass && suggestionPass && protectedPass;
   const nativePass = !native || (!!nativeTooltip && nativeTooltip.display !== 'none' && nativeTooltip.onScreen);
-  return { url, finalUrl, page, detectionCounts, hiddenOverlays, native, nativeTooltip, injectionState, injectedTooltip, feedbackButtons, feedbackStatus, suggestionState, suggestionButtons, suggestionStatus, errors, pass: injectedPass && nativePass };
+  return { url, finalUrl, page, detectionCounts, protectedText, hiddenOverlays, native, nativeTooltip, injectionState, injectedTooltip, feedbackButtons, feedbackStatus, disabledSuggestionButtons, suggestionState, suggestionButtons, suggestionStatus, errors, pass: injectedPass && nativePass && feedbackDisabledPass };
 }
 
 let exitCode = 0;

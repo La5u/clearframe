@@ -39,6 +39,7 @@ Color-coded categories track types of manipulation:
 - **blue** softening & agency hiding: euphemism, passive
 - **brown** dysphemism: dysphemism
 - **teal** style & voice: colloquialism, idiom, repetition, rhetorical-question
+- **slate** quotes: quote
 
 Disabled by default: `absolute`, `exaggeration`, `superlative`.
 

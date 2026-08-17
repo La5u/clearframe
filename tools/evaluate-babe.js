@@ -3,7 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { buildMatcher, findMatches, loadTerms, parseCsv } from '../src/core/term-utils.js';
+import { buildMatcher, findMatches } from '../src/core/matcher.js';
+import { loadTerms, parseCsv } from '../src/core/term-utils.js';
 import { approvedRuleTerms } from './rule-utils.js';
 import { assertSourcesAllowed, loadSourceRegistry } from './source-policy.js';
 

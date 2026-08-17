@@ -2,7 +2,7 @@ phrase,type,neutral,aliases,stemmable,regex,remove,contexts
 finally,clickbait,now,,,,true,headline
 devastate,clickbait,,,verb,,
 shock,clickbait,,,verb,,true,headline
-exclusive,clickbait,,,adjective,,true,headline
+exclusive,clickbait,,,adjective,,true,
 inside-story,clickbait,,,,,true,headline
 jaw-dropping,clickbait,surprising,,,,headline
 breaking,clickbait,,,,,true,headline

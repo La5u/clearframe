@@ -11,16 +11,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const ROOT = __dirname;
+const PACKAGE = readJson('package.json');
 const COLOR_CONFIG = readJson('data/type-colors.json');
 const STATIC_FILES = [
   ['src/background.js', 'background.js'],
   ['src/ui/popup.html', 'popup.html'],
   ['src/ui/content.css', 'content.css'],
 ];
-const MEDIA_FILES = ['icon.png', 'icon-16.png', 'icon-32.png', 'icon-64.png', 'icon-128.png'];
+const MEDIA_FILES = ['icon-16.png', 'icon-32.png', 'icon-64.png', 'icon-128.png'];
 const TARGETS = [
-  { dir: 'dist', archive: 'dist.zip', manifest: 'manifest.json' },
-  { dir: 'dist-firefox', archive: 'dist-firefox.zip', manifest: 'manifest.firefox.json', manifestOut: 'manifest.json' },
+  { dir: 'dist', archive: `${PACKAGE.name}-chromium-${PACKAGE.version}.zip`, manifest: 'manifest.json' },
+  { dir: 'dist-firefox', archive: `${PACKAGE.name}-firefox-${PACKAGE.version}.zip`, manifest: 'manifest.firefox.json', manifestOut: 'manifest.json' },
 ];
 const { types: TYPES, categories: CATEGORIES } = buildTypeMaps(COLOR_CONFIG);
 
@@ -47,6 +48,26 @@ function buildTypeMaps(colorConfig) {
 function resetDir(dir) {
   fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(dir, { recursive: true });
+}
+
+function compactContentIndex(index) {
+  const termsById = Object.fromEntries(Object.entries(index.termsById).map(([id, term]) => {
+    const compact = { type: term.type };
+    // Canonical terms use their ID as the phrase. Aliases/stem variants keep
+    // the canonical phrase because replacement and feedback need it.
+    if (id !== term.phrase) compact.phrase = term.phrase;
+    if (term.neutral) compact.neutral = term.neutral;
+    if (term.stemType) compact.stemType = term.stemType;
+    if (term.remove) compact.remove = true;
+    if (term.confidence && term.confidence !== 'high') compact.confidence = term.confidence;
+    if (term.contexts?.length) compact.contexts = term.contexts;
+    return [id, compact];
+  }));
+  // The matcher can build its trie from term IDs, so do not serialize the
+  // derived bucket/trie structure into the extension. Regex terms carry
+  // their pattern here instead of duplicating it on the term record.
+  const regexTerms = index.regexTerms.map(({ termId, pattern }) => ({ termId, pattern }));
+  return { termsById, regexTerms };
 }
 
 function copyFile(from, to) {
@@ -93,6 +114,8 @@ async function bundle(entryPoint, globals) {
 }
 
 async function build() {
+  for (const archive of ['dist.zip', 'dist-firefox.zip']) fs.rmSync(path.join(ROOT, archive), { force: true });
+
   const index = loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT));
   for (const term of Object.values(index.termsById)) {
     if (!TYPES[term.type]) {
@@ -100,7 +123,14 @@ async function build() {
     }
   }
 
-  const contentGlobals = { index, types: TYPES, categories: CATEGORIES, colorConfig: COLOR_CONFIG };
+  const contentGlobals = {
+    index: compactContentIndex(index),
+    types: TYPES,
+    categories: CATEGORIES,
+    colors: Object.fromEntries(Object.entries(COLOR_CONFIG.colors).map(([color, config]) => [color, config.rgb])),
+    underlines: Object.fromEntries(Object.entries(COLOR_CONFIG.colors).map(([color, config]) => [color, config.underline])),
+    intensity: COLOR_CONFIG.intensity || {},
+  };
   const popupGlobals = { types: TYPES, categories: CATEGORIES, colorConfig: COLOR_CONFIG };
 
   const [contentBundle, popupBundle] = await Promise.all([

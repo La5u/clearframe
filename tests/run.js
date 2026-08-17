@@ -6,7 +6,9 @@ import os from 'os';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-import { adverbWord, buildMatcher, extractText, findMatches, loadTerms } from '../src/core/term-utils.js';
+import { extractText, loadTerms } from '../src/core/term-utils.js';
+import { buildMatcher, findMatches } from '../src/core/matcher.js';
+import { adverbWord } from '../src/core/stemmer.js';
 import { ALL_CAPS_TERM_ID, findAllCapsMatches } from '../src/core/all-caps.js';
 import { getAllCapsAction, getContextualAllCapsAction, lowerAllCapsLongWords, matchReplacementCase } from '../src/core/display-utils.js';
 import { COMMON_SHORT_WORDS } from '../src/core/commonShortWords.js';
@@ -25,6 +27,12 @@ const ROOT = path.resolve(__dirname, '..');
 const TERMS_DIR = path.join(ROOT, 'data', 'terms');
 const index = loadTerms(TERMS_DIR, approvedRuleTerms(ROOT));
 const matcher = buildMatcher(index);
+const compactMatcher = buildMatcher({ termsById: index.termsById });
+assert.strictEqual(
+  findMatches(compactMatcher, 'The shocking warning was finally revealed.', index.termsById, index.regexTerms).length,
+  findMatches(matcher, 'The shocking warning was finally revealed.', index.termsById, index.regexTerms).length,
+  'the matcher must support compact indexes without serialized buckets',
+);
 const colorConfig = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'type-colors.json'), 'utf8'));
 const sourceRegistry = loadSourceRegistry(ROOT);
 assert.throws(() => assertSourcesAllowed(['babe'], sourceRegistry, 'rule-mining'), /Evaluation-only source/);
@@ -223,6 +231,10 @@ assert.strictEqual(normalizeSettings().monochrome, false);
 assert.strictEqual(normalizeSettings({ monochrome: true }).monochrome, true);
 assert.strictEqual(normalizeSettings().feedbackEnabled, false);
 assert.strictEqual(normalizeSettings({ feedbackEnabled: true }).feedbackEnabled, true);
+assert.strictEqual(normalizeSettings({ feedbackEnabled: 'false' }).feedbackEnabled, false);
+assert.strictEqual(normalizeSettings({ replaceTerms: 1, monochrome: 'true' }).replaceTerms, false);
+assert.strictEqual(normalizeSettings({ types: { loaded: 'false' } }).types.loaded, false);
+assert.deepStrictEqual(normalizeSettings([]), normalizeSettings());
 assert.deepStrictEqual(
   normalizeSettings({ enabled: true, siteEnabled: { 'https://example.com': true } }),
   normalizeSettings(),

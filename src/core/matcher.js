@@ -6,21 +6,19 @@ export function normalize(phrase) {
 
 export function buildMatcher(index, isTermEnabled = _term => true) {
   const root = Object.create(null);
-  if (!index.buckets) {
-    return root;
-  }
-  for (const entries of Object.values(index.buckets)) {
-    for (const entry of entries) {
-      const term = index.termsById?.[entry.termId];
-      if (!term || !isTermEnabled(term)) {
-        continue;
-      }
-      let node = root;
-      for (const ch of entry.phraseNorm) {
-        node = node[ch] ||= Object.create(null);
-      }
-      node.$ = entry.termId;
+  const entries = index.buckets
+    ? Object.values(index.buckets).flat()
+    : Object.keys(index.termsById || {}).map(termId => ({ phraseNorm: termId, termId }));
+  for (const entry of entries) {
+    const term = index.termsById?.[entry.termId];
+    if (!term || !isTermEnabled(term)) {
+      continue;
     }
+    let node = root;
+    for (const ch of entry.phraseNorm) {
+      node = node[ch] ||= Object.create(null);
+    }
+    node.$ = entry.termId;
   }
   return root;
 }

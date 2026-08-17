@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { normalize } from './matcher.js';
-import { adverbWord, pastTenseWord, ingWord } from './stemmer.js';
+import { adverbWord, pastTenseWord, pluralizeWord, ingWord } from './stemmer.js';
 
 const ALLOWED_CONTEXTS = new Set(['headline', 'body', 'publication', 'discussion', 'video', 'conversation', 'evaluative']);
 
@@ -14,25 +14,15 @@ export function buildStemRegex(word, stemType) {
 }
 
 export function stemVariants(word, stemType) {
-  const out = new Set([word]), cy = /[^aeiou]y$/;
+  const out = new Set([word]);
   if (stemType === 'noun') {
-    out.add(pluralWord(word, cy));
+    out.add(pluralizeWord(word));
   } else if (stemType === 'adjective') {
     out.add(adverbWord(word));
   } else if (stemType === 'verb') {
-    out.add(pluralWord(word, cy)); out.add(pastTenseWord(word)); out.add(ingWord(word));
+    out.add(pluralizeWord(word)); out.add(pastTenseWord(word)); out.add(ingWord(word));
   }
   return [...out];
-}
-
-function pluralWord(w, consonantY) {
-  if (/(s|x|z|ch|sh)$/.test(w)) {
-    return `${w  }es`;
-  }
-  if (consonantY.test(w)) {
-    return `${w.slice(0, -1)  }ies`;
-  }
-  return `${w  }s`;
 }
 
 export function parseCsv(input) {
@@ -119,11 +109,11 @@ export function loadTerms(dataDir, extraTerms = []) {
         throw new Error(`Invalid regex for term "${phrase}" in ${source}: ${message}`);
       }
     }
-    terms[phrase] = { phrase: normalize(term.phrase), type: term.type, neutral: term.neutral || '', hasNeutral, stemType: term.stemType || '', regex: term.regex || '', remove: term.remove === true, confidence: term.confidence || 'high', provenance: term.provenance || [], contexts: term.contexts || [] };
+    terms[phrase] = { phrase: normalize(term.phrase), type: term.type, neutral: term.neutral || '', hasNeutral, stemType: term.stemType || '', regex: term.regex || '', remove: term.remove === true, confidence: term.confidence || 'high', contexts: term.contexts || [] };
     if (term.regex) {
       regexTerms.push({ termId: phrase, pattern: term.regex });
     } else {
-      entries.push({ phraseNorm: phrase, termId: phrase, length: phrase.length });
+      entries.push({ phraseNorm: phrase, termId: phrase });
     }
   }
 
@@ -192,13 +182,10 @@ export function loadTerms(dataDir, extraTerms = []) {
   for (const entry of entries) {
     (buckets[entry.phraseNorm[0]] ||= []).push(entry);
   }
-  Object.values(buckets).forEach(arr => arr.sort((a, b) => b.length - a.length));
+  Object.values(buckets).forEach(arr => arr.sort((a, b) => b.phraseNorm.length - a.phraseNorm.length));
   return { termsById: terms, buckets, regexTerms };
 }
 
 export function extractText(html) {
   return html.replace(/<(script|style|noscript)[^>]*>[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/gi, ' ').replace(/\s+/g, ' ');
 }
-
-export { buildMatcher, findMatches } from './matcher.js';
-export { adverbWord, pastTenseWord, ingWord } from './stemmer.js';

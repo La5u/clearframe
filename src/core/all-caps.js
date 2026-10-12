@@ -1,3 +1,4 @@
+import { ALL_CAPS_ACRONYMS } from './acronyms.js';
 import { getAllCapsAction, getContextualAllCapsAction } from './display-utils.js';
 
 export const ALL_CAPS_TERM_ID = '__clearframe_all_caps__';
@@ -19,6 +20,28 @@ function isContextualAllCaps(text, start, end) {
     return false;
   }
   return !!getContextualAllCapsAction(text, start, end);
+}
+
+// Words that make a short caps node read as a sentence ("I DO NOT") rather than a label ("LATEST NEWS").
+const SENTENCE_WORDS = new Set(['I', 'NOT', 'YOU', 'IS', 'ARE', 'WAS', 'A', 'THE', 'DO', "DON'T", 'WILL', 'CAN', 'WE', 'MY', 'IT', "IT'S"]);
+// Short words that are emphasis rather than acronyms when capitalized alone.
+const EMPHASIS_WORDS = new Set(['NOT', 'NEVER', 'MUST', 'ALL', 'EVERY', 'ONLY', 'REAL', 'HUGE', 'VERY', 'EVER', 'STILL', 'JUST', 'NO']);
+
+// Real pages are full of caps that are not shouting: acronyms (US, ICE, NYPD),
+// section labels (POLITICS, LATEST NEWS), and kickers ("WATCH:").
+function isEmphasis(text, run) {
+  const value = text.slice(run.start, run.end);
+  const words = value.match(/[A-Z0-9]+(?:'[A-Z0-9]+)*/g) || [];
+  const bare = text.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9'’]+$/g, '');
+  if (words.length <= 3 && value === bare && !words.some(word => SENTENCE_WORDS.has(word))) return false;
+  // Kickers and bylines: "WATCH:", "ROB CRILLY:", "W. JAMES ANTLE:".
+  if (/^[\sA-Z.'’-]*$/.test(text.slice(0, run.start)) && /^\s*:/.test(text.slice(run.end))) return false;
+  if (words.length === 1) {
+    const [word] = words;
+    return EMPHASIS_WORDS.has(word) || (word.length >= 6 && !ALL_CAPS_ACRONYMS.has(word) && /[AEIOUY]/.test(word));
+  }
+  if (words.length === 2 && words.every(word => word.length <= 4 && !EMPHASIS_WORDS.has(word) && !SENTENCE_WORDS.has(word))) return false;
+  return true;
 }
 
 export function findAllCapsMatches(text, termId = ALL_CAPS_TERM_ID) {
@@ -51,5 +74,5 @@ export function findAllCapsMatches(text, termId = ALL_CAPS_TERM_ID) {
   if (pending) {
     matches.push(pending);
   }
-  return matches;
+  return matches.filter(run => isEmphasis(String(text || ''), run));
 }

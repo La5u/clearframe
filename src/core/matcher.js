@@ -6,9 +6,12 @@ export function normalize(phrase) {
 
 export function buildMatcher(index, isTermEnabled = _term => true) {
   const root = Object.create(null);
+  // Compact indexes omit buckets; regex-only terms must stay out of the
+  // literal trie or their lookahead/lookbehind constraints are bypassed.
+  const regexIds = new Set((index.regexTerms || []).map(term => term.termId));
   const entries = index.buckets
     ? Object.values(index.buckets).flat()
-    : Object.keys(index.termsById || {}).map(termId => ({ phraseNorm: termId, termId }));
+    : Object.keys(index.termsById || {}).filter(termId => !regexIds.has(termId)).map(termId => ({ phraseNorm: termId, termId }));
   for (const entry of entries) {
     const term = index.termsById?.[entry.termId];
     if (!term || !isTermEnabled(term)) {

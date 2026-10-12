@@ -24,7 +24,7 @@ const terms = Object.entries(loadTerms(path.join(ROOT, 'data', 'terms'), approve
   .filter(([term, data]) => term.length >= 4 && term.length <= 50 && !disabledTypes.has(data.type) && !data.contexts?.length)
   .map(([term]) => term).sort((a, b) => b.length - a.length);
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'clearframe-smoke-'));
-const browser = spawn('/usr/bin/chromium', [
+const browser = spawn(process.env.CHROMIUM_PATH || '/usr/bin/chromium', [
   '--headless=new', '--no-sandbox', '--disable-gpu', '--no-first-run',
   `--user-data-dir=${profile}`, `--disable-extensions-except=${path.join(ROOT, 'dist')}`,
   `--load-extension=${path.join(ROOT, 'dist')}`, '--remote-debugging-port=0', 'about:blank',
@@ -71,25 +71,21 @@ class Cdp {
   close() { this.ws.close(); }
 }
 
+// Hover a word the extension actually highlighted, so context rules that
+// intentionally skip a phrase do not count as tooltip failures.
 const findNative = `(() => {
-  const terms = ${JSON.stringify(terms)};
-  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-  while (walker.nextNode()) {
-    const node = walker.currentNode, parent = node.parentElement;
-    if (!parent || parent.closest('script,style,noscript,textarea,input,code,nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true],#cf-tooltip,#clearframe-smoke')) continue;
-    const text = node.nodeValue || '', lower = text.toLowerCase();
-    for (const term of terms) {
-      const at = lower.indexOf(term); if (at < 0) continue;
-      const before = lower[at - 1] || ' ', after = lower[at + term.length] || ' ';
-      if (/[a-z0-9]/.test(before) || /[a-z0-9]/.test(after)) continue;
-      const range = document.createRange(); range.setStart(node, at); range.setEnd(node, at + term.length);
+  for (const [name, highlight] of CSS.highlights || []) {
+    if (!name.startsWith('clearframe-') || name === 'clearframe-selected') continue;
+    for (const range of highlight) {
+      const node = range.startContainer, parent = node.parentElement;
+      if (!parent || parent.closest('#cf-tooltip,#clearframe-smoke')) continue;
       let rect = range.getBoundingClientRect();
-      if (rect.width < 2 || rect.height < 2 || getComputedStyle(parent).visibility==='hidden') continue;
-      if (rect.bottom < 0 || rect.top > innerHeight) { parent.scrollIntoView({block:'center',behavior:'instant'}); rect = range.getBoundingClientRect(); }
+      if (rect.width < 2 || rect.height < 2 || getComputedStyle(parent).visibility === 'hidden') continue;
+      if (rect.bottom < 0 || rect.top > innerHeight) { parent.scrollIntoView({ block: 'center', behavior: 'instant' }); rect = range.getBoundingClientRect(); }
       const x = rect.left + Math.min(rect.width / 2, 12), y = rect.top + rect.height / 2;
-      const hit=document.elementFromPoint(x,y);
-      if (!hit || !(parent.contains(hit)||hit.contains(parent))) continue;
-      return { term, text: text.trim().slice(0, 160), x, y, parent:parent.tagName, hit:hit?.tagName, hitClass:String(hit?.className||'').slice(0,80), related:!!hit&&(parent.contains(hit)||hit.contains(parent)) };
+      const hit = document.elementFromPoint(x, y);
+      if (!hit || !(parent.contains(hit) || hit.contains(parent))) continue;
+      return { term: range.toString(), text: (node.nodeValue || '').trim().slice(0, 160), x, y, parent: parent.tagName, hit: hit.tagName };
     }
   }
   return null;
@@ -103,6 +99,8 @@ async function hover(cdp, point) {
 }
 
 async function testSite(cdp, url) {
+  // Feedback stays enabled after the first site, so the disabled-state check only applies there.
+  const feedbackWasEnabled = feedbackEnabledForRun;
   cdp.events.length = 0;
   await cdp.send('Page.navigate', { url });
   for (let i = 0; i < 40; i++) { await delay(500); if (await cdp.evaluate(`document.readyState === 'complete' && !!document.body`)) break; }
@@ -171,7 +169,7 @@ async function testSite(cdp, url) {
   );
   const feedbackPass = feedbackButtons === 0 || (feedbackButtons === 5 && feedbackStatus === 'Saved locally');
   const suggestionPass = suggestionButtons === 0 || (suggestionButtons === 2 && suggestionStatus === 'Saved locally');
-  const feedbackDisabledPass = disabledSuggestionButtons === 0 && (!feedbackToggleState || (!feedbackToggleState.panel && feedbackToggleState.actions === 0));
+  const feedbackDisabledPass = feedbackWasEnabled || (disabledSuggestionButtons === 0 && (!feedbackToggleState || (!feedbackToggleState.panel && feedbackToggleState.actions === 0)));
   const protectedPass = protectedText.caption === 'They passed away' && protectedText.transcript === 'They passed away';
   const injectedPass = !!injectedTooltip && injectedTooltip.display !== 'none' && injectedTooltip.onScreen && feedbackPass && suggestionPass && protectedPass;
   const nativePass = !native || (!!nativeTooltip && nativeTooltip.display !== 'none' && nativeTooltip.onScreen);

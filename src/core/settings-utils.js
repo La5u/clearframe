@@ -1,9 +1,9 @@
 export const DEFAULT_SETTINGS = {
   replaceTerms: false,
   removeTerms: false,
-  monochrome: false,
+  monochrome: true,
   feedbackEnabled: false,
-  types: { absolute: false, exaggeration: false, superlative: false },
+  types: { absolute: false, exaggeration: false, superlative: false, quote: false },
   userTypeColors: {},
 };
 
@@ -17,7 +17,7 @@ export function normalizeSettings(rawSettings = {}, rawTypeColors = {}) {
   const { enabled: _legacyEnabled, siteEnabled: _legacySiteEnabled, ...supported } = raw;
   const next = { ...DEFAULT_SETTINGS, ...supported };
   for (const key of ['replaceTerms', 'removeTerms', 'monochrome', 'feedbackEnabled']) {
-    next[key] = raw[key] === true;
+    next[key] = raw[key] === undefined ? DEFAULT_SETTINGS[key] : raw[key] === true;
   }
   const rawTypes = raw.types && typeof raw.types === 'object' && !Array.isArray(raw.types) ? raw.types : {};
   next.types = { ...DEFAULT_SETTINGS.types };

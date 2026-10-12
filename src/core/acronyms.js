@@ -3,14 +3,22 @@ export const ALL_CAPS_ACRONYMS = new Set([
   'NASA',
   'APEX',
   'FIFA',
-
   'GPQA',
-
   'MBZUAI',
   'MMMU',
-
   'NVIDIA',
-
   'NATO',
-
+  // Six letters or longer: short acronyms are already skipped as single words.
+  'NASCAR',
+  'UNESCO',
+  'UNICEF',
+  'NASDAQ',
+  'LGBTQIA',
+  'CENTCOM',
+  'INTERPOL',
+  'AFRICOM',
+  'SPACECOM',
+  'SCOTUS',
+  'POTUS',
+  'FLOTUS',
 ]);

@@ -4,6 +4,7 @@ import { normalize } from './matcher.js';
 import { adverbWord, pastTenseWord, pluralizeWord, ingWord } from './stemmer.js';
 
 const ALLOWED_CONTEXTS = new Set(['headline', 'body', 'publication', 'discussion', 'video', 'conversation', 'evaluative']);
+const CONFIDENCE_LEVELS = new Set(['high', 'medium', 'contextual', 'exploratory']);
 
 export function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -130,11 +131,18 @@ export function loadTerms(dataDir, extraTerms = []) {
       } return i;
     };
     idx('phrase'); idx('type');
-    const phI = idx('phrase'), tyI = idx('type'), neI = headers.indexOf('neutral'), alI = headers.indexOf('aliases'), stI = headers.indexOf('stemmable'), reI = headers.indexOf('regex'), rmI = headers.indexOf('remove'), cxI = headers.indexOf('contexts');
+    const phI = idx('phrase'), tyI = idx('type'), neI = headers.indexOf('neutral'), alI = headers.indexOf('aliases'), stI = headers.indexOf('stemmable'), reI = headers.indexOf('regex'), rmI = headers.indexOf('remove'), cxI = headers.indexOf('contexts'), cfI = headers.indexOf('confidence');
 
     for (const row of bodyRows) {
       if (!row.some(c => c.trim().length > 0)) {
         continue;
+      }
+      // Extra cells mean a value landed in the wrong column (e.g. a stem type in `regex`).
+      if (row.length > headers.length) {
+        throw new Error(`Row "${row.join(',')}" in ${file} has ${row.length} cells; header has ${headers.length}`);
+      }
+      if (reI >= 0 && /^(?:noun|verb|adjective|true)$/i.test((row[reI] || '').trim())) {
+        throw new Error(`Row "${row[phI]}" in ${file} has a stem type in the regex column`);
       }
       const term = {
         phrase: row[phI] || '',
@@ -145,7 +153,11 @@ export function loadTerms(dataDir, extraTerms = []) {
         regex: reI >= 0 ? row[reI] || '' : '',
         remove: rmI >= 0 ? parseBooleanCell(row[rmI] || '') : false,
         contexts: splitAliases(cxI >= 0 ? row[cxI] || '' : ''),
+        confidence: cfI >= 0 ? (row[cfI] || '').trim() : '',
       };
+      if (term.confidence && !CONFIDENCE_LEVELS.has(term.confidence)) {
+        throw new Error(`Row "${row[phI]}" in ${file} has unknown confidence "${term.confidence}"`);
+      }
       const phrase = normalize(term.phrase);
       addTerm(phrase, term, file);
       if (term.stemType && !term.regex) {

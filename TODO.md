@@ -14,6 +14,12 @@
 
 ## Detection quality
 
+- [ ] Revisit deferred unmirrored terms in `data/mirror-pairs.json` (woke/MAGA, stealth tax trap/loophole, taxpayer-funded, hate group, apartheid regime, the Ottoman yoke).
+- [ ] Decide whether to keep `probe` and `warning` (now medium/contextual, drawn faint); `alleged` stays.
+- [ ] Decide on `job creators` ↔ `pay their fair share` (deferred, pairing uncertain) and `right to life` ↔ `right to choose` (both have common non-abortion uses).
+- [ ] Review GST mirror candidates with a politically mixed panel; current approvals are two-reviewer only.
+- [ ] Make `exploratory` and `contextual` confidence restrict execution, not only the tooltip label.
+
 - [ ] Rank combinations and context above isolated single-word matches.
 - [ ] Audit high-volume terms such as `reveal`, `exclusive`, `secret`, `most`, and `best`.
 - [ ] Separate strong cues from weak cues in the default settings.

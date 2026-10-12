@@ -35,13 +35,17 @@ export function resolveMatchGroups(matches) {
     if (last.structural || last.virtual || match.virtual) {
       const lexical = last.virtual ? match : last;
       const virtual = last.virtual ? last : match;
+      const start = Math.min(last.start, match.start), end = Math.max(last.end, match.end);
       accepted[accepted.length - 1] = {
         ...lexical,
-        start: Math.min(last.start, match.start),
-        end: Math.max(last.end, match.end),
+        start,
+        end,
         termIds: [...new Set([...(lexical.termIds || [lexical.termId]), ...(virtual.termIds || [virtual.termId])])],
         virtual: false,
         structural: true,
+        // The group now spans more than the lexical term, so that term's
+        // reword/removal must not be applied to the whole range.
+        expanded: !!lexical.expanded || start !== lexical.start || end !== lexical.end,
       };
       continue;
     }

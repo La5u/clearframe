@@ -76,15 +76,24 @@ export function findContextualMatches(text, { headline = false, conversational =
   }
   if (!headline) return matches;
   if (pageContext === 'publication' && /\?\s*$/.test(text)) {
-    const start = Math.max(0, text.lastIndexOf('.', text.length - 2) + 1);
-    matches.push({ start, end: text.length, termId: '__clearframe_headline_question__', virtual: true });
+    // The question starts after the last sentence break; "a.m." or "U.S." are not breaks.
+    const breaks = [...text.slice(0, -1).matchAll(/[.!?:]\s+(?=[\p{Lu}‘'"“])/gu)];
+    const last = breaks[breaks.length - 1];
+    const start = last ? last.index + last[0].length : text.search(/\S/);
+    // Only yes/no questions invite the reader to supply an answer the article may not
+    // support; who/what/why questions are usually explainers.
+    if (/^(?:is|are|was|were|can|could|will|would|should|does|do|did|has|have|had|might|may)\b/iu.test(text.slice(start)) && !/^tell us\b/iu.test(text.trim())) {
+      matches.push({ start, end: text.length, termId: '__clearframe_headline_question__', virtual: true });
+    }
   }
   if (!conversational) {
     for (const pattern of DIRECT_ADDRESS_PATTERNS) addMatches(matches, text, pattern, '__clearframe_direct_address__');
   }
   if (pageContext === 'publication') addQuotedWording(matches, text);
   if (pageContext === 'publication') addMatches(matches, text, /\b[Ee]ven\s+(?:the\s+)?(?:[\p{Lu}][\p{L}'’-]*|experts?|critics?|supporters?|opponents?)\s+(?:can|could|does|did|is|was|will|has|had)\b/gu, '__clearframe_even_framing__');
-  if (pageContext !== 'discussion') addMatches(matches, text, /\bfrom\s+[^.!?;:]{1,40}\s+to\s+[^.!?;:]{1,40}/giu, '__clearframe_transformation__');
+  // A transformation arc opens the headline ("From forgotten room to luxury retreat");
+  // mid-sentence "from X to Y" is usually a route, a range, or a list.
+  if (pageContext !== 'discussion') addMatches(matches, text, /^\s*from\s+[^.!?;:$\d]{1,40}\s+to\s+[^.!?;:$\d]{1,40}/giu, '__clearframe_transformation__');
   addMatches(matches, text, /\bone of the most\s+[^.!?;:]{1,45}\s+in history\b/giu, '__clearframe_history_claim__');
   addMatches(matches, text, /\b(?:top|best)\s+(?:five|ten|\d+)\s+[^.!?;:]{1,45}\b(?:you|everyone|every\s+\w+)\s+needs?\b/giu, '__clearframe_list_promise__');
   addMatches(matches, text, /\b(?:fans|viewers|critics|users)\s+(?:gasp|rave|insist|slam|love|hate)\b/giu, '__clearframe_reaction_claim__');

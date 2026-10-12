@@ -6,17 +6,21 @@ import { DEFAULT_SETTINGS, normalizeSettings } from './core/settings-utils.js';
 import { chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from './core/match-plan.js';
 import { ALL_CAPS_TERM_ID, findAllCapsMatches } from './core/all-caps.js';
 import { CONTEXTUAL_TERMS, classifyPageContext, findContextualMatches } from './core/contextual.js';
+import { recoverOriginalText } from './core/restore.js';
 import { shouldKeepLexicalMatch } from './core/context-filter.js';
 
 const { index, types: TYPE_MAP, categories: TYPE_CATEGORIES, colors, underlines, intensity } = ClearFrame;
-const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA', 'INPUT', 'CODE']);
+const SKIP_TAGS_SELECTOR = 'script,style,noscript,textarea,input,code,pre,kbd,samp';
 const MEDIA_UI_SELECTOR = '.ytp-caption-window-container,.ytp-caption-segment,.caption-window,.vjs-text-track-display,.jw-captions,.jw-text-track-display,.plyr__captions,.ytp-chrome-controls,.vjs-control-bar,.jw-controlbar,.plyr__controls,[data-testid=video-subtitles]';
 const PROTECTED_TEXT_SELECTOR = 'ytd-transcript-segment-renderer,ytd-transcript-segment-list-renderer,.ytd-transcript-segment-renderer,yt-live-chat-app,yt-live-chat-renderer,[aria-live=polite],[aria-live=assertive],[role=status],[role=alert]';
 const SKIP_SELECTOR = `nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true],#cf-tooltip,#cf-suggestion,${MEDIA_UI_SELECTOR}`;
 const HIGHLIGHT_PREFIX = 'clearframe-';
 const ALL_CAPS_HIGHLIGHT_NAME = 'clearframe-all-caps-underline';
 const SELECTED_HIGHLIGHT_NAME = 'clearframe-selected';
-const TYPE_HIGHLIGHT_NAMES = Object.keys(TYPE_MAP).flatMap(type => [getHighlightName(type), getHighlightName(type, 'underline')]);
+const TYPE_HIGHLIGHT_NAMES = Object.keys(TYPE_MAP).flatMap(type => [false, true].flatMap(low => [getHighlightName(type, 'highlight', low), getHighlightName(type, 'underline', low)]));
+// Terms below high confidence render fainter, so a reader can weigh them less.
+const LOW_CONFIDENCE_ALPHA = 0.5;
+const LOW_SUFFIX = '-low';
 const SUPPORTS_HIGHLIGHTS = !!(globalThis.Highlight && globalThis.CSS?.highlights);
 const COLOR_RGB = colors;
 const UNDERLINE_RGB = underlines;
@@ -30,6 +34,9 @@ let matcher = null;
 // A NodeResult owns all retained state for one analyzed text node.
 /** @type {Map<Text, {node: Text, originalText: string, displayedText: string, records: any[]}>} */
 const nodeResults = new Map();
+// Results for nodes the page detached; kept so reattached nodes can be restored.
+/** @type {WeakMap<Text, {node: Text, originalText: string, displayedText: string, records: any[]}>} */
+const detachedResults = new WeakMap();
 let totalMatches = 0;
 /** @type {Record<string, Record<string, number>>} */
 let termStats = Object.create(null);
@@ -99,8 +106,12 @@ function getMostImportantType(terms) {
   return best;
 }
 
-function getHighlightName(type, mode = 'highlight') {
-  return HIGHLIGHT_PREFIX + String(type).replace(/[^a-z0-9-]/gi, '-') + (mode === 'underline' ? '-underline' : '');
+function getHighlightName(type, mode = 'highlight', low = false) {
+  return HIGHLIGHT_PREFIX + String(type).replace(/[^a-z0-9-]/gi, '-') + (low ? '-low' : '') + (mode === 'underline' ? '-underline' : '');
+}
+
+function isLowConfidence(terms) {
+  return terms.length > 0 && terms.every(term => (term.confidence || 'high') !== 'high');
 }
 
 function getTermById(id) {
@@ -132,7 +143,7 @@ function getReplacementForTerm(term, src) {
 
 function isProcessableNode(node) {
   const parent = node.parentElement;
-  return !!parent && !parent.isContentEditable && !SKIP_TAGS.has(parent.tagName) && !parent.closest(SKIP_SELECTOR);
+  return !!parent && !parent.isContentEditable && !parent.closest(SKIP_TAGS_SELECTOR) && !parent.closest(SKIP_SELECTOR);
 }
 
 function isLikelyHeadline(parent, text) {
@@ -162,15 +173,16 @@ function getTermsForMatch(match) {
 
 function getHighlightNameForEntry(term, action, terms) {
   if (action === 'removed') return null;
-  if (terms.length > 1) return getHighlightName(getMostImportantType(terms));
-  if (action === 'highlighted') return getHighlightName(term.type);
-  return term.phrase === ALL_CAPS_TERM.phrase ? ALL_CAPS_HIGHLIGHT_NAME : getHighlightName(term.type, 'underline');
+  const low = isLowConfidence(terms.length ? terms : [term]);
+  if (terms.length > 1) return getHighlightName(getMostImportantType(terms), 'highlight', low);
+  if (action === 'highlighted') return getHighlightName(term.type, 'highlight', low);
+  return term.phrase === ALL_CAPS_TERM.phrase ? ALL_CAPS_HIGHLIGHT_NAME : getHighlightName(term.type, 'underline', low);
 }
 
 function processText(text, context = {}) {
   const matches = findMatches(matcher, text, index.termsById, index.regexTerms || [], false,
     term => isEnabled(term.type),
-    (termId, start, end) => shouldKeepLexicalMatch(getTermById(termId), text.slice(start, end), text, context));
+    (termId, start, end) => shouldKeepLexicalMatch(getTermById(termId), text.slice(start, end), text, context, start));
   const allCaps = isEnabled(ALL_CAPS_TERM.type) ? findAllCapsMatches(text) : [];
   const contextual = findContextualMatches(text, context).filter(match => isEnabled(getTermById(match.termId)?.type));
   const combined = resolveMatchGroups([...matches, ...allCaps, ...contextual]);
@@ -179,10 +191,13 @@ function processText(text, context = {}) {
   const termAction = term => getTermAction(term, context.preserveText === true);
   for (const match of combined) {
     const terms = getTermsForMatch(match);
-    const term = chooseReplacementTerm(terms, termAction, ALL_CAPS_TERM.phrase);
+    // An expanded group spans beyond its lexical term; only all-caps
+    // normalization is safe across the whole range, otherwise highlight.
+    const capsTerms = match.expanded ? terms.filter(item => item.phrase === ALL_CAPS_TERM.phrase) : [];
+    const term = chooseReplacementTerm(capsTerms.length ? capsTerms : terms, termAction, ALL_CAPS_TERM.phrase);
     if (!term) continue;
     const sourceText = text.slice(match.start, match.end);
-    const action = termAction(term);
+    const action = match.expanded && !capsTerms.length ? 'highlighted' : termAction(term);
     const replacementSource = getReplacementSourceText(term, terms, sourceText, ALL_CAPS_TERM.phrase, lowerAllCapsLongWords);
     const replacementText = getReplacementText(term, replacementSource, action);
     displayText += text.slice(cursor, match.start);
@@ -198,10 +213,14 @@ function processText(text, context = {}) {
 function restoreAnalysis() {
   restoreHoverReveal();
   for (const result of nodeResults.values()) {
-    if (result.node.isConnected && result.node.nodeValue === result.displayedText && result.displayedText !== result.originalText) {
-      result.node.nodeValue = result.originalText;
-    }
+    if (result.node.isConnected && result.displayedText !== result.originalText) restoreOriginalText(result);
   }
+}
+
+function restoreOriginalText(result) {
+  const current = result.node.nodeValue || '';
+  const original = recoverOriginalText(result, current);
+  if (original !== null && original !== current) result.node.nodeValue = original;
 }
 
 function clearHighlightPresentation() {
@@ -281,11 +300,13 @@ function buildHighlightRule(name) {
   if (settings.monochrome && name === ALL_CAPS_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(0,0,0,.65);text-decoration-thickness:1px;text-underline-offset:2px}`;
   if (name === ALL_CAPS_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(125,211,252,.42);text-decoration-thickness:.75px;text-underline-offset:2px}`;
   const underline = name.endsWith('-underline');
-  const typeName = name.slice(HIGHLIGHT_PREFIX.length, underline ? -'-underline'.length : undefined);
+  const base = name.slice(HIGHLIGHT_PREFIX.length, underline ? -'-underline'.length : undefined);
+  const low = base.endsWith(LOW_SUFFIX);
+  const typeName = low ? base.slice(0, -LOW_SUFFIX.length) : base;
   const color = getColor(typeName);
   const rgb = (underline ? UNDERLINE_RGB : COLOR_RGB)[color] || (underline ? UNDERLINE_RGB.gray : COLOR_RGB.gray);
   const intensity = TYPE_INTENSITY[typeName] ?? 0.65;
-  const alpha = Math.max(0.08, Math.min(underline ? 0.84 : 0.32, (underline ? 0.84 : 0.32) * intensity)).toFixed(3);
+  const alpha = (Math.max(0.08, Math.min(underline ? 0.84 : 0.32, (underline ? 0.84 : 0.32) * intensity)) * (low ? LOW_CONFIDENCE_ALPHA : 1)).toFixed(3);
   return underline
     ? `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(${rgb},${alpha});text-decoration-thickness:1px;text-underline-offset:1px}`
     : `::highlight(${name}){background-color:rgba(${rgb},${alpha})}`;
@@ -384,14 +405,26 @@ function analyzeMutations() {
   if (pendingDisconnectedCleanup) {
     for (const node of nodeResults.keys()) {
       if (!node.isConnected) {
-        const changed = removeResultHighlights(nodeResults.get(node));
-        highlightNamesChanged ||= changed; nodeResults.delete(node);
+        const result = nodeResults.get(node);
+        highlightNamesChanged ||= removeResultHighlights(result);
+        if (result) detachedResults.set(node, result);
+        nodeResults.delete(node);
       }
     }
   }
+  // The observer is disconnected here, so the restore's mutation will never be
+  // observed; drop its pending count or a later real edit would be ignored.
+  const revealedNode = hoverReveal?.node;
+  restoreHoverReveal();
+  if (revealedNode) internalMutationCounts.delete(revealedNode);
   for (const node of pendingMutationNodes) {
     const removedNames = removeResultHighlights(nodeResults.get(node));
     highlightNamesChanged ||= removedNames;
+    // Re-derive the original before re-analysis so rewritten wording never
+    // becomes the new "original" after the page edits this node.
+    const previous = nodeResults.get(node) || detachedResults.get(node);
+    if (previous && node.isConnected) restoreOriginalText(previous);
+    detachedResults.delete(node);
     if (!node.isConnected || !isProcessableNode(node)) {
       nodeResults.delete(node);
       continue;
@@ -601,6 +634,16 @@ function handleTooltipClick(event) {
   }
 }
 
+// Auto-scrolling carousels and tickers fire scroll events constantly; only a
+// scroll that moves the hovered text should dismiss its tooltip.
+function handleScroll(event) {
+  const target = event.target;
+  const record = pinnedTooltipRecord || activeHover;
+  const movesPage = target === document || target === document.documentElement || target === document.body;
+  if (movesPage || !record || (target instanceof Node && target.contains(record.node))) hideTooltip(true);
+  hideSuggestion();
+}
+
 function hideSuggestion() {
   document.getElementById('cf-suggestion')?.remove();
 }
@@ -761,7 +804,7 @@ function init() {
   document.addEventListener('click', handleTooltipClick, true);
   document.addEventListener('mouseup', handleSelectionSuggestion, true);
   document.addEventListener('keydown', handleKeyDown);
-  document.addEventListener('scroll', () => { hideTooltip(true); hideSuggestion(); }, true);
+  document.addEventListener('scroll', handleScroll, true);
   window.addEventListener('blur', () => { hideTooltip(true); hideSuggestion(); });
 }
 

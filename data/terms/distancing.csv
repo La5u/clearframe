@@ -1,5 +1,5 @@
-phrase,type,neutral,aliases,stemmable,regex,remove
+phrase,type,neutral,aliases,stemmable,regex,remove,confidence
 suspected,distancing,,,,,
 purportedly,distancing,,,,,
-alleged,distancing,,,,,
-allegedly,distancing,,,,,
+alleged,distancing,,,,,,medium
+allegedly,distancing,,,,,,medium

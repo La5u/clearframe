@@ -12,7 +12,7 @@ The reader stays in control:
 - Matches identify specific wording rather than assigning a political bias score.
 - Rewording and removal are optional.
 - Categories and colors remain customizable.
-- Highlights can use category colors or one monochrome color.
+- Highlights are monochrome by default; category colors are optional.
 
 ClearFrame exposes linguistic pressure without telling readers what to believe.
 
@@ -41,7 +41,7 @@ Color-coded categories track types of manipulation:
 - **teal** style & voice: colloquialism, idiom, repetition, rhetorical-question
 - **slate** quotes: quote
 
-Disabled by default: `absolute`, `exaggeration`, `superlative`.
+Disabled by default: `absolute`, `exaggeration`, `superlative`, `quote`.
 
 ## Data Model
 
@@ -67,6 +67,7 @@ exclusive,clickbait,,,adjective,,true,headline
 - `contexts`: optional pipe-separated allowlist such as `headline` or `evaluative`; there is no second exclusion list
 - `colloquialism` rules default to publication pages, so ordinary Reddit and YouTube language is not flagged
 - Every normalized phrase must be unique across all types (enforced at build)
+- Politically one-sided terms need a mirror term; see `TERMS.md` and `data/mirror-pairs.json`
 
 ## Architecture
 
@@ -91,7 +92,14 @@ npm run data:download       # Priority-1 sources; large files are git-ignored
 npm run data:normalize      # common JSONL research cache
 npm run mine:wnc -- research/raw/bias_data.zip
 npm run rules:magpie       # exact idioms; detection-only
-npm run rules:propaganda   # repeated short SemEval spans; context-labelled
+npm run mine:gst           # Congress partisan phrases 1995-2017; equal R/D review batches
+npm run data:crec          # sample recent Congressional Record floor speech (public domain)
+npm run mine:crec          # recent partisan phrases; equal R/D review batches
+node tools/import-wtw.js   # Wikipedia "Words to watch" candidates (CC BY-SA)
+npm run evaluate:balance   # NewsWCL50 left/centre/right flag-rate diagnostic
+node tools/news-report.js  # live news front pages across the spectrum (CHROMIUM_PATH=...)
+npm run smoke:sites        # tooltip, feedback, and reword checks on live sites
+npm run rules:propaganda   # SemEval spans; writes to research/quarantine, never ships
 npm run benchmark:build     # held-out WNC benchmark
 npm run evaluate:babe      # sealed external diagnostic; never rule generation
 npm run bench               # 10,000-rule phrase-matcher budget

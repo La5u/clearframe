@@ -31,6 +31,8 @@
 {"id":"editorial-racy","phrase":"racy","type":"loaded-framing","status":"approved","confidence":"medium","aliases":["racier"],"sources":["clearframe-manual"]}
 {"id":"editorial-raunchy","phrase":"raunchy","type":"loaded-framing","status":"approved","confidence":"medium","aliases":["raunchier"],"sources":["clearframe-manual"]}
 {"id":"editorial-sultry","phrase":"sultry","type":"loaded-framing","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-hunky","phrase":"hunky","type":"loaded-framing","status":"approved","confidence":"medium","sources":["clearframe-manual"],"notes":"Mirror of racy/raunchy/sultry: appearance framing applied to men."}
+{"id":"editorial-beefcake","phrase":"beefcake","type":"loaded-framing","status":"approved","confidence":"medium","sources":["clearframe-manual"],"notes":"Mirror of racy/raunchy/sultry: appearance framing applied to men."}
 {"id":"editorial-superstar","phrase":"superstar","type":"hype","status":"approved","confidence":"contextual","sources":["clearframe-manual"]}
 {"id":"editorial-warning","phrase":"warning","type":"fear","status":"approved","confidence":"contextual","aliases":["warnings","warn","warns","warned","warning"],"sources":["clearframe-manual"]}
 {"id":"editorial-fury","phrase":"fury","type":"aggression","status":"approved","confidence":"medium","aliases":["fuming","fumes","furiously"],"sources":["clearframe-manual"]}

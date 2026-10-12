@@ -11,6 +11,7 @@
       "sha256": "8a197e78ba560fedb2aefa570d7ed0ee3968c7c6151d1446ec09b085ae5baf3f",
       "license": "MIT code repository; Wikipedia-derived text requires separate CC BY-SA attribution review",
       "licenseUrl": "https://github.com/rpryzant/neutralizing-bias/blob/master/LICENSE",
+      "redistribution": "allowed",
       "citation": "Pryzant et al., Automatically Neutralizing Subjective Bias in Text",
       "notes": "Mine minimal biased-to-neutral edits; never promote raw pairs directly."
     },
@@ -24,6 +25,7 @@
       "sha256": "7d749f6e2c39e6970e4997839dcf6e42fd281f3c2fae0171d2192bae8cfa4b51",
       "license": "CC BY 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "redistribution": "allowed",
       "citation": "Open English WordNet 2025"
     },
     {
@@ -36,6 +38,7 @@
       "sha256": "81b3dc02df3e6ddb52790a3453fbd1a3d752ccad73a281397240a18525ba7e1f",
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://github.com/JULIELab/EmoBank#license",
+      "redistribution": "allowed",
       "citation": "Buechel and Hahn, 2017"
     },
     {
@@ -48,6 +51,7 @@
       "sha256": "23f289b01923f999bb7ef0220992c5e0d519b3ac1e09efa900f7b3c009fc564e",
       "license": "CC BY 4.0",
       "licenseUrl": "https://github.com/hslh/magpie-corpus/blob/master/LICENSE",
+      "redistribution": "allowed",
       "citation": "Haagsma, Bos and Nissim, 2020"
     },
     {
@@ -60,6 +64,7 @@
       "sha256": "fd2d2c358d42b2e326e7f6f148007b384f0a0ffac5ab6db21e3889313a8516bb",
       "license": "unverified-data-license",
       "licenseUrl": "https://propaganda.qcri.org/semeval2020-task11/data/",
+      "redistribution": "local-only",
       "citation": "Da San Martino et al., 2020",
       "notes": "Local research only until the dataset's own redistribution terms are confirmed."
     },
@@ -73,8 +78,65 @@
       "sha256": "30acf935efc82e4f99d45943827c4e14551d1554bc43514c90e4948c1514586b",
       "license": "verify-record-rights-before-rule-derivation",
       "licenseUrl": "https://zenodo.org/records/8136637",
+      "redistribution": "local-only",
       "citation": "Hagen et al., 2022",
       "notes": "Local research only; the Zenodo record has no explicit reusable license value."
+    },
+    {
+      "id": "gst-congress-partisan-phrases",
+      "name": "Gentzkow-Shapiro-Taddy Congressional Record partisan phrases",
+      "role": "mining",
+      "url": "https://stacks.stanford.edu/file/druid:md374tz9962/phrase_partisanship.zip",
+      "archive": "gst-phrase-partisanship.zip",
+      "bytes": 1134072,
+      "sha256": "096e548ca8cbdb6323092f1140d4c741e5cffd866cf11732b3e749f57667ea64",
+      "license": "ODC-BY 1.0",
+      "licenseUrl": "https://data.stanford.edu/congress_text",
+      "redistribution": "allowed",
+      "citation": "Gentzkow, Shapiro and Taddy, Congressional Record for the 43rd-114th Congresses: Parsed Speeches and Phrase Counts, Stanford Libraries, 2018",
+      "notes": "Top 1000 partisan stemmed bigrams per session; positive scores are Republican, negative Democratic. Candidate generator only: partisanship is not loadedness. Attribution required (see ATTRIBUTION.md).",
+      "requiresMirror": true
+    },
+    {
+      "id": "crec-govinfo",
+      "name": "Congressional Record floor speech, GovInfo (2017 onward)",
+      "role": "mining",
+      "enabled": false,
+      "url": "https://www.govinfo.gov/app/collection/crec",
+      "license": "Public domain: US government work (17 U.S.C. 105); speaker party from GovInfo MODS metadata",
+      "licenseUrl": "https://www.govinfo.gov/about/policies",
+      "redistribution": "allowed",
+      "requiresMirror": true,
+      "citation": "U.S. Government Publishing Office, Congressional Record (daily edition), via GovInfo",
+      "notes": "Crawled by tools/download-crec.js (sampled session days), not a pinned archive, so data:download skips it. Partisanship is not loadedness: rules ship only as tested mirror pairs."
+    },
+    {
+      "id": "wikipedia-words-to-watch",
+      "name": "Wikipedia Manual of Style: Words to watch",
+      "role": "mining",
+      "url": "https://en.wikipedia.org/w/index.php?title=Wikipedia:Manual_of_Style/Words_to_watch&action=raw&oldid=1379085656",
+      "archive": "wikipedia-words-to-watch.wikitext",
+      "bytes": 36300,
+      "sha256": "e8b0f20e6fd4d8c1b0c2493a5ed8f742e755836ce012f1c936d647cfb3e2f55b",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://en.wikipedia.org/wiki/Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License",
+      "redistribution": "allowed",
+      "citation": "Wikipedia contributors, Wikipedia:Manual of Style/Words to watch, revision 1379085656 (2026-10-07)",
+      "notes": "Side-neutral guideline; derived rules are CC BY-SA 4.0 (see ATTRIBUTION.md). Contentious labels still need mirror review."
+    },
+    {
+      "id": "newswcl50",
+      "name": "NewsWCL50 word choice and labeling annotations",
+      "role": "evaluation-only",
+      "url": "https://raw.githubusercontent.com/fhamborg/NewsWCL50/master/Annotations.csv",
+      "archive": "newswcl50-annotations.csv",
+      "bytes": 588034,
+      "sha256": "50ee5104a62ce2c294f42cf8ba512b0ed5ea38b46546ec0d331237b57d9310eb",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://github.com/fhamborg/NewsWCL50#license",
+      "redistribution": "allowed",
+      "citation": "Hamborg et al., Automated Identification of Media Bias by Word Choice and Labeling in News Articles, JCDL 2019",
+      "notes": "10 events (2018) covered by left, centre and right outlets. Used as a political-balance diagnostic: flag rates on each side's annotated wording. Too small and event-bound for rule mining."
     },
     {
       "id": "babe",
@@ -86,6 +148,7 @@
       "sha256": "2653ae46eeb2dded1a11e4f4c6772034465d336792de44ae7df6f05fe79d299a",
       "license": "AGPL-3.0 repository",
       "licenseUrl": "https://github.com/Media-Bias-Group/Neural-Media-Bias-Detection-Using-Distant-Supervision-With-BABE/blob/main/LICENSE",
+      "redistribution": "local-only",
       "citation": "Spinde et al., 2021",
       "notes": "Sealed evaluation only: never mining, training, tuning, vocabulary fitting, threshold selection, or rule review."
     }

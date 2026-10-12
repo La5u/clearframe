@@ -1,3 +1,3 @@
 phrase,type,neutral,aliases,stemmable,regex,remove
-minor,minimizing,,,,,
+minor,minimizing,,,,"\bminor(?=\s+(?:issues?|problems?|setbacks?|incidents?|glitch(?:es)?|errors?|mistakes?|concerns?|injur(?:y|ies)|damage|disruptions?|inconvenience|hiccups?|blips?|offen[cs]es?|infractions?))",
 mere,minimizing,,,,,

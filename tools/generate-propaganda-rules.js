@@ -8,7 +8,9 @@ import { readJsonl } from './rule-utils.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const rows = readJsonl(path.join(ROOT, 'research', 'cache', 'normalized', 'semeval-propaganda-2020.jsonl'));
-const output = path.join(ROOT, 'data', 'rules', 'semeval-propaganda.jsonl');
+// Quarantined: SemEval spans are politically asymmetric and not cleared for
+// redistribution, so generated rules never land in data/rules.
+const output = path.join(ROOT, 'research', 'quarantine', 'semeval-propaganda.jsonl');
 const typeMap = {
   Loaded_Language: 'loaded',
   'Name_Calling,Labeling': 'derogatory',

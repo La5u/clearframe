@@ -22,5 +22,29 @@ and ship as `exploratory` because literal readings remain possible. Rewording ha
 a separate, stricter gate and remains off until meaning and part of speech are
 preserved.
 
+Congressional Record (GST) phrases measure which party says a phrase, not
+whether it is loaded. `npm run mine:gst` writes equal Republican and Democratic
+batches to `research/reports/` for review. A GST rule is approved only when two
+independent reviewers agree it is loaded framing and it ships as half of a pair
+in `data/mirror-pairs.json`; the build rejects it otherwise.
+
+Recent Congressional Record speech (`crec-govinfo`, public domain) follows the
+same rule. Its sources are marked `requiresMirror` in `sources.json`, and the
+build rejects any rule from them that is not half of a tested pair.
+
+Wikipedia "Words to watch" candidates are side-neutral by design, but still
+need two reviewers to agree on news-text precision; contentious labels follow
+the mirror rule. NewsWCL50 is evaluation-only: `npm run evaluate:balance`
+compares flag rates on left, centre and right outlets' wording for the same
+events.
+
 Luna review agents should inspect borderline candidates, semantic conflicts, and
 new rule families rather than every occurrence.
+
+## Quarantine
+
+`research/quarantine/` holds generated rules that must not ship. SemEval-2020
+propaganda rules live there: they were politically asymmetric and the corpus is
+not cleared for redistribution. Sources whose `redistribution` is not
+`allowed` in `sources.json` are rejected as provenance for approved rules;
+they may appear only in a rule's `corroboratedBy` list.

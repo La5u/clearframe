@@ -17,3 +17,13 @@ export function assertSourcesAllowed(sourceIds, registry, purpose = 'rule-mining
     }
   }
 }
+
+export function assertSourcesShippable(sourceIds, registry, ruleId) {
+  for (const id of sourceIds || []) {
+    if (id === 'clearframe-manual') continue;
+    const source = registry.get(id);
+    if (source?.redistribution !== 'allowed') {
+      throw new Error(`Approved rule "${ruleId}" derives from "${id}", which is not cleared for redistribution`);
+    }
+  }
+}

@@ -1,6 +1,5 @@
-phrase,type,neutral,aliases,stemmable,regex,remove
+phrase,type,neutral,aliases,stemmable,regex,remove,confidence
 so-called,loaded-framing,called,,,,
-loophole,loaded-framing,gap,,,,
 elitist,loaded-framing,elite,,,,
 poison pill,loaded-framing,,,,,
 level playing field,loaded-framing,,,,,
@@ -10,4 +9,15 @@ sunsetting,loaded-framing,,,,,
 sunset,loaded-framing,,,,,
 officer-involved,loaded-framing,,,,,
 self-styled,loaded-framing,self-proclaimed,,,,
-runaway debt,loaded-framing,,,,,
+runaway debt,loaded-framing,,runaway spending,,,
+savage cuts,loaded-framing,,brutal cuts|swingeing cuts|savage spending cuts,,,
+illegal aliens,loaded-framing,,illegal alien,,,
+undocumented immigrants,loaded-framing,,undocumented immigrant|undocumented migrants|undocumented migrant,,,
+tax dodge,loaded-framing,,tax dodges|tax dodging|tax dodger|tax dodgers,,,,medium
+radical right,loaded-framing,,radical-right,,,,medium
+far-left,loaded-framing,,,,,,medium
+far-right,loaded-framing,,,,,,medium
+border crisis,loaded-framing,,migrant crisis|migration crisis|crisis at the border,,,,medium
+climate crisis,loaded-framing,,climate emergency,,,,medium
+pro-life,loaded-framing,anti-abortion,,,,,medium
+pro-choice,loaded-framing,abortion-rights,,,,,medium

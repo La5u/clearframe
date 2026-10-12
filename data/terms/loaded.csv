@@ -1,6 +1,7 @@
 phrase,type,neutral,aliases,stemmable,regex,remove
-government handouts,loaded,,,,,
+government handouts,loaded,,government handout,,,
+corporate welfare,loaded,,corporate handouts|corporate handout,,,
 tax relief,loaded,,,,,
-taxpayer-funded,loaded,,,,,
+tax breaks for the wealthy,loaded,,tax breaks for the rich|tax cuts for the wealthy|tax cuts for the rich,,,
 furious,negative-framing,angry,,,,
 

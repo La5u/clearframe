@@ -1,5 +1,4 @@
 phrase,type,neutral,aliases,stemmable,regex,remove,contexts
-illegal aliens,derogatory,illegal immigrants,illegal alien,,,
 trash,derogatory,poor quality,,,,
 horde,derogatory,large groups,,noun,,
 elite,derogatory,,,noun,,,evaluative
@@ -8,6 +7,5 @@ radical,derogatory,,,,,
 extremist,derogatory,,,,,
 dissident,derogatory,opponents,,noun,,
 thug,derogatory,,,noun,,
-woke,derogatory,,,,,
 bigot,derogatory,,,noun,,
 freak,derogatory,,,noun,,

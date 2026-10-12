@@ -17,6 +17,7 @@ const STATIC_FILES = [
   ['src/background.js', 'background.js'],
   ['src/ui/popup.html', 'popup.html'],
   ['src/ui/content.css', 'content.css'],
+  ['ATTRIBUTION.md', 'ATTRIBUTION.md'],
 ];
 const MEDIA_FILES = ['icon-16.png', 'icon-32.png', 'icon-64.png', 'icon-128.png'];
 const TARGETS = [

@@ -29,3 +29,26 @@ shock,clickbait,,,,verb,true
 ```
 
 If you are unsure, add the simplest base form and leave the replacement blank.
+
+## Confidence
+
+An optional `confidence` column (`high`, `medium`, `contextual`, `exploratory`;
+blank means `high`) marks terms that are often fine in news writing, such as
+`alleged` or `probe`. Anything below `high` is drawn at half strength and the
+tooltip names the level.
+
+## Mirror rule
+
+A term that frames one political side, group, or contested position must ship
+with its mirror: the equivalent framing from the other side, with the same type
+and confidence. Add both terms and a pair to `data/mirror-pairs.json`; `npm test`
+fails if the two sides are not flagged identically.
+
+If no sensible mirror exists, flag neither. Remove the term and add it to the
+`deferred` list in `data/mirror-pairs.json` with the reason, so it can be
+revisited. Tests also check deferred terms stay unflagged.
+
+Device-based terms (passive voice, agency hiding, clickbait, hype, unnamed
+sources) apply to whoever uses them and are not mirrored. Generic labels such as
+`radical`, `extremist`, or `regime` are symmetric by construction; add a pair
+proving it when in doubt.

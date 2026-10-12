@@ -8,5 +8,10 @@ Required fields: `id`, `phrase`, `type`, `status`, `sources`. Only records with
 `status: "approved"` are executable. A replacement also requires
 `reword.reviewed: true`; detection approval does not imply safe rewording.
 
+Every approved rule needs at least one source, and each source must have
+`redistribution: "allowed"` in `research/sources.json`. Sources that informed
+review without deriving the rule go in `corroboratedBy`. Evidence gates fail
+when evidence fields are missing.
+
 Corpora with `role: "evaluation-only"` in `research/sources.json` are rejected as
 rule provenance during every build.

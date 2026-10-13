@@ -4,9 +4,8 @@
 // highlights: counts by type, top terms, and every match with its sentence,
 // for false-positive and balance review. Results go to research/reports/.
 import fs from 'fs';
-import os from 'os';
 import path from 'path';
-import { spawn } from 'child_process';
+import { delay, launchExtensionBrowser } from './chromium.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const SITES = [
@@ -25,40 +24,6 @@ const SITES = [
   ['tabloid', 'https://www.dailymail.co.uk/home/index.html'],
 ];
 const urls = process.argv.slice(2).length ? process.argv.slice(2).map(url => ['custom', url]) : SITES;
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'clearframe-news-'));
-const browser = spawn(process.env.CHROMIUM_PATH || '/usr/bin/chromium', [
-  '--headless=new', '--no-sandbox', '--disable-gpu', '--no-first-run', '--window-size=1366,900',
-  `--user-data-dir=${profile}`, `--disable-extensions-except=${path.join(ROOT, 'dist')}`,
-  `--load-extension=${path.join(ROOT, 'dist')}`, '--remote-debugging-port=0', 'about:blank',
-], { stdio: ['ignore', 'ignore', 'pipe'] });
-let browserError = '';
-browser.stderr.on('data', data => { browserError += data; });
-
-class Cdp {
-  constructor(url) {
-    this.id = 0; this.pending = new Map(); this.events = [];
-    this.ws = new WebSocket(url);
-    this.ready = new Promise((resolve, reject) => { this.ws.onopen = resolve; this.ws.onerror = reject; });
-    this.ws.onmessage = event => {
-      const message = JSON.parse(event.data);
-      if (!message.id) { this.events.push(message); return; }
-      const pending = this.pending.get(message.id); this.pending.delete(message.id);
-      if (message.error) pending?.reject(new Error(message.error.message)); else pending?.resolve(message.result);
-    };
-  }
-  async send(method, params = {}) {
-    await this.ready; const id = ++this.id;
-    const result = new Promise((resolve, reject) => this.pending.set(id, { resolve, reject }));
-    this.ws.send(JSON.stringify({ id, method, params })); return result;
-  }
-  async evaluate(expression) {
-    const result = await this.send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
-    if (result.exceptionDetails) throw new Error(result.exceptionDetails.exception?.description || result.exceptionDetails.text);
-    return result.result.value;
-  }
-}
-
 // Every highlighted range with its type and surrounding text. CSS highlights
 // are the extension's rendered output, so this is what a reader would see.
 const COLLECT = `(() => {
@@ -95,17 +60,8 @@ async function visit(cdp, url) {
 }
 
 const report = [];
+const { cdp, close } = await launchExtensionBrowser({ windowSize: '1366,900' });
 try {
-  let port;
-  for (let i = 0; i < 100 && !port; i++) {
-    const file = path.join(profile, 'DevToolsActivePort');
-    if (fs.existsSync(file)) port = fs.readFileSync(file, 'utf8').split('\n')[0];
-    else await delay(100);
-  }
-  if (!port) throw new Error(`Chromium did not start: ${browserError}`);
-  const target = (await fetch(`http://127.0.0.1:${port}/json/list`).then(response => response.json())).find(item => item.type === 'page');
-  const cdp = new Cdp(target.webSocketDebuggerUrl);
-  await cdp.send('Page.enable'); await cdp.send('Runtime.enable');
   for (const [leaning, url] of urls) {
     try {
       // Some pages never settle (endless challenges or streams); bound each visit.
@@ -125,9 +81,7 @@ try {
     }
   }
 } finally {
-  browser.kill('SIGTERM');
-  await delay(1000);
-  fs.rmSync(profile, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+  await close();
 }
 const out = path.join(ROOT, 'research', 'reports', 'news-report.json');
 fs.mkdirSync(path.dirname(out), { recursive: true });

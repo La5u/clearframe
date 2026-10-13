@@ -11,11 +11,29 @@
   font-size: 14px;
   line-height: 1.35;
   white-space: pre-line;
-  pointer-events: none;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
 }
 
-#cf-tooltip.pinned { pointer-events: auto; }
+#cf-tooltip .cf-term + .cf-term { margin-top: 4px; }
+#cf-tooltip .cf-term-name { font-weight: 600; }
+#cf-tooltip .cf-confidence { font-size: 12px; color: #555; }
+#cf-tooltip .cf-info {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-left: 6px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  font: italic 600 11px/13px serif;
+  text-align: center;
+  vertical-align: 1px;
+  cursor: help;
+}
+#cf-tooltip .cf-term { display: flex; flex-direction: column; }
+#cf-tooltip .cf-plain { display: none; margin-top: 3px; font-size: 13px; }
+#cf-tooltip.cf-above .cf-plain { order: -1; margin: 0 0 3px; }
+#cf-tooltip .cf-term:has(.cf-info:hover) .cf-plain,
+#cf-tooltip .cf-term:has(.cf-info:focus) .cf-plain { display: block; }
 #cf-tooltip .cf-feedback-actions {
   display: flex;
   flex-wrap: wrap;

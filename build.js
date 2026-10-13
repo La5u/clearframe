@@ -13,6 +13,7 @@ const __dirname = path.dirname(__filename);
 const ROOT = __dirname;
 const PACKAGE = readJson('package.json');
 const COLOR_CONFIG = readJson('data/type-colors.json');
+const LABELS = readJson('data/type-labels.json');
 const STATIC_FILES = [
   ['src/background.js', 'background.js'],
   ['src/ui/popup.html', 'popup.html'],
@@ -64,8 +65,7 @@ function compactContentIndex(index) {
     if (term.contexts?.length) compact.contexts = term.contexts;
     return [id, compact];
   }));
-  // The matcher can build its trie from term IDs, so do not serialize the
-  // derived bucket/trie structure into the extension. Regex terms carry
+  // The matcher builds its trie from term IDs at load time. Regex terms carry
   // their pattern here instead of duplicating it on the term record.
   const regexTerms = index.regexTerms.map(({ termId, pattern }) => ({ termId, pattern }));
   return { termsById, regexTerms };
@@ -124,15 +124,27 @@ async function build() {
     }
   }
 
+  // Every type needs a technical term (shown first), a plain label, and its effect.
+  for (const type of Object.keys(TYPES)) {
+    const label = LABELS.types[type];
+    if (!label?.term || !label.plain || !label.effect) throw new Error(`Type "${type}" needs term, plain, and effect in data/type-labels.json`);
+  }
+  for (const type of Object.keys(LABELS.types)) {
+    if (!TYPES[type]) throw new Error(`data/type-labels.json labels unknown type "${type}"`);
+  }
+
   const contentGlobals = {
     index: compactContentIndex(index),
     types: TYPES,
     categories: CATEGORIES,
+    labels: LABELS,
     colors: Object.fromEntries(Object.entries(COLOR_CONFIG.colors).map(([color, config]) => [color, config.rgb])),
     underlines: Object.fromEntries(Object.entries(COLOR_CONFIG.colors).map(([color, config]) => [color, config.underline])),
     intensity: COLOR_CONFIG.intensity || {},
   };
-  const popupGlobals = { types: TYPES, categories: CATEGORIES, colorConfig: COLOR_CONFIG };
+  // The popup only needs group headings, swatches, and chip labels.
+  const popupColors = Object.fromEntries(Object.entries(COLOR_CONFIG.colors).map(([color, { name, category, hex }]) => [color, { name, category, hex }]));
+  const popupGlobals = { types: TYPES, labels: { types: LABELS.types }, colorConfig: { colors: popupColors } };
 
   const [contentBundle, popupBundle] = await Promise.all([
     bundle('src/content.js', contentGlobals),

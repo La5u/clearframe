@@ -24,9 +24,10 @@ preserved.
 
 Congressional Record (GST) phrases measure which party says a phrase, not
 whether it is loaded. `npm run mine:gst` writes equal Republican and Democratic
-batches to `research/reports/` for review. A GST rule is approved only when two
-independent reviewers agree it is loaded framing and it ships as half of a pair
-in `data/mirror-pairs.json`; the build rejects it otherwise.
+batches to `research/reports/` for review. By policy, a GST rule needs two
+independent reviewers who agree it is loaded framing. The build cannot check
+reviewers; it enforces the evidence gates and rejects any GST rule that is not
+half of a pair in `data/mirror-pairs.json`.
 
 Recent Congressional Record speech (`crec-govinfo`, public domain) follows the
 same rule. Its sources are marked `requiresMirror` in `sources.json`, and the
@@ -41,10 +42,10 @@ events.
 Luna review agents should inspect borderline candidates, semantic conflicts, and
 new rule families rather than every occurrence.
 
-## Quarantine
+## Rejected and inactive sources
 
-`research/quarantine/` holds generated rules that must not ship. SemEval-2020
-propaganda rules live there: they were politically asymmetric and the corpus is
-not cleared for redistribution. Sources whose `redistribution` is not
+SemEval-2020 propaganda spans were dropped: they were politically asymmetric and
+the corpus is not cleared for redistribution. Its `sources.json` entry stays,
+disabled, so the policy keeps rejecting it. Sources whose `redistribution` is not
 `allowed` in `sources.json` are rejected as provenance for approved rules;
 they may appear only in a rule's `corroboratedBy` list.

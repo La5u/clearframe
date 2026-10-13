@@ -6,14 +6,6 @@ import { adverbWord, pastTenseWord, pluralizeWord, ingWord } from './stemmer.js'
 const ALLOWED_CONTEXTS = new Set(['headline', 'body', 'publication', 'discussion', 'video', 'conversation', 'evaluative']);
 const CONFIDENCE_LEVELS = new Set(['high', 'medium', 'contextual', 'exploratory']);
 
-export function escapeRegex(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-export function buildStemRegex(word, stemType) {
-  return `\\b(?:${stemVariants(word, stemType).map(escapeRegex).join('|')})\\b`;
-}
-
 export function stemVariants(word, stemType) {
   const out = new Set([word]);
   if (stemType === 'noun') {
@@ -87,7 +79,7 @@ function parseStemTypeCell(value) {
 }
 
 export function loadTerms(dataDir, extraTerms = []) {
-  const terms = {}, entries = [], regexTerms = [], phraseTypes = new Map();
+  const terms = {}, regexTerms = [], phraseTypes = new Map();
 
   function addTerm(phrase, term, source) {
     for (const context of term.contexts || []) {
@@ -101,7 +93,6 @@ export function loadTerms(dataDir, extraTerms = []) {
     if (terms[phrase]) {
       return;
     }
-    const hasNeutral = term.neutral !== '';
     if (term.regex) {
       try {
         new RegExp(term.regex, 'giu');
@@ -110,12 +101,8 @@ export function loadTerms(dataDir, extraTerms = []) {
         throw new Error(`Invalid regex for term "${phrase}" in ${source}: ${message}`);
       }
     }
-    terms[phrase] = { phrase: normalize(term.phrase), type: term.type, neutral: term.neutral || '', hasNeutral, stemType: term.stemType || '', regex: term.regex || '', remove: term.remove === true, confidence: term.confidence || 'high', contexts: term.contexts || [] };
-    if (term.regex) {
-      regexTerms.push({ termId: phrase, pattern: term.regex });
-    } else {
-      entries.push({ phraseNorm: phrase, termId: phrase });
-    }
+    terms[phrase] = { phrase: normalize(term.phrase), type: term.type, neutral: term.neutral || '', stemType: term.stemType || '', regex: term.regex || '', remove: term.remove === true, confidence: term.confidence || 'high', contexts: term.contexts || [] };
+    if (term.regex) regexTerms.push({ termId: phrase, pattern: term.regex });
   }
 
   for (const file of fs.readdirSync(dataDir).filter(f => f.endsWith('.csv')).sort()) {
@@ -190,12 +177,7 @@ export function loadTerms(dataDir, extraTerms = []) {
     }
   }
 
-  const buckets = {};
-  for (const entry of entries) {
-    (buckets[entry.phraseNorm[0]] ||= []).push(entry);
-  }
-  Object.values(buckets).forEach(arr => arr.sort((a, b) => b.phraseNorm.length - a.phraseNorm.length));
-  return { termsById: terms, buckets, regexTerms };
+  return { termsById: terms, regexTerms };
 }
 
 export function extractText(html) {

@@ -3,14 +3,13 @@ import { performance } from 'perf_hooks';
 import { buildMatcher, findMatches } from '../src/core/matcher.js';
 
 const count = Number(process.argv[2] || 10000);
-const termsById = {}, buckets = {};
+const termsById = {};
 for (let i = 0; i < count; i++) {
   const phrase = `clearframe phrase ${i}`;
   termsById[phrase] = { phrase, type: 'loaded' };
-  (buckets.c ||= []).push({ phraseNorm: phrase, termId: phrase, length: phrase.length });
 }
 const startBuild = performance.now();
-const matcher = buildMatcher({ termsById, buckets });
+const matcher = buildMatcher({ termsById });
 const built = performance.now();
 const text = `${'ordinary page text '.repeat(5000)}clearframe phrase ${count - 1}`;
 const matches = findMatches(matcher, text, termsById);

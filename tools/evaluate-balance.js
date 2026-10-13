@@ -34,7 +34,7 @@ for (const row of rows) {
   bucket.mentions++;
   // Annotated mentions come from article bodies; apply the extension's own context rules.
   const context = { headline: false, pageContext: 'publication' };
-  const matches = findMatches(matcher, mention, index.termsById, index.regexTerms, false, () => true,
+  const matches = findMatches(matcher, mention, index.termsById, index.regexTerms, () => true,
     (termId, start, end) => shouldKeepLexicalMatch(index.termsById[termId], mention.slice(start, end), mention, context, start));
   if (matches.length) bucket.flagged++;
   // Below-high confidence renders faint; this rate counts only full-strength highlights.

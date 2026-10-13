@@ -12,7 +12,7 @@ import { adverbWord } from '../src/core/stemmer.js';
 import { ALL_CAPS_TERM_ID, findAllCapsMatches } from '../src/core/all-caps.js';
 import { getAllCapsAction, getContextualAllCapsAction, lowerAllCapsLongWords, matchReplacementCase } from '../src/core/display-utils.js';
 import { COMMON_SHORT_WORDS } from '../src/core/commonShortWords.js';
-import { chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from '../src/core/match-plan.js';
+import { chooseAction, chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from '../src/core/match-plan.js';
 import { normalizeSettings } from '../src/core/settings-utils.js';
 import { EXPECTED_COUNTS } from './fixtures.js';
 import { assertSourcesAllowed, loadSourceRegistry } from '../tools/source-policy.js';
@@ -29,17 +29,7 @@ const ROOT = path.resolve(__dirname, '..');
 const TERMS_DIR = path.join(ROOT, 'data', 'terms');
 const index = loadTerms(TERMS_DIR, approvedRuleTerms(ROOT));
 const matcher = buildMatcher(index);
-const compactMatcher = buildMatcher({ termsById: index.termsById, regexTerms: index.regexTerms });
-assert.strictEqual(
-  findMatches(compactMatcher, 'The shocking warning was finally revealed.', index.termsById, index.regexTerms).length,
-  findMatches(matcher, 'The shocking warning was finally revealed.', index.termsById, index.regexTerms).length,
-  'the matcher must support compact indexes without serialized buckets',
-);
-for (const text of ['It is up to you.', 'That is a proverb.', 'The minor signed the form.', 'He swung an axe at the door.']) {
-  assert.deepStrictEqual(findMatches(compactMatcher, text, index.termsById, index.regexTerms).map(match => text.slice(match.start, match.end)),
-    findMatches(matcher, text, index.termsById, index.regexTerms).map(match => text.slice(match.start, match.end)),
-    `compact index must honor regex constraints: ${text}`);
-}
+assert.ok(findMatches(matcher, 'The shocking warning was finally revealed.', index.termsById, index.regexTerms).length >= 3);
 for (const text of ['That is a proverb.', 'The minor signed the form.', 'He swung an axe at the door.', 'Boil the hot water.', 'Netflix licensed it exclusively.']) {
   assert.deepStrictEqual(findMatches(matcher, text, index.termsById, index.regexTerms), [], `no match expected in: ${text}`);
 }
@@ -52,7 +42,7 @@ assert.doesNotThrow(() => assertSourcesAllowed(['babe'], sourceRegistry, 'evalua
 assert.doesNotThrow(() => loadRuleRecords(ROOT));
 assert.throws(() => assertSourcesShippable(['semeval-propaganda-2020'], sourceRegistry, 'probe'), /not cleared for redistribution/);
 assert.doesNotThrow(() => assertSourcesShippable(['clearframe-manual', 'magpie-idioms'], sourceRegistry, 'probe'));
-assert.ok(!approvedRuleTerms(ROOT).some(term => term.provenance.includes('semeval-propaganda-2020')), 'SemEval rules stay quarantined');
+assert.ok(!approvedRuleTerms(ROOT).some(term => term.provenance.includes('semeval-propaganda-2020')), 'SemEval rules never ship');
 
 // Page edits outside rewritten spans keep the original; edits inside them cannot be recovered.
 const rewrittenNode = { originalText: 'Boil hot water.', displayedText: 'Boil trouble.', records: [{ startOffset: 5, endOffset: 12, sourceText: 'hot water', replacementText: 'trouble' }] };
@@ -158,7 +148,7 @@ assert.ok(!findContextualMatches('“We will leave,” the minister said', { hea
 const contextMatrix = JSON.parse(fs.readFileSync(path.join(__dirname, 'context-matrix.json'), 'utf8'));
 for (const row of contextMatrix) {
   const context = { headline: row.headline, pageContext: row.pageContext || 'publication' };
-  const matches = findMatches(matcher, row.text, index.termsById, index.regexTerms, false, () => true,
+  const matches = findMatches(matcher, row.text, index.termsById, index.regexTerms, () => true,
     (termId, start, end) => shouldKeepLexicalMatch(index.termsById[termId], row.text.slice(start, end), row.text, context, start));
   assert.strictEqual(matches.some(match => index.termsById[match.termId]?.phrase === row.term), row.match,
     `context matrix failed for ${row.term}: ${row.text}`);
@@ -166,7 +156,7 @@ for (const row of contextMatrix) {
 // Live-site false positives (October 2026 news report): literal and proper-noun senses.
 function headlineTerms(text) {
   const context = { headline: true, pageContext: 'publication' };
-  return findMatches(matcher, text, index.termsById, index.regexTerms, false, () => true,
+  return findMatches(matcher, text, index.termsById, index.regexTerms, () => true,
     (termId, start, end) => shouldKeepLexicalMatch(index.termsById[termId], text.slice(start, end), text, context, start))
     .map(match => index.termsById[match.termId].phrase);
 }
@@ -204,7 +194,7 @@ for (const text of ['ROB CRILLY: How she caught his eye', 'W. JAMES ANTLE: Polls
 const mirrorPairs = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'mirror-pairs.json'), 'utf8'));
 function bodyMatches(text) {
   const context = { headline: false, pageContext: 'publication' };
-  return findMatches(matcher, text, index.termsById, index.regexTerms, false, () => true,
+  return findMatches(matcher, text, index.termsById, index.regexTerms, () => true,
     (termId, start, end) => shouldKeepLexicalMatch(index.termsById[termId], text.slice(start, end), text, context, start));
 }
 // Type and confidence both shape the highlight, so a pair must match on both.
@@ -251,13 +241,9 @@ assert.strictEqual(
   'quoted inflections must use the phrase matcher without per-rule regex scans',
 );
 
-const allCapsTestTerm = { phrase: 'caps emphasis', hasNeutral: true, remove: false };
-const getAction = ({ remove, hasNeutral }, { removeTerms = false, replaceTerms = true } = {}) => {
-  if (remove && removeTerms) {
-    return 'removed';
-  }
-  return replaceTerms && hasNeutral ? 'replaced' : 'highlighted';
-};
+const allCapsTestTerm = { phrase: 'caps emphasis', neutral: 'caps emphasis', remove: false };
+const getAction = (term, { removeTerms = false, replaceTerms = true } = {}) => chooseAction(term, { removeTerms, replaceTerms });
+assert.strictEqual(chooseAction(index.termsById.exclusive, { removeTerms: true, replaceTerms: true }, true), 'highlighted', 'protected text is never reworded');
 const groupedAllCapsOverlap = resolveMatchGroups([
   { start: 0, end: 7, termId: 'finally' },
   { start: 0, end: 7, termId: '__clearframe_all_caps__', virtual: true },
@@ -312,7 +298,7 @@ const disabledTypes = new Set(['clickbait', 'reveal']);
 const filteredMatcher = buildMatcher(index, term => !disabledTypes.has(term.type));
 const filteredText = 'The secret was revealed in a reveal.';
 assert.deepStrictEqual(
-  findMatches(filteredMatcher, filteredText, index.termsById, index.regexTerms, false, term => !disabledTypes.has(term.type)),
+  findMatches(filteredMatcher, filteredText, index.termsById, index.regexTerms, term => !disabledTypes.has(term.type)),
   [],
   'disabled types must exclude regex-backed terms',
 );

@@ -13,7 +13,6 @@ interface ClearFrameTerm {
 
 interface ClearFrameIndex {
   termsById: Record<string, ClearFrameTerm>;
-  buckets?: Record<string, { phraseNorm: string; termId: string; length?: number }[]>;
   regexTerms: { termId: string; pattern?: string }[];
 }
 
@@ -26,7 +25,14 @@ interface ClearFrameColor {
   hex?: string;
 }
 
+interface ClearFrameLabel {
+  term: string;
+  plain: string;
+  effect: string;
+}
+
 interface ClearFrameData {
+  labels: { types: Record<string, ClearFrameLabel>; phrases?: Record<string, ClearFrameLabel> };
   index: ClearFrameIndex;
   types: Record<string, string>;
   categories: Record<string, string>;

@@ -13,8 +13,7 @@ const runs = Math.max(1, Number(process.argv[2] || 5));
 const expectedPhrase = 'clearframe phrase 4999';
 const index = loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT));
 index.termsById[expectedPhrase] = { phrase: expectedPhrase, type: 'loaded' };
-(index.buckets.c ||= []).push({ phraseNorm: expectedPhrase, termId: expectedPhrase, length: expectedPhrase.length });
-const payload = JSON.stringify({ termsById: index.termsById, buckets: index.buckets, regexTerms: index.regexTerms });
+const payload = JSON.stringify({ termsById: index.termsById, regexTerms: index.regexTerms });
 const waiters = new Map();
 
 const page = `<!doctype html><meta charset="utf-8"><script type="module">

@@ -6,10 +6,10 @@
 - [x] Keep the popup focused on General, Customize, and Detected.
 - [x] List exact matched wording and navigate back to each occurrence.
 - [ ] Make headline treatment the clearest, highest-confidence experience.
-- [ ] Add short, uncertainty-aware explanations for detected cues.
+- [x] Add short, uncertainty-aware explanations for detected cues (technical term, plain meaning and effect behind the (i)).
 - [ ] Reword replacements to sentence case / title case based on the surrounding headline or lead-in.
 - [ ] Handle all-caps separately in the sentence / title case rewording suggestion.
-- [ ] Give the quote category its own distinct type instead of folding into another category.
+- [x] Give the quote category its own distinct type instead of folding into another category.
 - [ ] Let users dismiss false positives and remember those decisions locally.
 
 ## Detection quality

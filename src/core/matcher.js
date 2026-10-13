@@ -1,4 +1,4 @@
-import { boundary, boundaryAt } from './stemmer.js';
+import { boundary } from './stemmer.js';
 
 export function normalize(phrase) {
   return phrase.trim().replace(/\s+/g, ' ').toLowerCase();
@@ -6,27 +6,21 @@ export function normalize(phrase) {
 
 export function buildMatcher(index, isTermEnabled = _term => true) {
   const root = Object.create(null);
-  // Compact indexes omit buckets; regex-only terms must stay out of the
-  // literal trie or their lookahead/lookbehind constraints are bypassed.
+  // Term IDs are the normalized phrases. Regex-only terms must stay out of
+  // the literal trie or their lookahead/lookbehind constraints are bypassed.
   const regexIds = new Set((index.regexTerms || []).map(term => term.termId));
-  const entries = index.buckets
-    ? Object.values(index.buckets).flat()
-    : Object.keys(index.termsById || {}).filter(termId => !regexIds.has(termId)).map(termId => ({ phraseNorm: termId, termId }));
-  for (const entry of entries) {
-    const term = index.termsById?.[entry.termId];
-    if (!term || !isTermEnabled(term)) {
-      continue;
-    }
+  for (const [termId, term] of Object.entries(index.termsById || {})) {
+    if (regexIds.has(termId) || !isTermEnabled(term)) continue;
     let node = root;
-    for (const ch of entry.phraseNorm) {
+    for (const ch of termId) {
       node = node[ch] ||= Object.create(null);
     }
-    node.$ = entry.termId;
+    node.$ = termId;
   }
   return root;
 }
 
-export function collectPhraseMatches(matcher, text, useBoundaryAt = false, keepMatch = (_termId, _start, _end) => true) {
+export function collectPhraseMatches(matcher, text, keepMatch = (_termId, _start, _end) => true) {
   if (!matcher) {
     return [];
   }
@@ -38,8 +32,7 @@ export function collectPhraseMatches(matcher, text, useBoundaryAt = false, keepM
       pos++; continue;
     }
     let matched = null, cursor = pos + 1;
-    const boundaryFn = useBoundaryAt ? boundaryAt : boundary;
-    if (node.$ && boundaryFn(lower, pos, cursor) && keepMatch(node.$, pos, cursor)) {
+    if (node.$ && boundary(lower, pos, cursor) && keepMatch(node.$, pos, cursor)) {
       matched = { start: pos, end: cursor, termId: node.$ };
     }
     while (cursor < lower.length) {
@@ -48,7 +41,7 @@ export function collectPhraseMatches(matcher, text, useBoundaryAt = false, keepM
         break;
       }
       cursor++;
-      if (node.$ && boundaryFn(lower, pos, cursor) && keepMatch(node.$, pos, cursor)) {
+      if (node.$ && boundary(lower, pos, cursor) && keepMatch(node.$, pos, cursor)) {
         matched = { start: pos, end: cursor, termId: node.$ };
       }
     }
@@ -97,14 +90,14 @@ export function collectRegexMatches(text, regexTerms, termsById, isTermEnabled =
   return matches;
 }
 
-export function collectMatches(matcher, text, termsById, regexTerms = [], useBoundaryAt = false, isTermEnabled = _term => true, keepMatch = (_termId, _start, _end) => true) {
-  const phrase = collectPhraseMatches(matcher, text, useBoundaryAt, keepMatch);
+export function collectMatches(matcher, text, termsById, regexTerms = [], isTermEnabled = _term => true, keepMatch = (_termId, _start, _end) => true) {
+  const phrase = collectPhraseMatches(matcher, text, keepMatch);
   const regex = collectRegexMatches(text, regexTerms, termsById, isTermEnabled, keepMatch);
   return [...phrase, ...regex].sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
 }
 
-export function findMatches(matcher, text, termsById, regexTerms = [], useBoundaryAt = false, isTermEnabled = _term => true, keepMatch = (_termId, _start, _end) => true) {
-  const all = collectMatches(matcher, text, termsById, regexTerms, useBoundaryAt, isTermEnabled, keepMatch);
+export function findMatches(matcher, text, termsById, regexTerms = [], isTermEnabled = _term => true, keepMatch = (_termId, _start, _end) => true) {
+  const all = collectMatches(matcher, text, termsById, regexTerms, isTermEnabled, keepMatch);
   const accepted = [];
   let cursor = 0;
   for (const m of all) {

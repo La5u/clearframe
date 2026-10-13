@@ -82,8 +82,6 @@ export function boundary(text, start, end) {
   return !isWordCharAt(text, start - 1) && !isWordCharAt(text, end);
 }
 
-export const boundaryAt = boundary;
-
 export function isWordCharAt(text, index) {
   const c = text[index];
   if (!c) return false;

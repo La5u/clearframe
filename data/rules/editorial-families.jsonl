@@ -55,8 +55,8 @@
 {"id":"editorial-lost-marbles","phrase":"lost its marbles","type":"idiom","status":"approved","confidence":"medium","aliases":["lost his marbles","lost her marbles","lose your marbles"],"sources":["clearframe-manual"]}
 {"id":"editorial-grow-backbone","phrase":"grow a backbone","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
 {"id":"editorial-raking-it-in","phrase":"raking it in","type":"idiom","status":"approved","confidence":"medium","aliases":["rake it in","rakes it in","raked it in"],"sources":["clearframe-manual"]}
-{"id":"editorial-feel-pinch","phrase":"feel the pinch","type":"idiom","status":"approved","confidence":"medium","aliases":["feels the pinch","felt the pinch","feeling the pinch"],"sources":["clearframe-manual"]}
-{"id":"editorial-over-moon","phrase":"over the moon","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
+{"id":"editorial-feel-pinch","phrase":"feel the pinch","type":"idiom","status":"approved","confidence":"medium","aliases":["feels the pinch","felt the pinch","feeling the pinch"],"sources":["clearframe-manual"],"corroboratedBy":["magpie-idioms"]}
+{"id":"editorial-over-moon","phrase":"over the moon","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"],"corroboratedBy":["magpie-idioms"]}
 {"id":"editorial-strength-to-strength","phrase":"from strength to strength","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"]}
 {"id":"editorial-draw-line","phrase":"draw a line under","type":"idiom","status":"approved","confidence":"medium","aliases":["draws a line under","drew a line under"],"sources":["clearframe-manual"]}
 {"id":"editorial-olive-branch","phrase":"olive branch","type":"idiom","status":"approved","confidence":"medium","sources":["clearframe-manual"]}

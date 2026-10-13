@@ -3,13 +3,13 @@ import { buildMatcher, findMatches } from './core/matcher.js';
 import { lowerAllCapsLongWords, matchReplacementCase } from './core/display-utils.js';
 import { pluralizeWord, pastTenseWord, ingWord, adverbWord } from './core/stemmer.js';
 import { DEFAULT_SETTINGS, normalizeSettings } from './core/settings-utils.js';
-import { chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from './core/match-plan.js';
+import { chooseAction, chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from './core/match-plan.js';
 import { ALL_CAPS_TERM_ID, findAllCapsMatches } from './core/all-caps.js';
 import { CONTEXTUAL_TERMS, classifyPageContext, findContextualMatches } from './core/contextual.js';
 import { recoverOriginalText } from './core/restore.js';
 import { shouldKeepLexicalMatch } from './core/context-filter.js';
 
-const { index, types: TYPE_MAP, categories: TYPE_CATEGORIES, colors, underlines, intensity } = ClearFrame;
+const { index, types: TYPE_MAP, categories: TYPE_CATEGORIES, labels: LABELS, colors, underlines, intensity } = ClearFrame;
 const SKIP_TAGS_SELECTOR = 'script,style,noscript,textarea,input,code,pre,kbd,samp';
 const MEDIA_UI_SELECTOR = '.ytp-caption-window-container,.ytp-caption-segment,.caption-window,.vjs-text-track-display,.jw-captions,.jw-text-track-display,.plyr__captions,.ytp-chrome-controls,.vjs-control-bar,.jw-controlbar,.plyr__controls,[data-testid=video-subtitles]';
 const PROTECTED_TEXT_SELECTOR = 'ytd-transcript-segment-renderer,ytd-transcript-segment-list-renderer,.ytd-transcript-segment-renderer,yt-live-chat-app,yt-live-chat-renderer,[aria-live=polite],[aria-live=assertive],[role=status],[role=alert]';
@@ -89,6 +89,12 @@ function getColor(type) {
   return settings.monochrome ? 'gray' : settings.userTypeColors?.[type] || TYPE_MAP[type] || 'gray';
 }
 
+// The technical term is shown first so readers learn the vocabulary; the
+// plain label and effect sit behind the (i).
+function getLabel(term) {
+  return LABELS?.phrases?.[term.phrase] || LABELS?.types?.[term.type] || { term: term.type, plain: getCategory(term.type), effect: '' };
+}
+
 function getCategory(type) {
   return TYPE_CATEGORIES?.[type] || 'General';
 }
@@ -154,12 +160,6 @@ function isLikelyHeadline(parent, text) {
   return !!parent.closest('strong,b,[class*=pufftext],[data-headline]') || link.getAttribute('itemprop') === 'url';
 }
 
-function getTermAction(term, preserveText = false) {
-  if (preserveText) return 'highlighted';
-  if (term.remove && settings.removeTerms) return 'removed';
-  if (settings.replaceTerms && term.neutral) return 'replaced';
-  return 'highlighted';
-}
 
 function getReplacementText(term, src, action) {
   if (action === 'removed') return '';
@@ -180,7 +180,7 @@ function getHighlightNameForEntry(term, action, terms) {
 }
 
 function processText(text, context = {}) {
-  const matches = findMatches(matcher, text, index.termsById, index.regexTerms || [], false,
+  const matches = findMatches(matcher, text, index.termsById, index.regexTerms || [],
     term => isEnabled(term.type),
     (termId, start, end) => shouldKeepLexicalMatch(getTermById(termId), text.slice(start, end), text, context, start));
   const allCaps = isEnabled(ALL_CAPS_TERM.type) ? findAllCapsMatches(text) : [];
@@ -188,7 +188,7 @@ function processText(text, context = {}) {
   const combined = resolveMatchGroups([...matches, ...allCaps, ...contextual]);
   let cursor = 0, displayText = '';
   const entries = [];
-  const termAction = term => getTermAction(term, context.preserveText === true);
+  const termAction = term => chooseAction(term, settings, context.preserveText === true);
   for (const match of combined) {
     const terms = getTermsForMatch(match);
     // An expanded group spans beyond its lexical term; only all-caps
@@ -245,33 +245,28 @@ function resetAnalysis() {
   updateBadge();
 }
 
-function processTarget(target) {
-  const node = target.node;
+function processTextNode(node) {
   if (!node.isConnected || !isProcessableNode(node)) return;
   const originalText = node.nodeValue || '';
-  const startOffset = Math.max(0, Math.min(target.start ?? 0, originalText.length));
-  const endOffset = Math.max(startOffset, Math.min(target.end ?? originalText.length, originalText.length));
-  const source = originalText.slice(startOffset, endOffset);
-  if (source.trim().length < 2) return;
+  if (originalText.trim().length < 2) return;
   const parent = node.parentElement;
   const conversational = !!parent?.closest('shreddit-comment,[data-testid*=comment],ytd-comment-thread-renderer,ytd-comments,#comments');
-  const headline = isLikelyHeadline(parent, source);
+  const headline = isLikelyHeadline(parent, originalText);
   const preserveText = !!parent?.closest(PROTECTED_TEXT_SELECTOR);
-  const plan = processText(source, { headline, conversational, preserveText, pageContext: PAGE_CONTEXT });
-  const displayedNodeText = originalText.slice(0, startOffset) + plan.displayText + originalText.slice(endOffset);
+  const plan = processText(originalText, { headline, conversational, preserveText, pageContext: PAGE_CONTEXT });
+  const displayedNodeText = plan.displayText;
   if (displayedNodeText !== originalText) node.nodeValue = displayedNodeText;
 
   /** @type {{node: Text, originalText: string, displayedText: string, records: any[]}} */
   const result = { node, originalText, displayedText: displayedNodeText, records: [] };
   for (const entry of plan.entries) {
-    const start = startOffset + entry.start, end = startOffset + entry.end;
+    const { start, end } = entry;
     const range = document.createRange();
     range.setStart(node, start); range.setEnd(node, end);
     result.records.push({
       range, node, startOffset: start, endOffset: end,
-      term: entry.term.phrase,
       terms: entry.terms,
-      type: entry.term.type, category: getCategory(entry.term.type), action: entry.action,
+      type: entry.term.type, action: entry.action,
       sourceText: entry.sourceText, replacementText: entry.replacementText, highlightName: entry.highlightName,
       matchContext: { headline, conversational, preserveText, pageContext: PAGE_CONTEXT },
     });
@@ -376,7 +371,7 @@ function addResultHighlights(result) {
 function analyzeTargets(root) {
   resetAnalysis();
   const targets = getTextTargets(root);
-  for (const target of targets) if (target.node?.isConnected) processTarget(target);
+  for (const node of targets) if (node.isConnected) processTextNode(node);
   rebuildSummary();
   renderHighlights();
   updateBadge();
@@ -430,7 +425,7 @@ function analyzeMutations() {
       continue;
     }
     nodeResults.delete(node);
-    processTarget({ node });
+    processTextNode(node);
     const addedNames = addResultHighlights(nodeResults.get(node));
     highlightNamesChanged ||= addedNames;
   }
@@ -449,7 +444,7 @@ function getTextTargets(root) {
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   while (walker.nextNode()) {
     const node = walker.currentNode;
-    if (isProcessableNode(node) && (node.nodeValue || '').trim().length >= 2) targets.push({ node });
+    if (isProcessableNode(node) && (node.nodeValue || '').trim().length >= 2) targets.push(node);
   }
   return targets;
 }
@@ -485,6 +480,16 @@ function isPointInsideHoverReveal(x, y) {
   return !!hoverReveal && [...hoverReveal.record.range.getClientRects()].some(rect =>
     x >= rect.left - 2 && x <= rect.right + 2 && y >= rect.top - 2 && y <= rect.bottom + 2,
   );
+}
+
+// Let the pointer travel from the highlight into the tooltip (to reach the
+// (i)) without the tooltip closing in the gap between them.
+function isPointTowardTooltip(x, y) {
+  const tooltip = document.getElementById('cf-tooltip');
+  if (!activeHover || !tooltip || tooltip.style.display === 'none') return false;
+  const tip = tooltip.getBoundingClientRect(), word = activeHover.range.getBoundingClientRect();
+  return x >= Math.min(tip.left, word.left) - 2 && x <= Math.max(tip.right, word.right) + 2
+    && y >= Math.min(tip.top, word.top) - 2 && y <= Math.max(tip.bottom, word.bottom) + 2;
 }
 
 function hideTooltip(force = false) {
@@ -533,9 +538,27 @@ function showTooltip(record, x, y) {
   }
   const terms = record.terms?.length ? record.terms : [{ type: record.type }];
   tooltip.textContent = '';
-  const info = document.createElement('div');
-  info.textContent = terms.map(term => `${term.type} - ${getCategory(term.type)}${term.confidence && term.confidence !== 'high' ? ` (${term.confidence})` : ''}`).join('\n');
-  tooltip.appendChild(info);
+  const seen = new Set();
+  for (const term of terms) {
+    const label = getLabel(term);
+    if (seen.has(label.term)) continue;
+    seen.add(label.term);
+    const row = document.createElement('div'); row.className = 'cf-term';
+    const line = document.createElement('div'); line.className = 'cf-term-line';
+    const name = document.createElement('span'); name.className = 'cf-term-name'; name.textContent = label.term;
+    line.appendChild(name);
+    if (term.confidence && term.confidence !== 'high') {
+      const confidence = document.createElement('span'); confidence.className = 'cf-confidence'; confidence.textContent = ' · lower confidence';
+      line.appendChild(confidence);
+    }
+    const info = document.createElement('span'); info.className = 'cf-info'; info.textContent = 'i';
+    info.tabIndex = 0; info.setAttribute('role', 'button'); info.setAttribute('aria-label', `In plain words: ${label.plain}`);
+    const plain = document.createElement('div'); plain.className = 'cf-plain';
+    const plainName = document.createElement('strong'); plainName.textContent = label.plain;
+    plain.append(plainName, label.effect ? ` – ${label.effect}` : '');
+    line.appendChild(info); row.append(line, plain);
+    tooltip.appendChild(row);
+  }
   tooltip.classList.toggle('pinned', pinnedTooltipRecord === record);
   if (pinnedTooltipRecord === record && isFeedbackEnabled()) {
     const actions = document.createElement('div'); actions.className = 'cf-feedback-actions';
@@ -555,9 +578,18 @@ function showTooltip(record, x, y) {
   const anchorBottom = Number.isFinite(rect.bottom) && rect.height > 0 ? rect.bottom : y;
   const left = Math.min(Math.max(8, anchorLeft), Math.max(8, window.innerWidth - tooltip.offsetWidth - 8));
   const above = anchorTop - tooltip.offsetHeight - 8;
-  const top = above >= 8 ? above : Math.min(anchorBottom + 8, Math.max(8, window.innerHeight - tooltip.offsetHeight - 8));
   tooltip.style.left = `${left}px`;
-  tooltip.style.top = `${top}px`;
+  // Anchor by the bottom edge when above the word, so opening the plain
+  // explanation grows the tooltip upward instead of over the word. The
+  // explanation opens on the far side of the (i), which keeps it under the pointer.
+  tooltip.classList.toggle('cf-above', above >= 8);
+  if (above >= 8) {
+    tooltip.style.top = 'auto';
+    tooltip.style.bottom = `${window.innerHeight - anchorTop + 8}px`;
+  } else {
+    tooltip.style.bottom = 'auto';
+    tooltip.style.top = `${Math.min(anchorBottom + 8, Math.max(8, window.innerHeight - tooltip.offsetHeight - 8))}px`;
+  }
 }
 
 function findRecordAtCaret(caret, x, y) {
@@ -567,9 +599,11 @@ function findRecordAtCaret(caret, x, y) {
   const records = nodeResults.get(node)?.records || [];
   for (let i = records.length - 1; i >= 0; i--) {
     const record = records[i];
-    if (record.range.isPointInRange(node, offset) ||
-        (offset > 0 && record.range.isPointInRange(node, offset - 1)) ||
-        [...record.range.getClientRects()].some(rect => x >= rect.left - 2 && x <= rect.right + 2 && y >= rect.top - 2 && y <= rect.bottom + 2)) return record;
+    // The caret snaps to the nearest text, even from blank space below a
+    // paragraph, so the pointer must also be over the highlighted word.
+    const caretHit = record.range.isPointInRange(node, offset) || (offset > 0 && record.range.isPointInRange(node, offset - 1));
+    const slack = caretHit ? 4 : 2;
+    if ([...record.range.getClientRects()].some(rect => x >= rect.left - slack && x <= rect.right + slack && y >= rect.top - slack && y <= rect.bottom + slack)) return record;
   }
   return null;
 }
@@ -603,7 +637,7 @@ function processHoverMove(event) {
   if (pinnedTooltipRecord || !nodeResults.size) return;
   const record = findRecordAtPoint(event.clientX, event.clientY);
   if (!record) {
-    if (activeHover && !isPointInsideHoverReveal(event.clientX, event.clientY)) hideTooltip();
+    if (activeHover && !isPointInsideHoverReveal(event.clientX, event.clientY) && !isPointTowardTooltip(event.clientX, event.clientY)) hideTooltip();
     return;
   }
   if (activeHover === record) return;
@@ -778,7 +812,7 @@ function scheduleMutationAnalysis(mutations) {
     pendingDisconnectedCleanup ||= mutation.removedNodes.length > 0;
     for (const added of mutation.addedNodes) {
       if (added instanceof Text) pendingMutationNodes.add(added);
-      else for (const target of getTextTargets(added)) pendingMutationNodes.add(target.node);
+      else for (const node of getTextTargets(added)) pendingMutationNodes.add(node);
     }
   }
   if (!pendingMutationNodes.size && !pendingDisconnectedCleanup) return;
@@ -827,11 +861,5 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.type === 'APPLY_SETTINGS') {
     applySettings(message.settings, message.settings?.userTypeColors);
     sendResponse({ ok: true }); return;
-  }
-  if (message.type === 'RELOAD_SETTINGS') {
-    chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ result) => {
-      applySettings(result.settings, result.userTypeColors); sendResponse({ ok: true });
-    });
-    return true;
   }
 });

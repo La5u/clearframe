@@ -1,0 +1,37 @@
+{
+  "types": {
+    "all-caps": {"term": "Capitalisation for emphasis", "plain": "Shouting in capitals", "effect": "Capital letters make words feel loud and urgent, grabbing attention before the reader weighs the content."},
+    "clickbait": {"term": "Sensationalist hook", "plain": "Clickbait", "effect": "Teases or overstates to make you click, rather than telling you what happened."},
+    "hype": {"term": "Puffery", "plain": "Hype", "effect": "Praises with big, unmeasured claims that sound impressive but are hard to check."},
+    "reveal": {"term": "Presupposition", "plain": "Promises a secret", "effect": "Assumes there is a hidden truth, implying you have been misled until now."},
+    "absolute": {"term": "Categorical assertion", "plain": "All-or-nothing wording", "effect": "Leaves no room for exceptions, so a claim sounds more certain than evidence usually allows."},
+    "exaggeration": {"term": "Hyperbole", "plain": "Exaggeration", "effect": "Inflates size or degree to make something feel more dramatic than a measured description would."},
+    "superlative": {"term": "Superlative", "plain": "Biggest, best or worst claim", "effect": "Ranks something as the extreme, which raises the stakes and is hard to verify."},
+    "unsourced": {"term": "Vague attribution", "plain": "Unnamed source", "effect": "Borrows authority from sources the reader cannot identify or check."},
+    "authority": {"term": "Attribution", "plain": "Says who said it", "effect": "Tells you where a claim comes from; notice who is quoted and who is not."},
+    "uncertainty": {"term": "Hedging", "plain": "Cautious wording", "effect": "Signals the claim is not confirmed, so the writer avoids fully committing to it."},
+    "loaded-framing": {"term": "Loaded language", "plain": "Slanted wording", "effect": "Carries a built-in judgment that nudges the reader toward one view before the facts."},
+    "distancing": {"term": "Distancing", "plain": "Not yet proven", "effect": "Marks a claim as unproven or someone else's; often required in legal reporting, but it can also cast doubt."},
+    "aggression": {"term": "Violent metaphor", "plain": "Violent wording", "effect": "Describes criticism or disagreement as a physical attack, making the conflict seem fiercer."},
+    "derogatory": {"term": "Pejorative language", "plain": "Insulting wording", "effect": "Labels people or groups with contempt, inviting the reader to dismiss them."},
+    "moral": {"term": "Evaluative language", "plain": "Moral judgment", "effect": "Judges right and wrong for the reader instead of describing what happened."},
+    "loaded": {"term": "Ideologically loaded term", "plain": "Partisan wording", "effect": "A phrase one side uses to frame an issue its way; the other side has its own version."},
+    "conflict": {"term": "Conflict framing", "plain": "Drama wording", "effect": "Frames events as a fight or chaos, which is gripping but less precise."},
+    "minimizing": {"term": "Minimisation", "plain": "Downplaying", "effect": "Makes something seem smaller or less important than it may be."},
+    "negative-framing": {"term": "Negative connotation", "plain": "Negative slant", "effect": "Chooses a word with bad associations where a neutral one exists."},
+    "fear": {"term": "Fear appeal", "plain": "Scary wording", "effect": "Uses alarm to raise the stakes, which can crowd out calm judgment."},
+    "euphemism": {"term": "Euphemism", "plain": "Softened wording", "effect": "Makes something harsh sound milder, or hides what actually happened."},
+    "passive": {"term": "Agentless passive", "plain": "Hides who did it", "effect": "Describes an action without saying who did it, which can shift responsibility away."},
+    "dysphemism": {"term": "Dysphemism", "plain": "Harsher wording", "effect": "Uses a blunter or more brutal word than needed, making events feel more dramatic."},
+    "colloquialism": {"term": "Colloquialism", "plain": "Casual wording", "effect": "Informal language builds a chatty, familiar relationship with the reader."},
+    "idiom": {"term": "Idiom", "plain": "Figure of speech", "effect": "A stock phrase that adds colour but can blur exactly what happened."},
+    "repetition": {"term": "Repetition", "plain": "Repeated wording", "effect": "Repeating words adds rhythm and emphasis, making an idea stick."},
+    "rhetorical-question": {"term": "Rhetorical question", "plain": "Question with an implied answer", "effect": "Steers the reader to an answer without the writer having to state it as a claim."},
+    "quote": {"term": "Scare quotes", "plain": "Quoted wording", "effect": "Quotation marks around a word can signal doubt or irony rather than an exact quote."}
+  },
+  "phrases": {
+    "direct address": {"term": "Direct address", "plain": "Talks to you", "effect": "Speaks straight to the reader, creating a sense of personal involvement or urgency."},
+    "even framing": {"term": "Presupposition", "plain": "Implied surprise", "effect": "'Even' assumes something is unexpected, telling the reader how to feel about it."},
+    "headline question": {"term": "Rhetorical question", "plain": "Question headline", "effect": "Raises a possibility without claiming it, so the headline can suggest more than it reports."}
+  }
+}

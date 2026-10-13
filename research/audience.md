@@ -1,8 +1,83 @@
-# ClearFrame market decision
+# Who ClearFrame is for
 
-Research date: 2026-07-27. Scope: repository audit plus 128 unique Reddit post pages across anti-clickbait/media literacy, teachers/ELA, literary devices, poetry, writing, browser extensions, privacy, and comparable writing/annotation tools.
+Two rounds of audience research. Both point at the same first users: English
+and media-literacy students and teachers, using ClearFrame for close reading
+rather than as an automatic bias verdict.
 
-## Decision
+## October 2026: IB English A: Language and Literature
+
+Sources are linked; teacher and revision sites are not official IB guidance. The IB site blocks automated fetches, so official
+details below come from search results and could not be re-checked directly.
+
+### The course
+
+- Paper 1 (guided textual analysis) is 35% at SL and HL: unseen non-literary
+  texts such as articles, ads, blogs, speeches, infographics and cartoons. SL
+  analyses one text in 75 minutes; HL analyses two in 135 minutes.
+  [IB course page](https://ibo.org/programmes/diploma-programme/curriculum/language-and-literature/language-a-language-and-literature/)
+- Criterion B (analysis and evaluation) rewards explaining how textual features
+  and authorial choices construct meaning. Naming a device does not earn the
+  top bands.
+- The guide was updated for first assessment 2026 (Paper 2 criteria changed;
+  Paper 1 criteria did not).
+- Subject reports (2023, 2024) repeatedly criticise "feature spotting", generic
+  effects ("grabs the reader's attention"), and ethos/pathos/logos used as a
+  checklist.
+
+### Implications for ClearFrame
+
+- A tool that only labels devices trains the habit examiners penalise. Every
+  label needs an effect, and the student should do the explaining.
+- Reword mode is the "swap test" teachers recommend: change the word and ask
+  what the meaning loses.
+- Predict-then-reveal (hide labels until the student has looked) keeps it a
+  practice tool, not an answer key. Exams are offline, so it is practice-only.
+- Current type names such as `clickbait`, `reveal`, `moral` are not analytic
+  terms. Closest classroom terms: emotive/loaded diction and connotation,
+  hyperbole, pejorative lexis, dysphemism, euphemism, violent metaphor,
+  hedging and modality, vague attribution, agentless passive, superlatives,
+  direct address, rhetorical questions, register (colloquialism).
+- Text-only detectors that are cheap and common in teaching: inclusive and
+  second-person pronouns, imperatives, modal verbs, general rhetorical
+  questions, statistics, exclamations, tricolon, anaphora and epistrophe,
+  "not X but Y" antithesis, sentence length. Structural devices need
+  sentence- or paragraph-level text, but the content script works on single
+  text nodes.
+- Out of reach without images or judgement: tone, irony, perspective and
+  omission, colour, layout, typography, text-image interplay. Say so in the UI.
+
+### Competitors
+
+- Rheta (Chrome): highlights rhetorical patterns; a handful of users.
+- BiasLens: local per-paragraph bias score, no device names.
+- Ground News and AllSides: outlet-level bias, not close reading.
+- ChatGPT-style prompts already do Paper 1 commentary, in the cloud and with
+  accounts. ClearFrame's position: free, local, in the page, no account.
+
+### Where to get feedback
+
+- InThinking English A Lang & Lit teacher site: https://thinkib.net/englishalanglit
+- r/IBO (read the wiki's advertising policy first): https://www.reddit.com/r/IBO/
+- A school's IB coordinator, or a short disclosed email to a few IB English
+  teachers. Teachers first; students once a teacher has tried it.
+
+### Sources
+
+- https://www.lanterna.com/resources/ace-ib-english-a-paper-1-commentary-guide
+- https://www.clastify.com/knowledge-hub/post/ib-english-rhetorical-devices
+- https://www.revisiondojo.com/blog/how-to-analyze-non-literary-texts-in-ib-english-language-and-literature
+- https://tutorsplus.com/how-to-analyse-visual-texts-in-ib-english-paper-1/
+- https://www.revisiondojo.com/blog/analyzing-figurative-language-news-opinion-ib-english
+
+## July 2026: market decision
+
+Research date: 2026-07-27. Scope: 128 unique Reddit post pages across
+anti-clickbait/media literacy, teachers/ELA, literary devices, poetry, writing,
+browser extensions, privacy, and comparable writing/annotation tools. The repo
+audit that accompanied it is out of date and has been dropped; replacements
+and removal are now off by default.
+
+### Decision
 
 Do not continue ClearFrame as a general-purpose automatic persuasion or “neutral writing” judge. The useful product is a narrow, local-first close-reading notebook:
 
@@ -12,27 +87,7 @@ Keep rule matches only as optional, clearly uncertain suggestions. Drop automati
 
 The best initial customer is an ELA/media-literacy teacher or student who needs repeatable close-reading evidence. A secondary customer is a researcher or writer who wants persistent web highlights and notes. This is a niche worth validating, not evidence for a broad consumer launch.
 
-## What the repo actually offers
-
-- 26 phrase/rule categories and 206 term rows, grouped into 10 colors.
-- On-demand article or selection analysis, CSS highlights, hover labels, counts, term navigation, and a badge.
-- Optional phrase replacement (71 terms have a neutral value) and removal (27 terms).
-- Per-category enable/disable, drag-to-recolor, two runtime keyboard toggles, and sync settings.
-- No saved manual annotations, notes, quote anchors, exports, or class workflow yet.
-
-The code is small and testable, but the product promise and implementation are out of sync:
-
-- `manifest.json:8-17` and the Firefox manifest still request `<all_urls>` and inject the content script on every page.
-- `README.md:91-95` and `TODO.md:15` correctly identify `activeTab`/programmatic injection as the desired future state, but it is not implemented.
-- `src/content.js:293-296` falls back to `document.body`; on pages without a good article root, analysis can include unrelated page text.
-- `README.md:11-14` describes manual labels and notes as first-class, but the current UI only has automated phrase matching.
-- `src/content.js:334-342` temporarily mutates displayed text to reveal the original replacement on hover. This makes “never silently rewrite source text” a product/implementation risk.
-- `package.json` has no lint script even though `README.md:24` advertises “lint” in `npm run ci`.
-- Existing working-tree changes were present before this audit and were left untouched.
-
-Verification: `npm test` passed; `npm run typecheck` passed. I did not run the build because it rewrites generated `dist/` artifacts during an audit.
-
-## Feature-by-feature demand
+### Feature-by-feature demand
 
 | Feature | Demand | Conclusion |
 |---|---|---|
@@ -51,7 +106,7 @@ Verification: `npm test` passed; `npm run typecheck` passed. I did not run the b
 | Keyboard shortcuts | Low standalone demand | Add after the selection workflow is reliable. |
 | LLM explanations | Unproven | Defer: cost, privacy, false certainty, and AI resistance are all visible in the research. |
 
-## Repeated complaints about comparable tools
+### Repeated complaints about comparable tools
 
 - Grammarly and similar assistants are described as intrusive, wrong in context, too corporate, hostile to fiction, and harmful to author voice. Passive voice is often flagged even when intentional or appropriate.
 - Users dislike extensions that read every keystroke or send text to a server. Privacy concerns are a direct opening for local-only behavior.
@@ -60,18 +115,18 @@ Verification: `npm test` passed; `npm run typecheck` passed. I did not run the b
 - Annotation users ask for local storage, no account, exports, search, tags, and cross-device recovery. They care about persistence and retrieval more than decorative marker styles.
 - Teachers already use CommonLit, Kami, Google Docs, Hypothesis, Canvas, and Perusall. A new tool must remove a specific friction—fast, private, reusable evidence capture—not merely add another colored overlay.
 
-## Validation plan before more architecture
+### Validation plan before more architecture
 
 1. Build only: select text, choose one of six labels, add a note, persist an anchor locally, and export Markdown.
 2. Recruit five ELA/media-literacy teachers and five students/researchers. Give them a real article or assigned passage and observe whether they use it twice in one week.
 3. Keep the project only if at least five of ten users repeat the workflow and at least three ask to keep using it without prompting.
 4. If that fails, archive the project. Do not spend time expanding the taxonomy, adding an LLM, or polishing color controls.
 
-## Reddit inventory
+### Reddit inventory
 
 The links below are 130 inventory entries representing 128 unique post pages. The exact `r/anticlickbait` search did not produce a usable body of posts in the search index, so anti-clickbait evidence comes from adjacent communities. Post pages are evidence of expressed problems or existing workflows, not proof of market size. Project-showcase posts are marked as such; their low engagement is useful as a warning against treating “someone built this” as demand.
 
-### Anti-clickbait, headlines, and media literacy
+#### Anti-clickbait, headlines, and media literacy
 
 1. [Anti-clickbait YouTube workflow](https://www.reddit.com/r/chrome_extensions/comments/1um84da/my_anticlickbait_workflow_a_chrome_extension_that/)
 2. [Public ranking site for misleading clickbait](https://www.reddit.com/r/ideas/comments/1rq71u4/idea_a_public_ranking_site_for_misleading/)
@@ -95,7 +150,7 @@ The links below are 130 inventory entries representing 128 unique post pages. Th
 20. [Misleading headline complaint](https://www.reddit.com/r/Coronavirus/comments/id263b)
 21. [Misleading headlines and narrative framing](https://www.reddit.com/r/FreeSpeech/comments/n1czaz)
 
-### Teachers, ELA, annotation, and close reading
+#### Teachers, ELA, annotation, and close reading
 
 22. [Annotation tool for Chromebooks](https://www.reddit.com/r/Teachers/comments/sk1j3cj)
 23. [Finding a layered annotation tool](https://www.reddit.com/r/Teachers/comments/plauw8)
@@ -127,7 +182,7 @@ The links below are 130 inventory entries representing 128 unique post pages. Th
 49. [AskTeachers: literacy and writing expectations](https://www.reddit.com/r/AskTeachers/comments/1om1rdi/please_tell_me_this_isnt_the_norm_or_rationalize/)
 50. [English-teacher media literacy curriculum](https://www.reddit.com/r/ELATeachers/comments/116ec9m)
 
-### Literary devices and rhetorical analysis
+#### Literary devices and rhetorical analysis
 
 51. [AP Literature device list](https://www.reddit.com/r/APLit/comments/1sya01q/literary_devices/)
 52. [Naming a literary technique](https://www.reddit.com/r/AskLiteraryStudies/comments/ldmwma)
@@ -148,7 +203,7 @@ The links below are 130 inventory entries representing 128 unique post pages. Th
 67. [Understanding rhetorical analysis](https://www.reddit.com/r/ENGLISH/comments/xdhc2v)
 68. [AP Lang rhetorical-analysis structure](https://www.reddit.com/r/APLang/comments/12v98tm)
 
-### Poetry and AI/writing detection
+#### Poetry and AI/writing detection
 
 69. [Poem incorrectly identified as AI](https://www.reddit.com/r/Poetry/comments/1cng6hx/help_my_poem_is_being_identified_as_ai_what_can_i/)
 70. [Poem with no literary devices](https://www.reddit.com/r/Poetry/comments/1c7efuy)
@@ -161,7 +216,7 @@ The links below are 130 inventory entries representing 128 unique post pages. Th
 77. [AI checkers flagging human writing](https://www.reddit.com/r/writers/comments/1hnuxq7/how_do_you_deal_with_ai_checkers_flagging_your_work_as_ai/)
 78. [GPT as an editor](https://www.reddit.com/r/WritingWithAI/comments/1ukxcr/gpt_as_my_editor/)
 
-### Writing tools, editing, and complaints about prescriptive feedback
+#### Writing tools, editing, and complaints about prescriptive feedback
 
 79. [Grammar-checker recommendations](https://www.reddit.com/r/writing/comments/1gy95g0/what_do_you_guys_use_for_a_grammar_checker/)
 80. [Grammar checkers](https://www.reddit.com/r/writing/comments/1njdwfo/grammar_checkers/)
@@ -190,7 +245,7 @@ The links below are 130 inventory entries representing 128 unique post pages. Th
 103. [Best grammar checkers, writers](https://www.reddit.com/r/writers/comments/1ocz9d3/best_grammar_checkers/)
 104. [Writing voice and style](https://www.reddit.com/r/writing/comments/9n9o58)
 
-### Comparable extensions, annotation, privacy, and persistence
+#### Comparable extensions, annotation, privacy, and persistence
 
 105. [LanguageTool browser-extension paywall](https://www.reddit.com/r/chrome_extensions/comments/1qbuuzt/languagetool_extension_will_now_only_be_available/)
 106. [Grammarly alternative for Firefox](https://www.reddit.com/r/firefox/comments/18j3fk6)
@@ -220,3 +275,4 @@ The links below are 130 inventory entries representing 128 unique post pages. Th
 130. [Local-first Markdown editor](https://www.reddit.com/r/opensource/comments/1prqzx9)
 
 The inventory intentionally exceeds 100 because several pages are project showcases rather than organic requests. The consistent signal is the workflow around saved evidence and user-controlled interpretation—not a larger detector taxonomy.
+

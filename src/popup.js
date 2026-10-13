@@ -1,7 +1,7 @@
 'use strict';
 import { DEFAULT_SETTINGS, normalizeSettings } from './core/settings-utils.js';
 
-const { types, categories, colorConfig } = ClearFrame;
+const { types, labels, colorConfig } = ClearFrame;
 const $ = (id) => /** @type {HTMLElement} */(document.getElementById(id));
 const els = {
   replaceTerms: /** @type {HTMLInputElement} */ ($('replace-terms')),
@@ -109,9 +109,6 @@ function sendToActiveTab(message, onResponse) {
 function getEffectiveColor(type) {
   return userTypeColors[type] || types[type] || 'gray';
 }
-function getCategory(type) {
-  return categories?.[type] || 'General';
-}
 function getColorHex(c) {
   return COLOR_MAP[c] || '#ccc';
 }
@@ -186,13 +183,15 @@ function setTopTab(name) {
 
 function createTypeChip(type) {
   const chip = /** @type {any} */(document.createElement('button'));
-  chip.className = 'type-chip'; chip.dataset.type = type; chip.dataset.category = getCategory(type);
+  chip.className = 'type-chip'; chip.dataset.type = type;
   chip.dataset.enabled = String(settings.types?.[type] !== false); chip.type = 'button';
   chip.style.background = getColorHex(settings.monochrome ? 'gray' : getEffectiveColor(type));
   if (chip.dataset.enabled !== 'true') {
     chip.classList.add('disabled');
   }
-  const label = document.createElement('span'); label.className = 'type-chip-label'; label.textContent = type;
+  const text = labels?.types?.[type];
+  const label = document.createElement('span'); label.className = 'type-chip-label'; label.textContent = text?.term || type;
+  if (text) chip.title = `${text.plain}: ${text.effect}`;
   chip.appendChild(label);
   return chip;
 }

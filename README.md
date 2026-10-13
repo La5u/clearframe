@@ -50,21 +50,20 @@ source, evidence, semantic dimensions, approval state, and an independently
 reviewed reword. Large corpora stay in git-ignored `research/raw/`; build-time
 scripts normalize and mine them, while only compact approved rules ship.
 
-Legacy hand-authored terms remain in `data/terms/*.csv` during migration:
-
-Terms live in `data/terms/*.csv`:
+Hand-authored terms live in `data/terms/*.csv`:
 
 ```csv
-phrase,type,neutral,aliases,stemmable,regex,remove,contexts
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts,confidence
 ain't,colloquialism,is not,,,,,
 exclusive,clickbait,,,adjective,,true,headline
 ```
 
 - `aliases`: pipe-separated alternate forms
-- `stemmable`: `noun|verb|adjective` — auto-generates regex for inflections (plural, past, -ing, adverb)
+- `stemmable`: `noun|verb|adjective` — adds literal inflected forms (plural, past, -ing, adverb)
 - `regex`: custom pattern for context-sensitive matches
 - `remove`: mark term for deletion in remove-mode
 - `contexts`: optional pipe-separated allowlist such as `headline` or `evaluative`; there is no second exclusion list
+- `confidence`: optional `medium|contextual|exploratory`; below `high` is drawn at half strength
 - `colloquialism` rules default to publication pages, so ordinary Reddit and YouTube language is not flagged
 - Every normalized phrase must be unique across all types (enforced at build)
 - Politically one-sided terms need a mirror term; see `TERMS.md` and `data/mirror-pairs.json`
@@ -99,8 +98,6 @@ node tools/import-wtw.js   # Wikipedia "Words to watch" candidates (CC BY-SA)
 npm run evaluate:balance   # NewsWCL50 left/centre/right flag-rate diagnostic
 node tools/news-report.js  # live news front pages across the spectrum (CHROMIUM_PATH=...)
 npm run smoke:sites        # tooltip, feedback, and reword checks on live sites
-npm run rules:propaganda   # SemEval spans; writes to research/quarantine, never ships
-npm run benchmark:build     # held-out WNC benchmark
 npm run evaluate:babe      # sealed external diagnostic; never rule generation
 npm run bench               # 10,000-rule phrase-matcher budget
 npm run bench:browsers      # matching core in installed Chromium and Firefox

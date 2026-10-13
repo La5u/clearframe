@@ -17,6 +17,8 @@
     },
     {
       "id": "open-english-wordnet",
+      "enabled": false,
+      "notes": "No tool reads it yet; enable when a consumer exists.",
       "name": "Open English WordNet 2025",
       "role": "candidate-support",
       "url": "https://en-word.net/downloads/english-wordnet-2025-json.zip",
@@ -30,6 +32,8 @@
     },
     {
       "id": "emobank",
+      "enabled": false,
+      "notes": "No tool reads it yet; enable when a consumer exists.",
       "name": "EmoBank",
       "role": "development",
       "url": "https://github.com/JULIELab/EmoBank/archive/248ce2a43e165a66d31aeaed83cff9641d6654e0.zip",
@@ -66,7 +70,8 @@
       "licenseUrl": "https://propaganda.qcri.org/semeval2020-task11/data/",
       "redistribution": "local-only",
       "citation": "Da San Martino et al., 2020",
-      "notes": "Local research only until the dataset's own redistribution terms are confirmed."
+      "enabled": false,
+      "notes": "Rejected: politically asymmetric spans and redistribution terms unconfirmed. Kept so the source policy keeps rejecting it."
     },
     {
       "id": "webis-clickbait-2022",

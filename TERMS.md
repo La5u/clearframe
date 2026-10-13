@@ -25,10 +25,18 @@ terrify,fear,,,verb,,
 secret,reveal,,,noun,,
 eye-watering,exaggeration,,,adjective,,
 up to,exaggeration,as much as,,,\bup to(?=\s+\d),
-shock,clickbait,,,,verb,true
+shock,clickbait,,,verb,,true
 ```
 
 If you are unsure, add the simplest base form and leave the replacement blank.
+
+## Labels
+
+Each type in `data/type-colors.json` needs an entry in `data/type-labels.json`:
+`term` (the technical name shown first, so readers learn it), `plain` (the
+everyday name), and `effect` (one sentence on what the wording does to the
+reader). The plain name and effect appear when hovering the (i). The build fails
+if a type is missing.
 
 ## Confidence
 

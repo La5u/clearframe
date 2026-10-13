@@ -65,3 +65,12 @@ export function getReplacementSourceText(term, terms, sourceText, allCapsPhrase,
     ? normalizeAllCaps(sourceText)
     : sourceText;
 }
+
+// Protected text (captions, transcripts) is only highlighted; otherwise the
+// user's reword/remove settings decide.
+export function chooseAction(term, { removeTerms = false, replaceTerms = false } = {}, preserveText = false) {
+  if (preserveText) return 'highlighted';
+  if (term.remove && removeTerms) return 'removed';
+  if (replaceTerms && term.neutral) return 'replaced';
+  return 'highlighted';
+}

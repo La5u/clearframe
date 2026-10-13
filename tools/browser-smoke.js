@@ -1,10 +1,8 @@
 #!/usr/bin/env node
-import fs from 'fs';
-import os from 'os';
 import path from 'path';
-import { spawn } from 'child_process';
 import { loadTerms } from '../src/core/term-utils.js';
 import { approvedRuleTerms } from './rule-utils.js';
+import { delay, launchExtensionBrowser } from './chromium.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const urls = process.argv.slice(2).length ? process.argv.slice(2) : [
@@ -23,54 +21,9 @@ const disabledTypes = new Set(['absolute', 'exaggeration', 'superlative']);
 const terms = Object.entries(loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT)).termsById)
   .filter(([term, data]) => term.length >= 4 && term.length <= 50 && !disabledTypes.has(data.type) && !data.contexts?.length)
   .map(([term]) => term).sort((a, b) => b.length - a.length);
-const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'clearframe-smoke-'));
-const browser = spawn(process.env.CHROMIUM_PATH || '/usr/bin/chromium', [
-  '--headless=new', '--no-sandbox', '--disable-gpu', '--no-first-run',
-  `--user-data-dir=${profile}`, `--disable-extensions-except=${path.join(ROOT, 'dist')}`,
-  `--load-extension=${path.join(ROOT, 'dist')}`, '--remote-debugging-port=0', 'about:blank',
-], { stdio: ['ignore', 'ignore', 'pipe'] });
-const browserClosed = new Promise(resolve => browser.once('close', resolve));
-let browserError = '';
-browser.stderr.on('data', data => { browserError += data; });
-
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 let feedbackEnabledForRun = false;
 let replaceEnabledForRun = false;
 let feedbackToggleTested = false;
-async function waitForFile(file) {
-  for (let i = 0; i < 100; i++) { if (fs.existsSync(file)) return fs.readFileSync(file, 'utf8'); await delay(100); }
-  throw new Error(`Chromium did not start: ${browserError}`);
-}
-
-class Cdp {
-  constructor(url) {
-    this.id = 0; this.pending = new Map(); this.events = [];
-    this.ws = new WebSocket(url);
-    this.ready = new Promise((resolve, reject) => { this.ws.onopen = resolve; this.ws.onerror = reject; });
-    this.ws.onmessage = event => {
-      const message = JSON.parse(event.data);
-      if (message.id) { const pending = this.pending.get(message.id); this.pending.delete(message.id); message.error ? pending?.reject(new Error(message.error.message)) : pending?.resolve(message.result); }
-      else this.events.push(message);
-    };
-    this.ws.onclose = () => {
-      for (const pending of this.pending.values()) pending.reject(new Error('Chromium page target closed'));
-      this.pending.clear();
-    };
-  }
-  async send(method, params = {}) {
-    await this.ready; const id = ++this.id;
-    if (this.ws.readyState !== WebSocket.OPEN) throw new Error('Chromium page target closed');
-    const result = new Promise((resolve, reject) => this.pending.set(id, { resolve, reject }));
-    this.ws.send(JSON.stringify({ id, method, params })); return result;
-  }
-  async evaluate(expression) {
-    const result = await this.send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
-    if (result.exceptionDetails) throw new Error(result.exceptionDetails.text);
-    return result.result.value;
-  }
-  close() { this.ws.close(); }
-}
-
 // Hover a word the extension actually highlighted, so context rules that
 // intentionally skip a phrase do not count as tooltip failures.
 const findNative = `(() => {
@@ -177,21 +130,14 @@ async function testSite(cdp, url) {
 }
 
 let exitCode = 0;
+const { cdp, close } = await launchExtensionBrowser();
 try {
-  const [port] = (await waitForFile(path.join(profile, 'DevToolsActivePort'))).trim().split(/\r?\n/);
-  const targets = await fetch(`http://127.0.0.1:${port}/json/list`).then(response => response.json());
-  const target = targets.find(item => item.type === 'page');
-  if (!target) throw new Error('Chromium page target not found');
-  const cdp = new Cdp(target.webSocketDebuggerUrl);
-  await cdp.send('Page.enable'); await cdp.send('Runtime.enable'); await cdp.send('Log.enable');
+  await cdp.send('Log.enable');
   for (const url of urls) {
     try { const result = await testSite(cdp, url); console.log(JSON.stringify(result)); if (!result.pass) exitCode = 1; }
     catch (error) { console.log(JSON.stringify({ url, pass: false, error: error.message })); exitCode = 1; }
   }
-  cdp.close();
 } finally {
-  browser.kill('SIGTERM');
-  await Promise.race([browserClosed, delay(3000)]);
-  fs.rmSync(profile, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+  await close();
 }
 process.exitCode = exitCode;

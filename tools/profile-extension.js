@@ -48,11 +48,12 @@ async function run(browser, extension, port) {
   const url=`http://127.0.0.1:${port}/profile?browser=${browser}&extension=${extension?1:0}`;
   let command,args;
   if(browser==='chromium') {
-    command='/usr/bin/chromium';args=['--headless=new','--no-sandbox','--disable-gpu','--no-first-run',`--user-data-dir=${profile}`];
+    command=process.env.CHROMIUM_PATH||'/usr/bin/chromium';args=['--headless=new','--no-sandbox','--disable-gpu','--no-first-run',`--user-data-dir=${profile}`];
     if(extension)args.push(`--disable-extensions-except=${path.join(ROOT,'dist')}`,`--load-extension=${path.join(ROOT,'dist')}`);
     args.push(url);
   } else if(extension) {
-    command=process.execPath;args=[path.join(ROOT,'node_modules','web-ext','bin','web-ext.js'),'run','-s',path.join(ROOT,'dist-firefox'),'-t','firefox-desktop','-f','/usr/bin/firefox','--no-reload','--no-input','--start-url',url,'--args=-headless'];
+    // web-ext is fetched on demand; it is too heavy to be a dev dependency for one profiler.
+    command='npx';args=['--yes','web-ext@10','run','-s',path.join(ROOT,'dist-firefox'),'-t','firefox-desktop','-f','/usr/bin/firefox','--no-reload','--no-input','--start-url',url,'--args=-headless'];
   } else { command='/usr/bin/firefox';args=['--headless','--profile',profile,url]; }
   const child=spawn(command,args,{stdio:['ignore','ignore','pipe']});let error='';child.stderr.on('data',data=>error+=data);
   const result=await Promise.race([new Promise(resolve=>waiters.set(`${browser}:${extension}`,resolve)),delay(30000).then(()=>{throw new Error(`${browser} ${extension?'extension':'baseline'} timeout: ${error.slice(-500)}`)})]);

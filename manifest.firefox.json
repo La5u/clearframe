@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ClearFrame",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Highlights authorial choices with neutral alternatives.",
   "permissions": ["storage"],
   "host_permissions": ["<all_urls>"],
@@ -13,7 +13,7 @@
     "matches": ["<all_urls>"],
     "js": ["content.js"],
     "css": ["content.css"],
-    "run_at": "document_idle"
+    "run_at": "document_start"
   }],
   "action": {
     "default_popup": "popup.html",

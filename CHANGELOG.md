@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1
+
+- Highlights appear while the page is still loading instead of after it
+  finishes parsing. On slow pages such as the Daily Mail this is seconds sooner.
+
 ## 1.2.0
 
 ### Learn the names of the techniques

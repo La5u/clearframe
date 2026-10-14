@@ -107,7 +107,7 @@ async function bundle(entryPoint, globals) {
     },
     legalComments: 'none',
     treeShaking: true,
-    minify: true,
+    minify: process.env.CLEARFRAME_NO_MINIFY !== "1",
     write: false,
   });
 

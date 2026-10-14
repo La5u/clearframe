@@ -868,18 +868,25 @@ function scheduleMutationAnalysis(mutations) {
 
 function init() {
   loadSettings(DEFAULT_SETTINGS);
+  let settingsLoaded = false, started = false;
+  // Runs at document_start: analyze as soon as <body> exists, then follow the
+  // parser through the page observer instead of waiting for DOMContentLoaded.
   const start = () => {
+    if (started || !settingsLoaded || !document.body) return;
+    started = true; bodyWatcher.disconnect();
     pageObserver = new MutationObserver(mutations => {
       scheduleMutationAnalysis(mutations);
     });
     analyzePage();
   };
-  if (document.body) start();
-  else document.addEventListener('DOMContentLoaded', start, { once: true });
+  const bodyWatcher = new MutationObserver(start);
+  bodyWatcher.observe(document, { childList: true, subtree: true });
   chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ result) => {
-    if (getSettingsKey(settings) === getSettingsKey(normalizeSettings(result.settings, result.userTypeColors))) return;
-    loadSettings(result.settings, result.userTypeColors);
-    if (document.body) analyzePage();
+    const changed = getSettingsKey(settings) !== getSettingsKey(normalizeSettings(result.settings, result.userTypeColors));
+    if (changed) loadSettings(result.settings, result.userTypeColors);
+    settingsLoaded = true;
+    if (!started) start();
+    else if (changed) analyzePage();
   });
   document.addEventListener('mousemove', handleHoverMove, { capture: true, passive: true });
   document.addEventListener('click', handleTooltipClick, true);

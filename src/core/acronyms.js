@@ -21,4 +21,8 @@ export const ALL_CAPS_ACRONYMS = new Set([
   'SCOTUS',
   'POTUS',
   'FLOTUS',
+  // Brand names written in capitals.
+  'DIRECTV',
+  'INDYCAR',
+  'OLIPOP',
 ]);

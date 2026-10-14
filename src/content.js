@@ -12,15 +12,18 @@ import { shouldKeepLexicalMatch } from './core/context-filter.js';
 const { index, types: TYPE_MAP, categories: TYPE_CATEGORIES, labels: LABELS, colors, underlines, intensity } = ClearFrame;
 const SKIP_TAGS_SELECTOR = 'script,style,noscript,textarea,input,code,pre,kbd,samp';
 const MEDIA_UI_SELECTOR = '.ytp-caption-window-container,.ytp-caption-segment,.caption-window,.vjs-text-track-display,.jw-captions,.jw-text-track-display,.plyr__captions,.ytp-chrome-controls,.vjs-control-bar,.jw-controlbar,.plyr__controls,[data-testid=video-subtitles]';
+// Captions, photo credits, and section labels set in capitals by design.
+const CAPS_LABEL_SELECTOR = 'figcaption,[class*=caption],[class*=credit],[class*=kicker],[class*=eyebrow],[class*=badge],[class*=label]';
 const PROTECTED_TEXT_SELECTOR = 'ytd-transcript-segment-renderer,ytd-transcript-segment-list-renderer,.ytd-transcript-segment-renderer,yt-live-chat-app,yt-live-chat-renderer,[aria-live=polite],[aria-live=assertive],[role=status],[role=alert]';
 const SKIP_SELECTOR = `nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true],#cf-tooltip,#cf-suggestion,${MEDIA_UI_SELECTOR}`;
 const HIGHLIGHT_PREFIX = 'clearframe-';
 const ALL_CAPS_HIGHLIGHT_NAME = 'clearframe-all-caps-underline';
 const SELECTED_HIGHLIGHT_NAME = 'clearframe-selected';
-const TYPE_HIGHLIGHT_NAMES = Object.keys(TYPE_MAP).flatMap(type => [false, true].flatMap(low => [getHighlightName(type, 'highlight', low), getHighlightName(type, 'underline', low)]));
-// Terms below high confidence render fainter, so a reader can weigh them less.
-const LOW_CONFIDENCE_ALPHA = 0.5;
-const LOW_SUFFIX = '-low';
+// Terms below high confidence render fainter, so a reader can weigh them
+// less: medium (e.g. "alleged") at 75%, contextual and exploratory at 50%.
+const MONOCHROME_RGB = '140, 140, 140';
+const STRENGTHS = { high: { suffix: '', alpha: 1 }, medium: { suffix: '-medium', alpha: 0.75 }, low: { suffix: '-low', alpha: 0.5 } };
+const TYPE_HIGHLIGHT_NAMES = Object.keys(TYPE_MAP).flatMap(type => Object.keys(STRENGTHS).flatMap(strength => [getHighlightName(type, 'highlight', strength), getHighlightName(type, 'underline', strength)]));
 const SUPPORTS_HIGHLIGHTS = !!(globalThis.Highlight && globalThis.CSS?.highlights);
 const COLOR_RGB = colors;
 const UNDERLINE_RGB = underlines;
@@ -47,6 +50,9 @@ let pinnedTooltipRecord = null;
 let hoverReveal = null;
 let hoverFrame = 0;
 let pendingHoverEvent = null;
+let hoverSwitchTimer = 0;
+let hoverSwitchRecord = null;
+const lastPointer = { x: 0, y: 0 };
 let pageObserver = null;
 let analysisTimer = 0;
 const pendingMutationNodes = new Set();
@@ -112,12 +118,18 @@ function getMostImportantType(terms) {
   return best;
 }
 
-function getHighlightName(type, mode = 'highlight', low = false) {
-  return HIGHLIGHT_PREFIX + String(type).replace(/[^a-z0-9-]/gi, '-') + (low ? '-low' : '') + (mode === 'underline' ? '-underline' : '');
+function getHighlightName(type, mode = 'highlight', strength = 'high') {
+  return HIGHLIGHT_PREFIX + String(type).replace(/[^a-z0-9-]/gi, '-') + STRENGTHS[strength].suffix + (mode === 'underline' ? '-underline' : '');
 }
 
-function isLowConfidence(terms) {
-  return terms.length > 0 && terms.every(term => (term.confidence || 'high') !== 'high');
+function getStrength(confidence = 'high') {
+  return confidence === 'high' || confidence === 'medium' ? confidence : 'low';
+}
+
+// Overlapping terms draw at the strength of the most confident one.
+function getEntryStrength(terms) {
+  const strengths = terms.map(term => getStrength(term.confidence));
+  return strengths.includes('high') ? 'high' : strengths.includes('medium') ? 'medium' : 'low';
 }
 
 function getTermById(id) {
@@ -173,17 +185,17 @@ function getTermsForMatch(match) {
 
 function getHighlightNameForEntry(term, action, terms) {
   if (action === 'removed') return null;
-  const low = isLowConfidence(terms.length ? terms : [term]);
-  if (terms.length > 1) return getHighlightName(getMostImportantType(terms), 'highlight', low);
-  if (action === 'highlighted') return getHighlightName(term.type, 'highlight', low);
-  return term.phrase === ALL_CAPS_TERM.phrase ? ALL_CAPS_HIGHLIGHT_NAME : getHighlightName(term.type, 'underline', low);
+  const strength = getEntryStrength(terms.length ? terms : [term]);
+  if (terms.length > 1) return getHighlightName(getMostImportantType(terms), 'highlight', strength);
+  if (action === 'highlighted') return getHighlightName(term.type, 'highlight', strength);
+  return term.phrase === ALL_CAPS_TERM.phrase ? ALL_CAPS_HIGHLIGHT_NAME : getHighlightName(term.type, 'underline', strength);
 }
 
 function processText(text, context = {}) {
   const matches = findMatches(matcher, text, index.termsById, index.regexTerms || [],
     term => isEnabled(term.type),
     (termId, start, end) => shouldKeepLexicalMatch(getTermById(termId), text.slice(start, end), text, context, start));
-  const allCaps = isEnabled(ALL_CAPS_TERM.type) ? findAllCapsMatches(text) : [];
+  const allCaps = isEnabled(ALL_CAPS_TERM.type) && !context.capsLabel ? findAllCapsMatches(text) : [];
   const contextual = findContextualMatches(text, context).filter(match => isEnabled(getTermById(match.termId)?.type));
   const combined = resolveMatchGroups([...matches, ...allCaps, ...contextual]);
   let cursor = 0, displayText = '';
@@ -253,7 +265,8 @@ function processTextNode(node) {
   const conversational = !!parent?.closest('shreddit-comment,[data-testid*=comment],ytd-comment-thread-renderer,ytd-comments,#comments');
   const headline = isLikelyHeadline(parent, originalText);
   const preserveText = !!parent?.closest(PROTECTED_TEXT_SELECTOR);
-  const plan = processText(originalText, { headline, conversational, preserveText, pageContext: PAGE_CONTEXT });
+  const capsLabel = !!parent?.closest(CAPS_LABEL_SELECTOR);
+  const plan = processText(originalText, { headline, conversational, preserveText, capsLabel, pageContext: PAGE_CONTEXT });
   const displayedNodeText = plan.displayText;
   if (displayedNodeText !== originalText) node.nodeValue = displayedNodeText;
 
@@ -296,12 +309,15 @@ function buildHighlightRule(name) {
   if (name === ALL_CAPS_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(125,211,252,.42);text-decoration-thickness:.75px;text-underline-offset:2px}`;
   const underline = name.endsWith('-underline');
   const base = name.slice(HIGHLIGHT_PREFIX.length, underline ? -'-underline'.length : undefined);
-  const low = base.endsWith(LOW_SUFFIX);
-  const typeName = low ? base.slice(0, -LOW_SUFFIX.length) : base;
+  const strength = Object.values(STRENGTHS).find(item => item.suffix && base.endsWith(item.suffix)) || STRENGTHS.high;
+  const typeName = strength.suffix ? base.slice(0, -strength.suffix.length) : base;
   const color = getColor(typeName);
-  const rgb = (underline ? UNDERLINE_RGB : COLOR_RGB)[color] || (underline ? UNDERLINE_RGB.gray : COLOR_RGB.gray);
+  // Monochrome uses a darker grey than the colour palette's grey group, so
+  // the fainter confidence levels stay visible on white pages.
+  const rgb = settings.monochrome && !underline ? MONOCHROME_RGB
+    : (underline ? UNDERLINE_RGB : COLOR_RGB)[color] || (underline ? UNDERLINE_RGB.gray : COLOR_RGB.gray);
   const intensity = TYPE_INTENSITY[typeName] ?? 0.65;
-  const alpha = (Math.max(0.08, Math.min(underline ? 0.84 : 0.32, (underline ? 0.84 : 0.32) * intensity)) * (low ? LOW_CONFIDENCE_ALPHA : 1)).toFixed(3);
+  const alpha = (Math.max(0.08, Math.min(underline ? 0.84 : 0.32, (underline ? 0.84 : 0.32) * intensity)) * strength.alpha).toFixed(3);
   return underline
     ? `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(${rgb},${alpha});text-decoration-thickness:1px;text-underline-offset:1px}`
     : `::highlight(${name}){background-color:rgba(${rgb},${alpha})}`;
@@ -492,8 +508,13 @@ function isPointTowardTooltip(x, y) {
     && y >= Math.min(tip.top, word.top) - 2 && y <= Math.max(tip.bottom, word.bottom) + 2;
 }
 
+function cancelHoverSwitch() {
+  clearTimeout(hoverSwitchTimer); hoverSwitchTimer = 0; hoverSwitchRecord = null;
+}
+
 function hideTooltip(force = false) {
   if (pinnedTooltipRecord && !force) return;
+  cancelHoverSwitch();
   if (force) pinnedTooltipRecord = null;
   restoreHoverReveal(); activeHover = null;
   const tooltip = document.getElementById('cf-tooltip');
@@ -548,7 +569,7 @@ function showTooltip(record, x, y) {
     const name = document.createElement('span'); name.className = 'cf-term-name'; name.textContent = label.term;
     line.appendChild(name);
     if (term.confidence && term.confidence !== 'high') {
-      const confidence = document.createElement('span'); confidence.className = 'cf-confidence'; confidence.textContent = ' · lower confidence';
+      const confidence = document.createElement('span'); confidence.className = 'cf-confidence'; confidence.textContent = ` · ${getStrength(term.confidence) === 'medium' ? 'medium' : 'low'} confidence`;
       line.appendChild(confidence);
     }
     const info = document.createElement('span'); info.className = 'cf-info'; info.textContent = 'i';
@@ -577,7 +598,11 @@ function showTooltip(record, x, y) {
   const anchorTop = Number.isFinite(rect.top) && rect.height > 0 ? rect.top : y;
   const anchorBottom = Number.isFinite(rect.bottom) && rect.height > 0 ? rect.bottom : y;
   const left = Math.min(Math.max(8, anchorLeft), Math.max(8, window.innerWidth - tooltip.offsetWidth - 8));
-  const above = anchorTop - tooltip.offsetHeight - 8;
+  // Measure with the plain explanations open, so an opened (i) still fits.
+  tooltip.classList.add('cf-measure');
+  const fullHeight = tooltip.offsetHeight;
+  tooltip.classList.remove('cf-measure');
+  const above = anchorTop - fullHeight - 8;
   tooltip.style.left = `${left}px`;
   // Anchor by the bottom edge when above the word, so opening the plain
   // explanation grows the tooltip upward instead of over the word. The
@@ -588,7 +613,7 @@ function showTooltip(record, x, y) {
     tooltip.style.bottom = `${window.innerHeight - anchorTop + 8}px`;
   } else {
     tooltip.style.bottom = 'auto';
-    tooltip.style.top = `${Math.min(anchorBottom + 8, Math.max(8, window.innerHeight - tooltip.offsetHeight - 8))}px`;
+    tooltip.style.top = `${Math.min(anchorBottom + 8, Math.max(8, window.innerHeight - fullHeight - 8))}px`;
   }
 }
 
@@ -614,10 +639,16 @@ function findRecordAtPoint(x, y) {
   const direct = findRecordAtCaret(position, x, y) || findRecordAtCaret(range, x, y);
   if (direct) return direct;
 
-  // Some sites place non-text descendants over the visible text. Check nearby
-  // text nodes without scanning every match on the page.
-  let element = document.elementFromPoint(x, y);
-  for (let depth = 0; element && depth < 5; depth++, element = element.parentElement) {
+  // Some sites place non-text descendants or a full-card link over the
+  // visible text. Check the hit element's ancestors and the elements stacked
+  // beneath it, without scanning every match on the page.
+  const stack = document.elementsFromPoint(x, y);
+  // Over ClearFrame's own tooltip, the text beneath it is not being pointed at.
+  if (stack[0]?.closest('#cf-tooltip,#cf-suggestion')) return null;
+  const candidates = new Set();
+  for (let element = /** @type {Element | null} */ (stack[0] || null), depth = 0; element && depth < 5; depth++, element = element.parentElement) candidates.add(element);
+  for (const element of stack.slice(1, 8)) candidates.add(element);
+  for (const element of candidates) {
     for (const node of element.childNodes) {
       if (!(node instanceof Text)) continue;
       for (const record of nodeResults.get(node)?.records || []) {
@@ -635,13 +666,29 @@ function processHoverMove(event) {
     return;
   }
   if (pinnedTooltipRecord || !nodeResults.size) return;
-  const record = findRecordAtPoint(event.clientX, event.clientY);
+  const x = event.clientX, y = event.clientY;
+  lastPointer.x = x; lastPointer.y = y;
+  const record = findRecordAtPoint(x, y);
+  if (record !== hoverSwitchRecord) cancelHoverSwitch();
   if (!record) {
-    if (activeHover && !isPointInsideHoverReveal(event.clientX, event.clientY) && !isPointTowardTooltip(event.clientX, event.clientY)) hideTooltip();
+    if (activeHover && !isPointInsideHoverReveal(x, y) && !isPointTowardTooltip(x, y)) hideTooltip();
     return;
   }
   if (activeHover === record) return;
-  restoreHoverReveal(); activeHover = record; showTooltip(record, event.clientX, event.clientY);
+  // On the way to the open tooltip's (i), the pointer may cross other
+  // highlighted words; only switch if it rests on one.
+  if (activeHover && isPointTowardTooltip(x, y)) {
+    if (hoverSwitchRecord === record) return;
+    hoverSwitchRecord = record;
+    hoverSwitchTimer = window.setTimeout(() => {
+      hoverSwitchTimer = 0; hoverSwitchRecord = null;
+      if (!pinnedTooltipRecord && activeHover !== record && findRecordAtPoint(lastPointer.x, lastPointer.y) === record) {
+        restoreHoverReveal(); activeHover = record; showTooltip(record, lastPointer.x, lastPointer.y);
+      }
+    }, 200);
+    return;
+  }
+  restoreHoverReveal(); activeHover = record; showTooltip(record, x, y);
 }
 
 function handleHoverMove(event) {

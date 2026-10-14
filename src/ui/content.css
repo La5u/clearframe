@@ -32,6 +32,7 @@
 #cf-tooltip .cf-term { display: flex; flex-direction: column; }
 #cf-tooltip .cf-plain { display: none; margin-top: 3px; font-size: 13px; }
 #cf-tooltip.cf-above .cf-plain { order: -1; margin: 0 0 3px; }
+#cf-tooltip.cf-measure .cf-plain,
 #cf-tooltip .cf-term:has(.cf-info:hover) .cf-plain,
 #cf-tooltip .cf-term:has(.cf-info:focus) .cf-plain { display: block; }
 #cf-tooltip .cf-feedback-actions {

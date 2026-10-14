@@ -63,7 +63,7 @@ exclusive,clickbait,,,adjective,,true,headline
 - `regex`: custom pattern for context-sensitive matches
 - `remove`: mark term for deletion in remove-mode
 - `contexts`: optional pipe-separated allowlist such as `headline` or `evaluative`; there is no second exclusion list
-- `confidence`: optional `medium|contextual|exploratory`; below `high` is drawn at half strength
+- `confidence`: optional `medium|contextual|exploratory`; drawn at 75% (`medium`) or 50% strength
 - `colloquialism` rules default to publication pages, so ordinary Reddit and YouTube language is not flagged
 - Every normalized phrase must be unique across all types (enforced at build)
 - Politically one-sided terms need a mirror term; see `TERMS.md` and `data/mirror-pairs.json`

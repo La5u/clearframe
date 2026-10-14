@@ -31,11 +31,11 @@ const COLLECT = `(() => {
   for (const [name, highlight] of CSS.highlights || []) {
     if (!name.startsWith('clearframe-') || name === 'clearframe-selected') continue;
     const base = name.replace(/^clearframe-/, '').replace(/-underline$/, '');
-    const low = base.endsWith('-low'), type = low ? base.slice(0, -4) : base;
+    const strength = base.match(/-(medium|low)$/)?.[1] || 'high', type = base.replace(/-(?:medium|low)$/, '');
     for (const range of highlight) {
       const node = range.startContainer, text = node.nodeValue || '';
       const parent = node.parentElement;
-      out.push({ type, low, match: range.toString(), context: text.slice(Math.max(0, range.startOffset - 90), range.endOffset + 90).replace(/\\s+/g, ' ').trim(),
+      out.push({ type, strength, match: range.toString(), context: text.slice(Math.max(0, range.startOffset - 90), range.endOffset + 90).replace(/\\s+/g, ' ').trim(),
         headline: !!parent?.closest('h1,h2,h3,h4,[class*=headline],[class*=title]'), link: !!parent?.closest('a') });
     }
   }

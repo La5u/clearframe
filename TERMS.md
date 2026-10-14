@@ -42,7 +42,8 @@ if a type is missing.
 
 An optional `confidence` column (`high`, `medium`, `contextual`, `exploratory`;
 blank means `high`) marks terms that are often fine in news writing, such as
-`alleged` or `probe`. Anything below `high` is drawn at half strength and the
+`alleged` or `probe`. `medium` is drawn at 75% strength (`alleged`),
+`contextual` and `exploratory` at 50% (`probe`, `warning`, idioms), and the
 tooltip names the level.
 
 ## Mirror rule

@@ -38,9 +38,22 @@ export class Cdp {
   close() { this.ws.close(); }
 }
 
+async function connect(port) {
+  const target = (await fetch(`http://127.0.0.1:${port}/json/list`).then(response => response.json())).find(item => item.type === 'page');
+  if (!target) throw new Error('Chromium page target not found');
+  const cdp = new Cdp(target.webSocketDebuggerUrl);
+  await cdp.send('Page.enable'); await cdp.send('Runtime.enable');
+  return cdp;
+}
+
 // Start Chromium with dist/ loaded and connect to its first page. Always call
-// close(), which also removes the temporary profile.
+// close(), which also removes the temporary profile. Set CLEARFRAME_CDP_PORT
+// to attach to a browser you started yourself (e.g. a visible window) instead.
 export async function launchExtensionBrowser({ windowSize } = {}) {
+  if (process.env.CLEARFRAME_CDP_PORT) {
+    const cdp = await connect(process.env.CLEARFRAME_CDP_PORT);
+    return { cdp, close: async () => cdp.close() };
+  }
   const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'clearframe-chromium-'));
   const browser = spawn(process.env.CHROMIUM_PATH || '/usr/bin/chromium', [
     '--headless=new', '--no-sandbox', '--disable-gpu', '--no-first-run', ...(windowSize ? [`--window-size=${windowSize}`] : []),
@@ -62,10 +75,7 @@ export async function launchExtensionBrowser({ windowSize } = {}) {
     for (let i = 0; i < 100 && !fs.existsSync(portFile); i++) await delay(100);
     if (!fs.existsSync(portFile)) throw new Error(`Chromium did not start: ${stderr}`);
     const [port] = fs.readFileSync(portFile, 'utf8').trim().split(/\r?\n/);
-    const target = (await fetch(`http://127.0.0.1:${port}/json/list`).then(response => response.json())).find(item => item.type === 'page');
-    if (!target) throw new Error('Chromium page target not found');
-    cdp = new Cdp(target.webSocketDebuggerUrl);
-    await cdp.send('Page.enable'); await cdp.send('Runtime.enable');
+    cdp = await connect(port);
     return { cdp, close };
   } catch (error) {
     await close();

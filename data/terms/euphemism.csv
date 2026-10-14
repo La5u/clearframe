@@ -1,5 +1,5 @@
 phrase,type,neutral,aliases,stemmable,regex,remove,contexts,confidence
-probe,euphemism,,,,,,publication,medium
+probe,euphemism,,,,,,publication,contextual
 enhanced interrogation,euphemism,torture,,,,
 collateral damage,euphemism,civilian harm,,,,
 non-consensual encounter,euphemism,assault,,,,

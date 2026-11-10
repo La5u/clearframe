@@ -48,10 +48,21 @@ Color-coded categories track types of manipulation:
 - **purple** urgency & fear: fear
 - **blue** softening & agency hiding: euphemism, passive
 - **brown** dysphemism: dysphemism
-- **teal** style & voice: colloquialism, idiom, repetition, rhetorical-question
+- **teal** style & voice: colloquialism, idiom, repetition, rhetorical-question, anaphora, tricolon
+- **indigo** address & obligation: imperative, direct-address, inclusive-pronoun, modality
 - **slate** quotes: quote
 
 Disabled by default: `absolute`, `exaggeration`, `superlative`, `quote`.
+
+The address and structure devices are mostly common words, so they are kept
+quiet. Word lists (`data/terms/{imperative,direct-address,inclusive-pronoun,modality}.csv`)
+are found in the same pass as every other phrase; `data/terms/exceptions.json`
+limits them to publication pages, skips comments and quoted speech, and shows
+them at the default level only in headlines (body text, and every inclusive
+pronoun, appear at "Everything"). `tricolon` and `anaphora` are structural
+detectors in `src/core/rhetoric.js`; their cheap pre-checks reject nearly every
+text node, and neither takes a span an older type already marks. All six are
+highlight-only: reword and remove modes leave them alone.
 
 ## Data Model
 

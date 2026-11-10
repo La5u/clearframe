@@ -8,7 +8,7 @@ import { matchReplacementCase } from './display-utils.js';
 import { pluralizeWord, pastTenseWord, ingWord, adverbWord, inflectPhrase } from './stemmer.js';
 import { chooseAction, chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from './match-plan.js';
 import { ALL_CAPS_TERM_ID, findAllCapsMatches, restoreAllCapsCase } from './all-caps.js';
-import { CONTEXTUAL_TERMS, findContextualMatches } from './contextual.js';
+import { CONTEXTUAL_TERMS, QUOTED_WORDING_ID, findContextualMatches } from './contextual.js';
 import { createLexicalFilter } from './context-filter.js';
 
 export const HIGHLIGHT_PREFIX = 'clearframe-';
@@ -16,7 +16,11 @@ export const ALL_CAPS_HIGHLIGHT_NAME = 'clearframe-all-caps-underline';
 // Terms below high confidence render fainter, so a reader can weigh them
 // less: medium (e.g. "alleged") at 75%, contextual and exploratory at 50%.
 export const STRENGTHS = { high: { suffix: '', alpha: 1 }, medium: { suffix: '-medium', alpha: 0.75 }, low: { suffix: '-low', alpha: 0.5 } };
-const TYPE_PRIORITY = ['derogatory', 'aggression', 'fear', 'loaded', 'moral', 'dysphemism', 'clickbait', 'loaded-framing', 'unsourced', 'euphemism', 'passive', 'negative-framing', 'conflict', 'exaggeration', 'superlative', 'hype', 'authority', 'uncertainty', 'distancing', 'minimizing', 'all-caps', 'absolute', 'repetition', 'rhetorical-question', 'colloquialism', 'idiom', 'reveal', 'quote'];
+const TYPE_PRIORITY = ['derogatory', 'aggression', 'fear', 'loaded', 'moral', 'dysphemism', 'clickbait', 'loaded-framing', 'unsourced', 'euphemism', 'passive', 'negative-framing', 'conflict', 'exaggeration', 'superlative', 'hype', 'authority', 'uncertainty', 'distancing', 'minimizing', 'all-caps', 'absolute', 'repetition', 'rhetorical-question', 'colloquialism', 'idiom', 'reveal', 'anaphora', 'tricolon', 'imperative', 'modality', 'direct-address', 'inclusive-pronoun', 'quote'];
+// Pronoun, modal and imperative words are matched in the trie; a structural
+// match (tricolon, anaphora) never takes over a span an older type already marks.
+const NEW_STRUCTURAL = new Set(['anaphora', 'tricolon']);
+const WORD_DEVICE_TYPES = new Set(['imperative', 'modality', 'direct-address', 'inclusive-pronoun']);
 const ALL_CAPS_TERM = { phrase: 'caps emphasis', type: 'all-caps', neutral: 'Caps normalized.' };
 
 function getTypeRank(type) {
@@ -143,7 +147,8 @@ export function createAnalyzer({ index }) {
 
   const isEnabled = (settings, type) => settings.types?.[type] !== false;
   // A term is used when its type is on and its strength passes the sensitivity.
-  const isUsed = (settings, term) => isEnabled(settings, term.type) && (SENSITIVITY_STRENGTHS[settings.sensitivity]?.includes(getStrength(term.confidence)) ?? true);
+  const isShown = (settings, confidence) => SENSITIVITY_STRENGTHS[settings.sensitivity]?.includes(getStrength(confidence)) ?? true;
+  const isUsed = (settings, term) => isEnabled(settings, term.type) && isShown(settings, term.confidence);
 
   function getTermById(id) {
     const term = index.termsById[id];
@@ -151,8 +156,11 @@ export function createAnalyzer({ index }) {
     return term || CONTEXTUAL_TERMS[id] || (id === ALL_CAPS_TERM_ID ? ALL_CAPS_TERM : null);
   }
 
+  // A match can carry a confidence of its own (see getConfidenceIn); it only
+  // applies when it is the match's one term.
   function getTermsForMatch(match) {
-    return (match.termIds || [match.termId]).map(getTermById).filter(Boolean);
+    const terms = (match.termIds || [match.termId]).map(getTermById).filter(Boolean);
+    return match.confidence && terms.length === 1 ? [{ ...terms[0], confidence: match.confidence }] : terms;
   }
 
   // Phrase and pattern rules only, after rule exceptions, without overlap
@@ -162,9 +170,17 @@ export function createAnalyzer({ index }) {
       matcher = buildMatcher(index, term => isUsed(settings, term));
       matcherSettings = settings;
     }
-    return findMatches(matcher, text, index.termsById, index.regexTerms || [],
+    const matches = findMatches(matcher, text, index.termsById, index.regexTerms || [],
       term => isUsed(settings, term),
-      (termId, start, end) => shouldKeepLexicalMatch(getTermById(termId), text.slice(start, end), text, context, start));
+      (termId, start, end) => {
+        const term = getTermById(termId);
+        return isShown(settings, shouldKeepLexicalMatch.getConfidenceIn(term, context.headline)) && shouldKeepLexicalMatch(term, text.slice(start, end), text, context, start);
+      });
+    for (const match of /** @type {any[]} */ (matches)) {
+      const term = getTermById(match.termId), confidence = shouldKeepLexicalMatch.getConfidenceIn(term, context.headline);
+      if (confidence !== (term.confidence || 'high')) match.confidence = confidence;
+    }
+    return matches;
   }
 
   /**
@@ -176,10 +192,15 @@ export function createAnalyzer({ index }) {
    */
   function analyze(text, context = {}, settings) {
     if (settings.headlinesOnly && !context.headline) return { displayText: text, entries: [] };
-    const matches = findLexicalMatches(text, context, settings);
     const allCaps = isUsed(settings, ALL_CAPS_TERM) && !context.capsLabel ? findAllCapsMatches(text) : [];
     const contextual = findContextualMatches(text, context).filter(match => isUsed(settings, getTermById(match.termId) || {}));
-    const combined = resolveMatchGroups([...matches, ...allCaps, ...contextual]);
+    // Pronoun, modal and imperative words inside a marked scare quote are the quote's, not a device of their own.
+    const quotes = contextual.filter(match => match.termId === QUOTED_WORDING_ID);
+    const overlaps = (a, b) => a.start < b.end && b.start < a.end;
+    const matches = findLexicalMatches(text, context, settings).filter(match => !quotes.some(quote => WORD_DEVICE_TYPES.has(getTermById(match.termId).type) && overlaps(quote, match)));
+    const patterns = contextual.filter(match => !NEW_STRUCTURAL.has(getTermById(match.termId).type)
+      || ![...matches, ...allCaps].some(other => overlaps(other, match) && !WORD_DEVICE_TYPES.has(getTermById(other.termId)?.type)));
+    const combined = resolveMatchGroups([...matches, ...allCaps, ...patterns]);
     let cursor = 0, displayText = '';
     const entries = [];
     const termAction = term => chooseAction(term, settings, context.preserveText === true);

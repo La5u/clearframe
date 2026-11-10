@@ -8,6 +8,7 @@
 //   npm run evaluate:gold -- --top=30  longer error lists
 //   npm run evaluate:gold -- --with-candidates[=medium|high]  dry run: also use unapproved candidate rules
 //                                    (in memory only) at that confidence or better; default medium (= high + medium)
+//   npm run evaluate:gold -- --exclude=modality,tricolon   score without detections of these types
 import fs from 'fs';
 import path from 'path';
 import { loadTerms } from '../src/core/term-utils.js';
@@ -20,6 +21,7 @@ const inputs = process.argv.slice(2).filter(arg => !arg.startsWith('--'));
 const TYPES = Object.keys(JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'type-labels.json'), 'utf8')).types);
 const allTypes = process.argv.includes('--all');
 const sensitivity = process.argv.find(arg => arg.startsWith('--sensitivity='))?.slice(14);
+const excluded = (process.argv.find(arg => arg.startsWith('--exclude='))?.slice(10) || '').split(',').filter(Boolean);
 const TOP = Number(process.argv.find(arg => arg.startsWith('--top='))?.slice(6)) || 10;
 
 const withCandidates = process.argv.find(arg => arg.startsWith('--with-candidates'))?.split('=')[1] || (process.argv.includes('--with-candidates') ? 'medium' : '');
@@ -28,6 +30,7 @@ const index = loadTerms(path.join(ROOT, 'data', 'terms'), [...approvedRuleTerms(
 for (const record of candidates) if (record.exception) index.exceptions.terms[record.phrase] = record.exception.unless;
 const settings = normalizeSettings({ ...(allTypes ? { types: Object.fromEntries(TYPES.map(type => [type, true])) } : DEFAULT_SETTINGS), ...(sensitivity && { sensitivity }) });
 if (sensitivity && settings.sensitivity !== sensitivity) throw new Error(`unknown --sensitivity=${sensitivity}`);
+for (const type of excluded) if (!TYPES.includes(type)) throw new Error(`unknown --exclude type ${type}`);
 const isEnabled = type => settings.types?.[type] !== false;
 const { analyze } = createAnalyzer({ index });
 
@@ -36,7 +39,7 @@ function detect(text, context) {
   return analyze(text, context, settings).entries.map(({ start, end, terms }) => {
     const types = terms.map(term => term.type);
     return { start, end, type: getMostImportantType(terms), types, rule: terms.map(term => term.phrase).join(' + ') };
-  });
+  }).filter(entry => !excluded.includes(entry.type));
 }
 
 const files = (inputs.length ? inputs : [path.join(ROOT, 'tests', 'gold')]).flatMap(input => fs.statSync(input).isDirectory()

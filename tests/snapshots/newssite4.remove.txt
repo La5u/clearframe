@@ -1,10 +1,11 @@
-# newssite4.html mode=remove highlights=168
+# newssite4.html mode=remove highlights=218
 all-caps | The video we've [ALL] been waiting for: Moment wedd
 conflict | Moment wedding is thrown into [chaos] after sister-in-law chucked b
 reveal | wis Hamilton... and the 'open [secret] in the industry' the 'couple'
 negative-framing-medium | he industry' the 'couple' are [desperate] to hide
 negative-framing-medium | lton and 'open secret they're [desperate] to hide'
 aggression-medium | [Fury] at 'schoolyard bully' Trump t
+modality-medium | as MPs say King's State Visit [should] be called off
 clickbait | im back… but he's delivered a [devastating] blow
 dysphemism | Gladiators star Giant '[axed]' from BBC show
 dysphemism | Gladiators star Giant '[axed]' from BBC show
@@ -16,25 +17,40 @@ fear-medium | Healthy but [heartbroken] British mother Wendy Duffy di
 clickbait | hs in December 2025 were 'too [devastating] to comprehend.'
 reveal | I kept my £15,000 debt a [secret] for nine years until one day
 clickbait-medium | day it all came spilling out. [Here's how] I dug myself out - and four s
+direct-address-medium | g myself out - and four signs [your] loved one may be in trouble
 clickbait-medium | ebt a secret for nine years - [here's how] I got out
 reveal | sts today following a week of [secret] auditions' - after Tess Daly
 authority | trictly Come Dancing 'today', [according to] new reports.
+direct-address-medium | supplement that turbo-charges [your] Mounjaro AND reduces your cho
+direct-address-medium | ges your Mounjaro AND reduces [your] cholesterol: Most patients wo
+modality-medium | s disclose why anyone on jabs [must] take it - and how it can stop
+direct-address-medium | take it - and how it can stop [you] putting weight back on
+direct-address-medium | to get my clothes off, aren't [you]?' Catrina thought they had a
 hype | at blind date… but here's the [surprising] reason 'fussy' James wasn't i
 fear-medium | public life after humiliating [heartbreak], breaks cover at Barcelona Br
 uncertainty | nch-Greek aristocrat, 41, who [reportedly] splits her time between a sma
+direct-address-medium | Brace [yourself] for a super El Niño: Likeliho
 clickbait | im back… but he's delivered a [devastating] blow
+direct-address-medium | n't-miss streaming deal - but [you'll] need to act fast to unlock it
+modality-medium | s streaming deal - but you'll [need to] act fast to unlock its large
 hype | mattress brand Simba unveils [game-changing] bedding for every type of sle
 hype | shareSimba unveils [game-changing] bedding for every type of sle
 hype-medium | The liquid formula hailed as '[flawless]' and 'better than luxury bran
 reveal | Victoria Beckham's [secret] for glowy skin is the star in
+direct-address-medium | The seven subtle signs [your] marriage is over, long before
 aggression-medium | Paris [Fury] says Molly-Mae Hague would ha
 aggression-medium | Paris [Fury] has set the record straight o
 idiom-medium | Paris Fury has [set the record straight] on why Molly-Mae Hague didn't
 aggression-medium | share Paris [Fury] explains why Molly-Mae Hague
+direct-address-medium | Do [YOU] have middle-class kitchen reg
 fear-medium | 71 shares [Panicking] Labour MPs push Starmer to 'a
 hype | of 'IVF mix-up' baby disclose [breakthrough] in search for their 'missing
+direct-address-medium | Do [YOU] clean your mattress regularly
+direct-address-medium | Do YOU clean [your] mattress regularly? It could
+direct-address-medium | ularly? It could be affecting [your] sleep - try these expert-appr
 negative-framing | and strikes to cut Britain's [bloated] welfare bill
 negative-framing | kes and even riots to cut the [bloated] benefits bill.
+direct-address-medium | o Gaviscon, what to take when [you're] struggling with painful acid
 loaded | imum term of 14 years for the [vicious] sex attack on a woman in her
 aggression | Navy cover hours before Iran [slammed] waterway shut again
 distancing-medium | ment a former beauty queen is [allegedly] shot in front of her baby by
@@ -44,6 +60,7 @@ fear-medium | 432 shareToo [heartbroken] to carry on: Mother to take h
 fear-medium | hen her mother disclosed this [harrowing] secret 20 years later that ma
 reveal | ther disclosed this harrowing [secret] 20 years later that made the
 negative-framing-medium | eard her mother Josephine was [desperately] ill, she knocked on her door
+direct-address-medium | when perimenopause sabotages [your] metabolism: I'm a PT but when
 negative-framing-medium | 125 share[Tragic] life of woman who accused Che
 clickbait-medium | st as much as the weight had. [Here's how] to banish it
 hype | ously being spotted wearing a [dazzling] diamond ring. On her outing s
@@ -53,18 +70,29 @@ derogatory | cientists have come up with a [radical] proposal to help prevent a 
 authority | Gulf Stream from collapsing, [experts say]
 dysphemism | Airline boss who [axed] London-LA flights says more c
 dysphemism | share Boss who [axed] London-LA flights says more c
+direct-address-medium | Is [your] garden 'common'? Expert discl
 derogatory | ediction only to mentally ill [thug] into changing his ways
+modality-medium | eath by a thousand cuts... He [should] fall on his sword instead
 all-caps | obic comment to Vinicius Jr - [NOT] 'monkey slur' he was accused
 hype-medium | ey slur' he was accused of in [explosive] row
 hype | mattress brand Simba unveils [game-changing] bedding for every type of sle
 hype | shareSimba unveils [game-changing] bedding for every type of sle
+direct-address-medium | n expert discloses the fabric [you] should never wear and why you
+modality-medium | pert discloses the fabric you [should] never wear and why you need t
+direct-address-medium | you should never wear and why [you] need to leave your go to dres
+modality-medium | should never wear and why you [need to] leave your go to dress behind
+direct-address-medium | ear and why you need to leave [your] go to dress behind
 hype | tian manuscript, heralding a '[breakthrough]' for understanding ancient sc
+direct-address-medium | This is what happens when [you] quit coffee for just two week
 hype | wo weeks: Scientists disclose [surprising] effects on stress, sleep and
+modality-medium | en leader claims US President [should] be stripped of his Scottish g
 all-caps | poll [OF THE DAY]: Is Sara Cox the right choice
 rhetorical-question-medium | poll OF THE DAY: [Is Sara Cox the right choice to replace Scott Mills on BBC Radio 2?]
 colloquialism | ses tribunal case after being [sacked] for being repeatedly late - s
 colloquialism | er loses tribunal after being [sacked] for lateness
 clickbait-medium | earing iconic red swimsuit... [can you guess] who?
+modality-medium | to my fibre broadband - what [should] I do about it? Consumer lawye
+direct-address-medium | red. Read it exclusively when [you] sign up to The Crime Desk new
 clickbait-medium | represent one in seven cars - [can you guess] which ones?
 all-caps | I'M A celeb [ALL] stars
 aggression-medium | hem to win': I'm A Celeb fans [furiously] brand final line up 'worst in
@@ -75,8 +103,15 @@ aggression | ted while unimpressed viewers [slam] the show's format
 fear-medium | [Heartbroken] Australian woman discloses ho
 fear-medium | A [heartbroken] Australian woman returning to
 negative-framing-medium | opened up about her mother's [tragic] death when she was a child.
+modality-medium | herine Ryan discloses why she [had to] cancel her facelift with Kris
 negative-framing | rait of Hormuz as the Iranian [regime] mocks his 'meaningless' cease
+direct-address-medium | Why [you] should never copy viral pimpl
+modality-medium | Why you [should] never copy viral pimple-poppi
+direct-address-medium | queeze, burst or lance a boil [yourself]. How DIY methods can cause pa
+direct-address-medium | igger deadly sepsis… and what [you] should do instead: DR RAJ aro
+modality-medium | r deadly sepsis… and what you [should] do instead: DR RAJ arora
 clickbait-medium | friend after I fell pregnant. [Here's why] I refuse to feel bad… and why
+imperative-medium | [DON'T miss]
 negative-framing-medium | he industry' the 'couple' are [desperate] to hide
 dysphemism | Gladiators' Giant '[axed] after being faced with choice
 aggression-medium | Paris [Fury] says Molly-Mae Hague would ha
@@ -109,15 +144,28 @@ loaded-framing-medium | liver Farnworth as she shares [racy] hot tub snap and sa
 moral | health amid domestic violence [scandal]
 loaded-framing-medium | the Mack! Millie revives her [racy] style with a post-split makeo
 reveal | US scientists working on top [secret] programmes mysteriously vanis
+direct-address-medium | What does [your] watch say about you? Expert d
+direct-address-medium | hat does your watch say about [you]? Expert discloses the accesso
+direct-address-medium | oses the accessory that makes [you] look 'powerful', the timepiec
+direct-address-medium | sswords: Experts disclose why [you] should never reuse or write d
+modality-medium | rds: Experts disclose why you [should] never reuse or write down you
+direct-address-medium | uld never reuse or write down [your] logins - and why it might be
+direct-address-medium | isleading' supermarket labels [you're] probably falling for: Experts
 distancing-medium | lie-Mae Doherty, both 22, are [alleged] to have committed misconduct
 aggression | Large tornados [rip] through Oklahoma, destroying
 fear-medium | across four states are issued [urgent warning]
+direct-address-medium | Why [you] should never copy viral pimpl
+modality-medium | Why you [should] never copy viral pimple-poppi
+direct-address-medium | queeze, burst or lance a boil [yourself]. How DIY methods can cause pa
+direct-address-medium | igger deadly sepsis… and what [you] should do instead: DR RAJ aro
+modality-medium | r deadly sepsis… and what you [should] do instead: DR RAJ arora
 clickbait-medium | friend after I fell pregnant. [Here's why] I refuse to feel bad… and why
 authority | thousands of men each month, [according to] Ukrainian authorities.
 aggression-medium | [Fury] erupts over why small boat mi
 conflict | Fury [erupts] over why small boat migrant m
 derogatory | Violent [thug] Karin Al-Danasurt was trying
 fear | the ground by phone thief in [terrifying] Lawless London attack
+direct-address-medium | [You're] removing stains wrong! Expert
 hype-medium | onald Trump was stunned by a '[miracle]' drug that helped restore hea
 hype-medium | Trump's three-word remark as '[miracle]' toddler steals the show
 negative-framing | unveiled. While it might look [gruesome], the dummy serves a crucial p
@@ -128,7 +176,9 @@ fear-medium | share [Panicking] motorists hand large sums to
 conflict | Rape allegations that [sparked] protests in Epsom came after
 reveal | Benjamin Netanyahu discloses [secret] prostate cancer diagnosis but
 authority | t prostrate cancer diagnosis, [according to] an official medical report re
+direct-address-medium | The garden furniture [your] neighbours are secretly judgi
 reveal | furniture your neighbours are [secretly] judging you for - and the on-
+direct-address-medium | ighbours are secretly judging [you] for - and the on-trend pieces
 clickbait-medium | gest outdoor trend for SS26 - [here's how] to style it, plus the best pi
 fear | confidential: How the taxman [terrified] Lady Angela, 87, with false d
 fear | share eden: How the taxman [terrified] Lady Angela, 87, with false d

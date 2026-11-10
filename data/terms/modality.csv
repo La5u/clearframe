@@ -1,0 +1,16 @@
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts,confidence
+must,modality,,,,,,,medium
+should,modality,,,,,,,medium
+ought to,modality,,,,,,,medium
+need to,modality,,,,,,,medium
+needs to,modality,,,,,,,medium
+have to,modality,,,,,,,medium
+has to,modality,,,,,,,medium
+had to,modality,,,,,,,medium
+have got to,modality,,,,,,,medium
+cannot afford to,modality,,,,,,,medium
+must not,modality,,,,,,,medium
+shouldn't,modality,,shouldn’t,,,,,medium
+should not,modality,,,,,,,medium
+mustn't,modality,,mustn’t,,,,,medium
+can't afford to,modality,,can’t afford to,,,,,medium

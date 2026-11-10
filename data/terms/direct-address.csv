@@ -1,0 +1,9 @@
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts,confidence
+you,direct-address,,,,,,,medium
+your,direct-address,,,,,,,medium
+yours,direct-address,,,,,,,medium
+yourself,direct-address,,,,,,,medium
+you're,direct-address,,you’re,,,,,medium
+you'll,direct-address,,you’ll,,,,,medium
+you've,direct-address,,you’ve,,,,,medium
+you'd,direct-address,,you’d,,,,,medium

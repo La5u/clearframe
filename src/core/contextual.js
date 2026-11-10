@@ -1,13 +1,18 @@
+import { findAnaphora, findTricolons } from './rhetoric.js';
+
+export const QUOTED_WORDING_ID = '__clearframe_quoted_wording__';
+
 export const CONTEXTUAL_TERMS = {
   '__clearframe_headline_question__': { phrase: 'headline question', type: 'rhetorical-question', confidence: 'medium' },
-  '__clearframe_direct_address__': { phrase: 'direct address', type: 'clickbait', confidence: 'contextual' },
-  '__clearframe_quoted_wording__': { phrase: 'quoted wording', type: 'quote', confidence: 'exploratory' },
+  [QUOTED_WORDING_ID]: { phrase: 'quoted wording', type: 'quote', confidence: 'exploratory' },
   '__clearframe_transformation__': { phrase: 'from-to transformation', type: 'hype', confidence: 'contextual' },
   '__clearframe_history_claim__': { phrase: 'history superlative', type: 'superlative', confidence: 'contextual' },
   '__clearframe_list_promise__': { phrase: 'list promise', type: 'clickbait', confidence: 'contextual' },
   '__clearframe_reaction_claim__': { phrase: 'audience reaction', type: 'unsourced', confidence: 'contextual' },
   '__clearframe_even_framing__': { phrase: 'even framing', type: 'loaded-framing', confidence: 'contextual' },
   '__clearframe_passive_agency__': { phrase: 'passive agency', type: 'passive', confidence: 'contextual' },
+  '__clearframe_tricolon__': { phrase: 'rule of three', type: 'tricolon', confidence: 'contextual' },
+  '__clearframe_anaphora__': { phrase: 'repeated opening', type: 'anaphora', confidence: 'medium' },
 };
 
 function addMatches(matches, text, pattern, termId) {
@@ -53,15 +58,6 @@ function addQuotedWording(matches, text) {
   }
 }
 
-const DIRECT_ADDRESS_PATTERNS = [
-  /\byou\s+(?:won't|will\s+not)\s+believe\b/giu,
-  /\bwhat\s+you\s+(?:need|must|should)\s+(?:to\s+)?know\b/giu,
-  /\b(?:mistakes?|things?)\s+you(?:'re|\s+are)\s+(?:making|doing)\b/giu,
-  /\b(?:mistakes?|things?|signs?|reasons?)\s+you\s+(?:need|must|should|could|can)\b/giu,
-  /\b(?:why|how)\s+you\s+(?:need|must|should|could|can|will|are|keep)\b/giu,
-  /\bwill\s+make\s+you\b/giu,
-];
-
 export function classifyPageContext(hostname = '') {
   const host = hostname.toLowerCase().replace(/^www\./, '');
   if (/(^|\.)reddit\.com$/.test(host)) return 'discussion';
@@ -74,6 +70,10 @@ export function findContextualMatches(text, { headline = false, conversational =
   if (pageContext === 'publication' && !conversational) {
     addMatches(matches, text, /\b(?:(?:mistakes?|errors?)\s+(?:was|were|have\s+been|had\s+been)\s+made|(?:concerns?|questions?)\s+(?:was|were|have\s+been|had\s+been)\s+raised|(?:jobs?|positions?)\s+(?:was|were|have\s+been|had\s+been)\s+(?:cut|eliminated)|(?:funds?|money)\s+(?:was|were|have\s+been|had\s+been)\s+(?:spent|lost)|(?:records?|evidence)\s+(?:was|were|have\s+been|had\s+been)\s+(?:removed|deleted|destroyed)|it\s+was\s+decided|(?:was|were)\s+asked\s+to\s+resign)\b/giu, '__clearframe_passive_agency__');
   }
+  if (pageContext === 'publication' && !conversational) {
+    for (const { start, end } of findTricolons(text)) matches.push({ start, end, termId: '__clearframe_tricolon__', virtual: true });
+    for (const { start, end } of findAnaphora(text)) matches.push({ start, end, termId: '__clearframe_anaphora__', virtual: true });
+  }
   if (!headline) return matches;
   if (pageContext === 'publication' && /\?\s*$/.test(text)) {
     // The question starts after the last sentence break; "a.m." or "U.S." are not breaks.
@@ -85,9 +85,6 @@ export function findContextualMatches(text, { headline = false, conversational =
     if (/^(?:is|are|was|were|can|could|will|would|should|does|do|did|has|have|had|might|may)\b/iu.test(text.slice(start)) && !/^tell us\b/iu.test(text.trim())) {
       matches.push({ start, end: text.length, termId: '__clearframe_headline_question__', virtual: true });
     }
-  }
-  if (!conversational) {
-    for (const pattern of DIRECT_ADDRESS_PATTERNS) addMatches(matches, text, pattern, '__clearframe_direct_address__');
   }
   if (pageContext === 'publication') addQuotedWording(matches, text);
   if (pageContext === 'publication') addMatches(matches, text, /\b[Ee]ven\s+(?:the\s+)?(?:[\p{Lu}][\p{L}'’-]*|experts?|critics?|supporters?|opponents?)\s+(?:can|could|does|did|is|was|will|has|had)\b/gu, '__clearframe_even_framing__');

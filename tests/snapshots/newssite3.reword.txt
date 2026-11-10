@@ -1,15 +1,18 @@
-# newssite3.html mode=reword highlights=236
+# newssite3.html mode=reword highlights=264
 conflict | t TWO DAYS' worth stored up - [sparking] fears of a supply shortage as
 authority | for just 1.5 days of demand, [according to] new data published by Nationa
 aggression | war: Foreign Secretary Cooper [blasts] president's 'diplomacy throug
 authority | sraeli embassy in London - as [experts warn] of 'serious security breach'
+direct-address-medium | tells Starmer 'we don't need [your] aircraft carriers for war we'
 hype-medium | for war we've already won' in [explosive] broadside
 fear | s are using state TV to issue [chilling] warnings that they and their
 negative-framing | ters, but those chanting anti-[regime] slogans risk on-the-spot exec
 clickbait | [EXCLUSIVE]As war rages in Iran, woke MoD
 clickbait | [EXCLUSIVE]Tony Blair rebukes Keir Starme
+direct-address-medium | Ultimate guide to protecting [your] finances from war in the Midd
 hype-underline | at to invest in now - and the [unexpected] stocks you must avoid
-all-caps-underline | and the unexpected stocks you [must] avoid
+direct-address-medium | w - and the unexpected stocks [you] must avoid
+all-caps | and the unexpected stocks you [must] avoid
 conflict | upted, aviation routes are in [chaos] and stock markets around the
 moral | er to 'cash in on the Epstein [scandal]'
 moral | er to 'cash in on the Epstein [scandal]', Hollywood unsourced. Fergie
@@ -23,12 +26,14 @@ uncertainty | ti Patel and Chris Philp both [reportedly] under threat
 clickbait | [EXCLUSIVE]EXPOSED: Andrew's messages abo
 conflict | n known as 'Spotty' that have [sparked] demands princesses 'come clea
 all-caps-underline | How to end the agony of UTIs [without] antibiotics. These are the si
+direct-address-medium | mple fixes doctors don't tell [you] about - including the 50p sup
 negative-framing-medium | o 'silent mode' while William [desperately] tried to 'form a barrier' fro
 authority | m a barrier' from his cousin, [according to] a body language expert.
 clickbait | [EXCLUSIVE]My haunting stay with Holly's
 moral | hed me the most; the sense of [evil] done and innocence destroyed,
 clickbait-underline | soriasis for 20 years. Then I [now] found a simple cure that real
 all-caps-underline | nd it saw me lose 3 stone too [without] medication. Everyone plagued
+modality-medium | ued by itchy red skin patches [should] make these easy lifestyle twe
 dysphemism-underline | HREE professional dancers are [cut] by BBC bosses ahead of new se
 uncertainty | jor shake-up after BBC bosses [reportedly] cut three professional dancer
 dysphemism-underline | p after BBC bosses reportedly [cut] three professional dancers fr
@@ -39,19 +44,23 @@ clickbait | [EXCLUSIVE]Inside London's most benighted
 reveal | tance tax trap: SIMON LAMBERT [reveals] two easy ways to avoid the 40
 loaded-framing-medium | he house for 14 years, before [sadly] passing away on 24 December 2
 euphemism | se for 14 years, before sadly [passing away] on 24 December 2025.
+modality-medium | Richard Branson warns Britain [must] prepare for conflict in space
 clickbait | [EXCLUSIVE]The flashy HMO king and queen
 clickbait | Jump racing in [shock] after 'lovely and bubbly' ama
 clickbait | [EXCLUSIVE]Emily in Hampstead? Lily Colli
 clickbait | [EXCLUSIVE]Andrew leaked inside intel on
 loaded-framing-medium | The Mail on Sunday reveal the [disgraced] former prince met with the ba
+direct-address-medium | ED face mask really transform [your] skin? My results, an expert's
 clickbait-medium | ts, an expert's thoughts, and [what you need to know] before buying
 clickbait-medium | share[Here's how] to get a free diamond ring fr
+direct-address-medium | e pieces will instantly boost [your] confidence and they're all on
 clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it's gone
+direct-address-medium | 10 chic home finds will make [your] space look instantly designer
 conflict | re in tell-all book on family [feud] after refusing to sign NDA'
 uncertainty | n Beckham's ex Hana Cross has [reportedly] been asked to feature in a te
 uncertainty | ictoria and David Beckham are [reportedly] aware that relatives, acquain
 moral | bt. I first warned about this [scandal] 13 years ago - this is the fi
-all-caps-underline | is is the financial advice he [should] be backing: JEFF PRESTRIDGE
+all-caps | is is the financial advice he [should] be backing: JEFF PRESTRIDGE
 clickbait | [EXCLUSIVE]Brazilian model who was abused
 distancing-medium | eeding and in agony after the [allegedly] aborted dental work.
 clickbait | [EXCLUSIVE]Labour blunder as MoD posts vi
@@ -62,16 +71,23 @@ all-caps-underline | ith 'zombie' drugs as up to a [quarter] of e-cigarettes con
 negative-framing | [Tragedy] as boy, 7, is killed after be
 negative-framing | share [Tragedy] as boy, 7, is killed after be
 clickbait-underline | h Prince Andrew and his three [surprising] requests, day I had to ban hi
+modality-medium | ee surprising requests, day I [had to] ban him from an event in case
 clickbait | [EXCLUSIVE]Distasteful truth about arroga
+direct-address-medium | f a huge fortune while giving [you] tips that will never make you
+direct-address-medium | you tips that will never make [you] rich... and betrayal he's des
 negative-framing-medium | you rich... and betrayal he's [desperate] to hide
 loaded-framing-underline | ieved his own publicity, it's [self-proclaimed] 'Money Saving Expert' Martin
 reveal | leads to divorce? Five women [reveal] exactly how much they made lo
 all-caps-underline | to divorce? Five women reveal [exactly] how much they made love in th
+direct-address-medium | eye-opening results may have [you] ringing your lawyer...
+direct-address-medium | results may have you ringing [your] lawyer...
 all-caps-underline | [War in the Middle East]
 clickbait | [EXCLUSIVE]Ironic moment women's rights a
 negative-framing | demonstrating against Iranian [regime]... which has brutally oppress
 negative-framing | ng 'f*** you' at anti-Iranian [regime] protesters and flashing her m
 negative-framing | activists swear at anti-Iran [regime] protesters
+direct-address-medium | s to the sounds of gunfire... [you] must first have ships: LORD W
+modality-medium | the sounds of gunfire... you [must] first have ships: LORD WEST
 hype | s to sounds of gunfire... you [must have] ships: LORD WEST
 clickbait | [EXCLUSIVE]UK spies in hunt for hidden ne
 clickbait | [EXCLUSIVE]Influencer trapped in five-sta
@@ -91,6 +107,9 @@ reveal | Rosanna Arquette [reveals] the price she paid for reject
 fear | ecting Harvey Weinstein after [horrifying] hotel encounter
 fear | ruel fate of dogs in Dubai is [horrifying]. I could never do what these
 fear | ent of dogs in Dubai is truly [horrifying]
+direct-address-medium | p toxic perfectionism ruining [your] life: So many women are unkno
+direct-address-medium | n are unknowing victims - but [you] can escape this pernicious cy
+imperative-medium | cycle, says DR SIAN WILLIAMS. [Take] my interactive quiz to find o
 all-caps-underline | interactive quiz to find out [exactly] how to tackle it
 clickbait | [Has Emma Watson finally found love with Gonzalo Hevia Bailleres... or is her new tech billionaire boyfriend just trying to make his popstar ex jealous?]
 aggression | ations, mushroom coffins, and [blasting] remains into SPACE
@@ -99,11 +118,17 @@ hype | Addison Ross, a [must-have] gifting destination known for
 reveal | [Secret] cremation for fiend Ian Huntl
 fear | n Saturday, 24 years after he [horrified] the nation by murdering ten-y
 clickbait | [EXCLUSIVE]King Charles' state visit to U
+modality-medium | ng Charles' state visit to US [should] be delayed until Iran war is
 fear | [Horrified] parent reports teacher to sch
 all-caps-underline | student posted video of him '[urinating] in class'
 all-caps-underline | r caught on cellphone camera '[urinating] in class'
 clickbait-medium | on a seven-hour flight - and [here's why] you should too
+direct-address-medium | -hour flight - and here's why [you] should too
+modality-medium | r flight - and here's why you [should] too
+direct-address-medium | The jobs [you] must do in March to get ahead
+modality-medium | The jobs you [must] do in March to get ahead of t
 authority | r a spectacular home refresh, [according to] the experts
+modality-medium | licking mission to Washington [should] be postponed for as long as p
 derogatory | Haunting prison mugshots show [mob] jailed for stealing iron and
 derogatory | rison mugshots show Victorian [mob] jailed for stealing iron
 clickbait | [EXCLUSIVE]Tragic royal Thomas Kingston's
@@ -115,12 +140,13 @@ reveal | blicly. Hearing these secrets [revealed] utterly shook me - and I'm no
 loaded-framing-underline | In the [called] modern world, what place is t
 aggression | James Corden ordered to [rip] up 'unsightly' paving slabs l
 negative-framing-medium | A TikTok star mom has [tragically] died at 47 after suffering co
+modality-medium | s Steve Borthwick and the RFU [must] answer after unforgivable Ita
 moral | One of the most [evil] child killers in history Ian
 hype-underline | How [stylish] nurse became embroiled in Tur
 all-caps-underline | [War in the Middle East]
 authority | who in the world: As military [experts warn] World War III has never been
 authority | ts' during his teenage years, [according to] royal author Tina Brown. Yet
-all-caps-underline | [Don't miss]
+all-caps | [Don't miss]
 fear | ecting Harvey Weinstein after [horrifying] hotel encounter
 dysphemism-underline | HREE professional dancers are [cut] by BBC bosses ahead of new se
 hype-medium | ght from her famous mother at [star-studded] Balenciaga show
@@ -190,6 +216,7 @@ clickbait-medium | ve lives makes rare outing... [can you guess] who?
 hype-medium | British comedy legends among [star-studded] guests hitting screens next w
 distancing-medium | Britney Spears [allegedly] open to seeking treatment aft
 clickbait | e of Robert Peston!' Viewers' [shock] at 65-year-old broadcaster's
+modality-medium | k-lifting epidemic! Now Tesco [has to] slap security tags on £2.85 p
 negative-framing | In [a desperate] attempt to foil shoplifters,
 all-caps-underline | pping diamond engagement ring [during] her first-round win at Indian
 all-caps-underline | wears diamond engagement ring [during] her win at Indian Wells
@@ -228,6 +255,7 @@ fear-medium | rime documentary dubbed 'both [harrowing] and moving in equal meas
 hype-medium | Demi Lovato puts on a [sizzling] show in red corset and fishne
 loaded-framing-medium | ed corset and fishnets during [racy] performance at the GLAAD Medi
 clickbait | [EXCLUSIVE]Is THIS your new husband's '£3
+direct-address-medium | EXCLUSIVEIs THIS [your] new husband's '£36million Dub
 all-caps-underline | angry boss says he will go on [holiday]
 fear-medium | [Heartbroken] Blake Lively cuts a downcast
 conflict | of FA Cup following thrilling [clash] with Premier League side Chel

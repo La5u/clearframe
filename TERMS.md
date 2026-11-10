@@ -51,9 +51,13 @@ The match is dropped if any `unless` clause matches; a clause matches when all
 its tests pass. Tests are regexes written as `/pattern/flags` (JSON doubles each
 backslash) against `before` / `after` (40 characters either side), `match` (the
 matched text), `nearby` (before + match + after) or `textBefore` (all text
-before), plus `"headline": true|false`. A string in `unless` names a list under
+before), plus `"headline": true|false` and `"conversational": true|false`. A string in `unless` names a list under
 `shared`, for patterns several terms use. `contexts` defines derived contexts
-such as `evaluative`, and `types` sets default contexts per type. Use `note` for
+such as `evaluative`, and `types` sets rules for every term of a type:
+`contexts`, `unless` (clauses or shared names), `only` and `confidence`
+(`{ "body": "contextual" }` lowers the confidence outside headlines). A term or
+type with `only` clauses is dropped unless one of them matches, which is how
+imperatives are limited to the start of a sentence. Use `note` for
 the reason. The build rejects bad regexes, unknown phrases, shared names and
 fields. Add a case to the exception table in `tests/run.js`.
 

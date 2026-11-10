@@ -1,4 +1,7 @@
-# newssite2.html mode=highlight highlights=48
+# newssite2.html mode=highlight highlights=70
+imperative-medium | sible Coup”, Peter Schweizer. [LISTEN] NOW
+imperative-medium | hop smarter with Post Wanted. [SIGN UP] NOW
+imperative-medium | odcast. New episodes Mon-Fri. [LISTEN] NOW
 distancing-medium | Police remove protester — who [allegedly] injured 3 officers and appear
 distancing-medium | [Alleged] mistress of disgraced ex-Mich
 loaded-framing-medium | Alleged mistress of [disgraced] ex-Michigan coach leaves univ
@@ -31,19 +34,38 @@ loaded-framing-medium | Family drama [Disgraced] La. mayor’s ex-husband fought
 distancing-medium | fought to keep kids from her [allegedly] abusive lover — who turned up
 uncertainty-medium | or sought to ban teen romance [rumors], purported rehab stints in ra
 reveal | Gayle King’s CBS News future [revealed] after months of speculation
+imperative-medium | [Beware] Turkey’s ambitions in the pos
 clickbait | lif. coffee shop — inside her [shocking] family history
 reveal | e Homes Ever Sold in the U.S. [Revealed]
 clickbait | [EXCLUSIVE]: Ewan McGregor’s Ex-Wife Puts
+direct-address-medium | Z We tested dozens of beds so [you] can sleep better: These are t
 authority | the 10 best mattress brands, [according to] our shopping reporters
+imperative-medium | [Meet] the world’s first AI-powered
+direct-address-medium | euro technology that syncs to [your] menstrual cycle
+direct-address-medium | Bloom [your] beauty routine with CVS Sprin
 clickbait | o player breaks silence after [bombshell] claims of underwater sex atta
+imperative-medium | [Meet] the maniacs who love middle s
 reveal | bulls—t’ Christina Applegate [reveals] the mistake she made after he
 aggression | r suing for sexual harassment [slams] firm’s investigation unit as
 rhetorical-question-medium | ted Luminous Silk foundation: [Does the new version live up to its cult status?]
 reveal | Outlander’ Says Goodbye: Five [Secrets] We Uncovered on the Season 8
+imperative-medium | Daily Crossword: [Take] a crack at the puzzle, includ
+direct-address-medium | t the puzzle, including those [you] may have missed
+direct-address-medium | Daily Word Search: Use [your] noggin to find the hidden wor
 aggression | tana GOP senator to ‘pass the [torch]’ — becomes 6th Republican to
 conflict | LA City Hall [showdown] over $1.3B homeless spending
+modality-medium | Jimmy Kimmel jokes Trump [should] let him host White House Corr
+modality-medium | Reality check: Sex offender [should] quit race for Fresno City Cou
+direct-address-medium | Where [you] get your drinking water from
+direct-address-medium | Where you get [your] drinking water from can raise
+direct-address-medium | drinking water from can raise [your] risk of Parkinson’s by up to
+direct-address-medium | Gen Z, [you] have one advantage in this wo
+modality-medium | much emotional support — they [should] be FSA-approved
+imperative-medium | [See] how few square feet a whoppin
 reveal | Apple [reveals] cheapest MacBook ever — comin
 authority | [Experts warn] of ‘mysterious’ leaked US gov
+direct-address-medium | Bizarre wellness fads [you] forgot about — and what we’re
 reveal | for Harry and Meghan as it’s [revealed] their movie projects are in l
 clickbait | firing – lawyer claims he has [bombshell] texts: report
 distancing-medium | ho made JFK Jr. jealous — and [allegedly] got her pregnant
+imperative-medium | [See] All Columnists

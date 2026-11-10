@@ -1,10 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import { normalize } from './matcher.js';
-import { CLAUSE_WINDOWS, parseRulePattern } from './context-filter.js';
+import { CLAUSE_FLAGS, CLAUSE_WINDOWS, parseRulePattern } from './context-filter.js';
 import { adverbWord, pastTenseWord, pluralizeWord, ingWord } from './stemmer.js';
 
 const ALLOWED_CONTEXTS = new Set(['headline', 'body', 'publication', 'discussion', 'video', 'conversation', 'evaluative']);
+const SHOWN_IN = ['headline', 'body'];
 const CONFIDENCE_LEVELS = new Set(['high', 'medium', 'contextual', 'exploratory']);
 
 export function stemVariants(word, stemType) {
@@ -186,7 +187,7 @@ const EXCEPTION_SECTIONS = new Set(['terms', 'shared', 'contexts', 'types']);
 // Validates data/terms/exceptions.json and returns it without notes, in the
 // shape createLexicalFilter() reads.
 export function loadExceptions(file, termsById) {
-  const out = { terms: {}, shared: {}, contexts: {}, types: {} };
+  const out = { terms: {}, only: {}, shared: {}, contexts: {}, types: {} };
   if (!fs.existsSync(file)) return out;
   const source = path.basename(file);
   let data;
@@ -205,11 +206,11 @@ export function loadExceptions(file, termsById) {
     }
   };
   const checkClause = (where, clause) => {
-    checkKeys(where, clause, ['headline', ...CLAUSE_WINDOWS]);
+    checkKeys(where, clause, [...CLAUSE_FLAGS, ...CLAUSE_WINDOWS]);
     if (!Object.keys(clause).length) fail(where, 'empty clause would match everything');
     for (const [key, value] of Object.entries(clause)) {
-      if (key === 'headline') {
-        if (typeof value !== 'boolean') fail(where, '"headline" must be true or false');
+      if (CLAUSE_FLAGS.includes(key)) {
+        if (typeof value !== 'boolean') fail(where, `"${key}" must be true or false`);
         continue;
       }
       try {
@@ -225,6 +226,16 @@ export function loadExceptions(file, termsById) {
     return list.map((clause, i) => checkClause(`${where}[${i}]`, clause));
   };
 
+  // Clauses, or names of `shared` lists.
+  const unlessList = (where, list) => {
+    if (!Array.isArray(list) || !list.length) fail(`${where}.unless`, 'must be a non-empty list');
+    return list.map((item, i) => {
+      if (typeof item !== 'string') return checkClause(`${where}.unless[${i}]`, item);
+      if (!out.shared[item]) fail(`${where}.unless[${i}]`, `unknown shared pattern "${item}"`);
+      return item;
+    });
+  };
+
   checkKeys('top level', data, [...EXCEPTION_SECTIONS]);
   for (const section of EXCEPTION_SECTIONS) {
     const value = data[section];
@@ -238,13 +249,10 @@ export function loadExceptions(file, termsById) {
   for (const [phrase, entry] of Object.entries(data.terms || {})) {
     const where = `term "${phrase}"`;
     if (!phrases.has(phrase)) fail(where, 'is not a term phrase (use the normalized main phrase, not an alias)');
-    checkKeys(where, entry, ['note', 'unless']);
-    if (!Array.isArray(entry.unless) || !entry.unless.length) fail(`${where}.unless`, 'must be a non-empty list');
-    out.terms[phrase] = entry.unless.map((item, i) => {
-      if (typeof item !== 'string') return checkClause(`${where}.unless[${i}]`, item);
-      if (!out.shared[item]) fail(`${where}.unless[${i}]`, `unknown shared pattern "${item}"`);
-      return item;
-    });
+    checkKeys(where, entry, ['note', 'unless', 'only']);
+    if (!entry.unless && !entry.only) fail(where, 'needs "unless" or "only"');
+    out.terms[phrase] = entry.unless ? unlessList(where, entry.unless) : [];
+    if (entry.only) out.only[phrase] = clauseList(`${where}.only`, entry.only);
   }
   for (const [name, entry] of Object.entries(data.contexts || {})) {
     if (!ALLOWED_CONTEXTS.has(name)) fail(`context "${name}"`, 'is not a supported context');
@@ -254,12 +262,23 @@ export function loadExceptions(file, termsById) {
   const types = new Set(Object.values(termsById).map(term => term.type));
   for (const [type, entry] of Object.entries(data.types || {})) {
     if (!types.has(type)) fail(`type "${type}"`, 'has no terms');
-    checkKeys(`type "${type}"`, entry, ['note', 'contexts']);
-    if (!Array.isArray(entry.contexts) || !entry.contexts.length) fail(`type "${type}".contexts`, 'must be a non-empty list');
-    for (const context of entry.contexts) {
-      if (!ALLOWED_CONTEXTS.has(context)) fail(`type "${type}"`, `unsupported context "${context}"`);
+    checkKeys(`type "${type}"`, entry, ['note', 'contexts', 'only', 'unless', 'confidence']);
+    const rule = {};
+    if (entry.contexts) {
+      if (!Array.isArray(entry.contexts) || !entry.contexts.length) fail(`type "${type}".contexts`, 'must be a non-empty list');
+      for (const context of entry.contexts) {
+        if (!ALLOWED_CONTEXTS.has(context)) fail(`type "${type}"`, `unsupported context "${context}"`);
+      }
+      rule.contexts = entry.contexts;
     }
-    out.types[type] = entry.contexts;
+    if (entry.only) rule.only = clauseList(`type "${type}".only`, entry.only);
+    if (entry.unless) rule.unless = unlessList(`type "${type}"`, entry.unless);
+    for (const [shown, confidence] of Object.entries(entry.confidence || {})) {
+      if (!SHOWN_IN.includes(shown) || !CONFIDENCE_LEVELS.has(confidence)) fail(`type "${type}".confidence`, `"${shown}: ${confidence}" is not (${SHOWN_IN.join('|')}): (${[...CONFIDENCE_LEVELS].join('|')})`);
+      (rule.confidence ||= {})[shown] = confidence;
+    }
+    if (!Object.keys(rule).length) fail(`type "${type}"`, 'needs contexts, only, unless or confidence');
+    out.types[type] = rule;
   }
   return out;
 }

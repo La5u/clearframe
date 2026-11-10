@@ -1,0 +1,63 @@
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts,confidence
+act,imperative,,,,,,,medium
+ask,imperative,,,,,,,medium
+beware,imperative,,,,,,,medium
+buy,imperative,,,,,,,medium
+choose,imperative,,,,,,,medium
+click,imperative,,,,,,,medium
+come,imperative,,,,,,,medium
+consider,imperative,,,,,,,medium
+discover,imperative,,,,,,,medium
+download,imperative,,,,,,,medium
+enjoy,imperative,,,,,,,medium
+explore,imperative,,,,,,,medium
+find,imperative,,,,,,,medium
+follow,imperative,,,,,,,medium
+forget,imperative,,,,,,,medium
+get,imperative,,,,,,,medium
+give,imperative,,,,,,,medium
+grab,imperative,,,,,,,medium
+imagine,imperative,,,,,,,medium
+join,imperative,,,,,,,medium
+keep,imperative,,,,,,,medium
+learn,imperative,,,,,,,medium
+listen,imperative,,,,,,,medium
+look,imperative,,,,,,,medium
+meet,imperative,,,,,,,medium
+remember,imperative,,,,,,,medium
+see,imperative,,,,,,,medium
+start,imperative,,,,,,,medium
+stay,imperative,,,,,,,medium
+take,imperative,,,,,,,medium
+tell,imperative,,,,,,,medium
+think,imperative,,,,,,,medium
+try,imperative,,,,,,,medium
+wait,imperative,,,,,,,medium
+watch,imperative,,,,,,,medium
+enter,imperative,,,,,,,medium
+subscribe,imperative,,,,,,,medium
+spot,imperative,,,,,,,medium
+picture,imperative,,,,,,,medium
+find out,imperative,,,,,,,medium
+read on,imperative,,,,,,,medium
+look out,imperative,,,,,,,medium
+sign up,imperative,,,,,,,medium
+stay tuned,imperative,,,,,,,medium
+think again,imperative,,,,,,,medium
+keep reading,imperative,,,,,,,medium
+keep calm,imperative,,,,,,,medium
+don't miss,imperative,,don’t miss,,,,,medium
+do not miss,imperative,,,,,,,medium
+don't forget,imperative,,don’t forget,,,,,medium
+do not forget,imperative,,,,,,,medium
+don't panic,imperative,,don’t panic,,,,,medium
+do not panic,imperative,,,,,,,medium
+don't ignore,imperative,,don’t ignore,,,,,medium
+never forget,imperative,,,,,,,medium
+never give up,imperative,,,,,,,medium
+never miss,imperative,,,,,,,medium
+don't wait,imperative,,don’t wait,,,,,medium
+don't let,imperative,,don’t let,,,,,medium
+don't be,imperative,,don’t be,,,,,medium
+don't buy,imperative,,don’t buy,,,,,medium
+don't try,imperative,,don’t try,,,,,medium

@@ -1,0 +1,10 @@
+phrase,type,neutral,aliases,stemmable,regex,remove,contexts,confidence
+we,inclusive-pronoun,,,,,,,contextual
+us,inclusive-pronoun,,,,,,,contextual
+our,inclusive-pronoun,,,,,,,contextual
+ours,inclusive-pronoun,,,,,,,contextual
+ourselves,inclusive-pronoun,,,,,,,contextual
+we're,inclusive-pronoun,,we’re,,,,,contextual
+we've,inclusive-pronoun,,we’ve,,,,,contextual
+we'll,inclusive-pronoun,,we’ll,,,,,contextual
+let's,inclusive-pronoun,,let’s,,,,,contextual

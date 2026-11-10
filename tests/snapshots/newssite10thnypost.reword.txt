@@ -1,19 +1,23 @@
-# newssite10thnypost.html mode=reword highlights=49
+# newssite10thnypost.html mode=reword highlights=72
 loaded-framing-medium | cnn deletes [tone-deaf] post downplaying moment suspe
 distancing | -deaf post downplaying moment [suspected] terrorists hurled bombs near
 distancing-medium | amos’ wedding called off over [alleged] ‘ongoing infidelity issues’
+modality-medium | i bomb shelter where The Post [had to] flee during Iran airstrike al
 loaded-framing-medium | Flights of fancy [Disgraced] Ohio State prez boasted he wa
 loaded-framing | [Common sense]. No nonsense.
 fear-medium | What the oil-price [panic] really tells you about our le
+direct-address-medium | oil-price panic really tells [you] about our leaders
 fear | Senior Iranian leader issues [chilling] warning that Trump could be ‘
 reveal | I found out my dad has a [secret] child — how do I confront him
 clickbait | Trading blows [Wild] brawl breaks out at usa vs. M
 clickbait | for divorce after wife makes [shocking] accusations
 reveal | Happiest cities in the US [revealed] — we have good and bad news f
+imperative-medium | nfl free agency live updates: [See] which players are left on Day
 negative-framing-medium | [Desperate] hunt Ex-fbi agent claims bloo
 dysphemism-underline | Yogi [cut] from nyc school after ‘inappr
 clickbait | r-old tennis star loses it in [wild] meltdown after failing to def
 fear | Sad footage exposes [heartbreaking] reality of animals in Dubai a
+imperative-medium | Space race [See] the space-saving renovations
 aggression | Megyn Kelly [rips] senator for threats against C
 reveal | Bristol Palin [reveals] new plan to fix ‘crazy’ and ’
 aggression-medium | Backhanded Mariners teammate [fumes] over wbc handshake refusal
@@ -31,21 +35,40 @@ uncertainty-medium | ng to breathe mid-speech — as [rumors] of his health woes
 clickbait | Mayor Daniel Lurie blamed for [wild] brawl that injured his bodygu
 distancing-medium | 'Immediate harm' Rihanna’s [alleged] shooter also went after Billi
 conflict | Rock out Cher, 79, [sparks] marriage speculation with Ale
+direct-address-medium | Gen Z, [you] have one advantage in this wo
+direct-address-medium | st cancer treatment increases [your] risk of dying by 400%
 hype-underline | The [Unexpected] Metros Where an Entry-Level L
 hype | [Supermodel] Kendall Jenner Opens Up the D
 clickbait-underline | ner Opens Up the Doors to the [surprising] Closet Inside Her $9 Million
+direct-address-medium | How Do [You] Get the Date-of-Death Apprais
+direct-address-medium | Appraisal—and What Happens If [You] Skip It?
+direct-address-medium | son alone — TurboTax can save [you] time and money
+imperative-medium | [Get] the water flosser that destro
+imperative-medium | [Come] clean Hilary Duff gets wet an
 clickbait | lean Hilary Duff gets wet and [wild] for ‘Tonight Show’ performanc
 loaded-framing-medium | dress for the TV debut of her [sultry] single “Roommates.”
 clickbait | Employers [shocked] that 1 in 5 Gen Z job seekers
+modality-medium | much emotional support — they [should] be fsa-approved
 conflict | admin for blacklisting after [clash] on using AI for surveillance,
 aggression-medium | rust suit— why judge was left [fuming]
 reveal | The Best Kept [Secret] in Paris Luxury: Chic Stays a
 reveal | Outlander’ Says Goodbye: Five [Secrets] We Uncovered on the Season 8
+imperative-medium | Daily Crossword: [Take] a crack at the puzzle, includ
+direct-address-medium | t the puzzle, including those [you] may have missed
+direct-address-medium | Daily Word Search: Use [your] noggin to find the hidden wor
 clickbait | [Shocking] moment gang storms luxury LA
+direct-address-medium | e saved — and doesn’t deserve [your] hate
+modality-medium | lax’s People Mover [needs to] be completed before embarrass
+imperative-medium | read the word, not the virus: [Get] measles vax
 conflict-underline | l Beretta of plotting stealth [acquisition]
+direct-address-medium | neaky condition that can make [your] penis shrink, bend — and hurt
+direct-address-medium | [Your] everything shower just got mo
+imperative-medium | [Learn] why thousands are trading the
 clickbait-underline | 9-year-old dad helps son, 80, [now] crack free oysters promotion
+direct-address-medium | ew eatery — and it isn’t what [you’d] expect
 distancing-medium | amos’ wedding called off over [alleged] ‘ongoing infidelity issues’
 clickbait | Hilary Duff gets wet and [wild] for ‘Tonight Show’ performanc
+imperative-medium | [See] All Columnists
 loaded-framing-medium | an of not protecting her from [disgraced] football coach Sherrone Moore
 moral | one Moore in first remarks on [scandal]
 # changed text nodes=6

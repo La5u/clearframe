@@ -27,10 +27,15 @@
     "idiom": {"term": "Idiom", "plain": "Figure of speech", "effect": "A stock phrase that adds colour but can blur exactly what happened."},
     "repetition": {"term": "Repetition", "plain": "Repeated wording", "effect": "Repeating words adds rhythm and emphasis, making an idea stick."},
     "rhetorical-question": {"term": "Rhetorical question", "plain": "Question with an implied answer", "effect": "Steers the reader to an answer without the writer having to state it as a claim."},
+    "imperative": {"term": "Imperative", "plain": "Tells you what to do", "effect": "Gives the reader an order, which creates urgency and casts the writer as someone entitled to direct them."},
+    "direct-address": {"term": "Direct address", "plain": "Talks to you", "effect": "Speaks straight to the reader, creating a sense of personal involvement or urgency."},
+    "inclusive-pronoun": {"term": "Inclusive pronoun", "plain": "We, us, our", "effect": "Puts writer and reader on the same side, so a view can sound like shared common sense."},
+    "modality": {"term": "Modal verb of obligation", "plain": "Must and should", "effect": "Presents an opinion as a duty or necessity, leaving little room to disagree."},
+    "tricolon": {"term": "Tricolon (rule of three)", "plain": "List of three", "effect": "Three parallel items give a rhythm that feels complete and memorable, which can make a claim sound more convincing than its evidence."},
+    "anaphora": {"term": "Anaphora", "plain": "Repeated opening", "effect": "Starting successive sentences the same way builds rhythm and emphasis, driving one point home."},
     "quote": {"term": "Scare quotes", "plain": "Quoted wording", "effect": "Quotation marks around a word can signal doubt or irony rather than an exact quote."}
   },
   "phrases": {
-    "direct address": {"term": "Direct address", "plain": "Talks to you", "effect": "Speaks straight to the reader, creating a sense of personal involvement or urgency."},
     "even framing": {"term": "Presupposition", "plain": "Implied surprise", "effect": "'Even' assumes something is unexpected, telling the reader how to feel about it."},
     "headline question": {"term": "Rhetorical question", "plain": "Question headline", "effect": "Raises a possibility without claiming it, so the headline can suggest more than it reports."}
   }

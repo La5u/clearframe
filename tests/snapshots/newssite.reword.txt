@@ -1,4 +1,4 @@
-# newssite.html mode=reword highlights=357
+# newssite.html mode=reword highlights=390
 clickbait | [EXCLUSIVE]Expats scared to speak out abo
 fear | 'safest place on Earth' - as [frightened] holidaymakers scramble for fl
 negative-framing-medium | thousands of ordinary Britons [desperate] to get home. While the United
@@ -22,6 +22,7 @@ reveal | traordinary bravery Antonella [reveals] what happened next - and the
 clickbait-medium | ary bravery Antonella reveals [what happened next] - and the unthinkable five wo
 clickbait | e unthinkable five words that [devastated] her
 reveal | [Revealed]: The 67 dog breeds that could
+direct-address-medium | ld be banned in Britain... is [YOUR] pooch on the list?
 idiom-medium | er off unravels as households [feel the pinch] - but benefits Britain is pro
 reveal | aren't much better: Teachers [reveal] what they really think of mod
 all-caps-underline | er: Teachers reveal what they [really] think of modern parenting in
@@ -34,12 +35,16 @@ clickbait | [EXCLUSIVE]The middle-class woman raking
 idiom-medium | CLUSIVEThe middle-class woman [raking it in] from OnlyFans. Megan was a nu
 reveal | now she makes £5k. Here they [reveal] the how, the wild requests...
 idiom-medium | share The middle-class woman [raking it in] from OnlyFans
+direct-address-medium | lose a friend who is so like [you]': Harry Styles says the tragi
 negative-framing-medium | e you': Harry Styles says the [tragic] death of Liam Payne has made
+modality-medium | public expectations on how he [should] grieve
 aggression-medium | positivity': Nicola Coughlan [hits back] at 'plus size' label and says
 aggression-medium | Nicola Coughlan has [hit back] at assumptions that she is 'p
 all-caps-underline | inkly neck in just 15 minutes [without] surgery: It's one of the hard
+direct-address-medium | reas to treat particularly if [you] lose weight. Now there's a ga
 hype | ou lose weight. Now there's a [game-changing] answer... and I'm proof it wo
 reveal | s. This is what really works, [the truth about] wires - and precisely what to
+direct-address-medium | hy weight loss jabs can leave [you] 'worse off than before' after
 reveal | Sian Williams, 61, recalls [secretly] fainting live on BBC Breakfas
 clickbait | [EXCLUSIVE]As Stacey Solomon toasts £10m
 reveal | e questions - and OLIVIA KEMP [reveals] why it's caused fury...
@@ -51,14 +56,17 @@ clickbait | [Shocking] moment Trump's Homeland Secur
 uncertainty-medium | er she is having sex with her [rumored] lover and trusted adviser.
 clickbait-underline | Why at 64 I [now] got married. We've been toget
 clickbait-underline | these are the two things that [now] made me walk down the aisle
+direct-address-medium | 10 chic home finds will make [your] space look instantly designer
 all-caps-underline | SHOPPING: Primark's latest [major find] has shoppers rushing for the
 clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it's gone
+direct-address-medium | e pieces will instantly boost [your] confidence and they're all on
 uncertainty-medium | The Princess of Wales' [rumoured] favourite anti-ageing formula
 clickbait-underline | ourite anti-ageing formula is [now] on sale in an amazing value s
 uncertainty-medium | SHOPPING: [Rumoured] to be a favourite of Catherin
 idiom-medium | es, this bee venom formula is [turning heads] across social media.
 all-caps-underline | unches a new pushchair with a [genius] folding carrycot as parents h
 idiom-medium | d loved by royal families, is [turning heads] among city parents with its n
+direct-address-medium | brand is about to be all over [your] feed - and these are the piec
 reveal | Amazon just [revealed] its longest sale yet! Here ar
 all-caps | TOM LEONARD: [Was it really a French-speaking Jim Carrey who accepted an award in Paris this week - or could the crazy conspiracy theories be true?]
 hype | ue francaise when he accepted [a prestigious] film award in Paris on Thursd
@@ -66,11 +74,16 @@ all-caps-underline | share Was it [really] a French Jim Carrey who accep
 authority | Bosses and [experts say] Labour's national insurance h
 reveal-underline | ideo that still haunts me and [what's] lurking in the internet's mos
 clickbait-underline | h Prince Andrew and his three [surprising] requests, day I had to ban hi
+modality-medium | ee surprising requests, day I [had to] ban him from an event in case
 clickbait | [EXCLUSIVE]Distasteful truth about arroga
+direct-address-medium | f a huge fortune while giving [you] tips that will never make you
+direct-address-medium | you tips that will never make [you] rich... and betrayal he's des
 negative-framing-medium | you rich... and betrayal he's [desperate] to hide
 loaded-framing-underline | ieved his own publicity, it's [self-proclaimed] 'Money Saving Expert' Martin
 reveal | leads to divorce? Five women [reveal] exactly how much they made lo
 all-caps-underline | to divorce? Five women reveal [exactly] how much they made love in th
+direct-address-medium | eye-opening results may have [you] ringing your lawyer...
+direct-address-medium | results may have you ringing [your] lawyer...
 clickbait | [EXCLUSIVE]Katie Price's inner doubts ove
 negative-framing-underline | ver new husband: Lee Andrews' [angry] ex reveals details of secret
 reveal | usband: Lee Andrews' angry ex [reveals] details of secret phone call
@@ -90,12 +103,16 @@ fear | seer claiming several of his [chilling] predictions could be unfoldin
 fear | 77 shares Nostradamus' [chilling] 2026 prophecy emerges as US-I
 negative-framing | srael air assault against the [regime] that resulted in the killing
 conflict | ears soaring oil prices could [spark] a surge in inflation
+modality-medium | aring the start of WWIII - we [must] stand up to him
 dysphemism-underline | redouble demands on Labour to [cut] approval for Beijing mega-emb
 clickbait | y in London in wake of latest [shock] spying allegations
 dysphemism-underline | ries new demands on Labour to [cut] approval for Beijing mega-emb
 all-caps-underline | f recovery - and the symptoms [everyone] should be aware of
+modality-medium | y - and the symptoms everyone [should] be aware of
+direct-address-medium | e pieces will instantly boost [your] confidence and they're all on
 clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it's gone
 minimizing | who is getting right and what [mere] mortals must know if they dar
+modality-medium | g right and what mere mortals [must] know if they dare to bare
 negative-framing-medium | om Barnsley, South Yorkshire, [tragically] died on June 11, 2025, four m
 clickbait | [EXCLUSIVE]Dark secret behind James Charl
 reveal | EXCLUSIVEDark [secret] behind James Charles new move
@@ -108,8 +125,12 @@ clickbait | Deadliest Catch star's [devastated] mom begs producers not to air
 fear-medium | A [heartbroken] mother has spoken out after h
 clickbait | [EXCLUSIVE]Moment police arrest Romanian
 uncertainty | that he is being arrested on [suspicion of] conspiracy to steal; while an
+direct-address-medium | What [you] must do NOW to protect your n
+modality-medium | What you [must] do NOW to protect your nest e
+direct-address-medium | at you must do NOW to protect [your] nest egg from Labour's tax gr
 loaded-framing-medium | t your nest egg from Labour's [tax grab]: JEFF PRESTRIDGE reveals his
 reveal | r's tax grab: JEFF PRESTRIDGE [reveals] his tricks to boost your savi
+direct-address-medium | E reveals his tricks to boost [your] savings... before the devasta
 clickbait | st your savings... before the [devastating] raid
 loaded-framing-medium | t your nest egg from Labour's [tax grab]
 clickbait | [EXCLUSIVE]'I had never experienced pain
@@ -132,6 +153,7 @@ clickbait-medium | ing financial data and texts: [Act NOW]
 hype | lished dress as she joins her [dazzling] co-stars Elle Chapman and Bea
 uncertainty | d by City of London Police on [suspicion of] fraud by abuse of position.
 reveal | Liam Neeson's son Daniel, 29, [reveals] he's undergone surgery for a
+direct-address-medium | Vaping could kill [you], concerning new study reveals
 reveal | ill you, concerning new study [reveals]: It raises blood pressure and
 reveal | usband Lee Andrews legal in a [secret] second Dubai ceremony after r
 reveal | t second Dubai ceremony after [revealing] she hasn't signed a pre-nup
@@ -158,6 +180,7 @@ fear | rs to influencers going from '[terrified]' to mysteriously praising the
 conflict | share [Chaos] in Dubai as tourists 'grab de
 rhetorical-question-medium | POLL OF THE DAY: [Does Trump's latest attack on Starmer mean the Special Relationship is over?]
 conflict-medium | r Cyprus until NEXT WEEK amid [growing row] over UK's ability to protect
+direct-address-medium | Wish [you] war here? Tourists and expats
 hype-medium | ld lead to migarnt crisis of '[unprecedented] magnitude'
 loaded-framing-medium | ran turmoil could lead to new [migrant crisis]
 clickbait | [EXCLUSIVE]Iran strikes pummel Trump appr
@@ -172,7 +195,7 @@ authority | Kate, Beatrice's display was, [according to] UK body language judge 
 hype | Oops, looks like [supermodel] Kate has made a Fergie fashio
 loaded-framing-medium | was famously worn once by the [disgraced] Sarah Ferguson (right).
 hype | share Oops, looks like [supermodel] Kate has made a Fergie fashio
-all-caps-underline | [Don't miss]
+all-caps | [Don't miss]
 aggression-medium | positivity': Nicola Coughlan [hits back] at 'plus size' label and says
 clickbait | [EXCLUSIVE]Katie Price's inner doubts ove
 negative-framing-underline | ver new husband: Lee Andrews' [angry] ex reveals details of secret
@@ -288,22 +311,31 @@ fear | Thea Joy after suffering two [heartbreaking] miscarriages in the space of
 reveal | Shane Warne's close friend [reveals] never-before-heard details ab
 negative-framing-medium | ng in the months prior to his [tragic] passing.
 reveal | ies as an adult? Psychologist [reveals] why so many grown ups still c
+direct-address-medium | [Your] childhood food favourites tha
 all-caps-underline | hildhood food favourites that [never] change: As brands bulk out pr
 uncertainty-medium | Week with daughter, 16, amid [rumors] he is back with Megan Fox
 uncertainty-medium | daughter Casie amid Megan Fox [rumors]
 clickbait | - and it comes in a range of [stunning] colours
 reveal | A frequent traveller [reveals] her ultimate packing hacks (i
 rhetorical-question-medium | ppeared in propaganda videos. [Was he a hero or traitor - and could he still be alive?]
+direct-address-medium | test. Here are the top models [you] can rely on for powerful, fus
 dysphemism-underline | Sky Sports [cut] pundit after she came out as
 reveal | soon to mow the lawn? Expert [reveals] what will happen if you cut t
+direct-address-medium | t reveals what will happen if [you] cut the grass now - and the s
+direct-address-medium | e simple test that could save [you] hundreds of pounds in machine
 hype-medium | I'm a personal trainer, my [foolproof] mindset switches will make yo
+direct-address-medium | of mindset switches will make [you] want to exercise, even when y
+direct-address-medium | u want to exercise, even when [you] can't be bothered
 authority | t manicure trends for spring, [according to] a top nail artist
 authority | t manicure trends for spring, [according to] a top nail artist
 authority | ajority of people were buried [according to] their gender, some defied the
 reveal | me expire? A fragrance expert [reveals] how long you can use your sce
+direct-address-medium | rance expert reveals how long [you] can use your scents for - and
+direct-address-medium | reveals how long you can use [your] scents for - and the signs it
 aggression | Mauritius PM [blasts] delay to Britain's handover o
 loaded-framing-medium | e top UK diplomat quits over '[craven surrender]'
 idiom-medium | [Chip off the old block]! Super-sub Kai Rooney produce
+direct-address-medium | ke-up switch will upgrade all [your] spring looks
 aggression-medium | [Fury] over Chinese 'monkey executio
 aggression-medium | [Fury] has erupted in China after fo
 negative-framing | show at a tourist attraction. [A disturbing] video shows the primate made
@@ -346,6 +378,7 @@ conflict | ent' in heartbreaking reunion [clash]
 conflict | The Heat thrown into [chaos] as diners evacuated from rest
 all-caps-underline | t thrown into chaos as diners [evacuated] from restaurant after chef's
 negative-framing-medium | from restaurant after chef's [disastrous] blunder - as boss seethes 'I
+direct-address-medium | t beach has been named - does [YOUR] favourite make the list?
 rhetorical-question-medium | [Will supermarket prices rise thanks to the Middle East conflict - and which products could run out?]
 authority | n Britain in the longer-term, [experts warn].
 distancing-medium | d to play football' amid more [alleged] time-wasting during 1-0 win

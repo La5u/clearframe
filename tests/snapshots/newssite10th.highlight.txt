@@ -1,4 +1,4 @@
-# newssite10th.html mode=highlight highlights=318
+# newssite10th.html mode=highlight highlights=350
 clickbait | [EXCLUSIVE]Cops swarm on Jeffrey Epstein'
 clickbait | Royal Navy [FINALLY] sets sail to defend Cyprus af
 hype-medium | ft my 'meno-middle'... Then a [miracle] method banished it in just fo
@@ -17,9 +17,14 @@ dysphemism | Karen Hauer is [AXED] in Strictly bloodbath
 negative-framing | ren Hauer is AXED in Strictly [bloodbath]
 clickbait | [EXCLUSIVE]The grandmother-of-10 making £
 all-caps | other-of-10 making £100 every [MINUTE] from her humble shop... and h
+direct-address-medium | om her humble shop... and how [you] can follow in her footsteps:
 all-caps | The gran-of-10 making £100 a [MINUTE] from her shop
 all-caps | The [REAL] Carolyn Bessette was a violen
+modality-medium | humiliation fetish. The lies [must] stop. Her friends are telling
 reveal | [The truth about] what happens if you drink mor
+direct-address-medium | e truth about what happens if [you] drink more than 14 units of a
+direct-address-medium | ek - and how much it shortens [your] life by (and it's shorter tha
+direct-address-medium | ife by (and it's shorter than [you] think)
 uncertainty | eks before he was arrested on [suspicion of] spying for China - when she i
 authority | Earthcott Ltd on 12 February, [according to] her latest register of intere
 clickbait | [EXCLUSIVE]'I am just reminded of the cyc
@@ -30,6 +35,7 @@ negative-framing-medium | BBC bosses were '[desperate]' to keep the 36-year-old 
 negative-framing | r-old Russian dancer amid the [bloodbath] because 'they know how popula
 negative-framing-medium | share [Desperate] BBC bosses save Katya Jones w
 authority | 'deliciously sweet' flavour, [according to] Which?.
+direct-address-medium | ices soar (and how to snaffle [yourself] the ultimate property nest eg
 all-caps | latasaray Team News - Osimhen [STARTS]View post
 all-caps | Liverpool Team News - Wirtz [STARTS]View post
 reveal | zon Spring Deal Days 2026: We [reveal] all the best deals as they co
@@ -40,8 +46,10 @@ authority | n Spring Deal Days buys 2026, [according to] experts
 clickbait-medium | month to beat the 3pm slump - [here's how] it transformed my energy (and
 clickbait | Dry, cracked heels? The [shocking] footcare trend that's both di
 reveal | here are the 10 perfumes mum [secretly] wants this Mother's Day (and
+direct-address-medium | urant rush: Let Waitrose help [you] create the perfect Mother's D
 clickbait | s of brow gels - but this one [finally] gave me 'clean girl' laminate
 distancing-medium | Trevor Hollisey, 72, [allegedly] attacked his neighbours Neil
+direct-address-medium | 'She's [your] stereotypical possessive boy
 reveal | ion' in their relationship is [revealed]
 clickbait | [EXCLUSIVE]Karen Hauer is AXED in Strictl
 dysphemism | EXCLUSIVEKaren Hauer is [AXED] in Strictly bloodbath: Longes
@@ -51,6 +59,7 @@ dysphemism | ctly Come Dancing bosses have [axed] professional dancer Karen Hau
 all-caps | gn the Gulf Stream is nearing [COLLAPSE]: Scientists identify 'red fla
 negative-framing | current is inching closer to [disaster]
 reveal | Dr Marine Vincent unlocks the [secret] to their superior complexion,
+direct-address-medium | r £30 they swear by - and how [YOU] can match them
 all-caps | [WAR IN THE MIDDLE EAST]
 aggression-medium | Tehran with 'death, fire and [fury]'
 aggression-medium | to brace for 'death, fire and [fury]' for keeping the Strait of Ho
@@ -63,12 +72,15 @@ clickbait | [EXCLUSIVE]: Daily Mail Sport understands
 distancing | 35, was arrested after police [suspected] he was drunk behind the wheel
 clickbait | soriasis for 20 years. Then I [finally] found a simple cure that real
 all-caps | nd it saw me lose 3 stone too [WITHOUT] medication. Everyone plagued
+modality-medium | ued by itchy red skin patches [should] make these easy lifestyle twe
 clickbait | [EXCLUSIVE]As Stacey Solomon toasts £10m
 reveal | e questions - and OLIVIA KEMP [reveals] why it's caused fury...
 aggression-medium | KEMP reveals why it's caused [fury]...
 all-caps | missing what the Iran war is [REALLY] about - and it's not Israel.
+direct-address-medium | HAVIV RETTIG GUR writes, once [you] understand, everything else m
 all-caps | 660 shareWhat the Iran war is [REALLY] about - it's not Israel: HAVI
 all-caps | inkly neck in just 15 minutes [WITHOUT] surgery: It's one of the hard
+direct-address-medium | reas to treat particularly if [you] lose weight. Now there's a ga
 hype | ou lose weight. Now there's a [game-changing] answer... and I'm proof it wo
 all-caps | ld wrinkly neck in 15 minutes [WITHOUT] surgery
 idiom-medium | Zara Tindall [turns heads] in elegant navy skirt suit on
@@ -87,6 +99,8 @@ clickbait | months for repeating 'deeply [shocking]' Ricky Gervais joke during o
 all-caps | England star announces he's [QUITTING] international football, three
 clickbait | [EXCLUSIVE]Jimmy Savile appears in Epstei
 hype | ointed Erika Kirk to serve on [an influential] board which oversees the US A
+direct-address-medium | ays 'there's no-one there for [you] when you crash' in latest swi
+direct-address-medium | e's no-one there for you when [you] crash' in latest swipe at the
 all-caps | [WAR IN THE MIDDLE EAST]
 reveal | Iran [reveals] stealthier 'kamikaze' drone b
 moral | [Ruthless] new Ayatollah 'even more brut
@@ -96,24 +110,31 @@ negative-framing | ated an important role in the [regime] over his lifetime.
 negative-framing | Mojtaba Khamenei, 56, a [hardline] cleric viewed as even more ex
 clickbait | [EXCLUSIVE]Interactive map reveals cheape
 reveal | EXCLUSIVEInteractive map [reveals] cheapest place to buy petrol
+direct-address-medium | to buy petrol and diesel near [you] as fuel prices surge amid Ira
 aggression-medium | reatens Tehran with 'fire and [fury]' if blockade continues
 clickbait | [EXCLUSIVE]Anthony Joshua quits the UK to
 fear-medium | sands try to flee amid rising [panic] in Middle East warzone
 conflict-medium | d rising panic in Middle East [warzone]
 conflict-medium | h the desert city is now in a [warzone] with thousands of Britons des
 negative-framing-medium | one with thousands of Britons [desperate] to get out.
+direct-address-medium | Why [you] should start prepping your ga
+modality-medium | Why you [should] start prepping your garden fu
+direct-address-medium | Why you should start prepping [your] garden furniture NOW to be re
 distancing-medium | The [alleged] rape took place at Sheffield
 authority | was reported by a third party [according to] British Transport Police.
 hype | l-Salem is accused of playing [a leading] role in the violent crackdown
 negative-framing | t of the uprising against the [regime] of former leader Bashar al-As
 reveal | guide to flowers: Our expert [reveals] secret meaning behind your bo
 reveal | o flowers: Our expert reveals [secret] meaning behind your bouquet,
+direct-address-medium | reveals secret meaning behind [your] bouquet, what NOT to buy and
 all-caps | ing behind your bouquet, what [NOT] to buy and plants to get if y
+direct-address-medium | T to buy and plants to get if [you] want to impress
 distancing | ou' before the pair died from [suspected] carbon monoxide poisoning, in
 distancing-medium | oyfriend texted mother before [alleged] poisoning
 fear | The [horrifying] life of 'Hannibal the Canniba
 reveal | Hannibal the Cannibal'... and [the TRUTH about] his 'glass cell'. Read it in
 uncertainty | 40 years, Robert Maudsley was [reportedly] kept locked in a bulletproof
+imperative-medium | [Forget] university, now young adults
 all-caps | crash victims died avoidable [FIREBALL] death after legal tycoon's wi
 all-caps | crash victims died avoidable [FIREBALL] death
 reveal | the Hollywood smile: Experts [reveal] what perfect teeth REALLY loo
@@ -135,6 +156,7 @@ negative-framing | share Tennis star, 18, throws [furious] tantrum and tells cro
 aggression | Jeremy Clarkson [rips] into 'idiotic' Countryfile as
 aggression | o 'idiotic' Countryfile as he [blasts] BBC for showcasing 'stupid pe
 reveal | [Revealed]: The 163 new emojis available
+direct-address-medium | e 163 new emojis available on [your] iPhone NOW - including a face
 fear | ng at the Vatican to tackle a [terrifying] new evil. The devil has a new
 moral | an to tackle a terrifying new [evil]. The devil has a new domain..
 clickbait-medium | y dogs make me £150k a year - [here's how] I turned my pooches into the
@@ -249,9 +271,13 @@ negative-framing | oria more freedom following a [severe] stroke. The 73-year-ol
 reveal | Scientists [reveal] controversial plan to launch
 all-caps | versial plan to launch 50,000 [MIRRORS] into space for 'sunlight on d
 all-caps | e Scientists to launch 50,000 [MIRRORS] into space for sunlight on de
+direct-address-medium | or pension glitch which means [you] could be given access to your
+direct-address-medium | you could be given access to [your] pot only for it to be snatche
+direct-address-medium | a small window to save it if [you] act NOW: TANYA JEFFERIES
 clickbait-medium | mall window to save it if you [act NOW]: TANYA JEFFERIES
 clickbait | [EXCLUSIVE]Moment wife of Alexander broth
 clickbait | Punch the monkey is [FINALLY] accepted by his peers after p
+direct-address-medium | POLL OF THE DAY: Do [you] believe war in the Middle Eas
 reveal | tain's most expensive streets [revealed]: Road where homes are worth a
 authority | [According to] Rightmove, Winnington Road in
 negative-framing | urday aged 52 after suffering [severe] brain trauma following the at
@@ -265,7 +291,11 @@ aggression-medium | cash machine for the world': [Fury] as stats suggest a quart
 aggression-medium | share [Fury] as stats suggest 1-in-4 non-E
 hype-medium | uller bust' swimwear range in [sizzling] Jamaica holiday snaps
 hype-medium | le curves in a pink bikini in [sizzling] holiday snaps from her trip t
+modality-medium | s connects to Pluto, one sign [must] trust their instincts, says J
+modality-medium | JEMIMA CAINER, while another [should] embrace emotion
 hype-medium | Cox scooped the event's most [prestigious] award in Birmingham on Sunday
+direct-address-medium | for all? Difficult people in [your] life AGE you 1.5% faster, stu
+direct-address-medium | icult people in your life AGE [you] 1.5% faster, study warns
 authority | could be ageing you quicker, [according to] a new study.
 clickbait | [EXCLUSIVE]Iconic nepo baby daughter of H
 derogatory | EXCLUSIVEIconic [nepo baby] daughter of Hollywood royalty
@@ -274,6 +304,8 @@ derogatory | 91 shares Iconic [nepo baby] daughter of Hollywood royalty
 hype | er Sian's birthday with their [glamorous] mum at swanky spa day after r
 hype-medium | reconciling following their '[explosive] row'
 hype | er, her sister Sian and their [glamorous] mother enjoyed a spa day on T
+direct-address-medium | What's [YOUR] Online Language? Scientists s
+direct-address-medium | ser - take the test to see if [you're] a 'Rabbit Hole Explorer' or a
 clickbait | [EXCLUSIVE]Staggering 242 Special Forces
 clickbait | [EXCLUSIVE]Police employee who was caught
 all-caps | [MORE DON'T MISS]

@@ -144,7 +144,7 @@ for (const [text, wording] of [
 assert.deepStrictEqual(findMatches(matcher, 'out of\nthe bluebird', index.termsById, index.regexTerms), [], 'word boundary still applies after whitespace');
 assert.strictEqual(findContextualMatches('One of the most\ndramatic moments in\nhistory', { headline: true }).length, 1, 'contextual patterns cross source whitespace');
 // Headline rules see the same wording (these are low-confidence cues, so every sensitivity level is needed).
-for (const [text, wording] of [['Why\nyou should care', 'Why\nyou should'], ['Third\ntime lucky', 'Third\ntime lucky']]) {
+for (const [text, wording] of [['Why you\nneed\nto care', 'need\nto'], ['Third\ntime lucky', 'Third\ntime lucky']]) {
   assert.ok(analyze(text, { ...PUBLICATION, headline: true }, normalizeSettings({ sensitivity: 'all' })).entries.some(entry => entry.sourceText === wording), `headline ${JSON.stringify(text)}`);
 }
 for (const [text, mode, displayText, source] of [
@@ -249,10 +249,94 @@ for (const sample of [
 ]) {
   assert.ok(findMatches(matcher, sample, index.termsById, index.regexTerms).length, `Daily Mail gap must match: ${sample}`);
 }
-assert.ok(findContextualMatches('The mistakes you are making', { headline: true }).some(match => match.termId === '__clearframe_direct_address__'));
-assert.deepStrictEqual(findContextualMatches('You can change this setting', { headline: true }), [], 'bare conversational you is not clickbait');
-assert.deepStrictEqual(findContextualMatches('What you need to know', { headline: true, conversational: true }), [], 'comment context suppresses direct address');
-assert.ok(findContextualMatches("You won't believe this", { headline: true }).some(match => match.termId === '__clearframe_direct_address__'));
+assert.ok(!findContextualMatches('The mistakes you are making', { headline: true }).some(match => match.termId === '__clearframe_direct_address__'), 'direct address is a word list now, not a contextual pattern');
+
+// Rhetorical devices found by word lists and exceptions.json (imperative, direct address,
+// inclusive pronoun, modality) or by structure (tricolon, anaphora): [type, text, context,
+// wordings found at "everything"]. Headlines show the word devices at the default level,
+// body text only at "everything"; comments and quoted speech never.
+/** @type {Array<[string, string, object, string[]]>} */
+const DEVICE_CASES = [
+  ['imperative', 'Find out why prices rise', { headline: true }, ['Find out']],
+  ['imperative', 'Imagine a city without cars', { headline: true }, ['Imagine']],
+  ["imperative", "Don't miss the final", { headline: true }, ["Don't miss"]],
+  ['imperative', 'BREAKING: Get ready for snow', { headline: true }, ['Get']],
+  ['imperative', 'Read on. See inside for details', { headline: true }, ['Read on', 'See']],
+  ['imperative', 'Watch brand Rolex unveils a new model', { headline: true }, []],
+  ['imperative', 'Meet the Press returns on Sunday', { headline: true }, []],
+  ['imperative', 'Check: £20 off all items', { headline: true }, []],
+  ['imperative', 'Voters watch closely as results arrive', { headline: true }, []],
+  ['imperative', 'Use of force was justified, report finds', { headline: true }, []],
+  ['imperative', '"Find out more," the minister said', { headline: true }, []],
+  ['imperative', 'Fans find out the truth', { headline: true }, []],
+  ['imperative', 'Get ready for snow', { headline: true, conversational: true }, []],
+  ['direct-address', 'How you can save £50', { headline: true }, ['you']],
+  ['direct-address', 'Your pension is at risk', { headline: true }, ['Your']],
+  ['direct-address', "What you'll need to know", { headline: true }, ["you'll"]],
+  ['direct-address', 'Is this you? Treat yourself', { headline: true }, ['you', 'yourself']],
+  ['direct-address', 'Youth unemployment hits a high', { headline: true }, []],
+  ['direct-address', 'The YouTube video went viral', { headline: true }, []],
+  ['direct-address', '“I love you,” she said', { headline: true }, []],
+  ['direct-address', 'How you can save £50', { headline: true, conversational: true }, []],
+  ['direct-address', 'How you can save £50', { headline: true, pageContext: 'discussion' }, []],
+  ['inclusive-pronoun', 'We must protect our future', { headline: true }, ['We', 'our']],
+  ['inclusive-pronoun', "Let's talk about us", { headline: true }, ["Let's", 'us']],
+  ['inclusive-pronoun', "It is ours, and we're ready", { headline: true }, ['ours', "we're"]],
+  ['inclusive-pronoun', 'We did it ourselves', {}, ['We', 'ourselves']],
+  ['inclusive-pronoun', 'US officials said the US-led talks failed', { headline: true }, []],
+  ['inclusive-pronoun', 'Bonus plans at Lotus and Focus', { headline: true }, []],
+  ['inclusive-pronoun', 'He said "we won" in a statement', { headline: true }, []],
+  ['modality', 'Schools must reopen, he should resign', { headline: true }, ['must', 'should']],
+  ['modality', 'We need to talk. She has to go', { headline: true }, ['need to', 'has to']],
+  ['modality', "Britain ought to act and cannot afford to wait; it mustn't fail", { headline: true }, ['ought to', 'cannot afford to', "mustn't"]],
+  ['modality', 'The ministers must not delay; they should not, and shouldn’t', { headline: true }, ['must not', 'should not', 'shouldn’t']],
+  ['modality', 'A must-have bag and a must-see film', { headline: true }, []],
+  ['modality', 'The cinema is a must for fans', { headline: true }, []],
+  ['modality', 'The need to protect children is clear', { headline: true }, []],
+  ['modality', 'Add mustard and pass the shoulders', { headline: true }, []],
+  ['tricolon', 'He offered blood, sweat and tears.', {}, ['blood, sweat and tears']],
+  ['tricolon', 'Faster, cheaper and safer.', {}, ['Faster, cheaper and safer']],
+  ['tricolon', 'No jobs, no homes, no hope', {}, ['No jobs, no homes, no hope']],
+  ['tricolon', 'I came, I saw, I conquered.', {}, ['I came, I saw, I conquered']],
+  ['tricolon', 'Of the people, by the people, for the people.', {}, ['Of the people, by the people, for the people']],
+  ['tricolon', 'London, Paris and New York are big cities.', {}, []],
+  ['tricolon', 'In March, the minister said, and the rest followed.', {}, []],
+  ['tricolon', 'Apples, oranges, pears and plums.', {}, []],
+  ['tricolon', 'Monday, Tuesday and Wednesday were dry.', {}, []],
+  ['tricolon', 'Sales were 3,000, 4,000 and 5,000 units.', {}, []],
+  ['tricolon', 'He bought bread, milk and eggs at the shop.', {}, []],
+  ['tricolon', 'Faster, cheaper and safer.', { conversational: true }, []],
+  ['anaphora', 'We will fight on the beaches. We will fight in the hills.', {}, ['We will fight', 'We will fight']],
+  ['anaphora', 'No more cuts. No more lies. No more excuses.', {}, ['No more', 'No more', 'No more']],
+  ['anaphora', 'Never again will we forget; never again will we fail.', {}, ['Never again', 'never again']],
+  ['anaphora', 'Every child matters, every child deserves a chance.', {}, ['Every child', 'every child']],
+  ['anaphora', 'The dog barked. The cat ran.', {}, []],
+  ['anaphora', 'He said no. He said yes.', {}, []],
+  ['anaphora', 'It was cold. It was dark.', {}, []],
+  ['anaphora', 'Huntley had been ill. Huntley died in hospital.', {}, []],
+  ['anaphora', 'We will fight on the beaches. We will fight in the hills.', { conversational: true }, []],
+];
+for (const [type, text, context, wordings] of DEVICE_CASES) {
+  const plan = analyze(text, { ...PUBLICATION, ...context }, normalizeSettings({ sensitivity: 'all' }));
+  const entries = plan.entries.filter(entry => entry.terms.some(term => term.type === type));
+  assert.deepStrictEqual(entries.map(entry => entry.wording), wordings, `${type}: ${text}`);
+  for (const entry of entries) assert.strictEqual(text.slice(entry.start, entry.end), entry.wording, `${type} offsets: ${text}`);
+}
+// Default level: word devices only in headlines, anaphora yes, tricolon only at "everything".
+const standardTypes = (text, context) => analyze(text, { ...PUBLICATION, ...context }, normalizeSettings({})).entries.map(entry => entry.term.type);
+assert.deepStrictEqual(standardTypes('You must act', { headline: true }), ['direct-address', 'modality']);
+assert.deepStrictEqual(standardTypes('You must act', {}), []);
+assert.deepStrictEqual(standardTypes('We will fight on the beaches. We will fight in the hills.', {}), ['anaphora', 'anaphora']);
+assert.deepStrictEqual(standardTypes('Faster, cheaper and safer', {}), []);
+assert.deepStrictEqual(standardTypes('Hope is a must', { headline: true }), []);
+// They are only ever highlighted, and an older type keeps its span.
+for (const mode of ['reword', 'remove']) {
+  const plan = analyze('Find out how you must act: no jobs, no homes, no hope', { ...PUBLICATION, headline: true }, normalizeSettings({ sensitivity: 'all', [mode === 'remove' ? 'removeTerms' : 'replaceTerms']: true }));
+  assert.ok(plan.entries.length && plan.entries.every(entry => entry.action === 'highlighted'), mode);
+}
+assert.deepStrictEqual(analyze('Act now, we must win', { ...PUBLICATION, headline: true }, normalizeSettings({})).entries.map(entry => `${entry.wording}:${entry.term.type}`), ['Act now:clickbait', 'must:modality'], 'clickbait imperatives keep their longer span and label');
+assert.strictEqual(analyze("'Our' plan, they said", { ...PUBLICATION, headline: true }, normalizeSettings({ sensitivity: 'all', types: { quote: true } })).entries.map(entry => entry.term.type).join(), 'quote', 'a word inside a scare quote is not a device of its own');
+assert.strictEqual(normalizeSettings({}).types.modality, undefined, 'new devices are on by default');
 assert.ok(findContextualMatches("The 'miracle' cure", { headline: true }).some(match => match.termId === '__clearframe_quoted_wording__'));
 for (const sample of ["don't do anything", "don't panic if it isn't ready", "James' plan", "students' work", "rock ’n’ roll", "the '90s", "a 6\" screen and 8\" tablet"]) {
   assert.ok(!findContextualMatches(sample, { headline: true }).some(match => match.termId === '__clearframe_quoted_wording__'), `apostrophe sanity check failed: ${sample}`);
@@ -374,6 +458,17 @@ const EXCEPTION_CASES = [
   ['elite', 'Xbox Elite controller leaks', false], ['elite', 'Hasbro Elite figures', false], ['elite', 'An elite athlete', false], ['elite', 'The wealthy elite', true],
   ['legendary', 'Marvel Legendary series', false], ['legendary', 'Her legendary performance', true],
   ['miracle', 'Scotts Miracle cream brand', false], ['miracle', 'A miracle cure', true], ['miracle', 'Miraculous comeback for the team', true], ['miracle', 'Doctors Hail Miraculous Escape', true],
+  ['meet', 'Meet the Press returns', false], ['meet', 'Meet the maniacs who love middle seats', true],
+  ['watch', 'Watch brand Rolex unveils a model', false], ['watch', 'Watch the moment he scores', true],
+  ['think', 'Think tank warns of cuts', false], ['think', 'Think hard, Britain', true],
+  ['must', 'A must-have bag', false], ['must', 'It is a must for fans', false], ['must', 'Schools must reopen', true],
+  ['need to', 'The need to protect children', false], ['need to', 'Schools need to reopen', true],
+  ['us', 'US officials said', false], ['us', 'The US-led talks', false], ['us', 'Visit us today', true], ['us', 'LET US PRAY FOR THE US ECONOMY', true],
+  ['we', 'He said "we won" last night', false], ['we', 'We won last night', true], ['we', 'We won last night', false, { headline: true, conversational: true }],
+  ['you', 'He said “you are kind', false], ['you', 'You are kind', true], ['you', 'You are kind', false, { headline: true, pageContext: 'video' }],
+  ['find out', 'Find out why', true], ['find out', 'Fans find out why', false], ['find out', '"Find out why" he said', false],
+  ['get', 'Get ready for winter', true], ['get', 'Get: £20', false], ['get', 'Get-out clause agreed', false], ['get', 'Get ready', false, { headline: true, conversational: true }],
+  ['get', 'A get-together', false], ['get', 'act now to get ready', false],
   ['gotta', 'You gotta see this', true, BODY], ['gotta', 'You gotta see this', false, REDDIT],
 ];
 for (const [phrase, text, flagged, context = HEAD] of EXCEPTION_CASES) {
@@ -537,6 +632,13 @@ try {
     [{ terms: { shock: { unless: [{}] } } }, /empty clause/],
     [{ term: {} }, /top level: unknown field "term"/],
     [{ types: { clickbait: { contexts: ['nowhere'] } } }, /unsupported context "nowhere"/],
+    [{ types: { clickbait: { confidence: { body: 'rare' } } } }, /type "clickbait".confidence/],
+    [{ types: { clickbait: { confidence: { sidebar: 'medium' } } } }, /type "clickbait".confidence/],
+    [{ types: { clickbait: { unless: ['missing'] } } }, /unknown shared pattern "missing"/],
+    [{ types: { clickbait: { only: [{ before: '/(/u' }] } } }, /type "clickbait".only\[0\].before: invalid regex/],
+    [{ types: { clickbait: { note: 'nothing else' } } }, /needs contexts, only, unless or confidence/],
+    [{ terms: { shock: { only: [{ conversational: 'no' }] } } }, /"conversational" must be true or false/],
+    [{ terms: { shock: { note: 'empty' } } }, /needs "unless" or "only"/],
   ]) {
     fs.writeFileSync(exceptionsFile, JSON.stringify(data));
     assert.throws(() => loadExceptions(exceptionsFile, exceptionTerms), error);

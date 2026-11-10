@@ -24,6 +24,34 @@
     "far-right": { "unless": ["position"] },
     "iconic": { "unless": ["productName"] },
     "legendary": { "unless": ["productName"] },
+    "meet": {
+      "note": "\"Meet the Press\" is a programme, not a command.",
+      "unless": [{ "after": "/^\\s+the\\s+press\\b/iu" }]
+    },
+    "must": {
+      "note": "\"must-have\" and \"must-see\" are hype; \"a must\" is a noun.",
+      "unless": [
+        { "after": "/^-/u" },
+        { "before": "/\\b(?:a|an|the|real|total)\\s+$/iu" }
+      ]
+    },
+    "need to": {
+      "note": "\"the need to protect\" is a noun; only the verb is a modal.",
+      "unless": [{ "before": "/\\b(?:the|a|an|their|his|her|its|our|your|my)\\s+$/iu" }]
+    },
+    "think": {
+      "unless": [{ "after": "/^\\s+tanks?\\b/iu" }]
+    },
+    "us": {
+      "note": "\"US officials\", \"US-led\": the country, written in capitals, unless the text around it is in capitals too.",
+      "unless": [
+        { "match": "/^US$/u", "before": "/^(?![\\s\\S]*[A-Z]{2,}\\s+$)/u", "after": "/^(?!\\s+[A-Z]{2,}\\b)/u" }
+      ]
+    },
+    "watch": {
+      "note": "The noun, as in \"Watch brand Rolex\" or \"Watch list\".",
+      "unless": [{ "after": "/^\\s+(?:brands?|makers?|straps?|faces?|dealers?|industry|company|sales|list|dog)\\b/iu" }]
+    },
     "miracle": {
       "note": "Brands use the noun (\"Miracle-Gro\", \"Miracle Recovery cream\"); a capitalised \"Miraculous\" is a sentence start or a Title Case headline, so the product guard skips that alias.",
       "unless": [
@@ -76,6 +104,15 @@
     }
   },
   "shared": {
+    "quotedSpeech": {
+      "note": "Words inside quotation marks that are still open are someone's speech, not the writer's voice.",
+      "unless": [
+        { "textBefore": "/“[^”]*$/u" },
+        { "textBefore": "/‘[^’]*$/u" },
+        { "textBefore": "/(?:^|[\\s(])'[^']*$/u" },
+        { "textBefore": "/^(?:[^\"]*\"[^\"]*\")*[^\"]*\"[^\"]*$/u" }
+      ]
+    },
     "position": {
       "note": "Position words: \"far right corner\", \"pictured at far left\", \"(far right)\".",
       "unless": [
@@ -101,6 +138,33 @@
     }
   },
   "types": {
+    "direct-address": {
+      "note": "Ordinary in comments and on forums, so only publications; in body text only shown at \"Everything\".",
+      "contexts": ["publication"],
+      "unless": [{ "conversational": true }, "quotedSpeech"],
+      "confidence": { "body": "contextual" }
+    },
+    "inclusive-pronoun": {
+      "note": "Contextual everywhere: in headlines \"we\" is mostly the outlet (\"We tested ten beds\"), not an appeal to a shared side.",
+      "contexts": ["publication"],
+      "unless": [{ "conversational": true }, "quotedSpeech"]
+    },
+    "modality": {
+      "contexts": ["publication"],
+      "unless": [{ "conversational": true }, "quotedSpeech"],
+      "confidence": { "body": "contextual" }
+    },
+    "imperative": {
+      "note": "A capitalised command opens a sentence or follows a kicker (\"WATCH: ...\"). Not \"Check: £20\", \"Use of force\", \"Look-alike\", or a verb that has a subject after it.",
+      "contexts": ["publication"],
+      "only": [{ "match": "/^\\p{Lu}/u", "before": "/^\\s*$|[.!?|–—:]\\s+$/u" }],
+      "unless": [
+        { "conversational": true },
+        "quotedSpeech",
+        { "after": "/^(?:\\s*:|-|\\s+(?:of|is|are|was|were|has|have|had|will|says?|said)\\b)/iu" }
+      ],
+      "confidence": { "body": "contextual" }
+    },
     "colloquialism": {
       "note": "Ordinary Reddit and YouTube language is not flagged.",
       "contexts": ["publication"]

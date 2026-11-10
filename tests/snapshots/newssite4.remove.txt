@@ -1,4 +1,4 @@
-# newssite4.html mode=remove highlights=217
+# newssite4.html mode=remove highlights=218
 all-caps | The video we've [ALL] been waiting for: Moment wedd
 conflict | Moment wedding is thrown into [chaos] after sister-in-law chucked b
 reveal | wis Hamilton... and the 'open [secret] in the industry' the 'couple'
@@ -212,6 +212,7 @@ derogatory | felt like a floating piece of [trash]': Zara Larsson recalls being
 hype-medium | ter being the centre stage in [explosive] trial with Johnny Depp
 hype-medium | ra print bikini as she shares [sizzling] beach snaps with fiancé Thom
 conflict | th The Stars lineup as her US [takeover] soars to new heights amid cla
+derogatory-medium | ty's David Haye takes another [vile] swipe at co-star Adam Thomas
 all-caps | obic comment to Vinicius Jr - [NOT] 'monkey slur' he was accused
 hype-medium | ey slur' he was accused of in [explosive] row
 dysphemism | ers BBC's 'crazy' decision to [axe] long-running show at end of t

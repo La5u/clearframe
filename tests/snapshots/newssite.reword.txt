@@ -1,4 +1,4 @@
-# newssite.html mode=reword highlights=389
+# newssite.html mode=reword highlights=390
 clickbait | [EXCLUSIVE]Expats scared to speak out abo
 fear | 'safest place on Earth' - as [frightened] holidaymakers scramble for fl
 negative-framing-medium | thousands of ordinary Britons [desperate] to get home. While the United
@@ -246,6 +246,7 @@ clickbait | [EXCLUSIVE]Jennifer Aniston's boyfriend J
 all-caps-underline | ton's boyfriend Jim Curtis is [very] attentive at secret shoot as
 idiom-medium | Diane Kruger and Naomi Watts [turn heads] in sophisticated shoulder pad
 clickbait | [EXCLUSIVE]RHONY newcomer Hailey Glassman
+fear-medium | yes out' as she watched on in [horror]
 aggression-medium | Christina Applegate's [blistering takedown] of 'gross' Harvey Weinstein e
 loaded-framing-medium | icits shock response from the [disgraced] film producer
 derogatory | Felicity Huffman's [nepo baby] Sophia Macy, 25, makes rare a

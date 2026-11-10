@@ -37,6 +37,13 @@
     "get": { "unless": [{ "after": "/^\\s+out\\s+of\\s+jail\\s+(?:free\\s+)?cards?\\b/iu" }] },
     "give": { "unless": [{ "after": "/^\\s+and\\s+take\\b/iu" }] },
     "grab": { "unless": [{ "after": "/^\\s+bags?\\b/iu" }] },
+    "horror": {
+      "note": "The genre: \"horror movies\", \"sci-fi and horror\", \"psycho-horror\".",
+      "unless": [
+        { "after": "/^\\s+(?:movies?|films?|genre|fans?|franchise|flicks?|novels?|stor(?:y|ies)|series|classics?|writers?|directors?|games?)\\b/iu" },
+        { "before": "/(?:-|\\bsci-fi and\\s)$/iu" }
+      ]
+    },
     "iconic": { "unless": ["productName"] },
     "imagine": { "unless": [{ "after": "/^\\s+Dragons\\b/u" }] },
     "join": { "unless": [{ "after": "/^\\s+(?:operations?|conditions?|clauses?)\\b/iu" }] },
@@ -65,6 +72,13 @@
       "unless": [{ "before": "/\\b(?:the|a|an|their|his|her|its|our|your|my)\\s+$/iu" }]
     },
     "picture": { "unless": [{ "after": "/^\\s+(?:frames?|credits?|captions?|quality|books?|postcards?)\\b/iu" }] },
+    "plunge": {
+      "note": "Clothing (\"plunging neckline\") and literal falls into water or through the air.",
+      "unless": [
+        { "match": "/^plunging$/iu", "after": "/^\\s+(?:[\\p{L}-]+\\s+){0,3}(?:neckline|bikini|swimsuit|dress|gown|top|bra|corset|bodysuit|outfit|number|blouse|jumpsuit|frock)\\b/iu" },
+        { "after": "/^\\s+(?:underwater|through the atmosphere|into (?:the |a )?(?:water|sea|river|lake|pool|ocean))\\b/iu" }
+      ]
+    },
     "revolutionary": {
       "unless": [
         { "after": "/^\\s*(?:guards?|war|army|front|committee|party)\\b/iu" }

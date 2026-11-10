@@ -1,4 +1,4 @@
-# newssite4.html mode=reword highlights=265
+# newssite4.html mode=reword highlights=266
 clickbait | [EXCLUSIVE]The video we've all been waiti
 all-caps-underline | EXCLUSIVEThe video we've [all] been waiting for: Moment wedd
 conflict | Moment wedding is thrown into [chaos] after sister-in-law chucked b
@@ -258,6 +258,7 @@ derogatory-underline | felt like a floating piece of [poor quality]': Zara Larss
 hype-medium | ter being the centre stage in [explosive] trial with Johnny Depp
 hype-medium | ra print bikini as she shares [sizzling] beach snaps with fiancé Thom
 conflict-underline | th The Stars lineup as her US [acquisition] soars to new heights amid cla
+derogatory-medium | ty's David Haye takes another [vile] swipe at co-star Adam Thomas
 clickbait | [EXCLUSIVE]Jack Whitehall's wedding venue
 clickbait | [Shocking] moment Massachusetts woman wa
 all-caps-underline | obic comment to Vinicius Jr - [not] 'monkey slur' he was accused

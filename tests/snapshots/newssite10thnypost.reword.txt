@@ -1,14 +1,11 @@
-# newssite10thnypost.html mode=reword highlights=58
-euphemism-low | Cops [probe] suspicious package near Graci
+# newssite10thnypost.html mode=reword highlights=49
 loaded-framing-medium | cnn deletes [tone-deaf] post downplaying moment suspe
 distancing | -deaf post downplaying moment [suspected] terrorists hurled bombs near
-euphemism-low | age facility in connection to [probe] into botched isis-inspired bo
 distancing-medium | amos’ wedding called off over [alleged] ‘ongoing infidelity issues’
 loaded-framing-medium | Flights of fancy [Disgraced] Ohio State prez boasted he wa
 loaded-framing | [Common sense]. No nonsense.
 fear-medium | What the oil-price [panic] really tells you about our le
 fear | Senior Iranian leader issues [chilling] warning that Trump could be ‘
-fear-low | ranian leader issues chilling [warning] that Trump could be ‘eliminat
 reveal | I found out my dad has a [secret] child — how do I confront him
 clickbait | Trading blows [Wild] brawl breaks out at usa vs. M
 clickbait | for divorce after wife makes [shocking] accusations
@@ -18,7 +15,6 @@ dysphemism-underline | Yogi [cut] from nyc school after ‘inappr
 clickbait | r-old tennis star loses it in [wild] meltdown after failing to def
 fear | Sad footage exposes [heartbreaking] reality of animals in Dubai a
 aggression | Megyn Kelly [rips] senator for threats against C
-loaded-framing-low | es strong stance on Eileen Gu [controversy]
 reveal | Bristol Palin [reveals] new plan to fix ‘crazy’ and ’
 aggression-medium | Backhanded Mariners teammate [fumes] over wbc handshake refusal
 distancing-medium | ein — where girls’ bodies are [allegedly] buried — is searched by autho
@@ -26,7 +22,6 @@ uncertainty-medium | e high-desert estate was long [rumored] to be one of severa
 clickbait | [exclusive]
 clickbait | sive Jeffrey Epstein brokered [exclusive] memberships for pals — while
 reveal | saw Jeffrey Epstein’s autopsy [reveals] why she didn’t immediately ru
-hype-low | Golden girl Zendaya [shows off] gold band at Paris Fashion We
 uncertainty-medium | Week as Tom Holland marriage [rumors] swirl
 clickbait-underline | ld out in 3 months — but it’s [now] back
 hype-medium | Larry Summers kicked out of [prestigious] economics group over Jeffrey
@@ -34,21 +29,17 @@ negative-framing-medium | Vlad the inhaler Russia [desperately] wipes video show
 uncertainty-medium | or breath amid ongoing health [rumors]
 uncertainty-medium | ng to breathe mid-speech — as [rumors] of his health woes ramp up.
 clickbait | Mayor Daniel Lurie blamed for [wild] brawl that injured his bodygu
-uncertainty-low | stomers is the least of their [worries]
 distancing-medium | 'Immediate harm' Rihanna’s [alleged] shooter also went after Billi
 conflict | Rock out Cher, 79, [sparks] marriage speculation with Ale
-loaded-framing-low | [Controversial] breast cancer treatment incre
 hype-underline | The [Unexpected] Metros Where an Entry-Level L
 hype | [Supermodel] Kendall Jenner Opens Up the D
 clickbait-underline | ner Opens Up the Doors to the [surprising] Closet Inside Her $9 Million
-idiom-low | [Come clean] Hilary Duff gets wet and wild
 clickbait | lean Hilary Duff gets wet and [wild] for ‘Tonight Show’ performanc
 loaded-framing-medium | dress for the TV debut of her [sultry] single “Roommates.”
 clickbait | Employers [shocked] that 1 in 5 Gen Z job seekers
 conflict | admin for blacklisting after [clash] on using AI for surveillance,
 aggression-medium | rust suit— why judge was left [fuming]
 reveal | The Best Kept [Secret] in Paris Luxury: Chic Stays a
-fear-low | Joy Behar [warned] Hasselbeck against going afte
 reveal | Outlander’ Says Goodbye: Five [Secrets] We Uncovered on the Season 8
 clickbait | [Shocking] moment gang storms luxury LA
 conflict-underline | l Beretta of plotting stealth [acquisition]

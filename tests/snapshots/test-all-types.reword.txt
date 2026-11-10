@@ -1,4 +1,4 @@
-# test-all-types.html mode=reword highlights=114
+# test-all-types.html mode=reword highlights=112
 aggression-underline | st | hit with | rip | roast | [harsh] | slam | taken out | torch |
 aggression | rip | roast | harsh | slam | [taken out] | torch | under fire
 aggression | | slam | taken out | torch | [under fire]
@@ -36,7 +36,6 @@ euphemism-underline | [civilian harm] | torture | assault | died |
 euphemism-underline | civilian harm | [torture] | assault | died | probe
 euphemism-underline | civilian harm | torture | [assault] | died | probe
 euphemism-underline | an harm | torture | assault | [died] | probe
-euphemism-low | | torture | assault | died | [probe]
 fear | dangerous | [frighten] | horrify | panic | terrify |
 fear | dangerous | frighten | [horrify] | panic | terrify | terror |
 fear-medium | gerous | frighten | horrify | [panic] | terrify | terror | threat |
@@ -66,7 +65,6 @@ loaded-framing | | self-proclaimed | called | [sunset]
 minimizing | [mere] | minor glitch
 minimizing | mere | [minor] glitch
 moral | [brutal] | controversial | courage | c
-loaded-framing-low | brutal | [controversial] | courage | corrupt | deluded
 moral | l | controversial | courage | [corrupt] | deluded | despicable | drac
 moral | versial | courage | corrupt | [deluded] | despicable | draconian | ev
 moral | courage | corrupt | deluded | [despicable] | draconian | evil | fair | f

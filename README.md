@@ -1,6 +1,6 @@
 # ClearFrame
 
-Browser extension that helps readers notice authorial choices, clickbait, and persuasion cues in online text.
+Browser extension that highlights persuasive wording choices on any page, for close reading. It offers wording to examine, not verdicts.
 
 ## Product Direction
 
@@ -10,11 +10,21 @@ The reader stays in control:
 
 - Pages are analyzed locally as they load and change.
 - Matches identify specific wording rather than assigning a political bias score.
-- Rewording and removal are optional.
-- Categories and colors remain customizable.
-- Highlights are monochrome by default; category colors are optional.
+- Hovering a highlight names the rhetorical device (hedging, hyperbole, agentless passive...) and its effect; the reader does the explaining.
+- Rewording is a "swap test" the reader switches on; removal is an advanced option.
+- Highlights are monochrome by default; device colors are optional.
 
 ClearFrame exposes linguistic pressure without telling readers what to believe.
+
+## Using it
+
+The popup has three tabs:
+
+- **This page**: how many wordings were flagged, grouped by device (most frequent first). Select a device to see its effect and the wordings found; select a wording to jump to its next occurrence.
+- **Study**: *Predict first* (the tooltip asks "What is this wording doing?" until you press Show; Alt+Shift+P), *Swap test* (shows a neutral alternative in place of each highlighted wording, hover for the original; Alt+Shift+R), *Headlines only*, and a link to *Analyse pasted text*.
+- **Settings**: *How much to highlight* (`sensitivity`: Strong cues only = high-confidence terms, Standard = high and medium, Everything = also uncertain cues; default Standard), monochrome highlights, per-device on/off and colors, and under *Advanced* Remove mode (Alt+Shift+X) and Feedback tools (Alt+Shift+F).
+
+ClearFrame reads wording only. It cannot see tone, irony, images or layout, and it misses things.
 
 ## Quick Start
 
@@ -79,7 +89,7 @@ exclusive,clickbait,,,adjective,,true,headline
 | `src/core/term-utils.js` | CSV parser, alias/stem expansion, duplicate and exception validation |
 | `src/core/context-filter.js` | Applies `data/terms/exceptions.json` and context allowlists to each match |
 | `src/core/stemmer.js` | Lightweight inflection for plural/past/-ing/adverb |
-| `src/popup.js` | Customize/Detected tab UI, type toggle, drag-to-recolor |
+| `src/popup.js` | This page / Study / Settings tabs, device list, device toggle, drag-to-recolor |
 | `src/background.js` | Badge sync across tabs |
 | `data/type-colors.json` | Color-to-subtype mapping |
 | `data/rules/*.jsonl` | Provenance-aware approved rules compiled at build time |
@@ -195,7 +205,7 @@ The design should:
 - Keep automatic analysis responsive on dynamic pages.
 - Prefer high-confidence patterns over isolated-word judgments.
 - Make every rewording reversible and keep original wording inspectable.
-- Optional feedback tools let readers classify bad matches and suggest selected wording; records stay in `chrome.storage.local` and can be copied from General.
+- Optional feedback tools let readers classify bad matches and suggest selected wording; records stay in `chrome.storage.local` and can be copied from Settings > Advanced.
 - Keep preferences in `chrome.storage.sync`; the term index remains bundled.
 - Avoid opaque political scores, fact-checking claims, and automatic moral judgments.
 
@@ -205,12 +215,12 @@ the original text, so rewording and restoring replace the whole original span.
 
 ## Analyse pasted text
 
-The popup's "Analyse pasted text" link opens `analyze.html`, a page for texts that are
+The Study tab's "Analyse pasted text" link opens `analyze.html`, a page for texts that are
 not web pages (PDFs, handouts). Paste a text and press Analyse: a blank line starts a
 paragraph, a single newline stays inside it and shows as a space, and the first line
 becomes an `<h1>` (so headline rules apply) unless "First line is the headline" is
 unticked. The page loads the same `content.js` and `content.css` as every web page, so
-highlights, the tooltip, reword mode (Alt+Shift+R), the popup's Detected list and the
+highlights, the tooltip, swap test (Alt+Shift+R), the popup's This page list and the
 settings behave identically. `analyze.js` only builds the paragraphs. The text stays in
 the page: nothing is stored or sent. It needs no extra permission.
 

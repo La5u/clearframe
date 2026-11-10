@@ -5,18 +5,18 @@
 // (display text, records) -> highlights; see "Analysis Flow" in README.md.
 import { DEFAULT_SETTINGS, normalizeSettings } from './core/settings-utils.js';
 import { getSettings, isFeedbackEnabled, setSettings } from './content/settings.js';
-import { getNextRecord, getTermGroups, getTotalMatches } from './content/store.js';
+import { getNextRecord, getDeviceGroups, getTotalMatches } from './content/store.js';
 import { showSelectedRecord } from './content/highlights.js';
 import { analyzePage, startObserving } from './content/observer.js';
 import { handleHoverMove, handleScroll, handleSelectionEnd, handleTooltipClick, hideFeedbackInTooltip, hideTooltip } from './content/tooltip.js';
 import { handleSelectionSuggestion, hideSuggestion } from './content/feedback.js';
 
-const RUNTIME_SHORTCUTS = { r: 'replaceTerms', x: 'removeTerms', f: 'feedbackEnabled' };
+const RUNTIME_SHORTCUTS = { r: 'replaceTerms', x: 'removeTerms', f: 'feedbackEnabled', p: 'predictFirst' };
 // Set once settings were loaded: by init in the top frame, or by APPLY_SETTINGS.
 let settingsReady = false;
 
 function getSettingsKey(value) {
-  return JSON.stringify({ replaceTerms: value.replaceTerms === true, removeTerms: value.removeTerms === true, monochrome: value.monochrome === true, feedbackEnabled: value.feedbackEnabled === true, types: value.types || {}, userTypeColors: value.userTypeColors || {} });
+  return JSON.stringify({ replaceTerms: value.replaceTerms === true, removeTerms: value.removeTerms === true, monochrome: value.monochrome === true, feedbackEnabled: value.feedbackEnabled === true, headlinesOnly: value.headlinesOnly === true, sensitivity: value.sensitivity, types: value.types || {}, userTypeColors: value.userTypeColors || {} });
 }
 
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
@@ -68,7 +68,7 @@ function init() {
   bodyWatcher.observe(document, { childList: true, subtree: true });
   chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ result) => {
     const changed = getSettingsKey(getSettings()) !== getSettingsKey(normalizeSettings(result.settings, result.userTypeColors));
-    if (changed) loadSettings(result.settings, result.userTypeColors);
+    loadSettings(result.settings, result.userTypeColors);
     settingsLoaded = true;
     if (!started) start();
     else if (changed) analyzePage();
@@ -94,10 +94,10 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     sendResponse({ count: getTotalMatches() }); return;
   }
   if (message.type === 'GET_TERMS') {
-    sendResponse({ groups: getTermGroups() }); return;
+    sendResponse({ devices: getDeviceGroups() }); return;
   }
   if (message.type === 'NAVIGATE_TERM') {
-    const record = getNextRecord(message.term, message.action);
+    const record = getNextRecord(message.term, message.device);
     if (record) showSelectedRecord(record);
     return;
   }

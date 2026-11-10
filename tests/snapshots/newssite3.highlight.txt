@@ -1,22 +1,16 @@
-# newssite3.html mode=highlight highlights=279
+# newssite3.html mode=highlight highlights=236
 conflict | t TWO DAYS' worth stored up - [sparking] fears of a supply shortage as
 authority | for just 1.5 days of demand, [according to] new data published by Nationa
 aggression | war: Foreign Secretary Cooper [blasts] president's 'diplomacy throug
-fear-low | -headed approach' after Trump [warned] the US will 'remember' the la
 authority | sraeli embassy in London - as [experts warn] of 'serious security breach'
 hype-medium | for war we've already won' in [explosive] broadside
-fear-low | The president [warned] the US will 'remember' the la
 fear | s are using state TV to issue [chilling] warnings that they and their
-fear-low | ng state TV to issue chilling [warnings] that they and their children
 negative-framing | ters, but those chanting anti-[regime] slogans risk on-the-spot exec
 clickbait | [EXCLUSIVE]As war rages in Iran, woke MoD
 clickbait | [EXCLUSIVE]Tony Blair rebukes Keir Starme
 hype | at to invest in now - and the [surprising] stocks you MUST avoid
 all-caps | and the surprising stocks you [MUST] avoid
 conflict | upted, aviation routes are in [chaos] and stock markets around the
-fear-low | Hell on Earth: Red Crescent [warns] Tehran may be submerged by to
-fear-low | an's Red Crescent society has [warned] that Tehran may soon be inund
-fear-low | share Red Crescent [warns] Tehran may be submerged by to
 moral | er to 'cash in on the Epstein [scandal]'
 moral | er to 'cash in on the Epstein [scandal]', Hollywood sources say. Ferg
 unsourced | e Epstein scandal', Hollywood [sources say]. Fergie, 66, had pitched the
@@ -28,12 +22,10 @@ dysphemism | cing shock as three stars are [axed]
 uncertainty | ti Patel and Chris Philp both [reportedly] under threat
 clickbait | [EXCLUSIVE]EXPOSED: Andrew's messages abo
 conflict | n known as 'Spotty' that have [sparked] demands princesses 'come clea
-idiom-low | e sparked demands princesses '[come clean]' about their finances - and B
 all-caps | How to end the agony of UTIs [WITHOUT] antibiotics. These are the si
 negative-framing-medium | o 'silent mode' while William [desperately] tried to 'form a barrier' fro
 authority | m a barrier' from his cousin, [according to] a body language expert.
 clickbait | [EXCLUSIVE]My haunting stay with Holly's
-clickbait-low | he most intense of my career. [This is what] they told me: SARAH OLIVER
 moral | hed me the most; the sense of [evil] done and innocence destroyed,
 clickbait | soriasis for 20 years. Then I [finally] found a simple cure that real
 all-caps | nd it saw me lose 3 stone too [WITHOUT] medication. Everyone plagued
@@ -47,13 +39,7 @@ clickbait | [EXCLUSIVE]Inside London's most benighted
 reveal | tance tax trap: SIMON LAMBERT [reveals] two easy ways to avoid the 40
 loaded-framing-medium | he house for 14 years, before [sadly] passing away on 24 December 2
 euphemism | se for 14 years, before sadly [passing away] on 24 December 2025.
-fear-low | tar Wars: Sir Richard Branson [warns] Britain must prepare for conf
-fear-low | llionaire, 75, gave the eerie [warning] to crowds at Space-Comm Expo
-fear-low | share Sir Richard Branson [warns] Britain must prepare for conf
 clickbait | [EXCLUSIVE]The flashy HMO king and queen
-idiom-low | uses in multiple occupation - [from scratch] in just two years. The high-f
-hype-low | years. The high-flying couple [flaunt] their wealth on social media
-idiom-low | le bragging that developments [in the pipeline] will soon see their empire sw
 clickbait | Jump racing in [shock] after 'lovely and bubbly' ama
 clickbait | [EXCLUSIVE]Emily in Hampstead? Lily Colli
 clickbait | [EXCLUSIVE]Andrew leaked inside intel on
@@ -64,7 +50,6 @@ clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it
 conflict | re in tell-all book on family [feud] after refusing to sign NDA'
 uncertainty | n Beckham's ex Hana Cross has [reportedly] been asked to feature in a te
 uncertainty | ictoria and David Beckham are [reportedly] aware that relatives, acquain
-fear-low | generation into debt. I first [warned] about this scandal 13 years a
 moral | bt. I first warned about this [scandal] 13 years ago - this is the fi
 all-caps | is is the financial advice he [SHOULD] be backing: JEFF PRESTRIDGE
 clickbait | [EXCLUSIVE]Brazilian model who was abused
@@ -83,7 +68,6 @@ loaded-framing | ieved his own publicity, it's [self-styled] 'Money Saving Exper
 reveal | leads to divorce? Five women [reveal] EXACTLY how much they made lo
 all-caps | to divorce? Five women reveal [EXACTLY] how much they made love in th
 all-caps | [WAR IN THE MIDDLE EAST]
-fear-low | , as the Revolutionary Guards [warned] today that it could carry on
 clickbait | [EXCLUSIVE]Ironic moment women's rights a
 negative-framing | demonstrating against Iranian [regime]... which has brutally oppress
 negative-framing | ng 'f*** you' at anti-Iranian [regime] protesters and flashing her m
@@ -98,13 +82,9 @@ negative-framing | ter stabbing of 'Iranian anti-[regime] protester'
 fear-medium | ough the streets of Tehran in [apocalyptic] scenes after after US strikes
 clickbait | ight launched a fresh wave of [devastating] strikes as the Middle East co
 conflict | s as the Middle East conflict [rages on].
-fear-low | Leaked spy report [warns] Trump's Iran war faces disast
 negative-framing | warns Trump's Iran war faces [disaster]
 negative-framing | the US's ability to influence [regime] change in Iran.
-fear-low | 437 shares Leaked spy report [warns] Trump's Iran war faces disast
 negative-framing | warns Trump's Iran war faces [disaster]
-fear-low | ne captain gave Iran crew two [warnings] to abandon ship before killin
-fear-low | ne captain gave Iran crew two [warnings] before torpedoing it
 aggression-medium | Pentagon [hits back] as Iran's wartime leader make
 aggression-medium | 78 shares Pentagon [hits back] at Iran's claim that US soldi
 reveal | Rosanna Arquette [reveals] the price she paid for reject
@@ -112,8 +92,6 @@ fear | ecting Harvey Weinstein after [horrifying] hotel encounter
 fear | ruel fate of dogs in Dubai is [horrifying]. I could never do what these
 fear | ent of dogs in Dubai is truly [horrifying]
 all-caps | interactive quiz to find out [EXACTLY] how to tackle it
-euphemism-low | MPs demand [probe] into offshore fund that may e
-euphemism-low | share MPs demand [probe] of offshore fund that may exp
 clickbait | [Has Emma Watson finally found love with Gonzalo Hevia Bailleres... or is her new tech billionaire boyfriend just trying to make his popstar ex jealous?]
 aggression | ations, mushroom coffins, and [blasting] remains into SPACE
 repetition | Today, [more and more] people are ditching the tradi
@@ -121,12 +99,10 @@ hype | Addison Ross, a [must-have] gifting destination known for
 reveal | [Secret] cremation for fiend Ian Huntl
 fear | n Saturday, 24 years after he [horrified] the nation by murdering ten-y
 clickbait | [EXCLUSIVE]King Charles' state visit to U
-euphemism-low | Murder [probe] launched after woman is found
-euphemism-low | 21 shares Murder [probe] launched after woman found de
 fear | [Horrified] parent reports teacher to sch
 all-caps | student posted video of him '[URINATING] in class'
 all-caps | r caught on cellphone camera '[URINATING] in class'
-clickbait-medium | on a seven-hour flight - and [here's why you should] too
+clickbait-medium | on a seven-hour flight - and [here's why] you should too
 authority | r a spectacular home refresh, [according to] the experts
 derogatory | Haunting prison mugshots show [mob] jailed for stealing iron and
 derogatory | rison mugshots show Victorian [mob] jailed for stealing iron
@@ -142,8 +118,6 @@ negative-framing-medium | A TikTok star mom has [tragically] died at 47 after su
 moral | One of the most [evil] child killers in history Ian
 hype | How [glamorous] nurse became embroiled in Tur
 all-caps | [WAR IN THE MIDDLE EAST]
-fear-low | be raised, leading economist [warns]
-fear-low | r to insurance giant Allianz, [warned] that the average person would
 authority | who in the world: As military [experts warn] World War III has never been
 authority | ts' during his teenage years, [according to] royal author Tina Brown. Yet
 all-caps | [DON'T MISS]
@@ -162,18 +136,15 @@ conflict | court war with Justin Baldoni [rages on]
 clickbait | Jack Osbourne recalls [devastating] moment he realized dad Ozzy w
 all-caps | A-list pop star [CRASHES] Ryan Gosling's Saturday Night
 loaded-framing-medium | Leon flashes her bottom in a [racy] sheer skirt during Paris Fash
-hype-low | Pregnant Dianne Buswell [shows off] her baby bump as she counts d
 uncertainty-medium | er-Man co-star fuels marriage [rumors] with cryptic Instagram post
 loaded-framing-medium | Lily Allen puts on a [racy] display in a pink silk bra as
 conflict | n's Got Talent collapses into [chaos] as judges Alesha Dixon and Si
 clickbait | [EXCLUSIVE]Is THIS your new husband's '£3
-hype-low | ld after IVF treatment as she [shows off] her growing bare baby bump
 clickbait | [EXCLUSIVE]King Charles' state visit to U
 clickbait | [EXCLUSIVE]Tragedy of Emma Watson's billi
 negative-framing | EXCLUSIVE[Tragedy] of Emma Watson's billionaire
 all-caps | Timothee Chalamet [SLAMMED] by Met Opera and Covent Garde
 clickbait | [EXCLUSIVE]Andrew leaked inside intel on
-hype-low | ves legs hydrated, smooth and [youthful] SHOPPING
 conflict | [Clash] of the co-stars! All the on-s
 unsourced | Kidman's daughter Sunday Rose [raises eyebrows] with her bizarre walk
 fear-medium | [Heartbroken] Blake Lively cuts a downcast
@@ -185,21 +156,15 @@ aggression-medium | indiscretion. Coleen's utter [fury] all revealed by ALISON B
 uncertainty-medium | after denying marriage split [rumours] in bizarre video
 conflict | ctoria's PFW show amid family [feud]
 all-caps | ruly cynical reason I believe [REALLY] lies behind the Beckhams' gus
-hype-low | as tweakments to maintain her [youthful] looks at 50
 clickbait | [EXCLUSIVE]Andrew, Fergie, Beatrice and E
-hype-low | Sydney Sweeney [shows off] her VERY ample chest in racy
 all-caps | Sydney Sweeney shows off her [VERY] ample chest in racy webcam sn
 loaded-framing-medium | s off her VERY ample chest in [racy] webcam snap as she plugs her
 all-caps | pping diamond engagement ring [DURING] her first-round win at Indian
-hype-low | Lizzo [shows off] her incredible 60lb weight lo
 clickbait | [EXCLUSIVE]'It was a really difficult tra
 distancing | ritney Spears is arrested for [suspected] DUI, we revisit what the trou
-hype-low | 'blown away'- with Hollywood [superstar] bringing 'immense gravitas' t
-uncertainty-low | rid of his felines - and fans [worry] it could hurt her Oscar hopes
 all-caps | rrects photographer after his [DAUGHTER], 16, is mistaken for Megan Fo
 clickbait | [EXCLUSIVE]Kaye Adams is accused of being
 derogatory-medium | e Adams is accused of being a [foul-mouthed] aggressive bully who humiliat
-clickbait-low | ed staff. I worked for her... [this is what] I saw, by CODIE BULLEN
 all-caps | ictured for the first time in [MONTHS]
 uncertainty-medium | Romeo Beckham's [rumoured] ex Caroline Daur turns heads
 idiom-medium | m's rumoured ex Caroline Daur [turns heads] at Victoria's Paris Fashion W
@@ -210,37 +175,30 @@ hype-medium | reconciling following their '[explosive] row' over secret affair w
 clickbait | [EXCLUSIVE]Toxic behind-the-scenes truth
 idiom-medium | David and Victoria Beckham's [olive branch] with 'love you' message to Br
 all-caps | ristina Applegate reveals the [HUGE] favor Will Ferrell did for he
-hype-low | Carol Vorderman, 65, [shows off] her slimmed -down figure in s
 clickbait | [EXCLUSIVE]Jennifer Lopez is pushing hers
 dysphemism | months after streaming giant [axed] her lifestyle show amid scath
 aggression | axed her lifestyle show amid [scathing] reviews
-hype-low | Williams goes braless as she [flaunts] drastic weight loss amid spec
 fear | himself on camera in front of [horrified] castmates
 clickbait | [EXCLUSIVE]Brooklyn's sad new estrangemen
 negative-framing-medium | sad new estrangement and the '[desperate]' meaning behind these picture
 rhetorical-question | some kind of special effects, [right?]!'
 distancing-medium | ichael Bay sues two women who [allegedly] crashed car into his Bel-Air
-uncertainty-low | s out following DUI arrest as [worried] pal says she needs to 'get ou
 distancing-medium | ciating with'... after police [allegedly] discover unknown substance in
 conflict | ctly about Brooklyn Beckham's [feud] with David and Victoria - bef
-hype-low | Trinny Woodall, 62, [flaunts] her toned abs in a strapless
 clickbait | [EXCLUSIVE]90s heartthrob who starred in
 clickbait-medium | ve lives makes rare outing... [can you guess] who?
 hype-medium | British comedy legends among [star-studded] guests hitting screens next w
 distancing-medium | Britney Spears [allegedly] open to seeking treatment aft
-hype-low | Caroline Wozniacki [shows off] her toned body in incredible
 clickbait | e of Robert Peston!' Viewers' [shock] at 65-year-old broadcaster's
 negative-framing | In [a desperate] attempt to foil shoplifters,
 all-caps | pping diamond engagement ring [DURING] her first-round win at Indian
 all-caps | wears diamond engagement ring [DURING] her win at Indian Wells
-hype-low | 'blown away'- with Hollywood [superstar] bringing 'immense gravitas' t
 conflict | [Clash] of the co-stars! All the on-s
 reveal | racing commentator John Hunt [reveals] heartbreaking grieving proces
 fear | commentator John Hunt reveals [heartbreaking] grieving process after crossb
 fear | Commentator John Hunt reveals [heartbreaking] grieving process
 aggression | a TOWEL on stage after being [ripped] out of leather catsuit by fan
 reveal | Inside Britney Spears' [secret] split from ex-felon Paul Soli
-fear-low | in Britney's circle had long [warned] her that Soliz might not be t
 clickbait | [EXCLUSIVE]Tragedy of Emma Watson's billi
 negative-framing | EXCLUSIVE[Tragedy] of Emma Watson's billionaire
 negative-framing | new boyfriend were touched by [tragedy] when a 20-year-old model died
@@ -252,7 +210,6 @@ all-caps | [MORE DON'T MISS]
 clickbait | [EXCLUSIVE]Britain's Got Talent turns phy
 negative-framing-medium | Amanda Holden's microphone in [desperate] bid to get revenge on Simon C
 all-caps | girlfriend Kim Turnbull risks [ANOTHER] awkward run-in with his ex Mi
-hype-low | Death In Paradise first look: [Iconic] character makes long-awaited
 moral | Grey's Anatomy star exposes '[brutal]' sacking that 'came out of no
 all-caps | er begging for an explanation [NINETEEN] times during exit meeting
 fear-medium | urbulent love life: From her '[horrendous]' split with a rugby player to

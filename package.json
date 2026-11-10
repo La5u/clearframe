@@ -3,7 +3,7 @@
   "version": "1.2.1",
   "private": true,
   "type": "module",
-  "description": "Highlights authorial choices with neutral alternatives.",
+  "description": "Highlights persuasive wording choices on any page, for close reading.",
   "scripts": {
     "build": "node build.js",
     "test": "node tests/run.js",

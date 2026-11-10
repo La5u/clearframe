@@ -1,8 +1,7 @@
-# newssite4.html mode=highlight highlights=278
+# newssite4.html mode=highlight highlights=216
 clickbait | [EXCLUSIVE]The video we've ALL been waiti
 all-caps | EXCLUSIVEThe video we've [ALL] been waiting for: Moment wedd
 conflict | Moment wedding is thrown into [chaos] after sister-in-law chucked b
-idiom-low | e walked down the aisle, when [out of the blue], 'it' happened. 'It' being th
 clickbait | [inside story]Kim Kardashian, Lewis Hamilton
 reveal | wis Hamilton... and the 'open [secret] in the industry' the 'couple'
 negative-framing-medium | he industry' the 'couple' are [desperate] to hide
@@ -10,35 +9,24 @@ negative-framing-medium | lton and 'open secret they're [desperate] to hide'
 aggression-medium | [Fury] at 'schoolyard bully' Trump t
 fear | The [heartbreaking] consequences of 'empty' threa
 clickbait | im back… but he's delivered a [devastating] blow
-hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
 dysphemism | Gladiators star Giant '[axed]' from BBC show
-hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
 dysphemism | Gladiators star Giant '[axed]' from BBC show
-hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
 dysphemism | Gladiators star Giant '[axed]' from BBC show
 dysphemism | Gladiators' Giant '[axed] after being faced with choice
 moral | ent his father. He isn't just [deluded] and dim-witted, he's dangerou
 clickbait | [EXCLUSIVE]Bloodbath on the streets as mi
 negative-framing | EXCLUSIVE[Bloodbath] on the streets as millions of
-fear-low | [warning] - graphic content: The Daily
 fear-medium | Healthy but [heartbroken] British mother Wendy Duffy di
-loaded-framing-low | 00 life savings to die at the [controversial] Pegasos 'suicide clinic' in B
 negative-framing | Rob Reiner's son Jake shares [horrific] new details of his parents' m
 clickbait | hs in December 2025 were 'too [devastating] to comprehend.'
 reveal | I kept my £15,000 debt a [secret] for nine years until one day
 clickbait-medium | day it all came spilling out. [Here's how] I dug myself out - and four s
 clickbait-medium | ebt a secret for nine years - [here's how] I got out
-loaded-framing-low | The end of assisted dying? [Controversial] Bill fails after bitter battl
-loaded-framing-low | supporters vow to bring back [controversial] legislation
 reveal | sts today following a week of [secret] auditions' - after Tess Daly
 authority | trictly Come Dancing 'today', [according to] new reports.
 hype | at blind date… but here's the [surprising] reason 'fussy' James wasn't i
-fear-low | ran war sends prices soaring, [warn] pharmacies
-fear-low | the war in Iran, experts have [warned].
 fear-medium | public life after humiliating [heartbreak], breaks cover at Barcelona Br
 uncertainty | nch-Greek aristocrat, 41, who [reportedly] splits her time between a sma
-fear-low | rn skyrockets - as scientists [warn] it could push global temperat
-fear-low | Scientists have [warned] that the world could be on tr
 fear | The [heartbreaking] consequences of 'empty' threa
 clickbait | im back… but he's delivered a [devastating] blow
 clickbait | o unlock its large library of [must-watch] shows for less
@@ -58,8 +46,6 @@ fear | point in what they called a '[heartbreaking] journey'.
 clickbait | [EXCLUSIVE]Farage wages 'war' on benefits
 negative-framing | and strikes to cut Britain's [bloated] welfare bill
 negative-framing | kes and even riots to cut the [bloated] benefits bill.
-hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
-hype-low | share Tess Daly, 57, [shows off] her figure in a plunging biki
 loaded | imum term of 14 years for the [vicious] sex attack on a woman in her
 aggression | Navy cover hours before Iran [slammed] waterway shut again
 fear | [Chilling] moment beauty queen is shot d
@@ -77,8 +63,6 @@ clickbait | [EXCLUSIVE]Disclosed: How the woman at ce
 negative-framing-medium | 125 share[Tragic] life of woman who accused Che
 clickbait-medium | st as much as the weight had. [Here's how] to banish it
 clickbait | [EXCLUSIVE]Labour accused of 'ideological
-idiom-low | [Third time lucky]? Zoe Kravitz's 'engagement' t
-idiom-low | itz appears to be hoping it's [third time lucky] amid reports she is engaged t
 hype | ously being spotted wearing a [dazzling] diamond ring. On her outing s
 reveal | tious - but these are my real [secrets] to looking this great at 48,
 authority | ing? close the Bering Strait, [experts say]
@@ -88,79 +72,58 @@ clickbait | my arms and legs - but I have [finally] found a solution which reall
 clickbait | 42, has barely aged a day as [stunning] star poses in a bikini and an
 dysphemism | Airline boss who [axed] London-LA flights says more c
 dysphemism | share Boss who [axed] London-LA flights says more c
-fear-low | rco Rubio fires World Cup ban [warning] to Iranian team staff... as T
-fear-low | rco Rubio fires World Cup ban [warning] to Iranian team staff
 clickbait | made grim prediction only to '[shock]' mentally ill thug into chang
 derogatory | only to 'shock' mentally ill [thug] into changing his ways
-fear-low | share Doctor who [warned] about Nottingham slayer did n
 clickbait | [EXCLUSIVE]Investment banker mother, 41,
 all-caps | obic comment to Vinicius Jr - [NOT] 'monkey slur' he was accused
 hype-medium | ey slur' he was accused of in [explosive] row
-idiom-low | ealth chiefs issue recall for [over the counter] painkiller taken by thousands
 hype | mattress brand Simba unveils [game-changing] bedding for every type of sle
 hype | shareSimba unveils [game-changing] bedding for every type of sle
-hype-low | r hellraiser Jack Nicholson's [youthful] looks on his birthday after d
 clickbait | his birthday after decades of [wild] partying and serial womanisin
-hype-low | s praised for maintaining his [youthful] looks
-clickbait-low | ric you should never wear and [why you need] to leave your go to dress beh
 hype | tian manuscript, heralding a '[breakthrough]' for understanding ancient sc
-loaded-framing-low | brity... co-star David Haye's [controversial] behaviour on the show during
-clickbait-low | [This is what] happens when you quit coffee
 hype | wo weeks: Scientists disclose [surprising] effects on stress, sleep and
-clickbait-low | 127 shares [This is what] happens when you quit coffee
 all-caps | poll [OF THE DAY]: Is Sara Cox the right choice
 rhetorical-question-medium | poll OF THE DAY: [Is Sara Cox the right choice to replace Scott Mills on BBC Radio 2?]
 colloquialism | ses tribunal case after being [sacked] for being repeatedly late - s
 colloquialism | er loses tribunal after being [sacked] for lateness
 clickbait | [EXCLUSIVE]Baywatch icon, 60, makes rare
-hype-low | nearly 30 years after wearing [iconic] red swimsuit... can you guess
 clickbait-medium | earing iconic red swimsuit... [can you guess] who?
-hype-low | the beaches of Malibu in the [legendary] red swimsuit was spotted maki
-hype-low | cades since she last wore the [legendary] red swimsuit, she has remaine
 clickbait-medium | represent one in seven cars - [can you guess] which ones?
 all-caps | I'M A celeb [ALL] stars
 aggression-medium | hem to win': I'm A Celeb fans [furiously] brand final line up 'worst in
 hype-medium | st in show's history' as most [explosive] series yet falls flat with 'i
 conflict | th Harry Redknapp after fiery [clashes] with David Haye and Jimmy Bul
 conflict | hey have spotted another camp [feud] between Adam Thomas and Harry
-aggression | eliminated while unimpressed [viewers slam] the show's format
+aggression | ted while unimpressed viewers [slam] the show's format
 clickbait | [EXCLUSIVE]Heartbroken Australian woman d
 fear-medium | EXCLUSIVE[Heartbroken] Australian woman discloses ho
 fear-medium | A [heartbroken] Australian woman returning to
 clickbait | [EXCLUSIVE]Five years ago, his painted fa
 negative-framing-medium | opened up about her mother's [tragic] death when she was a child.
 negative-framing | rait of Hormuz as the Iranian [regime] mocks his 'meaningless' cease
-clickbait-low | [Why you should] never copy viral pimple-poppi
 clickbait-medium | friend after I fell pregnant. [Here's why] I refuse to feel bad… and why
 clickbait | [EXCLUSIVE]Americans' true obsession with
-hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
 negative-framing-medium | he industry' the 'couple' are [desperate] to hide
 dysphemism | Gladiators' Giant '[axed] after being faced with choice
 aggression-medium | Paris [Fury] says Molly-Mae Hague would ha
 moral | ent his father. He isn't just [deluded] and dim-witted, he's dangerou
-hype-low | Danniella Westbrook, 52, [shows off] the incredible results of her
 clickbait | following her twin daughter's [devastating] diagnosis
 loaded-framing | Selling [Sunset] star Emma Hernan is back with
 hype-medium | Davis again two months after [explosive] fight
-hype-low | r hellraiser Jack Nicholson's [youthful] looks on his birthday after d
 negative-framing | Rob Reiner's son Jake shares [horrific] new details of his parents' m
-idiom-low | [Third time lucky]? Zoe Kravitz's 'engagement' t
 clickbait | [EXCLUSIVE]Prince Harry's 'arrogant' Ukra
 clickbait | [EXCLUSIVE]How Sara Cox reacted to new ro
 clickbait | [EXCLUSIVE]Noughties icon Lemar discloses
 aggression-medium | Anthony Quinlan [hits back] at cruel trolls who targeted
 clickbait | [EXCLUSIVE]Pregnant Scarlett Moffatt pose
 hype | The new '[must-have]' Mylee nail treatments are he
-hype-low | Emily Atack [shows off] her remarkable weight loss as
 distancing | g 'looksmaxxing' influencer's [suspected] overdose
 clickbait | [EXCLUSIVE]Baywatch icon, 60, makes rare
-hype-low | nearly 30 years after wearing [iconic] red swimsuit... can you guess
 clickbait-medium | earing iconic red swimsuit... [can you guess] who?
 hype-medium | s on 'snake' Amanda Batula in [explosive] audio leak from Summer House
 idiom-medium | One is a [chip off the old block]! Prince Louis proves he's Pri
 clickbait | [EXCLUSIVE]Awkward moment for Elon Musk a
 conflict | th Harry Redknapp after fiery [clashes] with David Haye and Jimmy Bul
-hype-low | Amanda Holden [shows off] some leg in a white dress and
 aggression-medium | hem to win': I'm A Celeb fans [furiously] brand final line up 'worst in
 hype-medium | st in show's history' as most [explosive] series yet falls flat with 'i
 unsourced | The Devil Wears Prada 2 [raises eyebrows] 'by roasting Jeff Bezos and L
@@ -171,35 +134,22 @@ clickbait | [EXCLUSIVE]Has tax-exile Rio Ferdinand qu
 loaded-framing-medium | Hailey Bieber dazzles in [racy] silver lace gown as she and D
 aggression-medium | Paris [Fury] breaks her silence on husband
 conflict | er silence on husband Tyson's [feud] with his dad John after he de
-hype-low | ce celebrates 10 years of her [iconic] album Lemonade as eagle-eyed
-hype-low | Iris Law [shows off] her incredible figure in a se
-hype-low | 7, left fans stunned with her [youthful] transformation at the Devil W
 conflict | inal after Adam Thomas' fiery [clashes] with both Jimmy Bullard and D
-hype-low | Maya Jama [shows off] her gorgeous hourglass curves
 clickbait | [EXCLUSIVE]The secret behind Millie Macki
-hype-low | Pregnant Molly-Mae Hague [shows off] her blossoming bump as she th
 uncertainty-medium | d Zoe Kravitz fuel engagement [rumours] as she flashes diamond ring o
 idiom-medium | Cruz Beckham extends an [olive branch] again to his estranged brothe
-hype-low | Jessica Alba [flaunts] toned arms in tank top as she
 conflict | Adam Thomas and Jimmy Bullard [feud] after their fallout sparked c
 conflict | d after their fallout sparked [chaos]
-hype-low | scloses the 'unnatural' drink [superstar] footballer has banned from hi
-loaded-framing-low | pstein' and discloses why his [controversial] documentary was pulled
-loaded-framing-low | sneak peek amid OnlyFans plan [controversy]
 loaded-framing-medium | liver Farnworth as she shares [racy] hot tub snap and says she is
 moral | health amid domestic violence [scandal]
-hype-low | et Nicole Eggert, 54, bravely [shows off] her body after painful cancer
 loaded-framing-medium | the Mack! Millie revives her [racy] style with a post-split makeo
 reveal | US scientists working on top [secret] programmes mysteriously vanis
 clickbait | an and her two daughters that [shocked] the US
-clickbait-low | e passwords: Experts disclose [why you should] never reuse or write down you
 clickbait | - and why it might be time to [finally] switch to a passkey
 distancing-medium | lie-Mae Doherty, both 22, are [alleged] to have committed misconduct
 aggression | Large tornados [rip] through Oklahoma, destroying
 fear-medium | across four states are issued [urgent warning]
-clickbait-low | [Why you should] never copy viral pimple-poppi
 clickbait-medium | friend after I fell pregnant. [Here's why] I refuse to feel bad… and why
-fear-low | drive by the Russian army and [warned] students they face certain de
 authority | thousands of men each month, [according to] Ukrainian authorities.
 aggression-medium | [Fury] erupts over why small boat mi
 conflict | Fury [erupts] over why small boat migrant m
@@ -222,16 +172,11 @@ clickbait-medium | gest outdoor trend for SS26 - [here's how] to style it, plus 
 fear | confidential: How the taxman [terrified] Lady Angela, 87, with false d
 fear | share eden: How the taxman [terrified] Lady Angela, 87, with false d
 clickbait | [EXCLUSIVE]Has tax-exile Rio Ferdinand qu
-fear-low | Bank of England deputy [warns] share prices are too high and
-fear-low | h and set to fall, BoE deputy [warns]
 conflict | ted Right… or a 'coalition of [chaos]': Megapoll finds Reform would
 conflict | underlines the potential for [chaos], with no single party close t
-idiom-low | w' during a unprovoked attack [in broad daylight].
 idiom-medium | One is a [chip off the old block]! Prince Louis proves he's Pri
 clickbait | ar, 50, who called himself a '[wild] child' abused girls at youth
 authority | iving in the United Kingdom', [according to] the report.
-hype-low | 7, left fans stunned with her [youthful] transformation at the Devil W
-hype-low | Lucy Liu debuted her very [youthful] appearance at the Devil Wears
 negative-framing | nionBOB seely: Our heroes are [furious] about the legal vultures houn
 derogatory | behalf of Iraqi hoodlums and [thugs] will surprise no one who serv
 negative-framing | are BOB seely: Our heroes are [furious] about legal vultures hounding
@@ -243,8 +188,6 @@ clickbait | the sea is solved: Scientists [finally] pinpoint its true identity -
 conflict | entity - three years after it [sparked] fears of aliens
 hype | [Glamorous] ex-tennis star poised to retu
 hype | share [Glamorous] ex-tennis star to return afte
-loaded-framing-low | The end of assisted dying? [Controversial] Bill set to fail today after
-loaded-framing-low | supporters vow to bring back [controversial] legislation
 aggression-medium | British war heroes' [fury] at Lord Hermer over 'witch-hu
 aggression-medium | 35 shares Brit war heroes' [fury] at Lord Hermer over 'witch-hu
 fear-medium | hy his officials are now in a [panic] that it could lead to his res
@@ -264,16 +207,11 @@ conflict | ringside seat at the Beckham [feud]: It's been a year since it ki
 negative-framing-medium | lgic reunion - 16 years after [tragic] end to their onscreen romance
 derogatory | felt like a floating piece of [trash]': Zara Larsson recalls being
 hype-medium | ter being the centre stage in [explosive] trial with Johnny Depp
-hype-low | toria Beckham return to their [iconic] his and hers style in matchin
-hype-low | Nicole Scherzinger [flaunts] her surprising figure in zebr
 hype-medium | ra print bikini as she shares [sizzling] beach snaps with fiancé Thom
 conflict | th The Stars lineup as her US [takeover] soars to new heights amid cla
-hype-low | e Louis! Young royal beams in [adorable] snap taken on family holiday
 clickbait | [EXCLUSIVE]Jack Whitehall's wedding venue
 clickbait | [Shocking] moment Massachusetts woman wa
 all-caps | obic comment to Vinicius Jr - [NOT] 'monkey slur' he was accused
 hype-medium | ey slur' he was accused of in [explosive] row
 dysphemism | ers BBC's 'crazy' decision to [axe] long-running show at end of t
-hype-low | scloses the 'unnatural' drink [superstar] footballer has banned from hi
-hype-low | scloses she was going to quit [iconic] show before Beeb pulled the p
 all-caps | chael Carrick insists he will [NOT] press Sir Jim Ratcliffe for c

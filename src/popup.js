@@ -3,42 +3,42 @@ import { DEFAULT_SETTINGS, normalizeSettings } from './core/settings-utils.js';
 
 const { types, labels, colorConfig } = ClearFrame;
 const $ = (id) => /** @type {HTMLElement} */(document.getElementById(id));
+// Setting key -> checkbox id. Everything else on the form is read separately.
+const TOGGLE_IDS = { predictFirst: 'predict-first', replaceTerms: 'replace-terms', headlinesOnly: 'headlines-only', monochrome: 'monochrome', removeTerms: 'remove-terms', feedbackEnabled: 'feedback-enabled' };
+const toggles = /** @type {Record<string, HTMLInputElement>} */ (Object.fromEntries(Object.entries(TOGGLE_IDS).map(([key, id]) => [key, $(id)])));
+const radios = /** @type {HTMLInputElement[]} */ ([...document.querySelectorAll('input[name=sensitivity]')]);
 const els = {
-  replaceTerms: /** @type {HTMLInputElement} */ ($('replace-terms')),
-  removeTerms: /** @type {HTMLInputElement} */ ($('remove-terms')),
-  monochrome: /** @type {HTMLInputElement} */ ($('monochrome')),
-  feedbackEnabled: /** @type {HTMLInputElement} */ ($('feedback-enabled')),
   feedbackToolsActions: $('feedback-tools-actions'),
   copyFeedback: /** @type {HTMLButtonElement} */ ($('copy-feedback')),
   feedbackCopyStatus: $('feedback-copy-status'),
   colorGroups: $('color-groups'),
   resetBtn: $('reset-btn'),
   detectedCount: $('detected-count'),
-  generalTab: $('general-tab'),
-  customizeTab: $('customize-tab'),
-  detectedTab: $('detected-tab'),
-  generalPanel: $('general-panel'),
-  customizePanel: $('customize-panel'),
-  detectedPanel: $('detected-panel'),
-  termTabs: $('term-tabs'),
-  termPanels: $('term-panels'),
-  popupVersion: $('popup-version'),
-  githubLink: /** @type {HTMLAnchorElement} */ ($('github-link')),
+  pageNote: $('page-note'),
+  devices: $('devices'),
 };
+const TABS = ['page', 'study', 'settings'];
 const COLOR_MAP = Object.fromEntries(Object.entries(colorConfig.colors || {}).map(([color, config]) => [color, config.hex]));
 let userTypeColors = {};
 let settings = normalizeSettings(DEFAULT_SETTINGS);
 let dragState = null;
 let activeTabId = null;
+const openDevices = new Set();
+// ?tab=<id> targets another tab instead of the active one (used to test the popup in a tab).
+const tabParam = Number(new URLSearchParams(location.search).get('tab')) || null;
 
 function loadSettings(rawSettings = {}, rawTypeColors = {}) {
   settings = normalizeSettings(rawSettings, rawTypeColors); userTypeColors = settings.userTypeColors;
 }
 
 function getSettings() {
-  const next = { replaceTerms: els.replaceTerms.checked, removeTerms: els.removeTerms.checked, monochrome: els.monochrome.checked, feedbackEnabled: els.feedbackEnabled.checked, types: {} };
+  /** @type {any} */
+  const next = Object.fromEntries(Object.entries(toggles).map(([key, input]) => [key, input.checked]));
+  next.sensitivity = radios.find(radio => radio.checked)?.value || DEFAULT_SETTINGS.sensitivity;
+  next.types = {};
   document.querySelectorAll('.type-chip').forEach(chip => {
-    next.types[/** @type {HTMLElement} */(chip).dataset.type] = /** @type {HTMLElement} */(chip).dataset.enabled === 'true';
+    const { type = '', enabled } = /** @type {HTMLElement} */(chip).dataset;
+    next.types[type] = enabled === 'true';
   });
   return next;
 }
@@ -55,7 +55,7 @@ function saveSettings() {
     }
     // Apply the new value immediately as well as persisting it. The storage
     // change event can be delayed while a selection event is already queued.
-    sendToActiveTab({ type: 'APPLY_SETTINGS', settings: next });
+    sendToTab({ type: 'APPLY_SETTINGS', settings: next });
     // Migrate the legacy top-level color setting after its values have been
     // copied into settings.userTypeColors.
     chrome.storage.sync.remove('userTypeColors', () => {
@@ -69,7 +69,7 @@ function saveSettings() {
 }
 
 function updateFeedbackTools() {
-  els.feedbackToolsActions.style.display = els.feedbackEnabled.checked ? 'block' : 'none';
+  els.feedbackToolsActions.style.display = toggles.feedbackEnabled.checked ? 'block' : 'none';
 }
 
 async function copyFeedback() {
@@ -87,23 +87,16 @@ async function copyFeedback() {
   }
 }
 
-function updateActiveTabId() {
-  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-    activeTabId = tabs[0]?.id ?? null;
-  });
+async function getTabId() {
+  activeTabId = tabParam ?? (await chrome.tabs.query({ active: true, currentWindow: true }))[0]?.id ?? null;
+  return activeTabId;
 }
 
-function sendToActiveTab(message, onResponse) {
-  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-    if (typeof tabs[0]?.id !== 'number') {
-      return;
-    }
-    chrome.tabs.sendMessage(tabs[0].id, message, res => {
-      if (!chrome.runtime.lastError && onResponse) {
-        onResponse(res);
-      }
-    });
-  });
+// Resolves with the content script's answer, or null if the page has none.
+async function sendToTab(message) {
+  const id = await getTabId();
+  if (typeof id !== 'number') return null;
+  return new Promise(resolve => chrome.tabs.sendMessage(id, message, res => resolve(chrome.runtime.lastError ? null : res ?? null)));
 }
 
 function getEffectiveColor(type) {
@@ -116,69 +109,42 @@ function getColorBg(c) {
   return `${getColorHex(c)}cc`;
 }
 
-function updateDetectedCount() {
-  sendToActiveTab({ type: 'GET_COUNT' }, res => {
-    const c = res?.count || 0; if (els.detectedCount) {
-      els.detectedCount.textContent = `(${c})`;
-    }
+const h = (tag, props = {}, ...children) => { const node = Object.assign(document.createElement(tag), props); node.append(...children); return node; };
+
+function renderDevice({ term, effects, count, wordings }, index) {
+  const body = h('div', { id: `device-${index}`, hidden: !openDevices.has(term), className: 'device-body' },
+    ...effects.map(effect => h('p', { className: 'effect', textContent: effect })),
+    ...wordings.map(item => {
+      const row = h('button', { type: 'button', className: 'term-row' }, h('span', { textContent: item.term }), h('span', { className: 'term-count', textContent: String(item.count) }));
+      row.addEventListener('click', () => sendToTab({ type: 'NAVIGATE_TERM', term: item.term, device: term }));
+      return row;
+    }));
+  const head = h('button', { type: 'button', className: 'device-head' }, h('span', { textContent: term }), h('span', { className: 'term-count', textContent: String(count) }));
+  head.setAttribute('aria-controls', body.id); head.setAttribute('aria-expanded', String(!body.hidden));
+  head.addEventListener('click', () => {
+    body.hidden = !body.hidden; head.setAttribute('aria-expanded', String(!body.hidden));
+    openDevices[body.hidden ? 'delete' : 'add'](term);
   });
+  return h('div', {}, head, body);
 }
 
-function updateTermsList() {
-  if (!els.termTabs || !els.termPanels) {
-    return;
-  }
-  els.termTabs.textContent = ''; els.termPanels.textContent = '';
-  sendToActiveTab({ type: 'GET_TERMS' }, res => {
-    const groups = res?.groups || {}, panes = new Map();
-    let firstAction = null, hasAny = false;
-    for (const action of ['highlighted', 'replaced', 'removed']) {
-      const items = groups[action] || [];
-      if (items.length) {
-        hasAny = true;
-      }
-      const tab = document.createElement('button'); tab.type = 'button'; tab.className = 'term-tab'; tab.dataset.action = action; tab.textContent = `${action[0].toUpperCase()}${action.slice(1)} (${items.length})`;
-      const panel = document.createElement('div'); panel.className = 'term-panel'; panel.dataset.action = action;
-      const list = document.createElement('div'); list.className = 'term-list';
-      if (items.length) {
-        const frag = document.createDocumentFragment(); for (const item of items) {
-          const row = document.createElement('button'); row.type = 'button'; row.className = 'term-row'; const name = document.createElement('span'); name.textContent = item.term; const count = document.createElement('span'); count.className = 'term-count'; count.textContent = String(item.count); row.appendChild(name); row.appendChild(count); row.addEventListener('click', () => sendToActiveTab({ type: 'NAVIGATE_TERM', term: item.term, action })); frag.appendChild(row);
-        } list.appendChild(frag);
-      } else {
-        list.textContent = 'No matches.';
-      }
-      panel.appendChild(list); panes.set(action, { tab, panel });
-      if (items.length && !firstAction) {
-        firstAction = action;
-      }
-      els.termTabs.appendChild(tab); els.termPanels.appendChild(panel);
-    }
-    for (const { tab } of panes.values()) {
-      tab.addEventListener('click', () => {
-        for (const [name, p] of panes) {
-          const a = name === tab.dataset.action; p.tab.classList.toggle('active', a); p.panel.classList.toggle('active', a);
-        }
-      });
-    }
-    if (hasAny && firstAction) {
-      for (const [name, p] of panes) {
-        const a = name === firstAction; p.tab.classList.toggle('active', a); p.panel.classList.toggle('active', a);
-      } return;
-    }
-    els.termTabs.textContent = ''; els.termPanels.textContent = 'No matches on this page.';
-  });
+async function updatePage() {
+  const res = await sendToTab({ type: 'GET_TERMS' });
+  const devices = res?.devices || [];
+  els.detectedCount.textContent = res ? String(devices.reduce((sum, device) => sum + device.count, 0)) : '-';
+  els.pageNote.textContent = !res ? 'ClearFrame cannot read this page. Browser pages, extension stores and PDF viewers are off limits.'
+    : devices.length ? 'Select a device for its effect and wordings. Select a wording to jump to it.' : 'No flagged wording found on this page.';
+  els.devices.replaceChildren(...devices.map(renderDevice));
 }
 
 function setTopTab(name) {
-  const tabs = { general: els.generalTab, customize: els.customizeTab, detected: els.detectedTab };
-  const panels = { general: els.generalPanel, customize: els.customizePanel, detected: els.detectedPanel };
-  for (const key of Object.keys(tabs)) {
+  for (const key of TABS) {
     const active = key === name;
-    tabs[key]?.classList.toggle('active', active);
-    tabs[key]?.setAttribute('aria-selected', String(active));
-    panels[key]?.classList.toggle('active', active);
+    $(`${key}-tab`).classList.toggle('active', active);
+    $(`${key}-tab`).setAttribute('aria-selected', String(active));
+    $(`${key}-panel`).classList.toggle('active', active);
   }
-  if (name === 'detected') updateTermsList();
+  if (name === 'page') updatePage();
 }
 
 function createTypeChip(type) {
@@ -285,52 +251,29 @@ function init() {
   try {
     chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ r) => {
       loadSettings(r.settings, r.userTypeColors);
-      const ver = chrome.runtime.getManifest().version;
-      if (els.popupVersion) {
-        els.popupVersion.textContent = `v${ver}`;
-      }
-      if (els.githubLink) {
-        els.githubLink.href = 'https://github.com/la5u/clearframe';
-      }
-      els.replaceTerms.checked = settings.replaceTerms === true; els.removeTerms.checked = settings.removeTerms === true; els.monochrome.checked = settings.monochrome === true; els.feedbackEnabled.checked = settings.feedbackEnabled === true;
+      $('popup-version').textContent = `v${chrome.runtime.getManifest().version}`;
+      for (const [key, input] of Object.entries(toggles)) input.checked = settings[key] === true;
+      for (const radio of radios) radio.checked = radio.value === settings.sensitivity;
       updateFeedbackTools();
-      updateActiveTabId();
-      renderColorGroups(); setTopTab('general');
-      els.replaceTerms.addEventListener('change', () => {
-        saveSettings();
-      });
-      els.removeTerms.addEventListener('change', () => {
-        saveSettings();
-      });
-      els.monochrome.addEventListener('change', () => {
-        saveSettings(); renderColorGroups();
-      });
-      els.feedbackEnabled.addEventListener('change', () => {
-        saveSettings(); updateFeedbackTools();
-      });
+      renderColorGroups(); setTopTab('page');
+      for (const [key, input] of Object.entries(toggles)) {
+        input.addEventListener('change', () => {
+          saveSettings();
+          if (key === 'monochrome') renderColorGroups();
+          if (key === 'feedbackEnabled') updateFeedbackTools();
+        });
+      }
+      for (const radio of radios) radio.addEventListener('change', saveSettings);
       els.copyFeedback.addEventListener('click', copyFeedback);
-      els.generalTab?.addEventListener('click', () => setTopTab('general'));
-      els.customizeTab?.addEventListener('click', () => setTopTab('customize'));
-      els.detectedTab?.addEventListener('click', () => setTopTab('detected'));
-      updateDetectedCount(); updateTermsList();
+      for (const key of TABS) $(`${key}-tab`).addEventListener('click', () => setTopTab(key));
     });
   } catch (e) {
-    console.error('ClearFrame init error:', e); if (els.colorGroups) {
-      els.colorGroups.innerHTML = '<p style="color:red">Error: Run as Chrome Extension</p>';
-    }
+    console.error('ClearFrame init error:', e); els.colorGroups.innerHTML = '<p style="color:red">Error: Run as Chrome Extension</p>';
   }
 }
 
 chrome.runtime.onMessage.addListener((msg, sender) => {
-  if (msg.type !== 'COUNT' || sender.tab?.id !== activeTabId) {
-    return;
-  }
-  if (els.detectedCount) {
-    els.detectedCount.textContent = `(${typeof msg.count === 'number' ? msg.count : 0})`;
-  }
-  if (els.detectedPanel?.classList.contains('active')) {
-    updateTermsList();
-  }
+  if (msg.type === 'COUNT' && sender.tab?.id === activeTabId) updatePage();
 });
 
 init();

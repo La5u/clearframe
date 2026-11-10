@@ -5,6 +5,7 @@ import { createAnalyzer } from '../core/analyze.js';
 import { recoverOriginalText } from '../core/restore.js';
 import { getSettings } from './settings.js';
 import { PAGE_CONTEXT, getElementContext, isLikelyHeadline } from './scanner.js';
+import { getLabel } from './labels.js';
 
 /** @typedef {{node: Text, originalText: string, displayedText: string, records: any[]}} NodeResult */
 
@@ -16,8 +17,8 @@ const nodeResults = new Map();
 /** @type {WeakMap<Text, NodeResult>} */
 const detachedResults = new WeakMap();
 let totalMatches = 0;
-/** @type {Record<string, Record<string, number>>} */
-let termStats = Object.create(null);
+/** @type {Map<string, {effects: Set<string>, wordings: Map<string, number>}>} Per device (technical term): its effect(s) and how often each wording was found. Two labels can share a term name with different effects. */
+let deviceStats = new Map();
 const navigationIndexes = new Map();
 let lastBadgeCount = -1;
 
@@ -43,7 +44,7 @@ export function processTextNode(node) {
     result.records.push({
       range, node, startOffset: start, endOffset: end,
       terms: entry.terms,
-      type: entry.term.type, action: entry.action,
+      type: entry.term.type, action: entry.action, label: getLabel(entry.term),
       wording: entry.wording, sourceText: entry.sourceText, replacementText: entry.replacementText, highlightName: entry.highlightName,
       matchContext: { headline, conversational, preserveText, pageContext: PAGE_CONTEXT },
     });
@@ -70,7 +71,7 @@ export function clearResults() {
   nodeResults.clear();
   navigationIndexes.clear();
   totalMatches = 0;
-  termStats = Object.create(null);
+  deviceStats = new Map();
 }
 
 // Moves results of nodes the page removed aside and returns them.
@@ -114,13 +115,19 @@ export function getAllRecords() {
   return [...nodeResults.values()].flatMap(result => result.records);
 }
 
+// "collateral\ndamage" and "collateral damage" are one wording.
+const wordingKey = wording => wording.replace(/\s+/g, ' ');
+
 export function rebuildSummary() {
   totalMatches = 0;
-  termStats = Object.create(null);
+  deviceStats = new Map();
   for (const result of nodeResults.values()) {
-    for (const record of result.records) {
-      const target = (termStats[record.wording] ||= { highlighted: 0, replaced: 0, removed: 0 });
-      target[record.action]++; totalMatches++;
+    for (const { label, wording } of result.records) {
+      let device = deviceStats.get(label.term);
+      if (!device) deviceStats.set(label.term, device = { effects: new Set(), wordings: new Map() });
+      if (label.effect) device.effects.add(label.effect);
+      const key = wordingKey(wording);
+      device.wordings.set(key, (device.wordings.get(key) || 0) + 1); totalMatches++;
     }
   }
 }
@@ -135,23 +142,20 @@ export function updateBadge() {
   chrome.runtime.sendMessage({ type: 'COUNT', count: totalMatches }).catch(() => {});
 }
 
-export function getTermGroups() {
-  /** @type {Record<string, Array<{term: string, count: number}>>} */
-  const groups = { highlighted: [], replaced: [], removed: [] };
-  for (const [term, counts] of Object.entries(termStats)) {
-    for (const action of Object.keys(groups)) {
-      if (counts[action] > 0) groups[action].push({ term, count: counts[action] });
-    }
-  }
-  for (const items of Object.values(groups)) items.sort((a, b) => b.count - a.count || a.term.localeCompare(b.term));
-  return groups;
+// The popup's list: devices by frequency, each with its effect and wordings.
+export function getDeviceGroups() {
+  const byCount = (a, b) => b.count - a.count || a.term.localeCompare(b.term);
+  return [...deviceStats].map(([term, { effects, wordings }]) => {
+    const list = [...wordings].map(([wording, count]) => ({ term: wording, count })).sort(byCount);
+    return { term, effects: [...effects], count: list.reduce((sum, item) => sum + item.count, 0), wordings: list };
+  }).sort(byCount);
 }
 
-// Each call steps to the next match of this wording and action, wrapping around.
-export function getNextRecord(term, action) {
-  const records = getAllRecords().filter(record => record.wording === term && record.action === action && record.node.isConnected);
+// Each call steps to the next match of this wording under this device, wrapping around.
+export function getNextRecord(wording, device) {
+  const records = getAllRecords().filter(record => record.label.term === device && wordingKey(record.wording) === wording && record.node.isConnected);
   if (!records.length) return null;
-  const key = `${action}\n${term}`;
+  const key = `${device}\n${wording}`;
   const nextIndex = ((navigationIndexes.get(key) ?? -1) + 1) % records.length;
   navigationIndexes.set(key, nextIndex);
   return records[nextIndex];

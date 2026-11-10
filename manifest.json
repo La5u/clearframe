@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ClearFrame",
   "version": "1.2.1",
-"description": "Highlights authorial choices with neutral alternatives.",
+"description": "Highlights persuasive wording choices on any page, for close reading.",
 "minimum_chrome_version": "105",
 "permissions": ["storage"],
   "host_permissions": ["<all_urls>"],

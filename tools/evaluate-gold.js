@@ -3,6 +3,7 @@
 // tests/gold/*.jsonl. A reporting tool, not a CI gate.
 //   npm run evaluate:gold              default settings (some types off)
 //   npm run evaluate:gold -- --all     every type enabled
+//   npm run evaluate:gold -- --sensitivity=strong|standard|all   (default: the extension default)
 //   npm run evaluate:gold -- FILE...   other .jsonl files or directories
 //   npm run evaluate:gold -- --top=30  longer error lists
 import fs from 'fs';
@@ -16,10 +17,12 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const inputs = process.argv.slice(2).filter(arg => !arg.startsWith('--'));
 const TYPES = Object.keys(JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'type-labels.json'), 'utf8')).types);
 const allTypes = process.argv.includes('--all');
+const sensitivity = process.argv.find(arg => arg.startsWith('--sensitivity='))?.slice(14);
 const TOP = Number(process.argv.find(arg => arg.startsWith('--top='))?.slice(6)) || 10;
 
 const index = loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT));
-const settings = normalizeSettings(allTypes ? { types: Object.fromEntries(TYPES.map(type => [type, true])) } : DEFAULT_SETTINGS);
+const settings = normalizeSettings({ ...(allTypes ? { types: Object.fromEntries(TYPES.map(type => [type, true])) } : DEFAULT_SETTINGS), ...(sensitivity && { sensitivity }) });
+if (sensitivity && settings.sensitivity !== sensitivity) throw new Error(`unknown --sensitivity=${sensitivity}`);
 const isEnabled = type => settings.types?.[type] !== false;
 const { analyze } = createAnalyzer({ index });
 
@@ -79,6 +82,7 @@ const reviewed = blocks.filter(block => block.reviewed === true).length;
 const goldSpans = results.reduce((sum, item) => sum + item.gold.length, 0);
 const predictedSpans = results.reduce((sum, item) => sum + item.predicted.length, 0);
 console.log(`Gold: ${blocks.length} blocks, ${blocks.reduce((sum, block) => sum + block.spans.length, 0)} spans; reviewed ${reviewed}, unreviewed ${blocks.length - reviewed}${reviewed < blocks.length ? ' (scores are provisional)' : ''}`);
+console.log(`Sensitivity: ${settings.sensitivity}`);
 console.log(`Settings: ${allTypes ? 'all types enabled' : `defaults (off: ${TYPES.filter(type => !isEnabled(type)).join(', ')}; their gold spans are left out)`}`);
 console.log(`Scored: ${goldSpans} gold spans, ${predictedSpans} detections, ${results.filter(item => !item.gold.length).length} blocks without gold spans\n`);
 for (const [label, typed] of [['Any type', false], ['Same type', true]]) {

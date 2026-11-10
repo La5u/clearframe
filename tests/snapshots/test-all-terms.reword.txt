@@ -1,4 +1,4 @@
-# test-all-terms.html mode=reword highlights=92
+# test-all-terms.html mode=reword highlights=90
 repetition-underline | [repeatedly] | is not | alarming | alleged
 colloquialism-underline | repeatedly | [is not] | alarming | alleged | ambush
 distancing-medium | eatedly | is not | alarming | [alleged] | ambush | animal | apparentl
@@ -11,7 +11,6 @@ negative-framing | eak | breakthrough | brutal | [catastrophic] | chaos | clash 
 conflict | ugh | brutal | catastrophic | [chaos] | clash | cockroach | civilia
 conflict | utal | catastrophic | chaos | [clash] | cockroach | civilian harm
 euphemism-underline | | chaos | clash | cockroach | [civilian harm]
-loaded-framing-low | [controversial] | correct? | corrupt | countl
 rhetorical-question | controversial | [correct?] | corrupt | countless | cutti
 moral | controversial | correct? | [corrupt] | countless | cutting-edge |
 hype | rect? | corrupt | countless | [cutting-edge] | dangerous | despicable | de
@@ -57,7 +56,6 @@ fear-medium | e | outrageous | repeatedly | [panic]
 euphemism-underline | [died] | unnamed sources | piracy |
 unsourced-underline | died | [unnamed sources] | piracy | plot | probe | pup
 moral | died | unnamed sources | [piracy] | plot | probe | puppet | pur
-euphemism-low | med sources | piracy | plot | [probe] | puppet | purportedly | radi
 negative-framing | ces | piracy | plot | probe | [puppet] | purportedly | radical | rag
 distancing | acy | plot | probe | puppet | [purportedly] | radical | rage | rat | red-
 derogatory | robe | puppet | purportedly | [radical] | rage | rat | red-faced | re

@@ -40,6 +40,9 @@ export function getStrength(confidence = 'high') {
   return confidence === 'high' || confidence === 'medium' ? confidence : 'low';
 }
 
+// Which term strengths each sensitivity level lets through.
+const SENSITIVITY_STRENGTHS = { strong: ['high'], standard: ['high', 'medium'] };
+
 // Overlapping terms draw at the strength of the most confident one.
 function getEntryStrength(terms) {
   const strengths = terms.map(term => getStrength(term.confidence));
@@ -139,6 +142,8 @@ export function createAnalyzer({ index }) {
   let matcher = null, matcherSettings = null;
 
   const isEnabled = (settings, type) => settings.types?.[type] !== false;
+  // A term is used when its type is on and its strength passes the sensitivity.
+  const isUsed = (settings, term) => isEnabled(settings, term.type) && (SENSITIVITY_STRENGTHS[settings.sensitivity]?.includes(getStrength(term.confidence)) ?? true);
 
   function getTermById(id) {
     const term = index.termsById[id];
@@ -154,11 +159,11 @@ export function createAnalyzer({ index }) {
   // resolution against the structural detectors.
   function findLexicalMatches(text, context, settings) {
     if (settings !== matcherSettings) {
-      matcher = buildMatcher(index, term => isEnabled(settings, term.type));
+      matcher = buildMatcher(index, term => isUsed(settings, term));
       matcherSettings = settings;
     }
     return findMatches(matcher, text, index.termsById, index.regexTerms || [],
-      term => isEnabled(settings, term.type),
+      term => isUsed(settings, term),
       (termId, start, end) => shouldKeepLexicalMatch(getTermById(termId), text.slice(start, end), text, context, start));
   }
 
@@ -167,12 +172,13 @@ export function createAnalyzer({ index }) {
    * into displayText.
    * @param {string} text
    * @param {{headline?: boolean, conversational?: boolean, preserveText?: boolean, capsLabel?: boolean, pageContext?: string}} context
-   * @param {{types?: Record<string, boolean>, replaceTerms?: boolean, removeTerms?: boolean}} settings
+   * @param {{types?: Record<string, boolean>, replaceTerms?: boolean, removeTerms?: boolean, sensitivity?: string, headlinesOnly?: boolean}} settings
    */
   function analyze(text, context = {}, settings) {
+    if (settings.headlinesOnly && !context.headline) return { displayText: text, entries: [] };
     const matches = findLexicalMatches(text, context, settings);
-    const allCaps = isEnabled(settings, ALL_CAPS_TERM.type) && !context.capsLabel ? findAllCapsMatches(text) : [];
-    const contextual = findContextualMatches(text, context).filter(match => isEnabled(settings, getTermById(match.termId)?.type));
+    const allCaps = isUsed(settings, ALL_CAPS_TERM) && !context.capsLabel ? findAllCapsMatches(text) : [];
+    const contextual = findContextualMatches(text, context).filter(match => isUsed(settings, getTermById(match.termId) || {}));
     const combined = resolveMatchGroups([...matches, ...allCaps, ...contextual]);
     let cursor = 0, displayText = '';
     const entries = [];

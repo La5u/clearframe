@@ -96,6 +96,20 @@ for (const [text, mode, context, displayText, entries] of ANALYZE_CASES) {
   for (const entry of plan.entries) assert.strictEqual(plan.displayText.slice(entry.start, entry.end), entry.replacementText, `${mode}: ${text} offsets`);
 }
 assert.deepStrictEqual(analyze('Meta axes 8,000 jobs.', PUBLICATION, normalizeSettings({ replaceTerms: true, types: { dysphemism: false } })).entries, [], 'disabled types are not detected');
+// Sensitivity keeps high, high+medium, or everything; headlinesOnly skips body text.
+/** @type {Array<[string, object, Record<string, string[]>]>} */
+const SENSITIVITY_CASES = [
+  ['The alleged shocking scandal.', {}, { strong: ['scandal'], standard: ['alleged', 'scandal'], all: ['alleged', 'scandal'] }],
+  ['Even critics could call the alleged scandal fair', { headline: true }, { strong: ['scandal', 'fair'], standard: ['alleged', 'scandal', 'fair'], all: ['Even critics could', 'alleged', 'scandal', 'fair'] }],
+  ['From shabby room to luxury retreat', { headline: true }, { strong: [], standard: [], all: ['From shabby room to luxury retreat'] }],
+];
+for (const [text, context, expected] of SENSITIVITY_CASES) {
+  for (const [sensitivity, wordings] of Object.entries(expected)) {
+    assert.deepStrictEqual(analyze(text, { ...PUBLICATION, ...context }, normalizeSettings({ sensitivity })).entries.map(entry => entry.wording), wordings, `${sensitivity}: ${text}`);
+  }
+}
+assert.deepStrictEqual(analyze('The alleged scandal.', PUBLICATION, normalizeSettings({ headlinesOnly: true })), { displayText: 'The alleged scandal.', entries: [] }, 'headlinesOnly skips body text');
+assert.strictEqual(analyze('The alleged scandal.', { ...PUBLICATION, headline: true }, normalizeSettings({ headlinesOnly: true })).entries.length, 2, 'headlinesOnly keeps headlines');
 // Remove mode tidies the text around a removal; swapping each entry's
 // replacementText back for its sourceText restores the exact original.
 for (const [text, displayText] of [
@@ -129,9 +143,9 @@ for (const [text, wording] of [
 }
 assert.deepStrictEqual(findMatches(matcher, 'out of\nthe bluebird', index.termsById, index.regexTerms), [], 'word boundary still applies after whitespace');
 assert.strictEqual(findContextualMatches('One of the most\ndramatic moments in\nhistory', { headline: true }).length, 1, 'contextual patterns cross source whitespace');
-// Headline rules see the same wording.
+// Headline rules see the same wording (these are low-confidence cues, so every sensitivity level is needed).
 for (const [text, wording] of [['Why\nyou should care', 'Why\nyou should'], ['Third\ntime lucky', 'Third\ntime lucky']]) {
-  assert.ok(analyze(text, { ...PUBLICATION, headline: true }, ANALYZE_SETTINGS.highlight).entries.some(entry => entry.sourceText === wording), `headline ${JSON.stringify(text)}`);
+  assert.ok(analyze(text, { ...PUBLICATION, headline: true }, normalizeSettings({ sensitivity: 'all' })).entries.some(entry => entry.sourceText === wording), `headline ${JSON.stringify(text)}`);
 }
 for (const [text, mode, displayText, source] of [
   ['It was a collateral\ndamage case.', 'reword', 'It was a civilian harm case.', 'collateral\ndamage'],
@@ -474,6 +488,18 @@ assert.deepStrictEqual(
   normalizeSettings(),
   'malformed nested settings must fall back to defaults',
 );
+
+// The three newer settings: defaults, accepted values, and fallbacks for anything else.
+for (const [raw, expected] of /** @type {Array<[any, any]>} */ ([
+  [undefined, { predictFirst: false, headlinesOnly: false, sensitivity: 'standard' }],
+  [{}, { predictFirst: false, headlinesOnly: false, sensitivity: 'standard' }],
+  [{ predictFirst: true, headlinesOnly: true, sensitivity: 'strong' }, { predictFirst: true, headlinesOnly: true, sensitivity: 'strong' }],
+  [{ sensitivity: 'all' }, { predictFirst: false, headlinesOnly: false, sensitivity: 'all' }],
+  [{ predictFirst: 'true', headlinesOnly: 1, sensitivity: 'loud' }, { predictFirst: false, headlinesOnly: false, sensitivity: 'standard' }],
+])) {
+  const { predictFirst, headlinesOnly, sensitivity } = normalizeSettings(raw);
+  assert.deepStrictEqual({ predictFirst, headlinesOnly, sensitivity }, expected, JSON.stringify(raw));
+}
 
 const invalidTermsDir = fs.mkdtempSync(path.join(os.tmpdir(), 'clearframe-terms-'));
 try {

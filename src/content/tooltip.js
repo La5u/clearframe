@@ -2,12 +2,12 @@
 // labels (with feedback buttons when pinned), reveals reworded text while
 // hovered, and closes on selection, scroll or click elsewhere.
 import { getStrength } from '../core/analyze.js';
-import { isFeedbackEnabled } from './settings.js';
+import { getSettings, isFeedbackEnabled } from './settings.js';
+import { getLabel } from './labels.js';
 import { getNodeRecords, hasResults } from './store.js';
 import { isPointInsideHoverReveal, restoreHoverReveal, revealOriginalText } from './reveal.js';
 import { appendFeedbackActions, hideSuggestion } from './feedback.js';
 
-const { categories: TYPE_CATEGORIES, labels: LABELS } = ClearFrame;
 let activeHover = null;
 let pinnedTooltipRecord = null;
 let hoverFrame = 0;
@@ -15,17 +15,10 @@ let pendingHoverEvent = null;
 let hoverSwitchTimer = 0;
 let hoverSwitchRecord = null;
 let tooltipAnchor = null;
+// Predict first: the record whose tooltip the reader has revealed. Any other
+// record, or a closed tooltip, starts hidden again.
+let revealedRecord = null;
 const lastPointer = { x: 0, y: 0 };
-
-// The technical term is shown first so readers learn the vocabulary; the
-// plain label and effect sit behind the (i).
-function getLabel(term) {
-  return LABELS?.phrases?.[term.phrase] || LABELS?.types?.[term.type] || { term: term.type, plain: getCategory(term.type), effect: '' };
-}
-
-function getCategory(type) {
-  return TYPE_CATEGORIES?.[type] || 'General';
-}
 
 // Let the pointer travel from the highlight into the tooltip (to reach the
 // (i)) without the tooltip closing in the gap between them.
@@ -45,7 +38,7 @@ export function hideTooltip(force = false) {
   if (pinnedTooltipRecord && !force) return;
   cancelHoverSwitch();
   if (force) pinnedTooltipRecord = null;
-  restoreHoverReveal(); activeHover = null;
+  revealedRecord = null; restoreHoverReveal(); activeHover = null;
   const tooltip = document.getElementById('cf-tooltip');
   if (tooltip) tooltip.style.display = 'none';
 }
@@ -63,8 +56,16 @@ function showTooltip(record, x, y) {
   }
   const terms = record.terms?.length ? record.terms : [{ type: record.type }];
   tooltip.textContent = '';
+  if (revealedRecord !== record) revealedRecord = null;
+  const hidden = getSettings().predictFirst === true && !revealedRecord;
   const seen = new Set();
-  for (const term of terms) {
+  if (hidden) {
+    const prompt = document.createElement('div'); prompt.className = 'cf-predict'; prompt.append('What is this wording doing?');
+    const show = document.createElement('button'); show.type = 'button'; show.className = 'cf-show'; show.textContent = 'Show';
+    show.addEventListener('click', () => { revealedRecord = record; showTooltip(record, lastPointer.x, lastPointer.y); });
+    prompt.appendChild(show); tooltip.appendChild(prompt);
+  }
+  for (const term of hidden ? [] : terms) {
     const label = getLabel(term);
     if (seen.has(label.term)) continue;
     seen.add(label.term);
@@ -207,7 +208,7 @@ export function handleTooltipClick(event) {
   if (selection && !selection.isCollapsed) return;
   const record = findRecordAtPoint(event.clientX, event.clientY);
   if (record) {
-    pinnedTooltipRecord = record; activeHover = record; showTooltip(record, event.clientX, event.clientY);
+    revealedRecord = record; pinnedTooltipRecord = record; activeHover = record; showTooltip(record, event.clientX, event.clientY);
   } else if (pinnedTooltipRecord) {
     hideTooltip(true);
   }

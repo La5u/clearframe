@@ -91,4 +91,4 @@ unsourced | ers | ultimate | under fire | [unnamed sources] | up to 10 | urgent 
 conflict | rmin | what's really | wild | [wipeout] | worst
 colloquialism | [y'all] | you won't believe
 # changed text nodes=1
-~ and more | most | must-have |[ nightmare  =>  ]| non-consensual encounter | o
+~ and more | most | must-have | [nightmare  => ]| non-consensual encounter | o

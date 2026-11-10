@@ -6,6 +6,7 @@ Rules:
 - Add the base word or base phrase, not an inflected derivative.
 - Do not enter surface inflections like `terrifying`, `raged`, `shocking`, or `clashes` when the lemma is `terrify`, `rage`, `shock`, or `clash`.
 - Leave `neutral` blank unless you actually want a replacement in replace mode.
+- For a `stemmable` term, write `neutral` in its base form (`cut`, `large group`): it is inflected to match the text, on the first word of a verb phrase (`push out` -> `pushed out`) and the last word of a noun phrase.
 - Use `remove=true` only when the term should disappear in replace mode.
 - Use `stemmable` for words that should match simple inflections, and set it to the word type:
   - `noun` for plural forms like `secret` -> `secrets`

@@ -1,11 +1,11 @@
 phrase,type,neutral,aliases,stemmable,regex,remove,contexts
 trash,derogatory,poor quality,,,,
-horde,derogatory,large groups,,noun,,
+horde,derogatory,large group,,noun,,
 elite,derogatory,,,noun,,,evaluative
 mob,derogatory,,,noun,,
 radical,derogatory,,,,,
 extremist,derogatory,,,,,
-dissident,derogatory,opponents,,noun,,
+dissident,derogatory,opponent,,noun,,
 thug,derogatory,,,noun,,
 bigot,derogatory,,,noun,,
 freak,derogatory,,,noun,,

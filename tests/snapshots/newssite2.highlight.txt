@@ -1,7 +1,4 @@
-# newssite2.html mode=highlight highlights=60
-all-caps | sible Coup”, Peter Schweizer. [LISTEN NOW]
-all-caps | hop smarter with Post Wanted. [SIGN UP NOW]
-all-caps | odcast. New episodes Mon-Fri. [LISTEN NOW]
+# newssite2.html mode=highlight highlights=57
 distancing-medium | Police remove protester — who [allegedly] injured 3 officers and appear
 distancing-medium | [Alleged] mistress of disgraced ex-Mich
 loaded-framing-medium | Alleged mistress of [disgraced] ex-Michigan coach leaves univ

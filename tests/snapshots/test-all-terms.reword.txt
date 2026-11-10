@@ -16,10 +16,10 @@ rhetorical-question | controversial | [correct?] | corrupt | countless | cutti
 moral | controversial | correct? | [corrupt] | countless | cutting-edge |
 hype | rect? | corrupt | countless | [cutting-edge] | dangerous | despicable | de
 moral | | cutting-edge | dangerous | [despicable] | devastate | disaster | oppo
-clickbait | ge | dangerous | despicable | [devastate] | disaster | opponents | elit
-negative-framing | us | despicable | devastate | [disaster] | opponents | elite | elite
-derogatory-underline | able | devastate | disaster | [opponents] | elite | elite
-loaded-framing-underline | isaster | opponents | elite | [elite]
+clickbait | ge | dangerous | despicable | [devastate] | disaster | opponent | elite
+negative-framing | us | despicable | devastate | [disaster] | opponent | elite | elite
+derogatory-underline | able | devastate | disaster | [opponent] | elite | elite
+loaded-framing-underline | disaster | opponent | elite | [elite]
 euphemism-underline | [torture] | erupt | evil | exclusive |
 moral | torture | erupt | [evil] | exclusive | unnamed expert
 unsourced-underline | | erupt | evil | exclusive | [unnamed expert] | experts say | extremist | e
@@ -33,10 +33,10 @@ idiom-underline | game-changing | [disappeared] | got to | government handout
 colloquialism-underline | game-changing | disappeared | [got to] | government handouts | heroi
 loaded | ging | disappeared | got to | [government handouts] | heroic | hit with | hidden
 moral | ot to | government handouts | [heroic] | hit with | hidden | large g
-idiom-underline | andouts | heroic | hit with | [hidden] | large groups | horrify | hu
-derogatory-underline | heroic | hit with | hidden | [large groups] | horrify | huge | illegal al
-fear | ith | hidden | large groups | [horrify] | huge | illegal aliens | inc
-loaded-framing | rge groups | horrify | huge | [illegal aliens] | incident occurred
+idiom-underline | andouts | heroic | hit with | [hidden] | large group | horrify | hug
+derogatory-underline | heroic | hit with | hidden | [large group] | horrify | huge | illegal al
+fear | with | hidden | large group | [horrify] | huge | illegal aliens | inc
+loaded-framing | arge group | horrify | huge | [illegal aliens] | incident occurred
 passive | ify | huge | illegal aliens | [incident occurred]
 rhetorical-question | incredibly | inside scoop | [isn't it?] | surprising | junta | kind o
 clickbait-underline | | inside scoop | isn't it? | [surprising] | junta | kind of | lash out
@@ -95,14 +95,14 @@ colloquialism-underline | [you all] | you won't believe
 ~ [again and again => repeatedly] | is not | alarming | alleged
 ~ again and again | [ain't  => is not ]| alarming | alleged | ambush
 ~ | chaos | clash | cockroach | [collateral damage => civilian harm]
-~ able | devastate | disaster | [dissident => opponents] | elite | elite
+~ able | devastate | disaster | [dissident => opponent] | elite | elite
 ~ isaster | dissident | elite | [elitist => elite]
 ~ [enhanced interrogation => torture] | erupt | evil | exclusive |
 ~ | erupt | evil | exclusive | [experts claim => unnamed expert] | experts say | extremist | e
 ~ game-changing | [gone to ground => disappeared] | got to | government handout
 ~ e-changing | gone to ground | [gotta  => got to ]| government handouts | heroic
-~ andouts | heroic | hit with | [holed up => hidden] | large groups | horrify | hu
-~ eroic | hit with | holed up | [horde  => large groups ]| horrify | huge | illegal ali
+~ andouts | heroic | hit with | [holed up => hidden] | large group | horrify | hug
+~ eroic | hit with | holed up | [horde  => large group ]| horrify | huge | illegal ali
 ~ | inside scoop | isn't it? | [jaw-dropping => surprising] | junta | kind of | lash out
 ~ it? | jaw-dropping | junta | [kinda  => kind of ]| lash out | massive | mere |
 ~ ost | must-have | nightmare | [non-consensual encounter => assault] | officer-involved shooting |

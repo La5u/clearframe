@@ -1,4 +1,4 @@
-# newssite10th.html mode=remove highlights=338
+# newssite10th.html mode=remove highlights=325
 hype-medium | ft my 'meno-middle'... Then a [miracle] method banished it in just fo
 negative-framing-medium | [Desperate] BBC bosses save Katya Jones a
 negative-framing | s save Katya Jones amid pros '[bloodbath]'
@@ -18,10 +18,8 @@ hype-low | Thylane Blondeau [shows off] her £34k engagement ring
 fear-low | sh Iranian attacks as Hegseth [warns] Tehran faces 'most intense da
 all-caps | other-of-10 making £100 every [MINUTE] from her humble shop... and h
 clickbait-low | E from her humble shop... and [how you can] follow in her footsteps: Jane
-all-caps | ootsteps: Jane Hastings tells [MOLLY CLAYTON] how she went from selling sho
 all-caps | The gran-of-10 making £100 a [MINUTE] from her shop
 all-caps | The [REAL] Carolyn Bessette was a violen
-all-caps | ing the truth… and it's ugly: [MAUREEN CALLAHAN]
 uncertainty-low | But how [worried] do we actually need to be if
 uncertainty | eks before he was arrested on [suspicion of] spying for China - when she i
 authority | Earthcott Ltd on 12 February, [according to] her latest register of intere
@@ -33,8 +31,6 @@ negative-framing-medium | share [Desperate] BBC bosses save Katya Jones w
 authority | 'deliciously sweet' flavour, [according to] Which?.
 all-caps | latasaray Team News - Osimhen [STARTS]View post
 all-caps | Liverpool Team News - Wirtz [STARTS]View post
-all-caps | proof. This is what's coming: [SYLVIA MORRIS]
-all-caps | ear for Premium Bond holders: [SYLVIA MORRIS]
 reveal | zon Spring Deal Days 2026: We [reveal] all the best deals as they co
 idiom-low | nnifer Symonds, 44, was found [dead in the water] in Henley-on-Thames on Friday
 all-caps | rdable teeth whitening powder [REALLY] rival the dentist? I reviewed
@@ -67,13 +63,10 @@ authority | at Commonwealth Day service, [according to] a lip reader
 uncertainty | his aunt, the Princess Royal, [apparently] telling her: 'I've had enough
 distancing | 35, was arrested after police [suspected] he was drunk behind the wheel
 all-caps | nd it saw me lose 3 stone too [WITHOUT] medication. Everyone plagued
-all-caps | uncomfortable questions - and [OLIVIA KEMP] reveals why it's caused fury.
 reveal | e questions - and OLIVIA KEMP [reveals] why it's caused fury...
 aggression-medium | KEMP reveals why it's caused [fury]...
 all-caps | missing what the Iran war is [REALLY] about - and it's not Israel.
-all-caps | chosen to strike now. But as [HAVIV RETTIG] GUR writes, once you understa
 all-caps | 660 shareWhat the Iran war is [REALLY] about - it's not Israel: HAVI
-all-caps | ALLY about - it's not Israel: [HAVIV RETTIG] GUR
 all-caps | inkly neck in just 15 minutes [WITHOUT] surgery: It's one of the hard
 hype | ou lose weight. Now there's a [game-changing] answer... and I'm proof it wo
 all-caps | ld wrinkly neck in 15 minutes [WITHOUT] surgery
@@ -203,12 +196,10 @@ dysphemism | show fronted by huge TV stars [AXED] after being trounced by The T
 hype-low | obbie! Wuthering Heights star [shows off] her new short hair and wows i
 all-caps | rns 62, he's bracing for some [VERY] 'intimate insights' in a tell
 all-caps | How Lewis Hamilton [REALLY] feels about Kim Kardashian
-all-caps | s money woes as insiders tell [OLIVIA KEMP] about new venture that's left
 all-caps | ms she won't return to TV for [SEVEN WEEKS] in emotional health update
 aggression-medium | ctful' Timothée Chalamet amid [fury] over 'no one cares about' ope
 negative-framing | after humiliating box office [disaster]
 hype-low | how she stays in shape while [showing off] her age-defying figure
-all-caps | [CHRISTOPHER STEVENS] reviews Gone: David Morrissey
 hype-low | [Iconic] nepo baby daughter of Hollywo
 derogatory | Iconic [nepo baby] daughter of Hollywood royalty
 hype | a pinstriped suit as he joins [glamorous] co-stars Sandra Hüller and Pr
@@ -232,7 +223,6 @@ moral | Strictly [scandalous]: Come Dancing's lengthy histo
 loaded-framing-low | show waltzes into yet another [controversy] after Nadiya Bychkova, 36, wa
 dysphemism | fter Nadiya Bychkova, 36, was [axed]
 hype-low | ah Michelle Gellar, 48, looks [youthful] as she kisses husband Freddie
-all-caps | irection stars: Insiders tell [MOLLY CLAYTON] secrets about Harry Styles' l
 uncertainty-medium | urrow and Jessica Alba dating [rumors] after their wild night togeth
 fear-medium | hysterics as she installs a '[heartbreak]' plaque on her ex-boyfriend's
 fear-medium | e the Gulf state amid 'rising [panic]'
@@ -260,7 +250,7 @@ reveal | Scientists [reveal] controversial plan to launch
 loaded-framing-low | Scientists reveal [controversial] plan to launch 50,000 MIRRORS
 all-caps | versial plan to launch 50,000 [MIRRORS] into space for 'sunlight on d
 all-caps | e Scientists to launch 50,000 [MIRRORS] into space for sunlight on de
-clickbait | mall window to save it if you [act NOW: TANYA JEFFERIES]
+clickbait-medium | mall window to save it if you [act NOW]: TANYA JEFFERIES
 reveal | tain's most expensive streets [revealed]: Road where homes are worth a
 authority | [According to] Rightmove, Winnington Road in
 negative-framing | urday aged 52 after suffering [severe] brain trauma following the at
@@ -277,8 +267,6 @@ hype-low | Kelly Brook [showed off] her incredible curves in a pi
 hype-medium | le curves in a pink bikini in [sizzling] holiday snaps from her trip t
 hype-low | with tie-side bottoms before [showing off] a leopard print bikini.
 hype-low | share Kelly Brook [shows off] her incredible curves in a pi
-all-caps | t trust their instincts, says [JEMIMA CAINER], while another should embrace
-all-caps | s in Aries connects to Pluto, [JEMIMA CAINER] analyses
 hype-medium | Cox scooped the event's most [prestigious] award in Birmingham on Sunday
 idiom-low | Time to cut out that toxic ex [once and for all]? Difficult people in your lif
 fear-low | fe AGE you 1.5% faster, study [warns]
@@ -311,7 +299,6 @@ fear-medium | madan flee Dubai amid 'rising [panic]' as they drive 11 hours to O
 negative-framing-medium | hey drive 11 hours to Oman in [desperate] bid to finally return to UK
 all-caps | ts pulses racing as she poses [TOPLESS] for sizzling selfie before sl
 hype-medium | cing as she poses TOPLESS for [sizzling] selfie before slipping into s
-all-caps | [CHRISTOPHER STEVENS] weekend TV review: A female 0
 negative-framing | [Bloodbath] at Strictly continues: Now pr
 hype-low | ead singer of 60s band behind [iconic] anti-Vietnam War anthem dies
 all-caps | phie Habboo's Raising Chelsea [FIRST LOOK]: Fans go wild as couple tease
@@ -342,10 +329,10 @@ hype-medium | ill NEVER return to club amid [explosive] row with president Joan 
 ~ [FINALLY => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ [The truth about  =>  ]what happens if you drink more
+~ [The truth about what => What] happens if you drink more tha
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ raped unconscious Brit teen in[ horrific  =>  ]30-minute ordeal in Magaluf ar
+~ aped unconscious Brit teen in [horrific  => ]30-minute ordeal in Magaluf ar
 ~ [shocking => ]
 ~ [finally => ]
 ~ [EXCLUSIVE => ]
@@ -358,11 +345,11 @@ hype-medium | ill NEVER return to club amid [explosive] row with president Joan 
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ 'Hannibal the Cannibal'... and[ the TRUTH about  =>  ]his 'glass cell'. Read it in T
+~ Hannibal the Cannibal'... and [the TRUTH about  => ]his 'glass cell'. Read it in T
 ~ [EXCLUSIVE => ]
 ~ [shocking => ]
 ~ [EXCLUSIVE => ]
-~ [The truth about  =>  ]Nadiya Bychkova's Strictly sac
+~ [The truth about  => ]Nadiya Bychkova's Strictly sac
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
@@ -370,7 +357,7 @@ hype-medium | ill NEVER return to club amid [explosive] row with president Joan 
 ~ [Nightmare => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ y Nelson amid her baby twins' ['heartbreaking' => ''] diagnosis
+~ y Nelson amid her baby twins' ['heartbreaking'  => ]diagnosis
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
@@ -384,17 +371,17 @@ hype-medium | ill NEVER return to club amid [explosive] row with president Joan 
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [FINALLY => ]
-~ here': Mollie King reveals the[ heartbreaking  =>  ]reason why she and Stuart Broa
-~ Mollie King has revealed the[ heartbreaking  =>  ]reason why she and cricketer S
+~ ere': Mollie King reveals the [heartbreaking  => ]reason why she and Stuart Broa
+~ Mollie King has revealed the [heartbreaking  => ]reason why she and cricketer S
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ leaves BBC fans in tears over[ heartbreaking  =>  ]death just as show legend retu
+~ leaves BBC fans in tears over [heartbreaking  => ]death just as show legend retu
 ~ [EXCLUSIVE => ]
-~ k's daughter Emilia, 9, shares[ heartbreaking  =>  ]tribute to her late father and
+~ 's daughter Emilia, 9, shares [heartbreaking  => ]tribute to her late father and
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ 'missing him tremendously' in[ heartbreaking  =>  ]tribute on his 49th birthday
+~ 'missing him tremendously' in [heartbreaking  => ]tribute on his 49th birthday
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]

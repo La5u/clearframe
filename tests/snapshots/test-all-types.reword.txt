@@ -20,13 +20,13 @@ conflict | chaos | clash | erupt | [feud] | plot | showdown | ignored |
 conflict | clash | erupt | feud | plot | [showdown] | ignored | spark | loss
 conflict-underline | pt | feud | plot | showdown | [ignored] | spark | loss
 conflict-underline | showdown | ignored | spark | [loss]
-derogatory | [bigot] | opponents | elite | extremi
-derogatory-underline | bigot | [opponents] | elite | extremist | large g
-derogatory | bigot | opponents | elite | [extremist] | large groups | illegal alie
-derogatory-underline | ponents | elite | extremist | [large groups] | illegal aliens | mob | radi
-loaded-framing | | extremist | large groups | [illegal aliens] | mob | radical | thug | poor
-derogatory | rge groups | illegal aliens | [mob] | radical | thug | poor quali
-derogatory | oups | illegal aliens | mob | [radical] | thug | poor quality
+derogatory | [bigot] | opponent | elite | extremis
+derogatory-underline | bigot | [opponent] | elite | extremist | large g
+derogatory | bigot | opponent | elite | [extremist] | large group | illegal alien
+derogatory-underline | pponent | elite | extremist | [large group] | illegal aliens | mob | radi
+loaded-framing | e | extremist | large group | [illegal aliens] | mob | radical | thug | poor
+derogatory | arge group | illegal aliens | [mob] | radical | thug | poor quali
+derogatory | roup | illegal aliens | mob | [radical] | thug | poor quality
 derogatory | egal aliens | mob | radical | [thug] | poor quality
 derogatory-underline | iens | mob | radical | thug | [poor quality]
 distancing-medium | [alleged] | purportedly | suspected
@@ -123,8 +123,8 @@ unsourced-underline | unnamed sources | unsourced | [sources]
 ~ ain't | gotta | kinda | [y'all => you all]
 ~ pt | feud | plot | showdown | [snub => ignored] | spark | loss
 ~ t | showdown | snub | spark | [wipeout => loss]
-~ bigot | [dissident => opponents] | elite | extremist | large g
-~ ssident | elite | extremist | [horde  => large groups ]| illegal aliens | mob | radic
+~ bigot | [dissident => opponent] | elite | extremist | large g
+~ ssident | elite | extremist | [horde  => large group ]| illegal aliens | mob | radic
 ~ iens | mob | radical | thug | [trash => poor quality]
 ~ [collateral damage => civilian harm] | torture | assault | died |
 ~ collateral damage | [enhanced interrogation => torture] | assault | died | probe

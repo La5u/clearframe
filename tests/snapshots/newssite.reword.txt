@@ -1,4 +1,4 @@
-# newssite.html mode=reword highlights=437
+# newssite.html mode=reword highlights=416
 clickbait | [EXCLUSIVE]Expats scared to speak out abo
 fear | 'safest place on Earth' - as [frightened] holidaymakers scramble for fl
 negative-framing-medium | thousands of ordinary Britons [desperate] to get home. While the United
@@ -7,18 +7,15 @@ conflict | r Ayatollah Ali Khamenei have [clashed] with anti-Iranian regime prot
 negative-framing | ave clashed with anti-Iranian [regime] protesters in Manchester city
 moral | Khamenei, who presided over a [brutal] regime which slaughtered thou
 negative-framing | i, who presided over a brutal [regime] which slaughtered thousands o
-all-caps-underline | the Ayatollah met his fate... [david patrikarakos] takes us inside the most auda
 fear | The [terrifying] gap in Britain's defences tha
 authority | s at our towns and cities: As [experts warn] we are on the brink of WWIII,
 all-caps-underline | an's network of terrorists is [already] here, plotting death and dest
 fear | share [Terrifying] gap in our defences means Ira
 conflict | LIVE[Chaos] as first UK government charte
-fear-medium | off with passengers suffering [panic attacks] - live updates
-all-caps-underline | ers suffering panic attacks - [live updates]
+fear-medium | off with passengers suffering [panic attacks] - LIVE UPDATES
 conflict | the Middle East faces further [chaos] with Gulf states embroiled in
 idiom-medium | ends keep asking if Britain's [lost its marbles] after Starmer snubbed Trump o
 loaded-framing-medium | tarmer snubbed Trump on Iran. [Sadly], there's only one answer
-all-caps-underline | erritory. That was it, writes [andrew neil]. But Sir Keir Starmer couldn'
 idiom-medium | ican friends ask: Has Britain [lost its marbles]?
 authority | ed a ground invasion in Iran, [according to] a US official.
 reveal | traordinary bravery Antonella [reveals] what happened next - and the
@@ -45,14 +42,12 @@ aggression-medium | positivity': Nicola Coughlan [hits back] at 'plus size' labe
 aggression-medium | Nicola Coughlan has [hit back] at assumptions that she is 'p
 all-caps-underline | inkly neck in just 15 minutes [without] surgery: It's one of the hard
 hype | ou lose weight. Now there's a [game-changing] answer... and I'm proof it wo
-all-caps-underline | a bra expert: I am 30GG says [katie weir] - and see my clients all make
 clickbait-low | s all make the same mistakes. [This is what] really works, the truth about
 reveal | s. This is what really works, [the truth about] wires - and precisely what to
 reveal | Sian Williams, 61, recalls [secretly] fainting live on BBC Breakfas
 clickbait | [EXCLUSIVE]As Stacey Solomon toasts £10m
-all-caps-underline | uncomfortable questions - and [olivia kemp] reveals why it's caused fury.
-reveal | e questions - and olivia kemp [reveals] why it's caused fury...
-aggression-medium | kemp reveals why it's caused [fury]...
+reveal | e questions - and OLIVIA KEMP [reveals] why it's caused fury...
+aggression-medium | KEMP reveals why it's caused [fury]...
 idiom-medium | I'm planning a pre-nup: I was [over the moon] when my fiance proposed - the
 idiom-low | A few weeks ago, [out of the blue], my fiance Archie asked me wh
 reveal | e right person': Harry Styles [reveals] his five year plan to get mar
@@ -60,10 +55,7 @@ idiom-medium | romance with Zoë Kravitz goes [from strength to strength]
 clickbait | [Shocking] moment Trump's Homeland Secur
 uncertainty-medium | er she is having sex with her [rumored] lover and trusted adviser.
 clickbait-underline | Why at 64 I [now] got married. We've been toget
-all-caps-underline | and have four children, says [christa d'souza]... but these are the two thin
 clickbait-underline | these are the two things that [now] made me walk down the aisle
-all-caps-underline | at 64 I finally got married: [christa d'souza]
-all-caps-underline | for Andrew's Maitlis fiasco: [eden confidential]
 all-caps-underline | SHOPPING: Primark's latest [major find] has shoppers rushing for the
 clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it's gone
 uncertainty-medium | The Princess of Wales' [rumoured] favourite anti-ageing formula
@@ -78,8 +70,6 @@ hype | ue francaise when he accepted [a prestigious] film award in Paris on Thur
 all-caps-underline | share Was it [really] a French Jim Carrey who accep
 authority | Bosses and [experts say] Labour's national insurance h
 reveal-underline | ideo that still haunts me and [what's] lurking in the internet's mos
-all-caps-underline | t's most depraved cesspit, by [jenni murray]
-all-caps-underline | ornography had become, writes [jenni murray]
 clickbait-underline | h Prince Andrew and his three [surprising] requests, day I had to ban hi
 clickbait | [EXCLUSIVE]Distasteful truth about arroga
 negative-framing-medium | you rich... and betrayal he's [desperate] to hide
@@ -96,7 +86,6 @@ fear-low | as her desperate attempts to [warn] her, including offering to me
 negative-framing-underline | share [Angry] ex of Katie Price's husband r
 clickbait | [EXCLUSIVE]Truth about Kristen Bell and D
 uncertainty-low | ica's friends say they're now [worried], as insiders share details of
-all-caps-underline | [christopher stevens] reviews last night's TV: Sher
 reveal | predicted to resume? Experts [reveal] when travel will return to no
 clickbait | [EXCLUSIVE]UK's richest plumber Charlie M
 loaded-framing-medium | ng Britain to avoid Labour's '[tax grab]'.
@@ -115,7 +104,6 @@ dysphemism-underline | redouble demands on Labour to [cut] approval for Beijing 
 clickbait | y in London in wake of latest [shock] spying allegations
 loaded-framing-low | the Commons to reverse their [controversial] decision to let Beijing build
 dysphemism-underline | ries new demands on Labour to [cut] approval for Beijing mega-emb
-all-caps-underline | d. How could I have a stroke? [jane gordon]'s diary of recovery - and the
 all-caps-underline | f recovery - and the symptoms [everyone] should be aware of
 clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it's gone
 hype-low | b ever look classy? Stars are [flaunting] cleavage on the red carpet ag
@@ -128,15 +116,13 @@ loaded-framing-medium | uld finish him. PLUS the most [tone-deaf] Dubai influenc
 reveal | af Dubai influencer bleating, [revealed] in our influencers unfiltered
 all-caps-underline | cer bleating, revealed in our [influencers unfiltered] column
 hype-low | a familiar face popping up in [iconic] British settings.
-all-caps-underline | ind James Charles's new move: [influencers unfiltered]
 clickbait | [EXCLUSIVE]Villagers in tiny hamlet with
 clickbait | Deadliest Catch star's [devastated] mom begs producers not to air
 fear-medium | A [heartbroken] mother has spoken out after h
 clickbait | [EXCLUSIVE]Moment police arrest Romanian
 uncertainty | that he is being arrested on [suspicion of] conspiracy to steal; while an
-loaded-framing-medium | t your nest egg from Labour's [tax grab]: jeff prestridge reveals his
-all-caps-underline | t egg from Labour's tax grab: [jeff prestridge] reveals his tricks to boost y
-reveal | r's tax grab: jeff prestridge [reveals] his tricks to boost your savi
+loaded-framing-medium | t your nest egg from Labour's [tax grab]: JEFF PRESTRIDGE reveals his
+reveal | r's tax grab: JEFF PRESTRIDGE [reveals] his tricks to boost your savi
 clickbait | st your savings... before the [devastating] raid
 loaded-framing-medium | t your nest egg from Labour's [tax grab]
 clickbait | [EXCLUSIVE]'I had never experienced pain
@@ -207,7 +193,7 @@ authority | Kate, Beatrice's display was, [according to] UK body language judge 
 hype | Oops, looks like [supermodel] Kate has made a Fergie fashio
 loaded-framing-medium | was famously worn once by the [disgraced] Sarah Ferguson (right).
 hype | share Oops, looks like [supermodel] Kate has made a Fergie fashio
-all-caps-underline | [don't miss]
+all-caps-underline | [Don't miss]
 aggression-medium | positivity': Nicola Coughlan [hits back] at 'plus size' label and says
 clickbait | [EXCLUSIVE]Katie Price's inner doubts ove
 negative-framing-underline | ver new husband: Lee Andrews' [angry] ex reveals details of secret
@@ -215,8 +201,7 @@ all-caps-underline | Olivia Attwood shares [very] racy snap as she poses toples
 loaded-framing-medium | Olivia Attwood shares very [racy] snap as she poses topless and
 hype-low | snap as she poses topless and [flaunts] her bottom in sheer tights fo
 clickbait | [EXCLUSIVE]As Stacey Solomon toasts £10m
-all-caps-underline | ister that's left questions - [olivia kemp] reveals why it's caused fury.
-aggression-medium | kemp reveals why it's caused [fury]...
+aggression-medium | KEMP reveals why it's caused [fury]...
 negative-framing-medium | Harry Styles says the [tragic] death of Liam Payne has made
 clickbait | [EXCLUSIVE]Truth about Kristen Bell and D
 uncertainty-low | Monica's friends say they're [worried]
@@ -233,11 +218,9 @@ rhetorical-question | carpet again...who is getting [right?]
 clickbait | Karla Thaynnara dies at 25 in [devastating] motorcycle crash shortly befo
 conflict | m 'want to draw a line' under [feud] with son Brooklyn after exten
 idiom-medium | lyn after extending emotional [olive branch] on his 27th birthday
-all-caps-underline | for Andrew's Maitlis fiasco: [eden confidential]
 clickbait | Deadliest Catch star's [devastated] mom begs producers not to air
 hype-low | ves legs hydrated, smooth and [youthful] SHOPPING
 idiom-medium | r Albert Square role - and it [spells trouble] for Zoe Slater
-all-caps-underline | [christopher stevens] reviews last night's TV: Sher
 uncertainty-medium | Week with daughter, 16, amid [rumors] he is back with Megan Fox
 distancing-medium | Deadliest Catch star [allegedly] suffered a concussion on set
 aggression-medium | st of her life as she reveals [merciless trolls] left her contemplating her TV
@@ -247,7 +230,6 @@ clickbait | [EXCLUSIVE]Katie Piper's acid attacker co
 hype | helle Pfeiffer, 67, joins her [dazzling] co-stars Elle Chapman and Bea
 clickbait | [EXCLUSIVE]Dark secret behind James Charl
 moral | d James Charles new move, the [scandal] that won't go away... and the
-all-caps-underline | gation that could finish him: [influencers unfiltered] column
 fear | the death of his 'brother' in [heartbreaking] post
 idiom-medium | ' as they extend an emotional [olive branch] to son Brooklyn on his 27th b
 loaded-framing-medium | helsea Handler snuggles up to [hunky] mystery boyfriend on romantic
@@ -282,7 +264,7 @@ hype-medium | husband Armando Rivera after [explosive] season four finale
 hype-medium | Mel B fronts [star-studded] first trailer for Squid Game:
 conflict | ans rave 'this is going to be [chaos]!'
 moral | 'It's been a [brutal] five months': Kaye Adams brea
-dysphemism-underline | s breaks her silence on being [cutted] from her £155,000 a year BBC
+dysphemism-underline | s breaks her silence on being [cut] from her £155,000 a year BBC
 all-caps-underline | and his ex-wife Christine are [still] struggling to sell £6.5millio
 moral | falling victim to Post Office [scandal]
 clickbait | s she prepares for her 'worst [nightmare]' of a red carpet
@@ -325,9 +307,8 @@ loaded-framing-low | tour - but it's all part of a [controversial] trend: 'Not a
 loaded-framing-medium | plans to push boundaries with [raunchy] new music video as filming be
 aggression-medium | Farrah Abraham [fires back] at her critics after she was
 loaded-framing-medium | ics after she was blasted for [racy] outfit at Egyptian pyramids
-dysphemism-underline | EDEN CONFIDENTIAL: [Cutted] Gregg cooking up a comeback w
+dysphemism-underline | EDEN CONFIDENTIAL: [Cut] Gregg cooking up a comeback w
 fear-medium | Revealed: [Harrowing] details of Deadliest Catch st
-all-caps-underline | [christopher stevens] reviews last night's TV: Murd
 hype-low | Alison Hammond [shows off] her incredible 11 stone weigh
 moral | nd told her to lose weight in [brutal] text
 hype-low | Jessica Simpson, 45, looks [youthful] in new goth style as she jets
@@ -387,7 +368,7 @@ fear-low | e Reiner were issued chilling [warning] over son Nick living at home
 moral | on Nick living at home before [brutal] murders
 fear | Rob and Michele Reiner issued [chilling] warning over son Nick
 fear-low | ichele Reiner issued chilling [warning] over son Nick
-all-caps-underline | [more don't miss]
+all-caps-underline | [More don't miss]
 derogatory | [Nepo babies] Lily McMenamy and Deva Cassel
 negative-framing-medium | star Caroline Brooks reveals [desperate] plans to leave Dubai amid Ira
 conflict | childhood and a long-standing [feud] with Lady Gaga could be to bl
@@ -427,67 +408,47 @@ rhetorical-question-medium | [Will supermarket prices rise thanks to the Middle 
 authority | n Britain in the longer-term, [experts warn].
 distancing-medium | d to play football' amid more [alleged] time-wasting during 1-0 win
 idiom-medium | [Chip off the old block]! Super-sub Kai Rooney produce
-all-caps-underline | Newcastle 2-1 Man United - [player ratings]: Which star failed to silence
 loaded-framing-low | Huge [controversy] as Newcastle star is sent off
 all-caps-underline | being given second yellow for [diving] in chaotic first half
-all-caps-underline | the Blues' favour, writes TOM [collomosse]
 derogatory | who fell down a lift shaft in [freak] accident opens up on 'miracle
 hype-medium | n freak accident opens up on '[miracle]' recovery as he reveals he is
 all-caps-underline | Harry Maguire is found [guilty] of assaulting Greek police an
 all-caps-underline | Simon Jordan [defends] Leeds fans accused of racism
 fear | in Middle Eastern bunker in '[terrifying]' ordeal amid US-Iran conflict
-# changed text nodes=70
-~ the Ayatollah met his fate... [DAVID PATRIKARAKOS => david patrikarakos] takes us inside the most auda
+# changed text nodes=52
 ~ an's network of terrorists is [ALREADY => already] here, plotting death and dest
-~ ers suffering panic attacks - [LIVE UPDATES => live updates]
-~ erritory. That was it, writes [ANDREW NEIL. => andrew neil.] But Sir Keir Starmer couldn't
 ~ er: Teachers reveal what they [REALLY => really] think of modern parenting in
 ~ What teachers [REALLY => really] think of modern parents
 ~ inkly neck in just 15 minutes [WITHOUT => without] surgery: It's one of the hard
-~ a bra expert: I am 30GG says [KATIE WEIR => katie weir] - and see my clients all make
-~ uncomfortable questions - and [OLIVIA KEMP => olivia kemp] reveals why it's caused fury.
 ~ Why at 64 I [finally => now] got married. We've been toget
-~ and have four children, says [CHRISTA D'SOUZA... => christa d'souza...] but these are the two things
 ~ these are the two things that [finally => now] made me walk down the aisle
-~ at 64 I finally got married: [CHRISTA D'SOUZA => christa d'souza]
-~ for Andrew's Maitlis fiasco: [EDEN CONFIDENTIAL => eden confidential]
 ~ SHOPPING: Primark's latest [MAJOR FIND => major find] has shoppers rushing for the
 ~ ourite anti-ageing formula is [finally => now] on sale in an amazing value s
 ~ unches a new pushchair with a [GENIUS => genius] folding carrycot as parents h
 ~ TOM LEONARD: Was it [REALLY => really] a French-speaking Jim Carrey
 ~ Was it [REALLY => really] a French Jim Carrey who accep
 ~ at still haunts me and what's [really  => ]lurking in the internet's most
-~ t's most depraved cesspit, by [JENNI MURRAY => jenni murray]
-~ ornography had become, writes [JENNI MURRAY => jenni murray]
 ~ [jaw-dropping => surprising]
 ~ ieved his own publicity, it's [self-styled => self-proclaimed] 'Money Saving Expert' Martin
 ~ to divorce? Five women reveal [EXACTLY => exactly] how much they made love in th
 ~ ver new husband: Lee Andrews' [furious => angry] ex reveals details of secret
 ~ [Furious => Angry] ex of Katie Price's husband r
-~ [CHRISTOPHER STEVENS => christopher stevens] reviews last night's TV: Sher
 ~ redouble demands on Labour to [axe => cut] approval for Beijing mega-emb
 ~ ries new demands on Labour to [axe => cut] approval for Beijing mega-emb
-~ d. How could I have a stroke? [JANE GORDON's => jane gordon's] diary of recovery - and the s
 ~ f recovery - and the symptoms [EVERYONE => everyone] should be aware of
 ~ cer bleating, revealed in our [INFLUENCERS UNFILTERED => influencers unfiltered] column
-~ ind James Charles's new move: [INFLUENCERS UNFILTERED => influencers unfiltered]
-~ t egg from Labour's tax grab: [JEFF PRESTRIDGE => jeff prestridge] reveals his tricks to boost y
 ~ latest olive branch in brutal [snub => ignored]
 ~ How [glamorous => stylish] nurse became embroiled in Tur
 ~ Karoline Leavitt [EXPLODES => explodes] at CNN's Kaitlan Collins as s
 ~ Karoline Leavitt [EXPLODES => explodes] at CNN's Kaitlan Collins
-~ [DON'T MISS => don't miss]
+~ [DON'T MISS => Don't miss]
 ~ ver new husband: Lee Andrews' [furious => angry] ex reveals details of secret
 ~ Olivia Attwood shares [VERY => very] racy snap as she poses toples
-~ ister that's left questions - [OLIVIA KEMP => olivia kemp] reveals why it's caused fury.
 ~ Was it [REALLY => really] a French-speaking Jim Carrey
-~ for Andrew's Maitlis fiasco: [EDEN CONFIDENTIAL => eden confidential]
-~ [CHRISTOPHER STEVENS => christopher stevens] reviews last night's TV: Sher
-~ gation that could finish him: [INFLUENCERS UNFILTERED => influencers unfiltered] column
 ~ ic Finland trip... and shares [VERY => very] racy snap
 ~ !' as Cat Deeley pays co-star [VERY => very] creepy compliment that 'no ma
 ~ ton's boyfriend Jim Curtis is [VERY => very] attentive at secret shoot as
-~ s breaks her silence on being [axed => cutted] from her £155,000 a year BBC
+~ s breaks her silence on being [axed => cut] from her £155,000 a year BBC
 ~ and his ex-wife Christine are [STILL => still] struggling to sell £6.5millio
 ~ ecca reveals truth behind her [VERY => very] harsh treatment of April afte
 ~ r podcast following BBC Radio [axe => cut]
@@ -495,19 +456,16 @@ fear | in Middle Eastern bunker in '[terrifying]' ordeal amid US-Iran conflict
 ~ worst two hours of television [EVER' => ever'] - raging 'I absolutely hated
 ~ ine Gun Kelly responds with a [VERY => very] cheeky comment
 ~ merdale and Coronation Street [CANCELLED => cancelled] this week in yet another ITV
-~ EDEN CONFIDENTIAL: [Axed => Cutted] Gregg cooking up a comeback w
-~ [CHRISTOPHER STEVENS => christopher stevens] reviews last night's TV: Murd
+~ EDEN CONFIDENTIAL: [Axed => Cut] Gregg cooking up a comeback w
 ~ hildhood food favourites that [NEVER => never] change: As brands bulk out pr
 ~ Sky Sports [axe => cut] pundit after she came out as
 ~ levels may be up to 4.9 feet [HIGHER => higher] than we thought - leaving mil
 ~ levels may be up to 4.9 feet [HIGHER => higher] than we thought
-~ [MORE DON'T MISS => more don't miss]
+~ [MORE DON'T MISS => More don't miss]
 ~ ace being closed' in yet more [scathing => harsh] posts
 ~ tandout performance poet will [NEVER => never] win the show - and the genius
 ~ als the painful result of her [glamorous => stylish] wedding makeover after walkin
 ~ t thrown into chaos as diners [EVACUATED => evacuated] from restaurant after chef's
-~ Newcastle 2-1 Man United - [PLAYER RATINGS: => player ratings:] Which star failed to silence
 ~ being given second yellow for [DIVING => diving] in chaotic first half
-~ the Blues' favour, writes TOM [COLLOMOSSE => collomosse]
 ~ Harry Maguire is found [GUILTY => guilty] of assaulting Greek police an
 ~ Simon Jordan [DEFENDS => defends] Leeds fans accused of racism

@@ -8,10 +8,10 @@
     },
     "elite": { "unless": ["productName"] },
     "evil": {
-      "note": "Titles: \"Resident Evil\", \"Evil Dead\".",
+      "note": "Titles, in Title Case or capitals: \"Resident Evil\", \"EVIL DEAD\"; not \"a resident evil plot\".",
       "unless": [
-        { "before": "/\\bResident\\s+$/u" },
-        { "after": "/^\\s*Dead\\b/u" }
+        { "match": "/^(?:Evil|EVIL)$/u", "before": "/\\b(?:Resident|RESIDENT)\\s+$/u" },
+        { "match": "/^(?:Evil|EVIL)$/u", "after": "/^\\s*(?:Dead|DEAD)\\b/u" }
       ]
     },
     "exclusive": {
@@ -24,17 +24,23 @@
     "far-right": { "unless": ["position"] },
     "iconic": { "unless": ["productName"] },
     "legendary": { "unless": ["productName"] },
-    "miracle": { "unless": ["productName"] },
+    "miracle": {
+      "note": "Brands use the noun (\"Miracle-Gro\", \"Miracle Recovery cream\"); a capitalised \"Miraculous\" is a sentence start or a Title Case headline, so the product guard skips that alias.",
+      "unless": [
+        { "match": "/^(?:Miracle|MIRACLE)\\b/u", "nearby": "/\\b(?:xbox|playstation|pixel|iphone|galaxy|controller|gamepad|keyboard|mouse|laptop|phone|model|series|edition|package|trim|brand|product|album|film|show|team|unit|magazine|newspaper|records|studios)\\b/iu" },
+        { "match": "/^(?:Miracle|MIRACLE)\\b/u", "textBefore": "/\\b[A-Z][\\p{L}\\d-]+\\s+$/u" }
+      ]
+    },
     "revolutionary": {
       "unless": [
         { "after": "/^\\s*(?:guards?|war|army|front|committee|party)\\b/iu" }
       ]
     },
     "sacked": {
-      "note": "American football: a quarterback \"sacked eight times\" or \"sacked for a loss\".",
+      "note": "American football: a quarterback \"sacked eight times\" or \"sacked for a loss\"; not a firm that \"sacked 300 staff\".",
       "unless": [
-        { "after": "/^\\s*(?:\\d+|one|two|three|four|five|six|seven|eight|nine|ten|twice|once)\\b(?:\\s+(?:times|more))?|^\\s*for\\s+(?:a\\s+)?(?:loss|safety|\\d)/iu" },
-        { "before": "/\\b(?:quarterback|QB|was|got|been)\\s+$/u", "after": "/\\b(?:times|loss|yards?|sacks?)\\b/iu" }
+        { "after": "/^\\s*(?:(?:\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\s+(?:more\\s+)?times\\b|for\\s+(?:a\\s+)?(?:loss|safety|\\d))/iu" },
+        { "before": "/\\b(?:quarterback|qb|was|got|been)\\s+$/iu", "after": "/\\b(?:times|loss|yards?|sacks?)\\b/iu" }
       ]
     },
     "secret": {
@@ -44,7 +50,7 @@
     },
     "severe": {
       "unless": [
-        { "after": "/^\\s*(?:storms?|thunderstorms?|weather|drought|flooding|turbulence|winds?|allerg)/iu" }
+        { "after": "/^\\s*(?:(?:storms?|thunderstorms?|weather|drought|flooding|turbulence|winds?)\\b|allerg)/iu" }
       ]
     },
     "shock": {
@@ -55,15 +61,17 @@
     },
     "superstar": { "unless": ["productName"] },
     "under fire": {
+      "note": "Only the literal sense: forces or vessels under fire, fire from armed attackers or weapons, or a combat context. \"Came under fire from critics\" is what the rule is for.",
       "unless": [
-        { "before": "/\\b(?:came|come|comes|coming)\\s+$/iu" },
-        { "after": "/^\\s*from\\b/iu" }
+        { "before": "/\\b(?:troops|soldiers?|convoys?|patrols?|marines|peacekeepers|warships?|ships?|vessels?|tankers?|helicopters?|aircraft|positions|bases?)\\s+(?:(?:came|come|comes|coming|were|was|are|is|had|has|have|been|got|reportedly)\\s+)*$/iu" },
+        { "after": "/^\\s*from\\s+(?:[\\w'’-]+\\s+){0,2}(?:gunmen|snipers?|rebels|militants?|insurgents|militia(?:s|men)?|fighters|terrorists|jihadists|troops|soldiers|forces|army|artillery|rockets?|missiles?|mortars?|drones?|tanks?|warships?|enemy)\\b/iu" },
+        { "nearby": "/\\b(?:gunfire|gunmen|shots were fired|shelling|snipers?|artillery|ambush(?:ed)?)\\b/iu" }
       ]
     },
     "wild": {
       "unless": [
         { "before": "/\\b(?:the|into)\\s+$/iu" },
-        { "after": "/^\\s*(?:card|fire|life|animals?|horses?|'n|‘n)/iu" }
+        { "after": "/^\\s*(?:(?:card|fire|life|animals?|horses?)\\b|['‘]n\\b)/iu" }
       ]
     }
   },

@@ -1,4 +1,4 @@
-# newssite3.html mode=reword highlights=297
+# newssite3.html mode=reword highlights=279
 conflict | t TWO DAYS' worth stored up - [sparking] fears of a supply shortage as
 authority | for just 1.5 days of demand, [according to] new data published by Nationa
 aggression | war: Foreign Secretary Cooper [blasts] president's 'diplomacy throug
@@ -8,8 +8,6 @@ hype-medium | for war we've already won' in [explosive] broadside
 fear-low | The president [warned] the US will 'remember' the la
 fear | s are using state TV to issue [chilling] warnings that they and their
 fear-low | ng state TV to issue chilling [warnings] that they and their children
-all-caps-underline | ll be shot in the street: IAN [gallagher] and david patrikarakos
-all-caps-underline | the street: IAN gallagher and [david patrikarakos]
 negative-framing | ters, but those chanting anti-[regime] slogans risk on-the-spot exec
 clickbait | [EXCLUSIVE]As war rages in Iran, woke MoD
 clickbait | [EXCLUSIVE]Tony Blair rebukes Keir Starme
@@ -24,9 +22,9 @@ moral | er to 'cash in on the Epstein [scandal]', Hollywood unsourced. Fergie
 unsourced-underline | e Epstein scandal', Hollywood [unsourced]. Fergie, 66, had pitched the
 loaded-framing-medium | said. The former wife of the [disgraced] Andrew Mountbatten-Windsor ha
 all-caps-underline | pressure in just three weeks [without] drugs. Anyone can make these
-dysphemism-underline | cing shock as three stars are [cutted]
-dysphemism-underline | cing shock as three stars are [cutted]
-dysphemism-underline | cing shock as three stars are [cutted]
+dysphemism-underline | cing shock as three stars are [cut]
+dysphemism-underline | cing shock as three stars are [cut]
+dysphemism-underline | cing shock as three stars are [cut]
 uncertainty | ti Patel and Chris Philp both [reportedly] under threat
 clickbait | [EXCLUSIVE]EXPOSED: Andrew's messages abo
 conflict | n known as 'Spotty' that have [sparked] demands princesses 'come clea
@@ -35,23 +33,18 @@ all-caps-underline | How to end the agony of UTIs [without] antibiotics. These a
 negative-framing-medium | o 'silent mode' while William [desperately] tried to 'form a barrier' fro
 authority | m a barrier' from his cousin, [according to] a body language expert.
 clickbait | [EXCLUSIVE]My haunting stay with Holly's
-clickbait-low | he most intense of my career. [This is what] they told me: sarah oliver
-all-caps-underline | r. This is what they told me: [sarah oliver]
+clickbait-low | he most intense of my career. [This is what] they told me: SARAH OLIVER
 moral | hed me the most; the sense of [evil] done and innocence destroyed,
 clickbait-underline | soriasis for 20 years. Then I [now] found a simple cure that real
 all-caps-underline | nd it saw me lose 3 stone too [without] medication. Everyone plagued
-dysphemism-underline | HREE professional dancers are [cutted] by BBC bosses ahead of new se
-uncertainty | jor shake-up after BBC bosses [reportedly] cutted three professional dan
-dysphemism-underline | p after BBC bosses reportedly [cutted] three professional dancers fr
-dysphemism-underline | keup as THREE pro dancers are [cutted]'
+dysphemism-underline | HREE professional dancers are [cut] by BBC bosses ahead of new se
+uncertainty | jor shake-up after BBC bosses [reportedly] cut three professional dancer
+dysphemism-underline | p after BBC bosses reportedly [cut] three professional dancers fr
+dysphemism-underline | keup as THREE pro dancers are [cut]'
 rhetorical-question-medium | TALK OF THE TOWN: [Is Prince George set for Marlborough College after he tours £60,000 a year school with parents?]
 uncertainty-medium | Despite [rumours] that George (pictured), 12, w
 clickbait | [EXCLUSIVE]Inside London's most benighted
-all-caps-underline | used by South Asian migrants: [fred kelly]
-all-caps-underline | don's most benighted borough: [fred kelly]
-all-caps-underline | eat the inheritance tax trap: [simon lambert] reveals two easy ways to avoi
-reveal | tance tax trap: simon lambert [reveals] two easy ways to avoid the 40
-all-caps-underline | How to beat inheritance tax: [simon lambert]
+reveal | tance tax trap: SIMON LAMBERT [reveals] two easy ways to avoid the 40
 loaded-framing-medium | he house for 14 years, before [sadly] passing away on 24 December 2
 euphemism | se for 14 years, before sadly [passing away] on 24 December 2025.
 fear-low | tar Wars: Sir Richard Branson [warns] Britain must prepare for conf
@@ -73,8 +66,7 @@ uncertainty | n Beckham's ex Hana Cross has [reportedly] been asked to feature i
 uncertainty | ictoria and David Beckham are [reportedly] aware that relatives, acquain
 fear-low | generation into debt. I first [warned] about this scandal 13 years a
 moral | bt. I first warned about this [scandal] 13 years ago - this is the fi
-all-caps-underline | is is the financial advice he [should] be backing: jeff prestridge
-all-caps-underline | advice he should be backing: [jeff prestridge]
+all-caps-underline | is is the financial advice he [should] be backing: JEFF PRESTRIDGE
 clickbait | [EXCLUSIVE]Brazilian model who was abused
 distancing-medium | eeding and in agony after the [allegedly] aborted dental work.
 clickbait | [EXCLUSIVE]Labour blunder as MoD posts vi
@@ -90,7 +82,7 @@ negative-framing-medium | you rich... and betrayal he's [desperate] to hide
 loaded-framing-underline | ieved his own publicity, it's [self-proclaimed] 'Money Saving Expert' Martin
 reveal | leads to divorce? Five women [reveal] exactly how much they made lo
 all-caps-underline | to divorce? Five women reveal [exactly] how much they made love in th
-all-caps-underline | [war in the middle east]
+all-caps-underline | [War in the Middle East]
 fear-low | , as the Revolutionary Guards [warned] today that it could carry on
 clickbait | [EXCLUSIVE]Ironic moment women's rights a
 negative-framing | demonstrating against Iranian [regime]... which has brutally oppress
@@ -119,9 +111,7 @@ reveal | Rosanna Arquette [reveals] the price she paid for reject
 fear | ecting Harvey Weinstein after [horrifying] hotel encounter
 fear | ruel fate of dogs in Dubai is [horrifying]. I could never do what these
 fear | ent of dogs in Dubai is truly [horrifying]
-all-caps-underline | his pernicious cycle, says DR [sian williams]. Take my interactive quiz to
 all-caps-underline | interactive quiz to find out [exactly] how to tackle it
-all-caps-underline | tionism ruining your life: DR [sian williams]
 euphemism-low | MPs demand [probe] into offshore fund that may e
 euphemism-low | share MPs demand [probe] of offshore fund that may exp
 clickbait | [Has Emma Watson finally found love with Gonzalo Hevia Bailleres... or is her new tech billionaire boyfriend just trying to make his popstar ex jealous?]
@@ -138,8 +128,6 @@ all-caps-underline | student posted video of him '[urinating] in class'
 all-caps-underline | r caught on cellphone camera '[urinating] in class'
 clickbait-medium | on a seven-hour flight - and [here's why you should] too
 authority | r a spectacular home refresh, [according to] the experts
-all-caps-underline | possible... if not for good: [geoffrey wheatcroft]
-all-caps-underline | o the US should be postponed: [geoffrey wheatcroft]
 derogatory | Haunting prison mugshots show [mob] jailed for stealing iron and
 derogatory | rison mugshots show Victorian [mob] jailed for stealing iron
 clickbait | [EXCLUSIVE]Tragic royal Thomas Kingston's
@@ -152,16 +140,15 @@ loaded-framing-underline | In the [called] modern world, what place is t
 aggression | James Corden ordered to [rip] up 'unsightly' paving slabs l
 negative-framing-medium | A TikTok star mom has [tragically] died at 47 after suffering co
 moral | One of the most [evil] child killers in history Ian
-all-caps-underline | haunt me forever, writes SAM [greenhill]. Read it exclusively in The C
 hype-underline | How [stylish] nurse became embroiled in Tur
-all-caps-underline | [war in the middle east]
+all-caps-underline | [War in the Middle East]
 fear-low | be raised, leading economist [warns]
 fear-low | r to insurance giant Allianz, [warned] that the average person would
 authority | who in the world: As military [experts warn] World War III has never been
 authority | ts' during his teenage years, [according to] royal author Tina Brown. Yet
-all-caps-underline | [don't miss]
+all-caps-underline | [Don't miss]
 fear | ecting Harvey Weinstein after [horrifying] hotel encounter
-dysphemism-underline | HREE professional dancers are [cutted] by BBC bosses ahead of new se
+dysphemism-underline | HREE professional dancers are [cut] by BBC bosses ahead of new se
 hype-medium | ght from her famous mother at [star-studded] Balenciaga show
 clickbait | [EXCLUSIVE]EXPOSED: Andrew's messages abo
 fear | all live on stage in front of [horrified] judging panel
@@ -189,14 +176,12 @@ clickbait | [EXCLUSIVE]Andrew leaked inside intel on
 hype-low | ves legs hydrated, smooth and [youthful] SHOPPING
 conflict | [Clash] of the co-stars! All the on-s
 unsourced | Kidman's daughter Sunday Rose [raises eyebrows] with her bizarre walk
-all-caps-underline | to. It's just too insidious: [caroline bullock]
 fear-medium | [Heartbroken] Blake Lively cuts a downcast
 conflict | of FA Cup following thrilling [clash] with Premier League side Chel
 all-caps-underline | - these are the items you're [banned] from buying and the moments B
 clickbait | [EXCLUSIVE]Explosive secrets of the Roone
 hype-medium | EXCLUSIVE[Explosive] secrets of the Rooney's marit
-aggression-medium | indiscretion. Coleen's utter [fury] all revealed by alison boshof
-all-caps-underline | 's utter fury all revealed by [alison boshoff]
+aggression-medium | indiscretion. Coleen's utter [fury] all revealed by ALISON BOSHOF
 uncertainty-medium | after denying marriage split [rumours] in bizarre video
 conflict | ctoria's PFW show amid family [feud]
 all-caps-underline | ruly cynical reason I believe [really] lies behind the Beckhams' gus
@@ -212,11 +197,9 @@ distancing | ritney Spears is arrested for [suspected] DUI, we revisit what the 
 hype-low | 'blown away'- with Hollywood [superstar] bringing 'immense gravitas' t
 uncertainty-low | rid of his felines - and fans [worry] it could hurt her Oscar hopes
 all-caps-underline | rrects photographer after his [daughter], 16, is mistaken for Megan Fo
-all-caps-underline | end meet at influencer party. [molly clayton] was there - and saw every mom
 clickbait | [EXCLUSIVE]Kaye Adams is accused of being
 derogatory-medium | e Adams is accused of being a [foul-mouthed] aggressive bully who humiliat
-clickbait-low | ed staff. I worked for her... [this is what] I saw, by codie bullen
-all-caps-underline | her... this is what I saw, by [codie bullen]
+clickbait-low | ed staff. I worked for her... [this is what] I saw, by CODIE BULLEN
 all-caps-underline | ictured for the first time in [months]
 uncertainty-medium | Romeo Beckham's [rumoured] ex Caroline Daur turns heads
 idiom-medium | m's rumoured ex Caroline Daur [turns heads] at Victoria's Paris Fashion W
@@ -229,13 +212,12 @@ idiom-medium | David and Victoria Beckham's [olive branch] with 'love you' messa
 all-caps-underline | ristina Applegate reveals the [huge] favor Will Ferrell did for he
 hype-low | Carol Vorderman, 65, [shows off] her slimmed -down figure in s
 clickbait | [EXCLUSIVE]Jennifer Lopez is pushing hers
-dysphemism-underline | months after streaming giant [cutted] her lifestyle show amid harsh
-aggression-underline | utted her lifestyle show amid [harsh] reviews
+dysphemism-underline | months after streaming giant [cut] her lifestyle show amid harsh
+aggression-underline | t cut her lifestyle show amid [harsh] reviews
 hype-low | Williams goes braless as she [flaunts] drastic weight loss amid spec
 fear | himself on camera in front of [horrified] castmates
 clickbait | [EXCLUSIVE]Brooklyn's sad new estrangemen
 negative-framing-medium | sad new estrangement and the '[desperate]' meaning behind these picture
-all-caps-underline | will have caused anguish, by [olivia kemp]
 rhetorical-question | some kind of special effects, [right?]!'
 distancing-medium | ichael Bay sues two women who [allegedly] crashed car into his Bel-Air
 uncertainty-low | s out following DUI arrest as [worried] pal says she needs to 'get ou
@@ -266,7 +248,7 @@ negative-framing | 91 shares [Tragedy] of Emma Watson's new man: Mod
 negative-framing-medium | [Desperate] search for missing skipper, 7
 negative-framing | [A desperate] search is underway for a 75-y
 negative-framing-medium | share [Desperate] search for veteran sailor aft
-all-caps-underline | [more don't miss]
+all-caps-underline | [More don't miss]
 clickbait | [EXCLUSIVE]Britain's Got Talent turns phy
 negative-framing-medium | Amanda Holden's microphone in [desperate] bid to get revenge on Simon C
 all-caps-underline | girlfriend Kim Turnbull risks [another] awkward run-in with his ex Mi
@@ -296,72 +278,54 @@ fear-medium | Wrexham 2-4 Chelsea: [Heartbreak] for 10-man Championship side
 fear | commentator John Hunt reveals [heartbreaking] grieving process after crossb
 clickbait | [EXCLUSIVE]Manchester United add Bournemo
 clickbait | [EXCLUSIVE]Patrice Evra puts his £3.5m fi
-# changed text nodes=67
-~ ll be shot in the street: IAN [GALLAGHER => gallagher] and david patrikarakos
-~ the street: IAN GALLAGHER and [DAVID PATRIKARAKOS => david patrikarakos]
+# changed text nodes=52
 ~ at to invest in now - and the [surprising => unexpected] stocks you must avoid
 ~ and the surprising stocks you [MUST => must] avoid
 ~ e Epstein scandal', Hollywood [sources say. => unsourced.] Fergie, 66, had pitched the i
 ~ pressure in just three weeks [WITHOUT => without] drugs. Anyone can make these
-~ cing shock as three stars are [axed => cutted]
-~ cing shock as three stars are [axed => cutted]
-~ cing shock as three stars are [axed => cutted]
+~ cing shock as three stars are [axed => cut]
+~ cing shock as three stars are [axed => cut]
+~ cing shock as three stars are [axed => cut]
 ~ How to end the agony of UTIs [WITHOUT => without] antibiotics. These are the si
-~ r. This is what they told me: [SARAH OLIVER => sarah oliver]
 ~ soriasis for 20 years. Then I [finally => now] found a simple cure that real
 ~ nd it saw me lose 3 stone too [WITHOUT => without] medication. Everyone plagued
-~ HREE professional dancers are [axed => cutted] by BBC bosses ahead of new se
-~ p after BBC bosses reportedly [axed => cutted] three professional dancers fr
-~ keup as THREE pro dancers are [axed' => cutted']
-~ used by South Asian migrants: [FRED KELLY => fred kelly]
-~ don's most benighted borough: [FRED KELLY => fred kelly]
-~ eat the inheritance tax trap: [SIMON LAMBERT => simon lambert] reveals two easy ways to avoi
-~ How to beat inheritance tax: [SIMON LAMBERT => simon lambert]
-~ is is the financial advice he [SHOULD => should] be backing: jeff prestridge
-~ advice he SHOULD be backing: [JEFF PRESTRIDGE => jeff prestridge]
+~ HREE professional dancers are [axed => cut] by BBC bosses ahead of new se
+~ p after BBC bosses reportedly [axed => cut] three professional dancers fr
+~ keup as THREE pro dancers are [axed' => cut']
+~ is is the financial advice he [SHOULD => should] be backing: JEFF PRESTRIDGE
 ~ ith 'zombie' drugs as up to a [QUARTER => quarter] of e-cigarettes confiscated i
 ~ h Prince Andrew and his three [jaw-dropping => surprising] requests, day I had to ban hi
 ~ ieved his own publicity, it's [self-styled => self-proclaimed] 'Money Saving Expert' Martin
 ~ to divorce? Five women reveal [EXACTLY => exactly] how much they made love in th
-~ [WAR IN THE MIDDLE EAST => war in the middle east]
+~ [WAR IN THE MIDDLE EAST => War in the Middle East]
 ~ s as the Middle East conflict [rages on. => continues.]
-~ his pernicious cycle, says DR [SIAN WILLIAMS. => sian williams.] Take my interactive quiz to f
 ~ interactive quiz to find out [EXACTLY => exactly] how to tackle it
-~ tionism ruining your life: DR [SIAN WILLIAMS => sian williams]
 ~ r student posted video of him ['URINATING => 'urinating] in class'
 ~ er caught on cellphone camera ['URINATING => 'urinating] in class'
-~ possible... if not for good: [GEOFFREY WHEATCROFT => geoffrey wheatcroft]
-~ o the US should be postponed: [GEOFFREY WHEATCROFT => geoffrey wheatcroft]
 ~ In the [so-called => called] modern world, what place is t
-~ haunt me forever, writes SAM [GREENHILL. => greenhill.] Read it exclusively in The Cr
 ~ How [glamorous => stylish] nurse became embroiled in Tur
-~ [WAR IN THE MIDDLE EAST => war in the middle east]
-~ [DON'T MISS => don't miss]
-~ HREE professional dancers are [axed => cutted] by BBC bosses ahead of new se
+~ [WAR IN THE MIDDLE EAST => War in the Middle East]
+~ [DON'T MISS => Don't miss]
+~ HREE professional dancers are [axed => cut] by BBC bosses ahead of new se
 ~ om survey to setup: What it's [REALLY => really] like to get solar panels and
 ~ pping point': Insiders reveal [REAL => real] trigger for their divorce
 ~ court war with Justin Baldoni [rages on => continues]
 ~ A-list pop star [CRASHES => crashes] Ryan Gosling's Saturday Night
 ~ Timothee Chalamet [SLAMMED => slammed] by Met Opera and Covent Garde
-~ to. It's just too insidious: [CAROLINE BULLOCK => caroline bullock]
 ~ - these are the items you're [BANNED => banned] from buying and the moments B
-~ 's utter fury all revealed by [ALISON BOSHOFF => alison boshoff]
 ~ ruly cynical reason I believe [REALLY => really] lies behind the Beckhams' gus
 ~ Sydney Sweeney shows off her [VERY => very] ample chest in racy webcam sn
 ~ pping diamond engagement ring [DURING => during] her first-round win at Indian
 ~ rrects photographer after his [DAUGHTER, => daughter,] 16, is mistaken for Megan Fox
-~ end meet at influencer party. [MOLLY CLAYTON => molly clayton] was there - and saw every mom
-~ her... this is what I saw, by [CODIE BULLEN => codie bullen]
 ~ ictured for the first time in [MONTHS => months]
 ~ iest role yet as she performs [VERY => very] X-rated sex scenes with White
 ~ ge of her pleasure' - but had [VERY => very] different ideas about what to
 ~ ristina Applegate reveals the [HUGE => huge] favor Will Ferrell did for he
-~ months after streaming giant [axed => cutted] her lifestyle show amid harsh
+~ months after streaming giant [axed => cut] her lifestyle show amid harsh
 ~ axed her lifestyle show amid [scathing => harsh] reviews
-~ will have caused anguish, by [OLIVIA KEMP => olivia kemp]
 ~ pping diamond engagement ring [DURING => during] her first-round win at Indian
 ~ wears diamond engagement ring [DURING => during] her win at Indian Wells
-~ [MORE DON'T MISS => more don't miss]
+~ [MORE DON'T MISS => More don't miss]
 ~ girlfriend Kim Turnbull risks [ANOTHER => another] awkward run-in with his ex Mi
 ~ er begging for an explanation [NINETEEN => nineteen] times during exit meeting
 ~ Chris Packham reveals the [HORRIFIC => horrific] ways he amassed his collectio

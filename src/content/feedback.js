@@ -15,7 +15,7 @@ function saveFeedback(record, verdict, status) {
   const item = {
     schemaVersion: 1,
     verdict,
-    wording: record.sourceText,
+    wording: record.wording,
     replacement: record.replacementText,
     action: record.action,
     rules: (record.terms || []).map(term => term.phrase),

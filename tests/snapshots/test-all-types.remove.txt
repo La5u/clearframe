@@ -112,5 +112,5 @@ unsourced | e sources | people close to | [people familiar] | sources say | unna
 unsourced | close to | people familiar | [sources say] | unnamed sources
 unsourced | ople familiar | sources say | [unnamed sources]
 # changed text nodes=2
-~ ping | must-see | must-watch |[ nightmare  =>  ]| reveal | shock | shocking |
-~ saster | gruesome | hardline |[ horrific  =>  ]| junta | puppet | regime | tr
+~ ing | must-see | must-watch | [nightmare  => ]| reveal | shock | shocking |
+~ aster | gruesome | hardline | [horrific  => ]| junta | puppet | regime | tr

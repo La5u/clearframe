@@ -1,4 +1,4 @@
-# newssite3.html mode=highlight highlights=297
+# newssite3.html mode=highlight highlights=279
 conflict | t TWO DAYS' worth stored up - [sparking] fears of a supply shortage as
 authority | for just 1.5 days of demand, [according to] new data published by Nationa
 aggression | war: Foreign Secretary Cooper [blasts] president's 'diplomacy throug
@@ -8,8 +8,6 @@ hype-medium | for war we've already won' in [explosive] broadside
 fear-low | The president [warned] the US will 'remember' the la
 fear | s are using state TV to issue [chilling] warnings that they and their
 fear-low | ng state TV to issue chilling [warnings] that they and their children
-all-caps | ll be shot in the street: IAN [GALLAGHER] and DAVID PATRIKARAKOS
-all-caps | the street: IAN GALLAGHER and [DAVID PATRIKARAKOS]
 negative-framing | ters, but those chanting anti-[regime] slogans risk on-the-spot exec
 clickbait | [EXCLUSIVE]As war rages in Iran, woke MoD
 clickbait | [EXCLUSIVE]Tony Blair rebukes Keir Starme
@@ -36,7 +34,6 @@ negative-framing-medium | o 'silent mode' while William [desperately] tried to '
 authority | m a barrier' from his cousin, [according to] a body language expert.
 clickbait | [EXCLUSIVE]My haunting stay with Holly's
 clickbait-low | he most intense of my career. [This is what] they told me: SARAH OLIVER
-all-caps | r. This is what they told me: [SARAH OLIVER]
 moral | hed me the most; the sense of [evil] done and innocence destroyed,
 clickbait | soriasis for 20 years. Then I [finally] found a simple cure that real
 all-caps | nd it saw me lose 3 stone too [WITHOUT] medication. Everyone plagued
@@ -47,11 +44,7 @@ dysphemism | keup as THREE pro dancers are [axed]'
 rhetorical-question-medium | TALK OF THE TOWN: [Is Prince George set for Marlborough College after he tours £60,000 a year school with parents?]
 uncertainty-medium | Despite [rumours] that George (pictured), 12, w
 clickbait | [EXCLUSIVE]Inside London's most benighted
-all-caps | used by South Asian migrants: [FRED KELLY]
-all-caps | don's most benighted borough: [FRED KELLY]
-all-caps | eat the inheritance tax trap: [SIMON LAMBERT] reveals two easy ways to avoi
 reveal | tance tax trap: SIMON LAMBERT [reveals] two easy ways to avoid the 40
-all-caps | How to beat inheritance tax: [SIMON LAMBERT]
 loaded-framing-medium | he house for 14 years, before [sadly] passing away on 24 December 2
 euphemism | se for 14 years, before sadly [passing away] on 24 December 2025.
 fear-low | tar Wars: Sir Richard Branson [warns] Britain must prepare for conf
@@ -74,7 +67,6 @@ uncertainty | ictoria and David Beckham are [reportedly] aware that relatives, a
 fear-low | generation into debt. I first [warned] about this scandal 13 years a
 moral | bt. I first warned about this [scandal] 13 years ago - this is the fi
 all-caps | is is the financial advice he [SHOULD] be backing: JEFF PRESTRIDGE
-all-caps | advice he SHOULD be backing: [JEFF PRESTRIDGE]
 clickbait | [EXCLUSIVE]Brazilian model who was abused
 distancing-medium | eeding and in agony after the [allegedly] aborted dental work.
 clickbait | [EXCLUSIVE]Labour blunder as MoD posts vi
@@ -119,9 +111,7 @@ reveal | Rosanna Arquette [reveals] the price she paid for reject
 fear | ecting Harvey Weinstein after [horrifying] hotel encounter
 fear | ruel fate of dogs in Dubai is [horrifying]. I could never do what these
 fear | ent of dogs in Dubai is truly [horrifying]
-all-caps | his pernicious cycle, says DR [SIAN WILLIAMS]. Take my interactive quiz to
 all-caps | interactive quiz to find out [EXACTLY] how to tackle it
-all-caps | tionism ruining your life: DR [SIAN WILLIAMS]
 euphemism-low | MPs demand [probe] into offshore fund that may e
 euphemism-low | share MPs demand [probe] of offshore fund that may exp
 clickbait | [Has Emma Watson finally found love with Gonzalo Hevia Bailleres... or is her new tech billionaire boyfriend just trying to make his popstar ex jealous?]
@@ -138,8 +128,6 @@ all-caps | student posted video of him '[URINATING] in class'
 all-caps | r caught on cellphone camera '[URINATING] in class'
 clickbait-medium | on a seven-hour flight - and [here's why you should] too
 authority | r a spectacular home refresh, [according to] the experts
-all-caps | possible... if not for good: [GEOFFREY WHEATCROFT]
-all-caps | o the US should be postponed: [GEOFFREY WHEATCROFT]
 derogatory | Haunting prison mugshots show [mob] jailed for stealing iron and
 derogatory | rison mugshots show Victorian [mob] jailed for stealing iron
 clickbait | [EXCLUSIVE]Tragic royal Thomas Kingston's
@@ -152,7 +140,6 @@ loaded-framing | In the [so-called] modern world, what place is t
 aggression | James Corden ordered to [rip] up 'unsightly' paving slabs l
 negative-framing-medium | A TikTok star mom has [tragically] died at 47 after suffering co
 moral | One of the most [evil] child killers in history Ian
-all-caps | haunt me forever, writes SAM [GREENHILL]. Read it exclusively in The C
 hype | How [glamorous] nurse became embroiled in Tur
 all-caps | [WAR IN THE MIDDLE EAST]
 fear-low | be raised, leading economist [warns]
@@ -189,14 +176,12 @@ clickbait | [EXCLUSIVE]Andrew leaked inside intel on
 hype-low | ves legs hydrated, smooth and [youthful] SHOPPING
 conflict | [Clash] of the co-stars! All the on-s
 unsourced | Kidman's daughter Sunday Rose [raises eyebrows] with her bizarre walk
-all-caps | to. It's just too insidious: [CAROLINE BULLOCK]
 fear-medium | [Heartbroken] Blake Lively cuts a downcast
 conflict | of FA Cup following thrilling [clash] with Premier League side Chel
 all-caps | - these are the items you're [BANNED] from buying and the moments B
 clickbait | [EXCLUSIVE]Explosive secrets of the Roone
 hype-medium | EXCLUSIVE[Explosive] secrets of the Rooney's marit
 aggression-medium | indiscretion. Coleen's utter [fury] all revealed by ALISON BOSHOF
-all-caps | 's utter fury all revealed by [ALISON BOSHOFF]
 uncertainty-medium | after denying marriage split [rumours] in bizarre video
 conflict | ctoria's PFW show amid family [feud]
 all-caps | ruly cynical reason I believe [REALLY] lies behind the Beckhams' gus
@@ -212,11 +197,9 @@ distancing | ritney Spears is arrested for [suspected] DUI, we revisit what the 
 hype-low | 'blown away'- with Hollywood [superstar] bringing 'immense gravitas' t
 uncertainty-low | rid of his felines - and fans [worry] it could hurt her Oscar hopes
 all-caps | rrects photographer after his [DAUGHTER], 16, is mistaken for Megan Fo
-all-caps | end meet at influencer party. [MOLLY CLAYTON] was there - and saw every mom
 clickbait | [EXCLUSIVE]Kaye Adams is accused of being
 derogatory-medium | e Adams is accused of being a [foul-mouthed] aggressive bully who humiliat
 clickbait-low | ed staff. I worked for her... [this is what] I saw, by CODIE BULLEN
-all-caps | her... this is what I saw, by [CODIE BULLEN]
 all-caps | ictured for the first time in [MONTHS]
 uncertainty-medium | Romeo Beckham's [rumoured] ex Caroline Daur turns heads
 idiom-medium | m's rumoured ex Caroline Daur [turns heads] at Victoria's Paris Fashion W
@@ -235,7 +218,6 @@ hype-low | Williams goes braless as she [flaunts] drastic weight loss amid spec
 fear | himself on camera in front of [horrified] castmates
 clickbait | [EXCLUSIVE]Brooklyn's sad new estrangemen
 negative-framing-medium | sad new estrangement and the '[desperate]' meaning behind these picture
-all-caps | will have caused anguish, by [OLIVIA KEMP]
 rhetorical-question | some kind of special effects, [right?]!'
 distancing-medium | ichael Bay sues two women who [allegedly] crashed car into his Bel-Air
 uncertainty-low | s out following DUI arrest as [worried] pal says she needs to 'get ou

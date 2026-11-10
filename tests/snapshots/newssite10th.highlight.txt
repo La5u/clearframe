@@ -1,4 +1,4 @@
-# newssite10th.html mode=highlight highlights=398
+# newssite10th.html mode=highlight highlights=385
 clickbait | [EXCLUSIVE]Cops swarm on Jeffrey Epstein'
 clickbait | Royal Navy [FINALLY] sets sail to defend Cyprus af
 hype-medium | ft my 'meno-middle'... Then a [miracle] method banished it in just fo
@@ -22,10 +22,8 @@ fear-low | sh Iranian attacks as Hegseth [warns] Tehran faces 'most intense da
 clickbait | [EXCLUSIVE]The grandmother-of-10 making £
 all-caps | other-of-10 making £100 every [MINUTE] from her humble shop... and h
 clickbait-low | E from her humble shop... and [how you can] follow in her footsteps: Jane
-all-caps | ootsteps: Jane Hastings tells [MOLLY CLAYTON] how she went from selling sho
 all-caps | The gran-of-10 making £100 a [MINUTE] from her shop
 all-caps | The [REAL] Carolyn Bessette was a violen
-all-caps | ing the truth… and it's ugly: [MAUREEN CALLAHAN]
 reveal | [The truth about] what happens if you drink mor
 uncertainty-low | But how [worried] do we actually need to be if
 uncertainty | eks before he was arrested on [suspicion of] spying for China - when she i
@@ -40,8 +38,6 @@ negative-framing-medium | share [Desperate] BBC bosses save Katya Jones w
 authority | 'deliciously sweet' flavour, [according to] Which?.
 all-caps | latasaray Team News - Osimhen [STARTS]View post
 all-caps | Liverpool Team News - Wirtz [STARTS]View post
-all-caps | proof. This is what's coming: [SYLVIA MORRIS]
-all-caps | ear for Premium Bond holders: [SYLVIA MORRIS]
 reveal | zon Spring Deal Days 2026: We [reveal] all the best deals as they co
 negative-framing | aped unconscious Brit teen in [horrific] 30-minute ordeal in Magaluf a
 idiom-low | nnifer Symonds, 44, was found [dead in the water] in Henley-on-Thames on Friday
@@ -82,13 +78,10 @@ distancing | 35, was arrested after police [suspected] he was drunk behind the w
 clickbait | soriasis for 20 years. Then I [finally] found a simple cure that real
 all-caps | nd it saw me lose 3 stone too [WITHOUT] medication. Everyone plagued
 clickbait | [EXCLUSIVE]As Stacey Solomon toasts £10m
-all-caps | uncomfortable questions - and [OLIVIA KEMP] reveals why it's caused fury.
 reveal | e questions - and OLIVIA KEMP [reveals] why it's caused fury...
 aggression-medium | KEMP reveals why it's caused [fury]...
 all-caps | missing what the Iran war is [REALLY] about - and it's not Israel.
-all-caps | chosen to strike now. But as [HAVIV RETTIG] GUR writes, once you understa
 all-caps | 660 shareWhat the Iran war is [REALLY] about - it's not Israel: HAVI
-all-caps | ALLY about - it's not Israel: [HAVIV RETTIG] GUR
 all-caps | inkly neck in just 15 minutes [WITHOUT] surgery: It's one of the hard
 hype | ou lose weight. Now there's a [game-changing] answer... and I'm proof it wo
 all-caps | ld wrinkly neck in 15 minutes [WITHOUT] surgery
@@ -238,14 +231,12 @@ all-caps | rns 62, he's bracing for some [VERY] 'intimate insights' in a tell
 all-caps | How Lewis Hamilton [REALLY] feels about Kim Kardashian
 clickbait | [EXCLUSIVE]Rihanna shooting suspect is Bi
 clickbait | [EXCLUSIVE]Truth about Joe Swash and his
-all-caps | s money woes as insiders tell [OLIVIA KEMP] about new venture that's left
 all-caps | ms she won't return to TV for [SEVEN WEEKS] in emotional health update
 clickbait | [EXCLUSIVE]Gene Hackman and wife Betsy Ar
 fear | [Chilling] 911 audio details shooting at
 aggression-medium | ctful' Timothée Chalamet amid [fury] over 'no one cares about' ope
 negative-framing | after humiliating box office [disaster]
 hype-low | how she stays in shape while [showing off] her age-defying figure
-all-caps | [CHRISTOPHER STEVENS] reviews Gone: David Morrissey
 clickbait | [EXCLUSIVE]Iconic nepo baby daughter of H
 hype-low | EXCLUSIVE[Iconic] nepo baby daughter of Hollywo
 derogatory | EXCLUSIVEIconic [nepo baby] daughter of Hollywood royalty
@@ -275,7 +266,6 @@ dysphemism | fter Nadiya Bychkova, 36, was [axed]
 hype-low | ah Michelle Gellar, 48, looks [youthful] as she kisses husband Freddie
 clickbait | [EXCLUSIVE]Blanca Blanco models pink ling
 clickbait | [EXCLUSIVE]The toxic rift between One Dir
-all-caps | irection stars: Insiders tell [MOLLY CLAYTON] secrets about Harry Styles' l
 uncertainty-medium | urrow and Jessica Alba dating [rumors] after their wild night togeth
 fear-medium | hysterics as she installs a '[heartbreak]' plaque on her ex-boyfriend's
 fear-medium | e the Gulf state amid 'rising [panic]'
@@ -304,7 +294,7 @@ reveal | Scientists [reveal] controversial plan to launch
 loaded-framing-low | Scientists reveal [controversial] plan to launch 50,000 MIRRORS
 all-caps | versial plan to launch 50,000 [MIRRORS] into space for 'sunlight on d
 all-caps | e Scientists to launch 50,000 [MIRRORS] into space for sunlight on de
-clickbait | mall window to save it if you [act NOW: TANYA JEFFERIES]
+clickbait-medium | mall window to save it if you [act NOW]: TANYA JEFFERIES
 clickbait | [EXCLUSIVE]Moment wife of Alexander broth
 clickbait | Punch the monkey is [FINALLY] accepted by his peers after p
 reveal | tain's most expensive streets [revealed]: Road where homes are worth a
@@ -325,8 +315,6 @@ hype-low | Kelly Brook [showed off] her incredible curves in a pi
 hype-medium | le curves in a pink bikini in [sizzling] holiday snaps from her trip t
 hype-low | with tie-side bottoms before [showing off] a leopard print bikini.
 hype-low | share Kelly Brook [shows off] her incredible curves in a pi
-all-caps | t trust their instincts, says [JEMIMA CAINER], while another should embrace
-all-caps | s in Aries connects to Pluto, [JEMIMA CAINER] analyses
 hype-medium | Cox scooped the event's most [prestigious] award in Birmingham on Sunday
 idiom-low | Time to cut out that toxic ex [once and for all]? Difficult people in your lif
 fear-low | fe AGE you 1.5% faster, study [warns]
@@ -367,7 +355,6 @@ fear-medium | madan flee Dubai amid 'rising [panic]' as they drive 11 hours to O
 negative-framing-medium | hey drive 11 hours to Oman in [desperate] bid to finally return to UK
 all-caps | ts pulses racing as she poses [TOPLESS] for sizzling selfie before sl
 hype-medium | cing as she poses TOPLESS for [sizzling] selfie before slipping into s
-all-caps | [CHRISTOPHER STEVENS] weekend TV review: A female 0
 clickbait | [EXCLUSIVE]Bloodbath at Strictly continue
 negative-framing | EXCLUSIVE[Bloodbath] at Strictly continues: Now pr
 hype-low | ead singer of 60s band behind [iconic] anti-Vietnam War anthem dies

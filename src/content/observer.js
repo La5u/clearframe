@@ -21,7 +21,6 @@ function resetAnalysis() {
   restoreAllText();
   clearHighlightPresentation();
   clearResults();
-  updateBadge();
 }
 
 function analyzeTargets(root) {
@@ -58,7 +57,8 @@ function analyzeMutations() {
   let highlightNamesChanged = false;
   if (pendingDisconnectedCleanup) {
     for (const result of detachDisconnectedResults()) {
-      highlightNamesChanged ||= removeResultHighlights(result);
+      const removedNames = removeResultHighlights(result);
+      highlightNamesChanged ||= removedNames;
     }
   }
   restoreHoverRevealUnobserved();

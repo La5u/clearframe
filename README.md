@@ -59,9 +59,9 @@ exclusive,clickbait,,,adjective,,true,headline
 ```
 
 - `aliases`: pipe-separated alternate forms
-- `stemmable`: `noun|verb|adjective` — adds literal inflected forms (plural, past, -ing, adverb)
+- `stemmable`: `noun|verb|adjective` — adds literal inflected forms (plural, past, -ing, adverb); in reword mode the `neutral` is put into the same form (`axed` → `cut`, `hordes` → `large groups`)
 - `regex`: custom pattern for context-sensitive matches
-- `remove`: mark term for deletion in remove-mode
+- `remove`: mark term for deletion in remove-mode; the space next to it and, at a sentence start, an orphaned `:`, `,` or dash go with it (`EXCLUSIVE: Chilling details` → `Details`). A capitalised term inside a name or title mid-sentence (`Shock and Awe`) is only highlighted, in reword mode too
 - `contexts`: optional pipe-separated allowlist such as `headline` or `evaluative`; there is no second exclusion list
 - `confidence`: optional `medium|contextual|exploratory`; drawn at 75% (`medium`) or 50% strength
 - `colloquialism` rules default to publication pages, so ordinary Reddit and YouTube language is not flagged (set under `types` in `data/terms/exceptions.json`)

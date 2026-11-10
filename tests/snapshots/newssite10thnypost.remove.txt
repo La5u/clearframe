@@ -45,16 +45,16 @@ loaded-framing-medium | an of not protecting her from [disgraced] football coach
 moral | one Moore in first remarks on [scandal]
 # changed text nodes=14
 ~ [chilling => ]
-~ [Wild => ] brawl breaks out at
+~ [Wild brawl => Brawl] breaks out at
 ~ [shocking => ]
-~ ar-old tennis star loses it in[ wild  =>  ]meltdown after failing to defe
-~ Sad footage exposes[ heartbreaking  =>  ]reality of animals in Dubai as
+~ r-old tennis star loses it in [wild  => ]meltdown after failing to defe
+~ Sad footage exposes [heartbreaking  => ]reality of animals in Dubai as
 ~ [exclusive => ]
 ~ [exclusive => ]
 ~ [finally => ]
-~ Mayor Daniel Lurie blamed for[ wild  =>  ]brawl that injured his bodygua
-~ Hilary Duff gets wet and[ wild  =>  ]for ‘Tonight Show’ performance
+~ Mayor Daniel Lurie blamed for [wild  => ]brawl that injured his bodygua
+~ Hilary Duff gets wet and [wild  => ]for ‘Tonight Show’ performance
 ~ [shocked => ]
 ~ [Shocking => ]
 ~ [finally => ]
-~ Hilary Duff gets wet and[ wild  =>  ]for ‘Tonight Show’ performance
+~ Hilary Duff gets wet and [wild  => ]for ‘Tonight Show’ performance

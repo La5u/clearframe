@@ -44,7 +44,7 @@ export function processTextNode(node) {
       range, node, startOffset: start, endOffset: end,
       terms: entry.terms,
       type: entry.term.type, action: entry.action,
-      sourceText: entry.sourceText, replacementText: entry.replacementText, highlightName: entry.highlightName,
+      wording: entry.wording, sourceText: entry.sourceText, replacementText: entry.replacementText, highlightName: entry.highlightName,
       matchContext: { headline, conversational, preserveText, pageContext: PAGE_CONTEXT },
     });
   }
@@ -119,7 +119,7 @@ export function rebuildSummary() {
   termStats = Object.create(null);
   for (const result of nodeResults.values()) {
     for (const record of result.records) {
-      const target = (termStats[record.sourceText] ||= { highlighted: 0, replaced: 0, removed: 0 });
+      const target = (termStats[record.wording] ||= { highlighted: 0, replaced: 0, removed: 0 });
       target[record.action]++; totalMatches++;
     }
   }
@@ -149,7 +149,7 @@ export function getTermGroups() {
 
 // Each call steps to the next match of this wording and action, wrapping around.
 export function getNextRecord(term, action) {
-  const records = getAllRecords().filter(record => record.sourceText === term && record.action === action && record.node.isConnected);
+  const records = getAllRecords().filter(record => record.wording === term && record.action === action && record.node.isConnected);
   if (!records.length) return null;
   const key = `${action}\n${term}`;
   const nextIndex = ((navigationIndexes.get(key) ?? -1) + 1) % records.length;

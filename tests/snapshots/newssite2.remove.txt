@@ -1,15 +1,13 @@
-# newssite2.html mode=remove highlights=49
-all-caps | sible Coup”, Peter Schweizer. [LISTEN NOW]
-all-caps | hop smarter with Post Wanted. [SIGN UP NOW]
-all-caps | odcast. New episodes Mon-Fri. [LISTEN NOW]
+# newssite2.html mode=remove highlights=47
 distancing-medium | Police remove protester — who [allegedly] injured 3 officers and appear
 distancing-medium | [Alleged] mistress of disgraced ex-Mich
 loaded-framing-medium | Alleged mistress of [disgraced] ex-Michigan coach leaves univ
 loaded-framing | [Common sense]. No nonsense.
 aggression-medium | ns deployed in Operation Epic [Fury], as Space Force stops Iran’s
 negative-framing | und offensive against Iranian [regime]: reports
+clickbait | er in Iran compared to 2003’s [Shock] and Awe invasion of Iraq, Heg
 fear-low | The US Embassy [warned] people in Cuba to “prepare fo
-uncertainty-medium | tactics [Is this ‘Groyper’ a worrying preview of the Republican party’s future?]
+uncertainty-medium | Tactics [Is this ‘Groyper’ a worrying preview of the Republican party’s future?]
 reveal | Andy Dick [reveals] the devastating damage to his
 clickbait | Andy Dick reveals the [devastating] damage to his brain caused by
 distancing-medium | ho made JFK Jr. jealous — and [allegedly] impregnated her
@@ -48,15 +46,14 @@ uncertainty-low | o make it work for you. Don't [worry] that friends and loved o
 reveal | for Harry and Meghan as it’s [revealed] their movie projects are in l
 distancing-medium | ho made JFK Jr. jealous — and [allegedly] got her pregnant
 hype-low | Lou Holtz, [legendary] Notre Dame coach, dead at 89
-# changed text nodes=11
-~ Referee knocked out in[ wild  =>  ]college basketball brawl that
-~ wer in Iran compared to 2003’s[ Shock  =>  ]and Awe invasion of Iraq, Hegs
-~ [Shock => ] tactics
-~ n’ in station parking lot will[ finally  =>  ]melt
-~ uthrie case solved — as DNA is[ finally  =>  ]matched
+# changed text nodes=10
+~ Referee knocked out in [wild  => ]college basketball brawl that
+~ [Shock tactics => Tactics]
+~ ’ in station parking lot will [finally  => ]melt
+~ thrie case solved — as DNA is [finally  => ]matched
 ~ [shocking => ]
-~ [Heartbreaking => ] detail emerges about 2 dead y
+~ [Heartbreaking detail => Detail] emerges about 2 dead young gi
 ~ [shocking => ]
-~ [EXCLUSIVE: => :] Ewan McGregor’s Ex-Wife Puts
-~ lo player breaks silence after[ bombshell  =>  ]claims of underwater sex attac
-~ firing – lawyer claims he has[ bombshell  =>  ]texts: report
+~ [EXCLUSIVE:  => ]Ewan McGregor’s Ex-Wife Puts T
+~ o player breaks silence after [bombshell  => ]claims of underwater sex attac
+~ firing – lawyer claims he has [bombshell  => ]texts: report

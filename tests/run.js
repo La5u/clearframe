@@ -8,7 +8,7 @@ import { dirname } from 'path';
 
 import { extractText, loadExceptions, loadTerms } from '../src/core/term-utils.js';
 import { buildMatcher, findMatches } from '../src/core/matcher.js';
-import { adverbWord } from '../src/core/stemmer.js';
+import { adverbWord, inflectPhrase } from '../src/core/stemmer.js';
 import { ALL_CAPS_TERM_ID, findAllCapsMatches } from '../src/core/all-caps.js';
 import { getAllCapsAction, getContextualAllCapsAction, lowerAllCapsLongWords, matchReplacementCase } from '../src/core/display-utils.js';
 import { COMMON_SHORT_WORDS } from '../src/core/commonShortWords.js';
@@ -66,17 +66,28 @@ const ANALYZE_CASES = [
   ['The committee met on Tuesday.', 'reword', PUBLICATION, 'The committee met on Tuesday.', []],
   ['Meta axes 8,000 jobs.', 'highlight', PUBLICATION, 'Meta axes 8,000 jobs.', ['axes>axes highlighted clearframe-dysphemism']],
   ['Meta axes 8,000 jobs.', 'reword', PUBLICATION, 'Meta cuts 8,000 jobs.', ['axes>cuts replaced clearframe-dysphemism-underline']],
-  ['EXCLUSIVE: Chilling details emerge.', 'remove', PUBLICATION, ':  details emerge.', ['EXCLUSIVE> removed null', 'Chilling> removed null']],
+  ['EXCLUSIVE: Chilling details emerge.', 'remove', PUBLICATION, 'Details emerge.', ['EXCLUSIVE: > removed null', 'Chilling d>D removed null']],
   ['A SHOCKING twist.', 'reword', PUBLICATION, 'A shocking twist.', ['SHOCKING>shocking replaced clearframe-all-caps-underline']],
   ['A SHOCKING twist.', 'highlight', { ...PUBLICATION, capsLabel: true }, 'A SHOCKING twist.', []],
   // Same span: the lexical term decides, on caps-normalized wording.
   ['The report was CHILLING.', 'reword', PUBLICATION, 'The report was chilling.', ['CHILLING>chilling replaced clearframe-fear']],
-  ['The report was CHILLING.', 'remove', PUBLICATION, 'The report was .', ['CHILLING> removed null']],
+  ['The report was CHILLING.', 'remove', PUBLICATION, 'The report was.', [' CHILLING> removed null']],
   // A caps run wider than the lexical term is only caps-normalized, never removed.
   ['This is CHILLING NEWS for everyone.', 'remove', PUBLICATION, 'This is CHILLING NEWS for everyone.', ['CHILLING NEWS>CHILLING NEWS highlighted clearframe-fear']],
   ['This is CHILLING NEWS for everyone.', 'reword', PUBLICATION, 'This is chilling news for everyone.', ['CHILLING NEWS>chilling news replaced clearframe-fear']],
   ['Is this the end of DEVASTATING cuts?', 'reword', { ...PUBLICATION, headline: true }, 'Is this the end of devastating cuts?', ['Is this the end of DEVASTATING cuts?>Is this the end of devastating cuts? replaced clearframe-clickbait']],
   ['Is this the end of DEVASTATING cuts?', 'reword', { ...PUBLICATION, headline: true, preserveText: true }, 'Is this the end of DEVASTATING cuts?', ['Is this the end of DEVASTATING cuts?>Is this the end of DEVASTATING cuts? highlighted clearframe-clickbait']],
+  // Replacements take the matched form: irregular, participle, already plural.
+  ['Meta axed 8,000 jobs.', 'reword', PUBLICATION, 'Meta cut 8,000 jobs.', ['axed>cut replaced clearframe-dysphemism-underline']],
+  ['War erupted. It has erupted.', 'reword', { ...PUBLICATION, headline: true }, 'War began. It has begun.', ['erupted>began replaced clearframe-conflict-underline', 'erupted>begun replaced clearframe-conflict-underline']],
+  ['Hordes of fans met a horde of tourists.', 'reword', PUBLICATION, 'Large groups of fans met a large group of tourists.', ['Hordes>Large groups replaced clearframe-derogatory-underline', 'horde>large group replaced clearframe-derogatory-underline']],
+  // Bylines keep their capitals; shouting is lowercased, headings get Title Case.
+  ["It's ugly: MAUREEN CALLAHAN", 'reword', PUBLICATION, "It's ugly: MAUREEN CALLAHAN", []],
+  ['But as HAVIV RETTIG GUR writes, the war is NOT over.', 'reword', PUBLICATION, 'But as HAVIV RETTIG GUR writes, the war is not over.', ['NOT>not replaced clearframe-all-caps-underline']],
+  ['THIS IS HUGE NEWS FOR EVERYONE', 'reword', PUBLICATION, 'This is huge news for everyone', ['THIS IS HUGE NEWS FOR EVERYONE>This is huge news for everyone replaced clearframe-all-caps-underline']],
+  ['WAR IN THE MIDDLE EAST', 'reword', PUBLICATION, 'War in the Middle East', ['WAR IN THE MIDDLE EAST>War in the Middle East replaced clearframe-all-caps-underline']],
+  // A capitalised term inside a name or title is only highlighted.
+  ['Compared to 2003’s Shock and Awe invasion', 'remove', { ...PUBLICATION, headline: true }, 'Compared to 2003’s Shock and Awe invasion', ['Shock>Shock highlighted clearframe-clickbait']],
 ];
 for (const [text, mode, context, displayText, entries] of ANALYZE_CASES) {
   const plan = analyze(text, context, ANALYZE_SETTINGS[mode]);
@@ -85,6 +96,36 @@ for (const [text, mode, context, displayText, entries] of ANALYZE_CASES) {
   for (const entry of plan.entries) assert.strictEqual(plan.displayText.slice(entry.start, entry.end), entry.replacementText, `${mode}: ${text} offsets`);
 }
 assert.deepStrictEqual(analyze('Meta axes 8,000 jobs.', PUBLICATION, normalizeSettings({ replaceTerms: true, types: { dysphemism: false } })).entries, [], 'disabled types are not detected');
+// Remove mode tidies the text around a removal; swapping each entry's
+// replacementText back for its sourceText restores the exact original.
+for (const [text, displayText] of [
+  ['EXCLUSIVE - Ewan speaks out', 'Ewan speaks out'],
+  ['The heartbreaking consequences of it', 'The consequences of it'],
+  ["Twins' 'heartbreaking' diagnosis", "Twins' diagnosis"],
+  ['She was a shocking sight. Chilling moment fans clash with police', 'She was a sight. Moment fans clash with police'],
+  ['Fans left in shock, then fury', 'Fans left in, then fury'],
+]) {
+  const plan = analyze(text, { ...PUBLICATION, headline: true }, ANALYZE_SETTINGS.remove);
+  assert.strictEqual(plan.displayText, displayText, `remove: ${text}`);
+  const rebuilt = plan.entries.reduceRight((value, entry) => value.slice(0, entry.start) + entry.sourceText + value.slice(entry.end), plan.displayText);
+  assert.strictEqual(rebuilt, text, `remove restores: ${text}`);
+  const records = plan.entries.map(entry => ({ ...entry, startOffset: entry.start, endOffset: entry.end }));
+  const node = { originalText: text, displayedText: plan.displayText, records };
+  assert.strictEqual(recoverOriginalText(node, plan.displayText), text);
+  assert.strictEqual(recoverOriginalText(node, `${plan.displayText} Update.`), `${text} Update.`);
+  for (const entry of plan.entries) assert.strictEqual(plan.displayText.slice(entry.start, entry.end), entry.replacementText, `remove offsets: ${text}`);
+  assert.ok(plan.entries.every(entry => entry.sourceText.includes(entry.wording)), `wording inside the removed span: ${text}`);
+}
+// [phrase, stem type, form, expected]
+for (const [phrase, stemType, form, expected] of [
+  ['cut', 'verb', 'past', 'cut'], ['hit', 'verb', 'ing', 'hitting'], ['quit', 'verb', 'ing', 'quitting'], ['spread', 'verb', 'third', 'spreads'],
+  ['begin', 'verb', 'past', 'began'], ['begin', 'verb', 'participle', 'begun'], ['begin', 'verb', 'ing', 'beginning'], ['admit', 'verb', 'past', 'admitted'],
+  ['agree', 'verb', 'ing', 'agreeing'], ['bury', 'verb', 'past', 'buried'], ['dodge', 'verb', 'ing', 'dodging'], ['go', 'verb', 'third', 'goes'],
+  ['push out', 'verb', 'past', 'pushed out'], ['angrily confront', 'verb', 'third', 'angrily confronts'],
+  ['criticizes', 'verb', '', 'criticize'], ['criticizes', 'verb', 'past', 'criticized'], ['ignored', 'verb', 'ing', 'ignored'],
+  ['large groups', 'noun', '', 'large group'], ['large groups', 'noun', 'plural', 'large groups'], ['large group', 'noun', 'plural', 'large groups'],
+  ['piece of work', 'noun', 'plural', 'pieces of work'], ['news', 'noun', 'plural', 'news'], ['very bad', 'adjective', 'adverb', 'very badly'],
+]) assert.strictEqual(inflectPhrase(phrase, stemType, form), expected, `inflect ${phrase} (${stemType}, ${form || 'base'})`);
 
 function countMatches(html) {
   const text = extractText(html);
@@ -274,17 +315,23 @@ const EXCEPTION_CASES = [
   ['far-right', 'Seen in the far right corner', false], ['far-right', 'The mayor (far right) spoke', false], ['far-right', 'A far-right party won', true],
   ['breaking', 'The bridge is breaking apart', false], ['breaking', 'BREAKING: vote delayed', true], ['breaking', 'Senators share breaking news today', true],
   ['wild', 'Released into the wild', false], ['wild', 'A wild card entry', false], ['wild', 'Fans erupt in wild rant', true],
+  ['wild', 'Protecting wild life', false], ['wild', 'Star shows off wild lifestyle', true], ['wild', 'Wild horses spotted', false], ['wild', 'Wild horseplay at party', true],
   ['revolutionary', "Iran's Revolutionary Guards", false], ['revolutionary', 'A revolutionary gadget', true],
   ['secret', 'Secret Service chief speaks', false], ['secret', 'Star reveals secret affair', true],
   ['shock', 'Workers felt an electric shock', false], ['shock', 'New shock absorbers fitted', false], ['shock', 'A shock result in Ohio', true],
-  ['under fire', 'Airport came under fire', false], ['under fire', 'Troops under fire from rebels', false], ['under fire', 'Coach under fire after debacle', true],
+  ['under fire', 'Troops under fire from rebels', false], ['under fire', 'Troops came under fire', false], ['under fire', 'Police came under fire from gunmen', false],
+  ['under fire', 'Convoy under fire as artillery pounds the road', false], ['under fire', 'Coach under fire after debacle', true],
+  ['under fire', 'Minister came under fire from critics', true], ['under fire', 'Police under fire over handling of the case', true], ['under fire', 'Airport came under fire', true],
   ['evil', 'Resident Evil remake announced', false], ['evil', 'Evil Dead sequel', false], ['evil', 'This is pure evil', true], ['evil', 'A resident evil plot', true],
+  ['evil', 'RESIDENT EVIL remake announced', false], ['evil', 'EVIL DEAD sequel', false], ['evil', 'Evil plan revealed', true],
   ['sacked', 'He was sacked eight times', false, BODY], ['sacked', 'Allen sacked for a loss', false, BODY], ['sacked', 'The QB was sacked by Watt for 9 yards', false, BODY],
-  ['sacked', 'The minister was sacked by the premier', true, BODY], ['sacked', 'The minister Was sacked by Watt for 9 yards', true, BODY],
+  ['sacked', 'The minister was sacked by the premier', true, BODY], ['sacked', 'Was sacked by Watt for 9 yards', false, BODY],
+  ['sacked', 'Quarterback sacked twice for 12 yards', false, BODY], ['sacked', 'The firm sacked 300 staff', true, BODY], ['sacked', 'He was sacked twice by the club', true, BODY],
   ['severe', 'Severe storms hit Texas', false], ['severe', 'Severe criticism of the plan', true],
   ['exclusive', 'They signed an exclusive license', false, BODY], ['exclusive', 'An EXCLUSIVE interview', true, BODY], ['exclusive', 'Exclusive: the inside story', true],
   ['elite', 'Xbox Elite controller leaks', false], ['elite', 'Hasbro Elite figures', false], ['elite', 'An elite athlete', false], ['elite', 'The wealthy elite', true],
   ['legendary', 'Marvel Legendary series', false], ['legendary', 'Her legendary performance', true],
+  ['miracle', 'Scotts Miracle cream brand', false], ['miracle', 'A miracle cure', true], ['miracle', 'Miraculous comeback for the team', true], ['miracle', 'Doctors Hail Miraculous Escape', true],
   ['gotta', 'You gotta see this', true, BODY], ['gotta', 'You gotta see this', false, REDDIT],
 ];
 for (const [phrase, text, flagged, context = HEAD] of EXCEPTION_CASES) {

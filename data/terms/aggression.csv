@@ -1,7 +1,7 @@
 phrase,type,neutral,aliases,stemmable,regex,remove,contexts
 slam,aggression,,,verb,,,headline
 rip,aggression,,,verb,,,headline
-torch,aggression,criticizes,,verb,,,headline
+torch,aggression,criticize,,verb,,,headline
 blast,aggression,,,verb,,,headline
 roast,aggression,,,verb,,,headline
 taken out,aggression,,,,,

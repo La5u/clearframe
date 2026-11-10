@@ -10,12 +10,12 @@ aggression-medium | [Fury] at 'schoolyard bully' Trump t
 fear | The [heartbreaking] consequences of 'empty' threa
 clickbait | im back… but he's delivered a [devastating] blow
 hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
-dysphemism-underline | Gladiators star Giant '[cutted]' from BBC show
+dysphemism-underline | Gladiators star Giant '[cut]' from BBC show
 hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
-dysphemism-underline | Gladiators star Giant '[cutted]' from BBC show
+dysphemism-underline | Gladiators star Giant '[cut]' from BBC show
 hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
-dysphemism-underline | Gladiators star Giant '[cutted]' from BBC show
-dysphemism-underline | Gladiators' Giant '[cutted] after being faced with choice
+dysphemism-underline | Gladiators star Giant '[cut]' from BBC show
+dysphemism-underline | Gladiators' Giant '[cut] after being faced with choice
 moral | ent his father. He isn't just [deluded] and dim-witted, he's dangerou
 clickbait | [EXCLUSIVE]Bloodbath on the streets as mi
 negative-framing | EXCLUSIVE[Bloodbath] on the streets as millions of
@@ -84,8 +84,8 @@ derogatory | cientists have come up with a [radical] proposal to help prevent a 
 authority | Gulf Stream from collapsing, [experts say]
 clickbait-underline | my arms and legs - but I have [now] found a solution which really
 clickbait | 42, has barely aged a day as [stunning] star poses in a bikini and an
-dysphemism-underline | Airline boss who [cutted] London-LA flights says more c
-dysphemism-underline | share Boss who [cutted] London-LA flights says more c
+dysphemism-underline | Airline boss who [cut] London-LA flights says more c
+dysphemism-underline | share Boss who [cut] London-LA flights says more c
 fear-low | rco Rubio fires World Cup ban [warning] to Iranian team staff... as T
 fear-low | rco Rubio fires World Cup ban [warning] to Iranian team staff
 clickbait | made grim prediction only to '[shock]' mentally ill thug into chang
@@ -132,7 +132,7 @@ clickbait-medium | friend after I fell pregnant. [Here's why] I refuse to feel b
 clickbait | [EXCLUSIVE]Americans' true obsession with
 hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
 negative-framing-medium | he industry' the 'couple' are [desperate] to hide
-dysphemism-underline | Gladiators' Giant '[cutted] after being faced with choice
+dysphemism-underline | Gladiators' Giant '[cut] after being faced with choice
 aggression-medium | Paris [Fury] says Molly-Mae Hague would ha
 moral | ent his father. He isn't just [deluded] and dim-witted, he's dangerou
 hype-low | Danniella Westbrook, 52, [shows off] the incredible results of her
@@ -274,21 +274,21 @@ hype-low | scloses she was going to quit [iconic] show before Beeb pulled the p
 all-caps-underline | chael Carrick insists he will [not] press Sir Jim Ratcliffe for c
 # changed text nodes=36
 ~ The video we've [ALL => all] been waiting for: Moment wedd
-~ Gladiators star Giant ['axed' => 'cutted'] from BBC show
-~ Gladiators star Giant ['axed' => 'cutted'] from BBC show
-~ Gladiators star Giant ['axed' => 'cutted'] from BBC show
-~ Gladiators' Giant ['axed => 'cutted] after being faced with choice
+~ Gladiators star Giant ['axed' => 'cut'] from BBC show
+~ Gladiators star Giant ['axed' => 'cut'] from BBC show
+~ Gladiators star Giant ['axed' => 'cut'] from BBC show
+~ Gladiators' Giant ['axed => 'cut] after being faced with choice
 ~ at blind date… but here's the [surprising => unexpected] reason 'fussy' James wasn't i
 ~ my arms and legs - but I have [finally => now] found a solution which really
-~ Airline boss who [axed => cutted] London-LA flights says more c
-~ Boss who [axed => cutted] London-LA flights says more c
+~ Airline boss who [axed => cut] London-LA flights says more c
+~ Boss who [axed => cut] London-LA flights says more c
 ~ obic comment to Vinicius Jr - [NOT => not] 'monkey slur' he was accused
 ~ wo weeks: Scientists disclose [surprising => unexpected] effects on stress, sleep and
 ~ poll [OF THE DAY: => of the day:] Is Sara Cox the right choice
 ~ ses tribunal case after being [sacked => dismissed] for being repeatedly late - s
 ~ er loses tribunal after being [sacked => dismissed] for lateness
 ~ I'M A celeb [ALL => all] stars
-~ Gladiators' Giant ['axed => 'cutted] after being faced with choice
+~ Gladiators' Giant ['axed => 'cut] after being faced with choice
 ~ gown as she continues her US [takeover => acquisition] at the Time100 Gala in NYC af
 ~ in a blue corset as she joins [glamorous => stylish] Michelle Keegan and Princess
 ~ - and why it might be time to [finally => now] switch to a passkey

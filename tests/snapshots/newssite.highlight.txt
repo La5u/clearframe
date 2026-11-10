@@ -1,4 +1,4 @@
-# newssite.html mode=highlight highlights=437
+# newssite.html mode=highlight highlights=416
 clickbait | [EXCLUSIVE]Expats scared to speak out abo
 fear | 'safest place on Earth' - as [frightened] holidaymakers scramble for fl
 negative-framing-medium | thousands of ordinary Britons [desperate] to get home. While the United
@@ -7,18 +7,15 @@ conflict | r Ayatollah Ali Khamenei have [clashed] with anti-Iranian regime prot
 negative-framing | ave clashed with anti-Iranian [regime] protesters in Manchester city
 moral | Khamenei, who presided over a [brutal] regime which slaughtered thou
 negative-framing | i, who presided over a brutal [regime] which slaughtered thousands o
-all-caps | the Ayatollah met his fate... [DAVID PATRIKARAKOS] takes us inside the most auda
 fear | The [terrifying] gap in Britain's defences tha
 authority | s at our towns and cities: As [experts warn] we are on the brink of WWIII,
 all-caps | an's network of terrorists is [ALREADY] here, plotting death and dest
 fear | share [Terrifying] gap in our defences means Ira
 conflict | LIVE[Chaos] as first UK government charte
 fear-medium | off with passengers suffering [panic attacks] - LIVE UPDATES
-all-caps | ers suffering panic attacks - [LIVE UPDATES]
 conflict | the Middle East faces further [chaos] with Gulf states embroiled in
 idiom-medium | ends keep asking if Britain's [lost its marbles] after Starmer snubbed Trump o
 loaded-framing-medium | tarmer snubbed Trump on Iran. [Sadly], there's only one answer
-all-caps | erritory. That was it, writes [ANDREW NEIL]. But Sir Keir Starmer couldn'
 idiom-medium | ican friends ask: Has Britain [lost its marbles]?
 authority | ed a ground invasion in Iran, [according to] a US official.
 reveal | traordinary bravery Antonella [reveals] what happened next - and the
@@ -45,12 +42,10 @@ aggression-medium | positivity': Nicola Coughlan [hits back] at 'plus size' labe
 aggression-medium | Nicola Coughlan has [hit back] at assumptions that she is 'p
 all-caps | inkly neck in just 15 minutes [WITHOUT] surgery: It's one of the hard
 hype | ou lose weight. Now there's a [game-changing] answer... and I'm proof it wo
-all-caps | a bra expert: I am 30GG says [KATIE WEIR] - and see my clients all make
 clickbait-low | s all make the same mistakes. [This is what] really works, the truth about
 reveal | s. This is what really works, [the truth about] wires - and precisely what to
 reveal | Sian Williams, 61, recalls [secretly] fainting live on BBC Breakfas
 clickbait | [EXCLUSIVE]As Stacey Solomon toasts £10m
-all-caps | uncomfortable questions - and [OLIVIA KEMP] reveals why it's caused fury.
 reveal | e questions - and OLIVIA KEMP [reveals] why it's caused fury...
 aggression-medium | KEMP reveals why it's caused [fury]...
 idiom-medium | I'm planning a pre-nup: I was [over the moon] when my fiance proposed - the
@@ -60,10 +55,7 @@ idiom-medium | romance with Zoë Kravitz goes [from strength to strength]
 clickbait | [Shocking] moment Trump's Homeland Secur
 uncertainty-medium | er she is having sex with her [rumored] lover and trusted adviser.
 clickbait | Why at 64 I [finally] got married. We've been toget
-all-caps | and have four children, says [CHRISTA D'SOUZA]... but these are the two thin
 clickbait | these are the two things that [finally] made me walk down the aisle
-all-caps | at 64 I finally got married: [CHRISTA D'SOUZA]
-all-caps | for Andrew's Maitlis fiasco: [EDEN CONFIDENTIAL]
 all-caps | SHOPPING: Primark's latest [MAJOR FIND] has shoppers rushing for the
 clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it's gone
 uncertainty-medium | The Princess of Wales' [rumoured] favourite anti-ageing formula
@@ -78,8 +70,6 @@ hype | ue francaise when he accepted [a prestigious] film award in Paris on Thur
 all-caps | share Was it [REALLY] a French Jim Carrey who accep
 authority | Bosses and [experts say] Labour's national insurance h
 reveal | ideo that still haunts me and [what's really] lurking in the internet's mos
-all-caps | t's most depraved cesspit, by [JENNI MURRAY]
-all-caps | ornography had become, writes [JENNI MURRAY]
 clickbait | h Prince Andrew and his three [jaw-dropping] requests, day I had to ban hi
 clickbait | [EXCLUSIVE]Distasteful truth about arroga
 negative-framing-medium | you rich... and betrayal he's [desperate] to hide
@@ -96,7 +86,6 @@ fear-low | as her desperate attempts to [warn] her, including offering to me
 negative-framing | share [Furious] ex of Katie Price's husband r
 clickbait | [EXCLUSIVE]Truth about Kristen Bell and D
 uncertainty-low | ica's friends say they're now [worried], as insiders share details of
-all-caps | [CHRISTOPHER STEVENS] reviews last night's TV: Sher
 reveal | predicted to resume? Experts [reveal] when travel will return to no
 clickbait | [EXCLUSIVE]UK's richest plumber Charlie M
 loaded-framing-medium | ng Britain to avoid Labour's '[tax grab]'.
@@ -115,7 +104,6 @@ dysphemism | redouble demands on Labour to [axe] approval for Beijing mega-emb
 clickbait | y in London in wake of latest [shock] spying allegations
 loaded-framing-low | the Commons to reverse their [controversial] decision to let Beijing build
 dysphemism | ries new demands on Labour to [axe] approval for Beijing mega-emb
-all-caps | d. How could I have a stroke? [JANE GORDON]'s diary of recovery - and the
 all-caps | f recovery - and the symptoms [EVERYONE] should be aware of
 clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it's gone
 hype-low | b ever look classy? Stars are [flaunting] cleavage on the red carpet ag
@@ -128,14 +116,12 @@ loaded-framing-medium | uld finish him. PLUS the most [tone-deaf] Dubai influenc
 reveal | af Dubai influencer bleating, [revealed] in our INFLUENCERS UNFILTERED
 all-caps | cer bleating, revealed in our [INFLUENCERS UNFILTERED] column
 hype-low | a familiar face popping up in [iconic] British settings.
-all-caps | ind James Charles's new move: [INFLUENCERS UNFILTERED]
 clickbait | [EXCLUSIVE]Villagers in tiny hamlet with
 clickbait | Deadliest Catch star's [devastated] mom begs producers not to air
 fear-medium | A [heartbroken] mother has spoken out after h
 clickbait | [EXCLUSIVE]Moment police arrest Romanian
 uncertainty | that he is being arrested on [suspicion of] conspiracy to steal; while an
 loaded-framing-medium | t your nest egg from Labour's [tax grab]: JEFF PRESTRIDGE reveals his
-all-caps | t egg from Labour's tax grab: [JEFF PRESTRIDGE] reveals his tricks to boost y
 reveal | r's tax grab: JEFF PRESTRIDGE [reveals] his tricks to boost your savi
 clickbait | st your savings... before the [devastating] raid
 loaded-framing-medium | t your nest egg from Labour's [tax grab]
@@ -215,7 +201,6 @@ all-caps | Olivia Attwood shares [VERY] racy snap as she poses toples
 loaded-framing-medium | Olivia Attwood shares VERY [racy] snap as she poses topless and
 hype-low | snap as she poses topless and [flaunts] her bottom in sheer tights fo
 clickbait | [EXCLUSIVE]As Stacey Solomon toasts £10m
-all-caps | ister that's left questions - [OLIVIA KEMP] reveals why it's caused fury.
 aggression-medium | KEMP reveals why it's caused [fury]...
 negative-framing-medium | Harry Styles says the [tragic] death of Liam Payne has made
 clickbait | [EXCLUSIVE]Truth about Kristen Bell and D
@@ -233,11 +218,9 @@ rhetorical-question | carpet again...who is getting [right?]
 clickbait | Karla Thaynnara dies at 25 in [devastating] motorcycle crash shortly befo
 conflict | m 'want to draw a line' under [feud] with son Brooklyn after exten
 idiom-medium | lyn after extending emotional [olive branch] on his 27th birthday
-all-caps | for Andrew's Maitlis fiasco: [EDEN CONFIDENTIAL]
 clickbait | Deadliest Catch star's [devastated] mom begs producers not to air
 hype-low | ves legs hydrated, smooth and [youthful] SHOPPING
 idiom-medium | r Albert Square role - and it [spells trouble] for Zoe Slater
-all-caps | [CHRISTOPHER STEVENS] reviews last night's TV: Sher
 uncertainty-medium | Week with daughter, 16, amid [rumors] he is back with Megan Fox
 distancing-medium | Deadliest Catch star [allegedly] suffered a concussion on set
 aggression-medium | st of her life as she reveals [merciless trolls] left her contemplating her TV
@@ -247,7 +230,6 @@ clickbait | [EXCLUSIVE]Katie Piper's acid attacker co
 hype | helle Pfeiffer, 67, joins her [dazzling] co-stars Elle Chapman and Bea
 clickbait | [EXCLUSIVE]Dark secret behind James Charl
 moral | d James Charles new move, the [scandal] that won't go away... and the
-all-caps | gation that could finish him: [INFLUENCERS UNFILTERED] column
 fear | the death of his 'brother' in [heartbreaking] post
 idiom-medium | ' as they extend an emotional [olive branch] to son Brooklyn on his 27th b
 loaded-framing-medium | helsea Handler snuggles up to [hunky] mystery boyfriend on romantic
@@ -327,7 +309,6 @@ aggression-medium | Farrah Abraham [fires back] at her critics after she was
 loaded-framing-medium | ics after she was blasted for [racy] outfit at Egyptian pyramids
 dysphemism | EDEN CONFIDENTIAL: [Axed] Gregg cooking up a comeback w
 fear-medium | Revealed: [Harrowing] details of Deadliest Catch st
-all-caps | [CHRISTOPHER STEVENS] reviews last night's TV: Murd
 hype-low | Alison Hammond [shows off] her incredible 11 stone weigh
 moral | nd told her to lose weight in [brutal] text
 hype-low | Jessica Simpson, 45, looks [youthful] in new goth style as she jets
@@ -427,10 +408,8 @@ rhetorical-question-medium | [Will supermarket prices rise thanks to the Middle 
 authority | n Britain in the longer-term, [experts warn].
 distancing-medium | d to play football' amid more [alleged] time-wasting during 1-0 win
 idiom-medium | [Chip off the old block]! Super-sub Kai Rooney produce
-all-caps | Newcastle 2-1 Man United - [PLAYER RATINGS]: Which star failed to silence
 loaded-framing-low | Huge [controversy] as Newcastle star is sent off
 all-caps | being given second yellow for [DIVING] in chaotic first half
-all-caps | the Blues' favour, writes TOM [COLLOMOSSE]
 derogatory | who fell down a lift shaft in [freak] accident opens up on 'miracle
 hype-medium | n freak accident opens up on '[miracle]' recovery as he reveals he is
 all-caps | Harry Maguire is found [GUILTY] of assaulting Greek police an

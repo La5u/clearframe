@@ -1,31 +1,29 @@
-# newssite10th.html mode=reword highlights=398
+# newssite10th.html mode=reword highlights=385
 clickbait | [EXCLUSIVE]Cops swarm on Jeffrey Epstein'
 clickbait-underline | Royal Navy [NOW] sets sail to defend Cyprus af
 hype-medium | ft my 'meno-middle'... Then a [miracle] method banished it in just fo
 clickbait | [EXCLUSIVE]'Netflix were not happy with A
 negative-framing-medium | [Desperate] BBC bosses save Katya Jones a
 negative-framing | s save Katya Jones amid pros '[bloodbath]'
-dysphemism-underline | Karen Hauer is [CUTTED] in Strictly bloodbath
-negative-framing | n Hauer is CUTTED in Strictly [bloodbath]
+dysphemism-underline | Karen Hauer is [CUT] in Strictly bloodbath
+negative-framing | aren Hauer is CUT in Strictly [bloodbath]
 hype-low | Thylane Blondeau [shows off] her £34k engagement ring
 negative-framing-medium | [Desperate] BBC bosses save Katya Jones a
 negative-framing | s save Katya Jones amid pros '[bloodbath]'
-dysphemism-underline | Karen Hauer is [CUTTED] in Strictly bloodbath
-negative-framing | n Hauer is CUTTED in Strictly [bloodbath]
+dysphemism-underline | Karen Hauer is [CUT] in Strictly bloodbath
+negative-framing | aren Hauer is CUT in Strictly [bloodbath]
 hype-low | Thylane Blondeau [shows off] her £34k engagement ring
 negative-framing-medium | [Desperate] BBC bosses save Katya Jones a
 negative-framing | s save Katya Jones amid pros '[bloodbath]'
-dysphemism-underline | Karen Hauer is [CUTTED] in Strictly bloodbath
-negative-framing | n Hauer is CUTTED in Strictly [bloodbath]
+dysphemism-underline | Karen Hauer is [CUT] in Strictly bloodbath
+negative-framing | aren Hauer is CUT in Strictly [bloodbath]
 hype-low | Thylane Blondeau [shows off] her £34k engagement ring
 fear-low | sh Iranian attacks as Hegseth [warns] Tehran faces 'most intense da
 clickbait | [EXCLUSIVE]The grandmother-of-10 making £
 all-caps-underline | other-of-10 making £100 every [minute] from her humble shop... and h
 clickbait-low | e from her humble shop... and [how you can] follow in her footsteps: Jane
-all-caps-underline | ootsteps: Jane Hastings tells [molly clayton] how she went from selling sho
 all-caps-underline | The gran-of-10 making £100 a [minute] from her shop
 all-caps-underline | The [real] Carolyn Bessette was a violen
-all-caps-underline | ing the truth… and it's ugly: [maureen callahan]
 reveal | [The truth about] what happens if you drink mor
 uncertainty-low | But how [worried] do we actually need to be if
 uncertainty | eks before he was arrested on [suspicion of] spying for China - when she i
@@ -40,8 +38,6 @@ negative-framing-medium | share [Desperate] BBC bosses save Katya Jones w
 authority | 'deliciously sweet' flavour, [according to] Which?.
 all-caps-underline | latasaray Team News - Osimhen [starts]View post
 all-caps-underline | Liverpool Team News - Wirtz [starts]View post
-all-caps-underline | proof. This is what's coming: [sylvia morris]
-all-caps-underline | ear for Premium Bond holders: [sylvia morris]
 reveal | zon Spring Deal Days 2026: We [reveal] all the best deals as they co
 negative-framing | aped unconscious Brit teen in [horrific] 30-minute ordeal in Magaluf a
 idiom-low | nnifer Symonds, 44, was found [dead in the water] in Henley-on-Thames on Friday
@@ -56,16 +52,16 @@ distancing-medium | Trevor Hollisey, 72, [allegedly] attacked his neighbours Nei
 reveal | ion' in their relationship is [revealed]
 hype-low | Thylane Blondeau [shows off] her £34,000 diamond engagemen
 hype-low | backdrop as Thylane Blondeau [showed off] her diamond engagement ring o
-clickbait | [EXCLUSIVE]Karen Hauer is CUTTED in Stric
-dysphemism-underline | EXCLUSIVEKaren Hauer is [CUTTED] in Strictly bloodbath: Longes
-negative-framing | n Hauer is CUTTED in Strictly [bloodbath]: Longest-serving female pro d
+clickbait | [EXCLUSIVE]Karen Hauer is CUT in Strictly
+dysphemism-underline | EXCLUSIVEKaren Hauer is [CUT] in Strictly bloodbath: Longes
+negative-framing | aren Hauer is CUT in Strictly [bloodbath]: Longest-serving female pro d
 colloquialism-underline | -serving female pro dancer is [dismissed] in major lineup shake-up
-dysphemism-underline | ctly Come Dancing bosses have [cutted] professional dancer Karen Hau
+dysphemism-underline | ctly Come Dancing bosses have [cut] professional dancer Karen Hau
 all-caps-underline | gn the Gulf Stream is nearing [collapse]: Scientists identify 'red fla
 negative-framing | current is inching closer to [disaster]
 reveal | Dr Marine Vincent unlocks the [secret] to their superior complexion,
 clickbait-low | under £30 they swear by - and [how YOU can] match them
-all-caps-underline | [war in the middle east]
+all-caps-underline | [War in the Middle East]
 aggression-medium | Tehran with 'death, fire and [fury]'
 fear-low | Trump with 'elimination' and [warns] him to 'be careful'
 aggression-medium | to brace for 'death, fire and [fury]' for keeping the Strait of Ho
@@ -82,13 +78,10 @@ distancing | 35, was arrested after police [suspected] he was drunk behind the w
 clickbait-underline | soriasis for 20 years. Then I [now] found a simple cure that real
 all-caps-underline | nd it saw me lose 3 stone too [without] medication. Everyone plagued
 clickbait | [EXCLUSIVE]As Stacey Solomon toasts £10m
-all-caps-underline | uncomfortable questions - and [olivia kemp] reveals why it's caused fury.
-reveal | e questions - and olivia kemp [reveals] why it's caused fury...
-aggression-medium | kemp reveals why it's caused [fury]...
+reveal | e questions - and OLIVIA KEMP [reveals] why it's caused fury...
+aggression-medium | KEMP reveals why it's caused [fury]...
 all-caps-underline | missing what the Iran war is [really] about - and it's not Israel.
-all-caps-underline | chosen to strike now. But as [haviv rettig] GUR writes, once you understa
-all-caps-underline | 660 shareWhat the Iran war is [really] about - it's not Israel: havi
-all-caps-underline | ally about - it's not Israel: [haviv rettig] GUR
+all-caps-underline | 660 shareWhat the Iran war is [really] about - it's not Israel: HAVI
 all-caps-underline | inkly neck in just 15 minutes [without] surgery: It's one of the hard
 hype | ou lose weight. Now there's a [game-changing] answer... and I'm proof it wo
 all-caps-underline | ld wrinkly neck in 15 minutes [without] surgery
@@ -111,7 +104,7 @@ clickbait | [EXCLUSIVE]Jimmy Savile appears in Epstei
 hype | ointed Erika Kirk to serve on [an influential] board which oversees the US A
 loaded-framing-low | [Controversy] over memorial bench rememberi
 hype-low | int - because it features his [iconic] 'devil horns' haircut
-all-caps-underline | [war in the middle east]
+all-caps-underline | [War in the Middle East]
 reveal | Iran [reveals] stealthier 'kamikaze' drone b
 moral | [Ruthless] new Ayatollah 'even more brut
 moral | less new Ayatollah 'even more [brutal] than his slain father': How h
@@ -175,7 +168,7 @@ moral | One of the most [evil] child killers in history Ian
 all-caps-underline | rns 62, he's bracing for some [very] 'intimate insights' in a tell
 moral | ghtmarish' timing amid Andrew [scandal]
 idiom-medium | in 2020, Ruthie unexpectedly [lifted the lid on] her sex life with Edward. 'Yo
-all-caps-underline | [don't miss]
+all-caps-underline | [Don't miss]
 clickbait | [EXCLUSIVE]Desperate BBC bosses save Katy
 negative-framing-medium | EXCLUSIVE[Desperate] BBC bosses save Katya Jones a
 negative-framing | Come Dancing contract after '[bloodbath]' of top talent from show
@@ -183,11 +176,11 @@ hype-low | Thylane Blondeau [shows off] her £34,000 diamond engagemen
 all-caps-underline | n I fear Harry and Meghan are [really] heading to Australia, the pai
 uncertainty-medium | Margot Robbie sparks Ozempic [rumors] after fans notice her shrinki
 all-caps-underline | om survey to setup: What it's [really] like to get solar panels and
-clickbait | [EXCLUSIVE]Karen Hauer is CUTTED in Stric
-dysphemism-underline | EXCLUSIVEKaren Hauer is [CUTTED] in Strictly bloodbath: Longes
-negative-framing | n Hauer is CUTTED in Strictly [bloodbath]: Longest-serving female pro d
+clickbait | [EXCLUSIVE]Karen Hauer is CUT in Strictly
+dysphemism-underline | EXCLUSIVEKaren Hauer is [CUT] in Strictly bloodbath: Longes
+negative-framing | aren Hauer is CUT in Strictly [bloodbath]: Longest-serving female pro d
 colloquialism-underline | -serving female pro dancer is [dismissed] in major lineup shake-up
-dysphemism-underline | car-winning film star, 92, is [CUTTED] from show - as fans fume 'ima
+dysphemism-underline | car-winning film star, 92, is [CUT] from show - as fans fume 'ima
 all-caps-underline | als 'The GC' has demanded £1M [A day] to return to show
 all-caps-underline | Is Cher [married]? Singer, 79, wears diamond ri
 uncertainty-medium | dal white amid secret wedding [rumours] as she leads the A-list glamo
@@ -197,7 +190,7 @@ hype-low | Apple Martin [shows off] her taut abs in a patterned b
 all-caps-underline | Norton can't stop laughing in [very] raunchy scenes from singer's
 loaded-framing-medium | n can't stop laughing in very [raunchy] scenes from singer's new musi
 all-caps-underline | rity All Stars as she suffers [another] reality TV tumble
-dysphemism-underline | interview days before she was [cutted] from the BBC show's lineup
+dysphemism-underline | interview days before she was [cut] from the BBC show's lineup
 hype-medium | after experiencing her 'first [miracle]'
 hype-underline | er Sian's birthday with their [stylish] mum at swanky spa day after r
 hype-medium | after reconciling following '[explosive] row'
@@ -231,21 +224,19 @@ hype-low | Victoria Beckham shares [adorable] childhood snaps in birthday t
 conflict | irthday tribute to her mum as [feud] with estranged son Brooklyn r
 distancing-medium | Rihanna jets out of LA after [alleged] shooter is charged with attem
 all-caps-underline | ink claws into 'worst episode [ever]' as they take aim at BBC scri
-dysphemism-underline | show fronted by huge TV stars [CUTTED] after being trounced by The T
+dysphemism-underline | show fronted by huge TV stars [CUT] after being trounced by The T
 fear | Nelson amid her baby twins' '[heartbreaking]' diagnosis
 hype-low | obbie! Wuthering Heights star [shows off] her new short hair and wows i
 all-caps-underline | rns 62, he's bracing for some [very] 'intimate insights' in a tell
 all-caps-underline | How Lewis Hamilton [really] feels about Kim Kardashian
 clickbait | [EXCLUSIVE]Rihanna shooting suspect is Bi
 clickbait | [EXCLUSIVE]Truth about Joe Swash and his
-all-caps-underline | s money woes as insiders tell [olivia kemp] about new venture that's left
 all-caps-underline | ms she won't return to TV for [seven weeks] in emotional health update
 clickbait | [EXCLUSIVE]Gene Hackman and wife Betsy Ar
 fear | [Chilling] 911 audio details shooting at
 aggression-medium | ctful' Timothée Chalamet amid [fury] over 'no one cares about' ope
 negative-framing | after humiliating box office [disaster]
 hype-low | how she stays in shape while [showing off] her age-defying figure
-all-caps-underline | [christopher stevens] reviews Gone: David Morrissey
 clickbait | [EXCLUSIVE]Iconic nepo baby daughter of H
 hype-low | EXCLUSIVE[Iconic] nepo baby daughter of Hollywo
 derogatory | EXCLUSIVEIconic [nepo baby] daughter of Hollywood royalty
@@ -260,7 +251,7 @@ fear-low | Louis Theroux issues chilling [warning] to every parent of boys after
 hype-low | Kim Kardashian, 45, [flaunts] her very tiny 24inch waistlin
 clickbait-medium | t dress at Commonwealth Day - [here's how] to recreate her look on the h
 hype-low | recognisable as they recreate [iconic] scene 25 years on from blockb
-dysphemism-underline | on a brave face after being '[cutted]' as he steps out for the firs
+dysphemism-underline | on a brave face after being '[cut]' as he steps out for the firs
 clickbait | [EXCLUSIVE]Lorraine Kelly reveals she was
 colloquialism-underline | ly reveals she was 'brutally' [dismissed] just weeks after giving birth
 clickbait | [EXCLUSIVE]Taylor Swift sleuths expose he
@@ -271,11 +262,10 @@ uncertainty-medium | omantic Mexican getaway after [rumor] she was dating Joe Bu
 all-caps-underline | bikini body in Mexico as she [confirms] she is dating Italian directo
 moral | Strictly [scandalous]: Come Dancing's lengthy histo
 loaded-framing-low | show waltzes into yet another [controversy] after Nadiya Bychkova, 36, wa
-dysphemism-underline | fter Nadiya Bychkova, 36, was [cutted]
+dysphemism-underline | fter Nadiya Bychkova, 36, was [cut]
 hype-low | ah Michelle Gellar, 48, looks [youthful] as she kisses husband Freddie
 clickbait | [EXCLUSIVE]Blanca Blanco models pink ling
 clickbait | [EXCLUSIVE]The toxic rift between One Dir
-all-caps-underline | irection stars: Insiders tell [molly clayton] secrets about Harry Styles' l
 uncertainty-medium | urrow and Jessica Alba dating [rumors] after their wild night togeth
 fear-medium | hysterics as she installs a '[heartbreak]' plaque on her ex-boyfriend's
 fear-medium | e the Gulf state amid 'rising [panic]'
@@ -287,7 +277,7 @@ clickbait | Nadiya Bychkova is '[devastated]' by Strictly cutting as frien
 dysphemism-underline | a is 'devastated' by Strictly [cutting] as friends accuse show of age
 uncertainty-medium | dies of London after baseless [rumour] that she is a high-end 'madam
 hype-underline | Lily James joins [stylish] Jessica Chastain and Naomi Wa
-dysphemism-underline | ' as it's revealed she's been [cutted]
+dysphemism-underline | ' as it's revealed she's been [cut]
 all-caps-underline | t hopeful returns to show for [fourth] time, six years on from makin
 aggression-medium | ITV [hits back] at claims This Morning bosses
 conflict | Rival barbers' 'turf war' [sparked] huge street brawl with '13 me
@@ -304,7 +294,7 @@ reveal | Scientists [reveal] controversial plan to launch
 loaded-framing-low | Scientists reveal [controversial] plan to launch 50,000 mirrors
 all-caps-underline | versial plan to launch 50,000 [mirrors] into space for 'sunlight on d
 all-caps-underline | e Scientists to launch 50,000 [mirrors] into space for sunlight on de
-clickbait | mall window to save it if you [act now: tanya jefferies]
+clickbait-medium | mall window to save it if you [act NOW]: TANYA JEFFERIES
 clickbait | [EXCLUSIVE]Moment wife of Alexander broth
 clickbait-underline | Punch the monkey is [NOW] accepted by his peers after p
 reveal | tain's most expensive streets [revealed]: Road where homes are worth a
@@ -325,8 +315,6 @@ hype-low | Kelly Brook [showed off] her incredible curves in a pi
 hype-medium | le curves in a pink bikini in [sizzling] holiday snaps from her trip t
 hype-low | with tie-side bottoms before [showing off] a leopard print bikini.
 hype-low | share Kelly Brook [shows off] her incredible curves in a pi
-all-caps-underline | t trust their instincts, says [jemima cainer], while another should embrace
-all-caps-underline | s in Aries connects to Pluto, [jemima cainer] analyses
 hype-medium | Cox scooped the event's most [prestigious] award in Birmingham on Sunday
 idiom-low | Time to cut out that toxic ex [once and for all]? Difficult people in your lif
 fear-low | fe AGE you 1.5% faster, study [warns]
@@ -346,7 +334,7 @@ hype-medium | reconciling following their '[explosive] row'
 hype-underline | er, her sister Sian and their [stylish] mother enjoyed a spa day on T
 clickbait | [EXCLUSIVE]Staggering 242 Special Forces
 clickbait | [EXCLUSIVE]Police employee who was caught
-all-caps-underline | [more don't miss]
+all-caps-underline | [More don't miss]
 all-caps-underline | s revealed as the new face of [frasers] in 'nostalgic' partnership as
 hype-medium | The Last Leg takes [explosive] turn as Penny Mordaunt brande
 fear | leaves BBC fans in tears over [heartbreaking] death just as show legend ret
@@ -355,7 +343,7 @@ all-caps-underline | e cast update - and fans have [A lot] to say about the Slyt
 clickbait | [EXCLUSIVE]How Ariana Grande and Ethan Sl
 all-caps-underline | riana Grande and Ethan Slater [almost] called it quits: Insider reve
 fear | 's daughter Emilia, 9, shares [heartbreaking] tribute to her late father an
-dysphemism-underline | insist any "bad eggs' will be [CUTTED] no matter how famous'
+dysphemism-underline | insist any "bad eggs' will be [CUT] no matter how famous'
 hype-low | pher Lloyd four decades after [iconic] film's release
 uncertainty-medium | after clapping back at split [rumours]
 dysphemism-underline | hes off Strictly Come Dancing [cutting] as she enjoys a £3K-a-night h
@@ -367,7 +355,6 @@ fear-medium | madan flee Dubai amid 'rising [panic]' as they drive 11 hours to O
 negative-framing-medium | hey drive 11 hours to Oman in [desperate] bid to finally return to UK
 all-caps-underline | ts pulses racing as she poses [topless] for sizzling selfie before sl
 hype-medium | cing as she poses topless for [sizzling] selfie before slipping into s
-all-caps-underline | [christopher stevens] weekend TV review: A female 0
 clickbait | [EXCLUSIVE]Bloodbath at Strictly continue
 negative-framing | EXCLUSIVE[Bloodbath] at Strictly continues: Now pr
 hype-low | ead singer of 60s band behind [iconic] anti-Vietnam War anthem dies
@@ -397,34 +384,27 @@ all-caps-underline | l Carrick: Ex-Man United star [defends] viral post and reve
 moral | interim boss told him after '[brutal]' message about former team-ma
 all-caps-underline | gend Xavi reveals why he will [never] return to club amid explosive
 hype-medium | ill never return to club amid [explosive] row with president Joan Lapor
-# changed text nodes=105
+# changed text nodes=95
 ~ [FINALLY => NOW]
-~ Karen Hauer is [AXED => CUTTED] in Strictly bloodbath
-~ Karen Hauer is [AXED => CUTTED] in Strictly bloodbath
-~ Karen Hauer is [AXED => CUTTED] in Strictly bloodbath
+~ Karen Hauer is [AXED => CUT] in Strictly bloodbath
+~ Karen Hauer is [AXED => CUT] in Strictly bloodbath
+~ Karen Hauer is [AXED => CUT] in Strictly bloodbath
 ~ other-of-10 making £100 every [MINUTE => minute] from her humble shop... and h
-~ ootsteps: Jane Hastings tells [MOLLY CLAYTON => molly clayton] how she went from selling sho
 ~ The gran-of-10 making £100 a [MINUTE => minute] from her shop
 ~ The [REAL => real] Carolyn Bessette was a violen
-~ ing the truth… and it's ugly: [MAUREEN CALLAHAN => maureen callahan]
 ~ latasaray Team News - Osimhen [STARTS => starts]
 ~ Liverpool Team News - Wirtz [STARTS => starts]
-~ proof. This is what's coming: [SYLVIA MORRIS => sylvia morris]
-~ ear for Premium Bond holders: [SYLVIA MORRIS => sylvia morris]
 ~ rdable teeth whitening powder [REALLY => really] rival the dentist? I reviewed
 ~ [finally => now]
-~ Karen Hauer is [AXED => CUTTED] in Strictly bloodbath: Longes
+~ Karen Hauer is [AXED => CUT] in Strictly bloodbath: Longes
 ~ -serving female pro dancer is [sacked => dismissed] in major lineup shake-up
-~ ctly Come Dancing bosses have [axed => cutted] professional dancer Karen Hau
+~ ctly Come Dancing bosses have [axed => cut] professional dancer Karen Hau
 ~ gn the Gulf Stream is nearing [COLLAPSE: => collapse:] Scientists identify 'red flag
-~ [WAR IN THE MIDDLE EAST => war in the middle east]
+~ [WAR IN THE MIDDLE EAST => War in the Middle East]
 ~ [finally => now]
 ~ nd it saw me lose 3 stone too [WITHOUT => without] medication. Everyone plagued
-~ uncomfortable questions - and [OLIVIA KEMP => olivia kemp] reveals why it's caused
 ~ missing what the Iran war is [REALLY => really] about - and it's not Israel.
-~ chosen to strike now. But as [HAVIV RETTIG => haviv rettig] GUR writes, once you understa
-~ What the Iran war is [REALLY => really] about - it's not Israel: havi
-~ ALLY about - it's not Israel: [HAVIV RETTIG => haviv rettig] GUR
+~ What the Iran war is [REALLY => really] about - it's not Israel: HAVI
 ~ inkly neck in just 15 minutes [WITHOUT => without] surgery: It's one of the hard
 ~ ld wrinkly neck in 15 minutes [WITHOUT => without] surgery
 ~ race for best-dressed is on! [Glamorous => Stylish] Cheltenham revellers don thei
@@ -432,7 +412,7 @@ hype-medium | ill never return to club amid [explosive] row with president Joan 
 ~ ldest map of the night sky is [REVEALED => revealed] after 2,000 years: Hipparchus
 ~ ldest map of the night sky is [REVEALED => revealed] after 2,000 years
 ~ England star announces he's [QUITTING => quitting] international football, three
-~ [WAR IN THE MIDDLE EAST => war in the middle east]
+~ [WAR IN THE MIDDLE EAST => War in the Middle East]
 ~ ing behind your bouquet, what [NOT => not] to buy and plants to get if y
 ~ crash victims died avoidable [FIREBALL => fireball] death after legal tycoon's wi
 ~ crash victims died avoidable [FIREBALL => fireball] death
@@ -443,17 +423,17 @@ hype-medium | ill never return to club amid [explosive] row with president Joan 
 ~ Tennis star, 18, throws [furious => angry] tantrum as she launches racke
 ~ Tennis star, 18, throws [furious => angry] tantrum and tells crowd 'f***
 ~ rns 62, he's bracing for some [VERY => very] 'intimate insights' in a tell
-~ [DON'T MISS => don't miss]
+~ [DON'T MISS => Don't miss]
 ~ n I fear Harry and Meghan are [REALLY => really] heading to Australia, the pai
 ~ om survey to setup: What it's [REALLY => really] like to get solar panels and
-~ Karen Hauer is [AXED => CUTTED] in Strictly bloodbath: Longes
+~ Karen Hauer is [AXED => CUT] in Strictly bloodbath: Longes
 ~ -serving female pro dancer is [sacked => dismissed] in major lineup shake-up
-~ car-winning film star, 92, is [AXED => CUTTED] from show - as fans fume 'ima
+~ car-winning film star, 92, is [AXED => CUT] from show - as fans fume 'ima
 ~ s 'The GC' has demanded £1M A [DAY => day] to return to show
 ~ Is Cher [MARRIED? => married?] Singer, 79, wears diamond rin
 ~ Norton can't stop laughing in [VERY => very] raunchy scenes from singer's
 ~ rity All Stars as she suffers [ANOTHER => another] reality TV tumble
-~ interview days before she was [axed => cutted] from the BBC show's lineup
+~ interview days before she was [axed => cut] from the BBC show's lineup
 ~ er Sian's birthday with their [glamorous => stylish] mum at swanky spa day after r
 ~ Lisa Rinna singles out yet [ANOTHER => another] 'rude' celebrity who wronged
 ~ drama as they share the same [furious => angry] complaint after just one epis
@@ -461,48 +441,41 @@ hype-medium | ill never return to club amid [explosive] row with president Joan 
 ~ Bychkova's Strictly sacking: [Axe => Cut] had nothing to do with ageism
 ~ BBC 'may [axe => cut] even more Strictly profession
 ~ ink claws into 'worst episode [EVER' => ever'] as they take aim at BBC scrip
-~ TV stars [AXED => CUTTED] after being trounced by The T
+~ TV stars [AXED => CUT] after being trounced by The T
 ~ rns 62, he's bracing for some [VERY => very] 'intimate insights' in a tell
 ~ How Lewis Hamilton [REALLY => really] feels about Kim Kardashian
-~ s money woes as insiders tell [OLIVIA KEMP => olivia kemp] about new venture that's left
 ~ ms she won't return to TV for [SEVEN WEEKS => seven weeks] in emotional health update
-~ [CHRISTOPHER STEVENS => christopher stevens] reviews Gone: David Morrissey
 ~ a pinstriped suit as he joins [glamorous => stylish] co-stars Sandra Hüller and Pr
 ~ ush off Strictly Come Dancing [axing => cutting] during £3K-a-night holiday at
 ~ ome is charged with attempted [MURDER => murder]
-~ s on a brave face after being ['axed' => 'cutted'] as he steps out for the first
+~ s on a brave face after being ['axed' => 'cut'] as he steps out for the first
 ~ ly reveals she was 'brutally' [sacked => dismissed] just weeks after giving birth
 ~ aims as he muses over being a [TRILLIONAIRE => trillionaire] - amid fans' doubt about the
 ~ bikini body in Mexico as she [CONFIRMS => confirms] she is dating Italian directo
-~ fter Nadiya Bychkova, 36, was [axed => cutted]
-~ irection stars: Insiders tell [MOLLY CLAYTON => molly clayton] secrets about Harry Styles' l
+~ fter Nadiya Bychkova, 36, was [axed => cut]
 ~ Montana Brown sparks [furious => angry] debate over 'tone deaf' criti
 ~ Good Morning Britain studio [EVACUATED => evacuated] mid-broadcast as scrambling h
 ~ ' by Strictly [axing => cutting] as friends accuse show of age
 ~ Lily James joins [glamorous => stylish] Jessica Chastain and Naomi Wa
-~ ' as it's revealed she's been [axed => cutted]
+~ ' as it's revealed she's been [axed => cut]
 ~ t hopeful returns to show for [FOURTH => fourth] time, six years on from makin
 ~ 'dirty seven euro kebabs' is [BETTER => better]
 ~ versial plan to launch 50,000 [MIRRORS => mirrors] into space for 'sunlight on d
 ~ Scientists to launch 50,000 [MIRRORS => mirrors] into space for sunlight on de
-~ window to save it if you act [NOW: TANYA JEFFERIES => now: tanya jefferies]
 ~ [FINALLY => NOW]
 ~ [passed away => died]
-~ t trust their instincts, says [JEMIMA CAINER, => jemima cainer,] while another should embrace
-~ s in Aries connects to Pluto, [JEMIMA CAINER => jemima cainer] analyses
 ~ er Sian's birthday with their [glamorous => stylish] mum at swanky spa day after r
 ~ er, her sister Sian and their [glamorous => stylish] mother enjoyed a spa day on T
-~ [MORE DON'T MISS => more don't miss]
+~ [MORE DON'T MISS => More don't miss]
 ~ s revealed as the new face of [FRASERS => frasers] in 'nostalgic' partnership as
 ~ [jaw-dropping => surprising]
 ~ cast update - and fans have A [LOT => lot] to say about the Slytherin st
 ~ riana Grande and Ethan Slater [ALMOST => almost] called it quits: Insider reve
-~ insist any "bad eggs' will be [AXED => CUTTED] no matter how famous'
+~ insist any "bad eggs' will be [AXED => CUT] no matter how famous'
 ~ hes off Strictly Come Dancing [axing => cutting] as she enjoys a £3K-a-night h
 ~ Katie Price's husband's [furious => angry] ex accuses him of scamming MO
 ~ pping point': Insiders reveal [REAL => real] trigger for their divorce
 ~ ts pulses racing as she poses [TOPLESS => topless] for sizzling selfie before sl
-~ [CHRISTOPHER STEVENS => christopher stevens] weekend TV review: A female 0
 ~ phie Habboo's Raising Chelsea [FIRST LOOK: => first look:] Fans go wild as couple tease
 ~ aptive inside $1m mansion for [FIVE YEARS, => five years,] investigators say
 ~ d wife captive in mansion for [FIVE YEARS, => five years,] police say

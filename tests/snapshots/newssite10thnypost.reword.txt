@@ -14,7 +14,7 @@ clickbait | Trading blows [Wild] brawl breaks out at usa vs. M
 clickbait | for divorce after wife makes [shocking] accusations
 reveal | Happiest cities in the US [revealed] — we have good and bad news f
 negative-framing-medium | [Desperate] hunt Ex-fbi agent claims bloo
-dysphemism-underline | Yogi [cutted] from nyc school after ‘inappr
+dysphemism-underline | Yogi [cut] from nyc school after ‘inappr
 clickbait | r-old tennis star loses it in [wild] meltdown after failing to def
 fear | Sad footage exposes [heartbreaking] reality of animals in Dubai a
 aggression | Megyn Kelly [rips] senator for threats against C
@@ -58,7 +58,7 @@ clickbait | Hilary Duff gets wet and [wild] for ‘Tonight Show’ performanc
 loaded-framing-medium | an of not protecting her from [disgraced] football coach Sherrone Moore
 moral | one Moore in first remarks on [scandal]
 # changed text nodes=6
-~ Yogi [axed => cutted] from
+~ Yogi [axed => cut] from
 ~ [finally => now]
 ~ The [Surprising => Unexpected] Metros Where an Entry-Level L
 ~ [Jaw-Dropping => surprising]

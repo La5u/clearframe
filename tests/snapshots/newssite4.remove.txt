@@ -69,7 +69,7 @@ dysphemism | Airline boss who [axed] London-LA flights says more c
 dysphemism | share Boss who [axed] London-LA flights says more c
 fear-low | rco Rubio fires World Cup ban [warning] to Iranian team staff... as T
 fear-low | rco Rubio fires World Cup ban [warning] to Iranian team staff
-derogatory | ction only to '' mentally ill [thug] into changing his ways
+derogatory | ediction only to mentally ill [thug] into changing his ways
 fear-low | share Doctor who [warned] about Nottingham slayer did n
 all-caps | obic comment to Vinicius Jr - [NOT] 'monkey slur' he was accused
 hype-medium | ey slur' he was accused of in [explosive] row
@@ -227,49 +227,49 @@ all-caps | chael Carrick insists he will [NOT] press Sir Jim Ratcliffe for c
 # changed text nodes=48
 ~ [EXCLUSIVE => ]
 ~ [inside story => ]
-~ The[ heartbreaking  =>  ]consequences of 'empty' threat
+~ The [heartbreaking  => ]consequences of 'empty' threat
 ~ [EXCLUSIVE => ]
-~ Rob Reiner's son Jake shares[ horrific  =>  ]new details of his parents' mu
-~ The[ heartbreaking  =>  ]consequences of 'empty' threat
-~ to unlock its large library of[ must-watch  =>  ]shows for less
+~ Rob Reiner's son Jake shares [horrific  => ]new details of his parents' mu
+~ The [heartbreaking  => ]consequences of 'empty' threat
+~ o unlock its large library of [must-watch  => ]shows for less
 ~ [EXCLUSIVE => ]
-~ omas' and says scenes were too[ shocking  =>  ]to air
-~ g point in what they called a ['heartbreaking => '] journey'.
+~ mas' and says scenes were too [shocking  => ]to air
+~ g point in what they called a ['heartbreaking journey'. => 'journey'.]
 ~ [EXCLUSIVE => ]
-~ [ Chilling  =>  ]moment beauty queen is shot de
-~ This is the[ chilling  =>  ]moment a former beauty queen i
-~ [Chilling => ] moment beauty queen is shot d
-~ [EXCLUSIVE => ]
-~ [EXCLUSIVE => ]
-~ [EXCLUSIVE => ]
-~ my arms and legs - but I have[ finally  =>  ]found a solution which really
-~ , 42, has barely aged a day as[ stunning  =>  ]star poses in a bikini and an
-~ made grim prediction only to ['shock' => ''] mentally ill thug into changi
-~ [EXCLUSIVE => ]
-~ his birthday after decades of[ wild  =>  ]partying and serial womanising
+~ [Chilling moment => Moment] beauty queen is shot dead 'by
+~ This is the [chilling  => ]moment a former beauty queen i
+~ [Chilling moment => Moment] beauty queen is shot dead 'by
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ my arms and legs - but I have [finally  => ]found a solution which really
+~ 42, has barely aged a day as [stunning  => ]star poses in a bikini and an
+~ made grim prediction only to ['shock'  => ]mentally ill thug into changin
 ~ [EXCLUSIVE => ]
-~ Rob Reiner's son Jake shares[ horrific  =>  ]new details of his parents' mu
+~ his birthday after decades of [wild  => ]partying and serial womanising
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ [EXCLUSIVE => ]
+~ [EXCLUSIVE => ]
+~ Rob Reiner's son Jake shares [horrific  => ]new details of his parents' mu
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ man and her two daughters that[ shocked  =>  ]the US
-~ - and why it might be time to[ finally  =>  ]switch to a passkey
+~ [EXCLUSIVE => ]
+~ [EXCLUSIVE => ]
+~ an and her two daughters that [shocked  => ]the US
+~ - and why it might be time to [finally  => ]switch to a passkey
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ car, 50, who called himself a ['wild => '] child' abused girls at youth
-~ the sea is solved: Scientists[ finally  =>  ]pinpoint its true identity - t
+~ car, 50, who called himself a ['wild child' => 'child'] abused girls at youth group b
+~ the sea is solved: Scientists [finally  => ]pinpoint its true identity - t
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ unsuccessful rounds of IVF and[ heartbreaking  =>  ]miscarriages
+~ nsuccessful rounds of IVF and [heartbreaking  => ]miscarriages
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ [Shocking => ] moment Massachusetts woman wa
+~ [Shocking moment => Moment] Massachusetts woman was maule

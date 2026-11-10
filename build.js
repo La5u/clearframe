@@ -17,6 +17,8 @@ const LABELS = readJson('data/type-labels.json');
 const STATIC_FILES = [
   ['src/background.js', 'background.js'],
   ['src/ui/popup.html', 'popup.html'],
+  ['src/ui/analyze.html', 'analyze.html'],
+  ['src/analyze.js', 'analyze.js'],
   ['src/ui/content.css', 'content.css'],
   ['ATTRIBUTION.md', 'ATTRIBUTION.md'],
 ];

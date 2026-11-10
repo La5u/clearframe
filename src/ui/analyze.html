@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClearFrame: analyse pasted text</title>
+  <link rel="stylesheet" href="content.css">
+  <style>
+    * { box-sizing: border-box; border-radius: 0 !important; }
+    body {
+      max-width: 72ch;
+      margin: 0 auto;
+      padding: 24px 14px 48px;
+      background: #fff;
+      color: #000;
+      font: 16px/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    h1, h2 { line-height: 1.25; }
+    .tool-title { margin: 0 0 6px; font-size: 18px; }
+    .note { margin: 0 0 14px; font-size: 13px; }
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 180px;
+      padding: 8px;
+      border: 1px solid #000;
+      background: #fff;
+      color: #000;
+      font: inherit;
+    }
+    .controls { display: flex; align-items: center; gap: 16px; margin: 10px 0 0; font-size: 14px; }
+    button { appearance: none; padding: 5px 12px; border: 1px solid #000; background: #fff; color: #000; font: inherit; cursor: pointer; }
+    #output { margin-top: 20px; padding-top: 16px; border-top: 1px solid #bbb; }
+    #output:empty { display: none; }
+    #output h1 { margin: 0 0 14px; font-size: 24px; }
+    #output p { margin: 0 0 1em; }
+  </style>
+</head>
+<body>
+  <h2 class="tool-title">Analyse pasted text</h2>
+  <p class="note">Reads wording only: it cannot see tone, irony, images or layout. Your text stays in this tab.</p>
+  <textarea id="text" aria-label="Text to analyse" placeholder="Paste a text here. A blank line starts a new paragraph."></textarea>
+  <div class="controls">
+    <button id="analyse" type="button">Analyse</button>
+    <label><input id="headline" type="checkbox" checked> First line is the headline</label>
+  </div>
+  <main id="output"></main>
+  <script src="content.js"></script>
+  <script src="analyze.js"></script>
+</body>
+</html>

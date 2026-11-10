@@ -199,6 +199,21 @@ The design should:
 - Keep preferences in `chrome.storage.sync`; the term index remains bundled.
 - Avoid opaque political scores, fact-checking claims, and automatic moral judgments.
 
+Phrase rules match across source whitespace: a newline, tab, non-breaking space or
+run of spaces between words counts as one space (blank lines too), and a match covers
+the original text, so rewording and restoring replace the whole original span.
+
+## Analyse pasted text
+
+The popup's "Analyse pasted text" link opens `analyze.html`, a page for texts that are
+not web pages (PDFs, handouts). Paste a text and press Analyse: a blank line starts a
+paragraph, a single newline stays inside it and shows as a space, and the first line
+becomes an `<h1>` (so headline rules apply) unless "First line is the headline" is
+unticked. The page loads the same `content.js` and `content.css` as every web page, so
+highlights, the tooltip, reword mode (Alt+Shift+R), the popup's Detected list and the
+settings behave identically. `analyze.js` only builds the paragraphs. The text stays in
+the page: nothing is stored or sent. It needs no extra permission.
+
 ## Intentional Limits
 
 - Phrase-based, no NLP or semantic disambiguation

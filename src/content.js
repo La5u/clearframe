@@ -16,6 +16,12 @@ const MEDIA_UI_SELECTOR = '.ytp-caption-window-container,.ytp-caption-segment,.c
 const CAPS_LABEL_SELECTOR = 'figcaption,[class*=caption],[class*=credit],[class*=kicker],[class*=eyebrow],[class*=badge],[class*=label]';
 const PROTECTED_TEXT_SELECTOR = 'ytd-transcript-segment-renderer,ytd-transcript-segment-list-renderer,.ytd-transcript-segment-renderer,yt-live-chat-app,yt-live-chat-renderer,[aria-live=polite],[aria-live=assertive],[role=status],[role=alert]';
 const SKIP_SELECTOR = `nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true],#cf-tooltip,#cf-suggestion,${MEDIA_UI_SELECTOR}`;
+const SKIP_ELEMENT_SELECTOR = `${SKIP_TAGS_SELECTOR},${SKIP_SELECTOR}`;
+const HEADING_SELECTOR = 'h1,h2,h3,[role=heading],[slot=title],a#video-title,[class*=headline],[class*=title]';
+const LINK_EXCLUDED_SELECTOR = 'nav,footer,[role=navigation],[class*=share],[class*=comment]';
+const EMPHASIS_SELECTOR = 'strong,b,[class*=pufftext],[data-headline]';
+const CONVERSATIONAL_SELECTOR = 'shreddit-comment,[data-testid*=comment],ytd-comment-thread-renderer,ytd-comments,#comments';
+const CLEARFRAME_IDS = ['cf-tooltip', 'cf-suggestion', 'cf-highlight-styles'];
 const HIGHLIGHT_PREFIX = 'clearframe-';
 const ALL_CAPS_HIGHLIGHT_NAME = 'clearframe-all-caps-underline';
 const SELECTED_HIGHLIGHT_NAME = 'clearframe-selected';
@@ -43,7 +49,6 @@ const detachedResults = new WeakMap();
 let totalMatches = 0;
 /** @type {Record<string, Record<string, number>>} */
 let termStats = Object.create(null);
-let activeHighlightNames = new Set();
 const highlightSets = new Map();
 let activeHover = null;
 let pinnedTooltipRecord = null;
@@ -55,8 +60,15 @@ let hoverSwitchRecord = null;
 const lastPointer = { x: 0, y: 0 };
 let pageObserver = null;
 let analysisTimer = 0;
+// Text nodes the page edited, and subtrees it added; walked once per pass.
 const pendingMutationNodes = new Set();
+const pendingMutationRoots = new Set();
 let pendingDisconnectedCleanup = false;
+/** @type {Map<Element, any>} getElementContext cache, emptied after each pass. */
+const elementContexts = new Map();
+let lastBadgeCount = -1;
+/** @type {string | null} ':root' where highlight inheritance works, '' otherwise. */
+let highlightScope = null;
 const internalMutationCounts = new WeakMap();
 const navigationIndexes = new Map();
 const PAGE_CONTEXT = classifyPageContext(location.hostname);
@@ -159,17 +171,47 @@ function getReplacementForTerm(term, src) {
     : applyStemmedReplacement(src, term.phrase, term.neutral, term.stemType || '');
 }
 
-function isProcessableNode(node) {
-  const parent = node.parentElement;
-  return !!parent && !parent.isContentEditable && !parent.closest(SKIP_TAGS_SELECTOR) && !parent.closest(SKIP_SELECTOR);
+const ROOT_CONTEXT = { skip: false, heading: false, navLike: false, link: null, linkExcluded: false, emphasis: false, conversational: false, preserveText: false, capsLabel: false };
+
+// Each flag is true when the element or an ancestor matches, as closest()
+// would report, but every element is matched once per pass instead of once
+// per text node and selector.
+/** @param {Element | null} element @returns {typeof ROOT_CONTEXT} */
+function getElementContext(element) {
+  if (!element) return ROOT_CONTEXT;
+  let context = elementContexts.get(element);
+  if (context) return context;
+  const parent = getElementContext(element.parentElement);
+  if (parent.skip) context = parent;
+  else {
+    const isLink = element.matches('a[href]');
+    const navLike = parent.navLike || element.matches(LINK_EXCLUDED_SELECTOR);
+    context = {
+      skip: element.matches(SKIP_ELEMENT_SELECTOR),
+      heading: parent.heading || element.matches(HEADING_SELECTOR),
+      navLike,
+      link: isLink ? element : parent.link,
+      linkExcluded: isLink ? navLike : parent.linkExcluded,
+      emphasis: parent.emphasis || element.matches(EMPHASIS_SELECTOR),
+      conversational: parent.conversational || element.matches(CONVERSATIONAL_SELECTOR),
+      preserveText: parent.preserveText || element.matches(PROTECTED_TEXT_SELECTOR),
+      capsLabel: parent.capsLabel || element.matches(CAPS_LABEL_SELECTOR),
+    };
+  }
+  elementContexts.set(element, context);
+  return context;
 }
 
-function isLikelyHeadline(parent, text) {
-  if (parent?.closest('h1,h2,h3,[role=heading],[slot=title],a#video-title,[class*=headline],[class*=title]')) return true;
+function isProcessableNode(node) {
+  const parent = node.parentElement;
+  return !!parent && !parent.isContentEditable && !getElementContext(parent).skip;
+}
+
+function isLikelyHeadline(context, text) {
+  if (context.heading) return true;
   if (PAGE_CONTEXT !== 'publication' || text.trim().length < 20) return false;
-  const link = parent?.closest('a[href]');
-  if (!link || link.closest('nav,footer,[role=navigation],[class*=share],[class*=comment]')) return false;
-  return !!parent.closest('strong,b,[class*=pufftext],[data-headline]') || link.getAttribute('itemprop') === 'url';
+  if (!context.link || context.linkExcluded) return false;
+  return context.emphasis || context.link.getAttribute('itemprop') === 'url';
 }
 
 
@@ -241,8 +283,6 @@ function clearHighlightPresentation() {
       CSS.highlights.delete(name);
     }
   }
-  document.getElementById('cf-highlight-styles')?.remove();
-  activeHighlightNames = new Set();
   highlightSets.clear();
 }
 
@@ -257,15 +297,13 @@ function resetAnalysis() {
   updateBadge();
 }
 
+// Callers pass only connected, processable nodes.
 function processTextNode(node) {
-  if (!node.isConnected || !isProcessableNode(node)) return;
   const originalText = node.nodeValue || '';
   if (originalText.trim().length < 2) return;
-  const parent = node.parentElement;
-  const conversational = !!parent?.closest('shreddit-comment,[data-testid*=comment],ytd-comment-thread-renderer,ytd-comments,#comments');
-  const headline = isLikelyHeadline(parent, originalText);
-  const preserveText = !!parent?.closest(PROTECTED_TEXT_SELECTOR);
-  const capsLabel = !!parent?.closest(CAPS_LABEL_SELECTOR);
+  const context = getElementContext(node.parentElement);
+  const { conversational, preserveText, capsLabel } = context;
+  const headline = isLikelyHeadline(context, originalText);
   const plan = processText(originalText, { headline, conversational, preserveText, capsLabel, pageContext: PAGE_CONTEXT });
   const displayedNodeText = plan.displayText;
   if (displayedNodeText !== originalText) node.nodeValue = displayedNodeText;
@@ -333,26 +371,33 @@ function renderHighlights() {
     ranges.push(record.range);
     rangesByName.set(record.highlightName, ranges);
   }
-  activeHighlightNames = new Set(rangesByName.keys());
   for (const [name, ranges] of rangesByName) {
     const highlight = new Highlight(...ranges);
     highlightSets.set(name, highlight); CSS.highlights.set(name, highlight);
   }
-  if (activeHighlightNames.size) {
-    const style = document.createElement('style');
-    style.id = 'cf-highlight-styles';
-    style.textContent = [...activeHighlightNames].map(buildHighlightRule).join('\n');
-    (document.head || document.documentElement).appendChild(style);
-  }
+  syncHighlightStyles();
 }
 
+// Every ::highlight rule is matched against every element on each restyle,
+// so many rules slow down every restyle the page does. Chromium's highlight
+// inheritance lets rules on :root reach all text at almost no cost, so there
+// the sheet holds every name and changes only with the settings. Firefox has
+// no highlight inheritance and keeps universal rules for the names in use.
 function syncHighlightStyles() {
-  document.getElementById('cf-highlight-styles')?.remove();
-  activeHighlightNames = new Set(highlightSets.keys());
-  if (!activeHighlightNames.size) return;
-  const style = document.createElement('style'); style.id = 'cf-highlight-styles';
-  style.textContent = [...activeHighlightNames].map(buildHighlightRule).join('\n');
-  (document.head || document.documentElement).appendChild(style);
+  if (!highlightSets.size) return;
+  let style = document.getElementById('cf-highlight-styles');
+  if (!style) {
+    style = document.createElement('style'); style.id = 'cf-highlight-styles';
+  }
+  if (!style.isConnected) (document.head || document.documentElement).appendChild(style);
+  if (highlightScope === null) {
+    style.textContent = `:root::highlight(${SELECTED_HIGHLIGHT_NAME}){background-color:rgb(1, 2, 3)}`;
+    highlightScope = document.body && getComputedStyle(document.body, `::highlight(${SELECTED_HIGHLIGHT_NAME})`).backgroundColor === 'rgb(1, 2, 3)' ? ':root' : '';
+  }
+  const names = highlightScope ? [...TYPE_HIGHLIGHT_NAMES, ALL_CAPS_HIGHLIGHT_NAME] : [...highlightSets.keys()];
+  const rules = names.map(name => highlightScope + buildHighlightRule(name)).join('\n')
+    + `\n${highlightScope}::highlight(${SELECTED_HIGHLIGHT_NAME}){background-color:CanvasText;color:Canvas}`;
+  if (style.textContent !== rules) style.textContent = rules;
 }
 
 function removeResultHighlights(result) {
@@ -386,8 +431,10 @@ function addResultHighlights(result) {
 
 function analyzeTargets(root) {
   resetAnalysis();
+  elementContexts.clear();
   const targets = getTextTargets(root);
   for (const node of targets) if (node.isConnected) processTextNode(node);
+  elementContexts.clear();
   rebuildSummary();
   renderHighlights();
   updateBadge();
@@ -401,6 +448,7 @@ function analyzePage() {
     analysisTimer = 0;
   }
   pendingMutationNodes.clear();
+  pendingMutationRoots.clear();
   pendingDisconnectedCleanup = false;
   pageObserver?.disconnect();
   const count = analyzeTargets(document.body);
@@ -428,6 +476,12 @@ function analyzeMutations() {
   const revealedNode = hoverReveal?.node;
   restoreHoverReveal();
   if (revealedNode) internalMutationCounts.delete(revealedNode);
+  elementContexts.clear();
+  for (const root of pendingMutationRoots) {
+    if (root instanceof Text) pendingMutationNodes.add(root);
+    else if (root.isConnected) for (const node of getTextTargets(root)) pendingMutationNodes.add(node);
+  }
+  pendingMutationRoots.clear();
   for (const node of pendingMutationNodes) {
     const removedNames = removeResultHighlights(nodeResults.get(node));
     highlightNamesChanged ||= removedNames;
@@ -447,6 +501,7 @@ function analyzeMutations() {
   }
   pendingMutationNodes.clear();
   pendingDisconnectedCleanup = false;
+  elementContexts.clear();
   rebuildSummary();
   if (highlightNamesChanged) syncHighlightStyles();
   updateBadge();
@@ -455,17 +510,19 @@ function analyzeMutations() {
 }
 
 function getTextTargets(root) {
-  if (!root) return [];
+  if (!root || getElementContext(root).skip) return [];
   const targets = [];
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   while (walker.nextNode()) {
     const node = walker.currentNode;
-    if (isProcessableNode(node) && (node.nodeValue || '').trim().length >= 2) targets.push(node);
+    if ((node.nodeValue || '').trim().length >= 2 && isProcessableNode(node)) targets.push(node);
   }
   return targets;
 }
 
 function updateBadge() {
+  if (totalMatches === lastBadgeCount) return;
+  lastBadgeCount = totalMatches;
   chrome.runtime.sendMessage({ type: 'COUNT', count: totalMatches }).catch(() => {});
 }
 
@@ -737,9 +794,11 @@ function selectionContext(range) {
 }
 
 function saveSuggestion(wording, context, element, status) {
+  const elementContext = getElementContext(element);
+  elementContexts.clear();
   const item = {
     schemaVersion: 1, wording, context, pageContext: PAGE_CONTEXT, hostname: location.hostname,
-    matchContext: { headline: isLikelyHeadline(element, wording), conversational: !!element.closest('shreddit-comment,[data-testid*=comment],ytd-comment-thread-renderer,ytd-comments,#comments') },
+    matchContext: { headline: isLikelyHeadline(elementContext, wording), conversational: elementContext.conversational },
     createdAt: new Date().toISOString(),
   };
   chrome.storage.local.get({ clearframeSuggestions: [] }, result => {
@@ -795,8 +854,6 @@ function navigateToTerm(term, action) {
   const record = records[nextIndex];
   record.node.parentElement?.scrollIntoView({ block: 'center', behavior: 'auto' });
   if (SUPPORTS_HIGHLIGHTS && !record.range.collapsed) {
-    const style = document.getElementById('cf-highlight-styles');
-    if (style) style.textContent = [...activeHighlightNames].map(buildHighlightRule).join('\n') + `\n::highlight(${SELECTED_HIGHLIGHT_NAME}){background-color:CanvasText;color:Canvas}`;
     CSS.highlights.set(SELECTED_HIGHLIGHT_NAME, new Highlight(record.range));
   }
 }
@@ -831,38 +888,36 @@ function getTermGroups() {
 }
 
 function isClearFrameNode(node) {
-  const element = node instanceof Element ? node : node.parentElement;
-  return !!element?.closest('#cf-tooltip,#cf-suggestion,#cf-highlight-styles');
+  return CLEARFRAME_IDS.some(id => document.getElementById(id)?.contains(node));
 }
 
-function mutationChangesText(mutation) {
-  if (isClearFrameNode(mutation.target)) return false;
-  if (mutation.type === 'characterData') {
-    const remaining = internalMutationCounts.get(mutation.target) || 0;
-    if (remaining > 0) {
-      if (remaining === 1) internalMutationCounts.delete(mutation.target);
-      else internalMutationCounts.set(mutation.target, remaining - 1);
-      return false;
-    }
-    return true;
-  }
-  return [...mutation.addedNodes, ...mutation.removedNodes].some(node => !isClearFrameNode(node) && (node.textContent || '').trim().length >= 2);
+// Cheap test that skips empty and whitespace-only insertions and removals,
+// and ClearFrame's own elements.
+function mayHoldPageText(node) {
+  if (node instanceof Text) return (node.nodeValue || '').trim().length >= 2;
+  return node instanceof Element && !!node.firstChild && !CLEARFRAME_IDS.includes(node.id);
 }
 
+// Runs inside the observer callback for every batch, so it only records what
+// changed; added subtrees are walked once, in the debounced analyzeMutations.
 function scheduleMutationAnalysis(mutations) {
   for (const mutation of mutations) {
-    if (!mutationChangesText(mutation)) continue;
-    if (mutation.type === 'characterData' && mutation.target instanceof Text) {
-      pendingMutationNodes.add(mutation.target);
+    const target = mutation.target;
+    if (mutation.type === 'characterData') {
+      if (!(target instanceof Text) || isClearFrameNode(target)) continue;
+      const remaining = internalMutationCounts.get(target) || 0;
+      if (remaining > 1) internalMutationCounts.set(target, remaining - 1);
+      else if (remaining === 1) internalMutationCounts.delete(target);
+      else pendingMutationNodes.add(target);
       continue;
     }
-    pendingDisconnectedCleanup ||= mutation.removedNodes.length > 0;
-    for (const added of mutation.addedNodes) {
-      if (added instanceof Text) pendingMutationNodes.add(added);
-      else for (const node of getTextTargets(added)) pendingMutationNodes.add(node);
-    }
+    const added = [...mutation.addedNodes].filter(mayHoldPageText);
+    const removed = [...mutation.removedNodes].some(mayHoldPageText);
+    if ((!added.length && !removed) || isClearFrameNode(target)) continue;
+    pendingDisconnectedCleanup ||= removed;
+    for (const node of added) pendingMutationRoots.add(node);
   }
-  if (!pendingMutationNodes.size && !pendingDisconnectedCleanup) return;
+  if (!pendingMutationNodes.size && !pendingMutationRoots.size && !pendingDisconnectedCleanup) return;
   if (!analysisTimer) analysisTimer = window.setTimeout(analyzeMutations, 120);
 }
 

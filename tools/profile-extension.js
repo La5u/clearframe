@@ -16,11 +16,13 @@ const params=new URLSearchParams(location.search), browser=params.get('browser')
 const root=document.querySelector('#articles'), started=performance.now(), fragment=document.createDocumentFragment();
 for(let i=0;i<${staticNodes};i++){const p=document.createElement('p');p.textContent=i%8===0?'A shocking warning reportedly reveals a devastating secret.':'The committee published its ordinary quarterly report after the meeting.';fragment.appendChild(p)}
 root.appendChild(fragment);
-let initialMs=null, dynamicStart=null, styleAdds=0, finished=false;
+let initialMs=null, dynamicStart=null, highlightUpdates=0, finished=false;
 function addDynamic(){const f=document.createDocumentFragment();for(let i=0;i<${dynamicNodes};i++){const p=document.createElement('p');p.textContent='Over the moon after an ordinary report';f.appendChild(p)}root.appendChild(f)}
-function send(){if(finished)return;finished=true;fetch('/result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({browser,extension,staticNodes:${staticNodes},dynamicNodes:${dynamicNodes},characters:document.body.innerText.length,initialMs,dynamicMs:dynamicStart===null?null:performance.now()-dynamicStart,heapMb:performance.memory?Math.round(performance.memory.usedJSHeapSize/1048576):null,styles:styleAdds})})}
-const observer=new MutationObserver(records=>{for(const record of records)for(const node of record.addedNodes)if(node.id==='cf-highlight-styles'){styleAdds++;if(initialMs===null){initialMs=performance.now()-started;dynamicStart=performance.now();addDynamic()}else send()}});
-observer.observe(document.documentElement,{childList:true,subtree:true});
+function send(){if(finished)return;finished=true;fetch('/result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({browser,extension,staticNodes:${staticNodes},dynamicNodes:${dynamicNodes},characters:document.body.innerText.length,initialMs,dynamicMs:dynamicStart===null?null:performance.now()-dynamicStart,heapMb:performance.memory?Math.round(performance.memory.usedJSHeapSize/1048576):null,highlightUpdates})})}
+// The highlight stylesheet is inserted once, so watch the highlight registry for each analysis pass.
+let ranges=0;
+function poll(){if(finished)return;let next=0;for(const highlight of CSS.highlights.values())next+=highlight.size;if(next>ranges){ranges=next;highlightUpdates++;if(initialMs===null){initialMs=performance.now()-started;dynamicStart=performance.now();addDynamic()}else send()}requestAnimationFrame(poll)}
+if(extension)requestAnimationFrame(poll);
 if(!extension)requestAnimationFrame(()=>requestAnimationFrame(()=>{initialMs=performance.now()-started;dynamicStart=performance.now();addDynamic();setTimeout(send,250)}));
 setTimeout(send,20000);
 </script>`;

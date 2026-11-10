@@ -1,8 +1,7 @@
-# newssite10thnypost.html mode=reword highlights=72
+# newssite10thnypost.html mode=reword highlights=70
 loaded-framing-medium | cnn deletes [tone-deaf] post downplaying moment suspe
 distancing | -deaf post downplaying moment [suspected] terrorists hurled bombs near
 distancing-medium | amos’ wedding called off over [alleged] ‘ongoing infidelity issues’
-modality-medium | i bomb shelter where The Post [had to] flee during Iran airstrike al
 loaded-framing-medium | Flights of fancy [Disgraced] Ohio State prez boasted he wa
 loaded-framing | [Common sense]. No nonsense.
 fear-medium | What the oil-price [panic] really tells you about our le
@@ -68,7 +67,6 @@ clickbait-underline | 9-year-old dad helps son, 80, [now] crack free oysters pro
 direct-address-medium | ew eatery — and it isn’t what [you’d] expect
 distancing-medium | amos’ wedding called off over [alleged] ‘ongoing infidelity issues’
 clickbait | Hilary Duff gets wet and [wild] for ‘Tonight Show’ performanc
-imperative-medium | [See] All Columnists
 loaded-framing-medium | an of not protecting her from [disgraced] football coach Sherrone Moore
 moral | one Moore in first remarks on [scandal]
 # changed text nodes=6

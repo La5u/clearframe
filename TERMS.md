@@ -51,7 +51,7 @@ The match is dropped if any `unless` clause matches; a clause matches when all
 its tests pass. Tests are regexes written as `/pattern/flags` (JSON doubles each
 backslash) against `before` / `after` (40 characters either side), `match` (the
 matched text), `nearby` (before + match + after) or `textBefore` (all text
-before), plus `"headline": true|false` and `"conversational": true|false`. A string in `unless` names a list under
+before), `openQuotes` (currently open speech quote marks), plus `"headline": true|false` and `"conversational": true|false`. A string in `unless` names a list under
 `shared`, for patterns several terms use. `contexts` defines derived contexts
 such as `evaluative`, and `types` sets rules for every term of a type:
 `contexts`, `unless` (clauses or shared names), `only` and `confidence`

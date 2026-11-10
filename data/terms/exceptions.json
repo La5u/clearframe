@@ -1,11 +1,21 @@
 {
   "terms": {
+    "act": { "unless": [{ "after": "/^\\s+(?:one|two|three|[IVX]+|\\d+)\\b/u" }] },
+    "ask": { "unless": [{ "after": "/^(?:\\.com\\b|\\s+(?:Amy|Abby|Ann|Polly)\\b)/u" }] },
     "breaking": {
       "note": "Only a \"BREAKING:\" / \"breaking news\" label, or a text that opens with the word; not \"breaking the law\" or \"record-breaking\".",
       "unless": [
         { "before": "/\\S/u", "after": "/^(?!\\s*(?::|news\\b|update|story))/iu" }
       ]
     },
+    "buy": { "unless": [{ "after": "/^\\s+(?:orders?|ratings?|recommendations?|signals?)\\b/iu" }] },
+    "click": { "unless": [{ "after": "/^\\s+(?:fraud|rates?|counts?|bait)\\b/iu" }] },
+    "come": {
+      "note": "A named subject after the idiomatic kicker (Come clean Hilary Duff), or a concessive idiom; keep commands such as Come clean about it.",
+      "unless": [{ "after": "/^\\s+(?:clean\\s+\\p{Lu}|rain\\s+or\\s+shine\\b|hell\\s+or\\s+high\\s+water\\b|what\\s+may\\b)/u" }]
+    },
+    "discover": { "unless": [{ "after": "/^\\s+(?:card|bank|financial\\s+services)\\b/iu" }] },
+    "download": { "unless": [{ "after": "/^\\s+(?:speeds?|limits?|sizes?|rates?|counts?)\\b/iu" }] },
     "elite": { "unless": ["productName"] },
     "evil": {
       "note": "Titles, in Title Case or capitals: \"Resident Evil\", \"EVIL DEAD\"; not \"a resident evil plot\".",
@@ -22,11 +32,26 @@
     },
     "far-left": { "unless": ["position"] },
     "far-right": { "unless": ["position"] },
+    "find": { "unless": [{ "after": "/^\\s+spots?\\b/iu" }] },
+    "follow": { "unless": [{ "after": "/^\\s+up\\s+(?:appointments?|visits?|studies|questions?)\\b/iu" }] },
+    "get": { "unless": [{ "after": "/^\\s+out\\s+of\\s+jail\\s+(?:free\\s+)?cards?\\b/iu" }] },
+    "give": { "unless": [{ "after": "/^\\s+and\\s+take\\b/iu" }] },
+    "grab": { "unless": [{ "after": "/^\\s+bags?\\b/iu" }] },
     "iconic": { "unless": ["productName"] },
+    "imagine": { "unless": [{ "after": "/^\\s+Dragons\\b/u" }] },
+    "join": { "unless": [{ "after": "/^\\s+(?:operations?|conditions?|clauses?)\\b/iu" }] },
+    "keep": { "unless": [{ "after": "/^\\s+net\\b/iu" }] },
     "legendary": { "unless": ["productName"] },
+    "look": { "unless": [{ "after": "/^\\s+(?:books?|alikes?)\\b/iu" }] },
     "meet": {
-      "note": "\"Meet the Press\" is a programme, not a command.",
-      "unless": [{ "after": "/^\\s+the\\s+press\\b/iu" }]
+      "unless": [{ "after": "/^\\s+(?:the\\s+press|records?|results?)\\b/iu" }]
+    },
+    "miracle": {
+      "note": "Brands use the noun (\"Miracle-Gro\", \"Miracle Recovery cream\"); a capitalised \"Miraculous\" is a sentence start or a Title Case headline, so the product guard skips that alias.",
+      "unless": [
+        { "match": "/^(?:Miracle|MIRACLE)\\b/u", "nearby": "/\\b(?:xbox|playstation|pixel|iphone|galaxy|controller|gamepad|keyboard|mouse|laptop|phone|model|series|edition|package|trim|brand|product|album|film|show|team|unit|magazine|newspaper|records|studios)\\b/iu" },
+        { "match": "/^(?:Miracle|MIRACLE)\\b/u", "textBefore": "/\\b[A-Z][\\p{L}\\d-]+\\s+$/u" }
+      ]
     },
     "must": {
       "note": "\"must-have\" and \"must-see\" are hype; \"a must\" is a noun.",
@@ -39,26 +64,7 @@
       "note": "\"the need to protect\" is a noun; only the verb is a modal.",
       "unless": [{ "before": "/\\b(?:the|a|an|their|his|her|its|our|your|my)\\s+$/iu" }]
     },
-    "think": {
-      "unless": [{ "after": "/^\\s+tanks?\\b/iu" }]
-    },
-    "us": {
-      "note": "\"US officials\", \"US-led\": the country, written in capitals, unless the text around it is in capitals too.",
-      "unless": [
-        { "match": "/^US$/u", "before": "/^(?![\\s\\S]*[A-Z]{2,}\\s+$)/u", "after": "/^(?!\\s+[A-Z]{2,}\\b)/u" }
-      ]
-    },
-    "watch": {
-      "note": "The noun, as in \"Watch brand Rolex\" or \"Watch list\".",
-      "unless": [{ "after": "/^\\s+(?:brands?|makers?|straps?|faces?|dealers?|industry|company|sales|list|dog)\\b/iu" }]
-    },
-    "miracle": {
-      "note": "Brands use the noun (\"Miracle-Gro\", \"Miracle Recovery cream\"); a capitalised \"Miraculous\" is a sentence start or a Title Case headline, so the product guard skips that alias.",
-      "unless": [
-        { "match": "/^(?:Miracle|MIRACLE)\\b/u", "nearby": "/\\b(?:xbox|playstation|pixel|iphone|galaxy|controller|gamepad|keyboard|mouse|laptop|phone|model|series|edition|package|trim|brand|product|album|film|show|team|unit|magazine|newspaper|records|studios)\\b/iu" },
-        { "match": "/^(?:Miracle|MIRACLE)\\b/u", "textBefore": "/\\b[A-Z][\\p{L}\\d-]+\\s+$/u" }
-      ]
-    },
+    "picture": { "unless": [{ "after": "/^\\s+(?:frames?|credits?|captions?|quality|books?|postcards?)\\b/iu" }] },
     "revolutionary": {
       "unless": [
         { "after": "/^\\s*(?:guards?|war|army|front|committee|party)\\b/iu" }
@@ -76,6 +82,7 @@
         { "after": "/^\\s*service\\b/iu" }
       ]
     },
+    "see": { "unless": [{ "after": "/^\\s+all\\s+(?:columnists|authors|contributors|articles|stories|results|comments)\\s*$/iu" }] },
     "severe": {
       "unless": [
         { "after": "/^\\s*(?:(?:storms?|thunderstorms?|weather|drought|flooding|turbulence|winds?)\\b|allerg)/iu" }
@@ -87,7 +94,16 @@
         { "after": "/^\\s*(?:gloves?|therapy|absorbers?|wave|collars?)\\b/iu" }
       ]
     },
+    "spot": { "unless": [{ "after": "/^\\s+(?:prices?|markets?|rates?|welds?|checks?)\\b/iu" }] },
+    "start": { "unless": [{ "after": "/^\\s+(?:dates?|times?|lines?|menus?|buttons?)\\b/iu" }] },
+    "stay": { "unless": [{ "after": "/^\\s+orders?\\b/iu" }] },
     "superstar": { "unless": ["productName"] },
+    "take": { "unless": [{ "after": "/^\\s+home\\s+pay\\b/iu" }] },
+    "tell": { "unless": [{ "after": "/^\\s+tale\\s+signs?\\b/iu" }] },
+    "think": {
+      "unless": [{ "after": "/^\\s+tanks?\\b/iu" }]
+    },
+    "try": { "unless": [{ "after": "/^\\s+(?:lines?|scorers?|scoring)\\b/iu" }] },
     "under fire": {
       "note": "Only the literal sense: forces or vessels under fire, fire from armed attackers or weapons, or a combat context. \"Came under fire from critics\" is what the rule is for.",
       "unless": [
@@ -95,6 +111,17 @@
         { "after": "/^\\s*from\\s+(?:[\\w'’-]+\\s+){0,2}(?:gunmen|snipers?|rebels|militants?|insurgents|militia(?:s|men)?|fighters|terrorists|jihadists|troops|soldiers|forces|army|artillery|rockets?|missiles?|mortars?|drones?|tanks?|warships?|enemy)\\b/iu" },
         { "nearby": "/\\b(?:gunfire|gunmen|shots were fired|shelling|snipers?|artillery|ambush(?:ed)?)\\b/iu" }
       ]
+    },
+    "us": {
+      "note": "\"US officials\", \"US-led\": the country, written in capitals, unless the text around it is in capitals too.",
+      "unless": [
+        { "match": "/^US$/u", "before": "/^(?![\\s\\S]*[A-Z]{2,}\\s+$)/u", "after": "/^(?!\\s+[A-Z]{2,}\\b)/u" }
+      ]
+    },
+    "wait": { "unless": [{ "after": "/^\\s+(?:times?|lists?|staff)\\b/iu" }] },
+    "watch": {
+      "note": "The noun, as in \"Watch brand Rolex\" or \"Watch list\".",
+      "unless": [{ "after": "/^\\s+(?:brands?|makers?|straps?|faces?|dealers?|industry|company|sales|list|dog)\\b/iu" }]
     },
     "wild": {
       "unless": [
@@ -106,12 +133,7 @@
   "shared": {
     "quotedSpeech": {
       "note": "Words inside quotation marks that are still open are someone's speech, not the writer's voice.",
-      "unless": [
-        { "textBefore": "/“[^”]*$/u" },
-        { "textBefore": "/‘[^’]*$/u" },
-        { "textBefore": "/(?:^|[\\s(])'[^']*$/u" },
-        { "textBefore": "/^(?:[^\"]*\"[^\"]*\")*[^\"]*\"[^\"]*$/u" }
-      ]
+      "unless": [{ "openQuotes": "/[“‘'\"]/u" }]
     },
     "position": {
       "note": "Position words: \"far right corner\", \"pictured at far left\", \"(far right)\".",

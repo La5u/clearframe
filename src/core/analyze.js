@@ -198,8 +198,13 @@ export function createAnalyzer({ index }) {
     const quotes = contextual.filter(match => match.termId === QUOTED_WORDING_ID);
     const overlaps = (a, b) => a.start < b.end && b.start < a.end;
     const matches = findLexicalMatches(text, context, settings).filter(match => !quotes.some(quote => WORD_DEVICE_TYPES.has(getTermById(match.termId).type) && overlaps(quote, match)));
-    const patterns = contextual.filter(match => !NEW_STRUCTURAL.has(getTermById(match.termId).type)
-      || ![...matches, ...allCaps].some(other => overlaps(other, match) && !WORD_DEVICE_TYPES.has(getTermById(other.termId)?.type)));
+    const occupied = [...matches, ...allCaps].filter(match => !WORD_DEVICE_TYPES.has(getTermById(match.termId)?.type)).sort((a, b) => a.start - b.start);
+    let nextOccupied = 0;
+    const patterns = contextual.sort((a, b) => a.start - b.start).filter(match => {
+      if (!NEW_STRUCTURAL.has(getTermById(match.termId).type)) return true;
+      while (nextOccupied < occupied.length && occupied[nextOccupied].end <= match.start) nextOccupied++;
+      return nextOccupied === occupied.length || occupied[nextOccupied].start >= match.end;
+    });
     const combined = resolveMatchGroups([...matches, ...allCaps, ...patterns]);
     let cursor = 0, displayText = '';
     const entries = [];

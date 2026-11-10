@@ -1,4 +1,4 @@
-# newssite.html mode=reword highlights=390
+# newssite.html mode=reword highlights=389
 clickbait | [EXCLUSIVE]Expats scared to speak out abo
 fear | 'safest place on Earth' - as [frightened] holidaymakers scramble for fl
 negative-framing-medium | thousands of ordinary Britons [desperate] to get home. While the United
@@ -74,7 +74,6 @@ all-caps-underline | share Was it [really] a French Jim Carrey who accep
 authority | Bosses and [experts say] Labour's national insurance h
 reveal-underline | ideo that still haunts me and [what's] lurking in the internet's mos
 clickbait-underline | h Prince Andrew and his three [surprising] requests, day I had to ban hi
-modality-medium | ee surprising requests, day I [had to] ban him from an event in case
 clickbait | [EXCLUSIVE]Distasteful truth about arroga
 direct-address-medium | f a huge fortune while giving [you] tips that will never make you
 direct-address-medium | you tips that will never make [you] rich... and betrayal he's des

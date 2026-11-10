@@ -1,4 +1,4 @@
-# newssite2.html mode=reword highlights=70
+# newssite2.html mode=reword highlights=69
 imperative-medium | sible Coup”, Peter Schweizer. [LISTEN] NOW
 imperative-medium | hop smarter with Post Wanted. [SIGN UP] NOW
 imperative-medium | odcast. New episodes Mon-Fri. [LISTEN] NOW
@@ -68,7 +68,6 @@ direct-address-medium | Bizarre wellness fads [you] forgot about — and what we
 reveal | for Harry and Meghan as it’s [revealed] their movie projects are in l
 clickbait | firing – lawyer claims he has [bombshell] texts: report
 distancing-medium | ho made JFK Jr. jealous — and [allegedly] got her pregnant
-imperative-medium | [See] All Columnists
 # changed text nodes=3
 ~ ’ in station parking lot will [finally => now] melt
 ~ thrie case solved — as DNA is [finally => now] matched

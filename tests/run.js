@@ -23,6 +23,7 @@ import { createLexicalFilter } from '../src/core/context-filter.js';
 import { recoverOriginalText } from '../src/core/restore.js';
 import { createAnalyzer } from '../src/core/analyze.js';
 import { assertSourcesShippable } from '../tools/source-policy.js';
+import { candidateConfidence, uniqueRecordIds } from '../tools/rule-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -61,6 +62,48 @@ assert.strictEqual(recoverOriginalText(removedNode, 'A  twist ends. Update.'), '
 const { analyze } = createAnalyzer({ index });
 const ANALYZE_SETTINGS = { highlight: normalizeSettings({}), reword: normalizeSettings({ replaceTerms: true }), remove: normalizeSettings({ removeTerms: true }) };
 const PUBLICATION = { pageContext: 'publication' };
+// Long nodes must stay within the scanner's responsiveness budget (best of three).
+const performanceSettings = normalizeSettings({ sensitivity: 'all' });
+for (const [phrase, repeats, expected] of /** @type {Array<[string, number, number]>} */ ([
+  ['We must go. ', 1700, 1700], ['a, ', 7000, 0], ['no jobs, no homes and no hope. ', 650, 650],
+])) {
+  const text = phrase.repeat(repeats);
+  let best = Infinity;
+  for (let run = 0; run < 3; run++) {
+    const start = performance.now();
+    const plan = analyze(text, PUBLICATION, performanceSettings);
+    best = Math.min(best, performance.now() - start);
+    assert.strictEqual(plan.displayText, text);
+    assert.strictEqual(plan.entries.length, expected, `long text detections: ${phrase}`);
+  }
+  assert.ok(best <= 60, `linear analysis: ${JSON.stringify(phrase)} × ${repeats} took ${best.toFixed(1)} ms (budget 60 ms)`);
+  console.log(`linear analysis ${JSON.stringify(phrase)} × ${repeats}: ${best.toFixed(1)} ms`);
+}
+
+// Open-quote state preserves the old prefix regexes, including apostrophes and odd whitespace.
+const speechPatterns = [/“[^”]*$/u, /‘[^’]*$/u, /(?:^|[\s(])'[^']*$/u, /^(?:[^"]*"[^"]*")*[^"]*"[^"]*$/u];
+for (const text of [
+  'We must go. “We must go.” We must go.',
+  `He said 'we can't go' and "we must go".`,
+  `‘We’re ready,’ she said. (‘We must go.’)`,
+  `“outer “inner” after” 'one' 'two' "one" "two`,
+  `We\n\t 'must' go.\u00a0\u00a0"We must go".`,
+]) {
+  for (const start of [...text].map((_, i) => i).reverse()) {
+    const before = text.slice(0, start).replace(/\s+/g, ' ');
+    assert.strictEqual(shouldKeepLexicalMatch(index.termsById.we, text[start], text, PUBLICATION, start),
+      !speechPatterns.some(pattern => pattern.test(before)), `quote state at ${start}: ${text}`);
+  }
+}
+
+for (const [precision, judged, confidence] of /** @type {Array<[number, number, string]>} */ ([
+  [1, 1, 'contextual'], [1, 5, 'contextual'], [0.75, 6, 'medium'],
+  [1, 7, 'medium'], [0.9, 8, 'high'], [0.75, 8, 'medium'], [0.5, 8, 'reject'],
+])) assert.strictEqual(candidateConfidence(precision, judged), confidence, `mining confidence: ${precision} on ${judged} judgments`);
+assert.strictEqual(candidateConfidence(0.6, 12, 4, 0.75), 'contextual', 'headline evidence can rescue contextual candidates');
+const collisionRecords = ['llm-shake-up', 'llm-shake-up', 'llm-shake-up-2', 'llm-shake-up'].map(id => ({ id }));
+uniqueRecordIds(collisionRecords, ['llm-shake-up']);
+assert.deepStrictEqual(collisionRecords.map(record => record.id), ['llm-shake-up-3', 'llm-shake-up-4', 'llm-shake-up-2', 'llm-shake-up-5'], 'mining IDs avoid reserved IDs and natural suffix collisions');
 /** @type {Array<[string, string, object, string, string[]]>} */
 const ANALYZE_CASES = [
   ['The committee met on Tuesday.', 'reword', PUBLICATION, 'The committee met on Tuesday.', []],
@@ -259,7 +302,7 @@ assert.ok(!findContextualMatches('The mistakes you are making', { headline: true
 const DEVICE_CASES = [
   ['imperative', 'Find out why prices rise', { headline: true }, ['Find out']],
   ['imperative', 'Imagine a city without cars', { headline: true }, ['Imagine']],
-  ["imperative", "Don't miss the final", { headline: true }, ["Don't miss"]],
+  ['imperative', 'Don\'t miss the final', { headline: true }, ['Don\'t miss']],
   ['imperative', 'BREAKING: Get ready for snow', { headline: true }, ['Get']],
   ['imperative', 'Read on. See inside for details', { headline: true }, ['Read on', 'See']],
   ['imperative', 'Watch brand Rolex unveils a new model', { headline: true }, []],
@@ -270,6 +313,78 @@ const DEVICE_CASES = [
   ['imperative', '"Find out more," the minister said', { headline: true }, []],
   ['imperative', 'Fans find out the truth', { headline: true }, []],
   ['imperative', 'Get ready for snow', { headline: true, conversational: true }, []],
+  ['imperative', 'Come clean Hilary Duff gets wet and wild', { headline: true }, []],
+  ['imperative', 'Come rain or shine, the festival continues', { headline: true }, []],
+  ['imperative', 'Come what may, the team returns', { headline: true }, []],
+  ['imperative', 'Act II opens tonight', { headline: true }, []],
+  ['imperative', 'Ask Amy answers readers', { headline: true }, []],
+  ['imperative', 'Buy orders rise', { headline: true }, []],
+  ['imperative', 'Click fraud costs advertisers millions', { headline: true }, []],
+  ['imperative', 'Discover card profits rise', { headline: true }, []],
+  ['imperative', 'Download speeds fall', { headline: true }, []],
+  ['imperative', 'Give and take defines the talks', { headline: true }, []],
+  ['imperative', 'Grab bag contains three prizes', { headline: true }, []],
+  ['imperative', 'Imagine Dragons announce tour', { headline: true }, []],
+  ['imperative', 'Join operation fails in database', { headline: true }, []],
+  ['imperative', 'Look alike contest returns', { headline: true }, []],
+  ['imperative', 'Meet results published', { headline: true }, []],
+  ['imperative', 'See All Columnists', { headline: true }, []],
+  ['imperative', 'See all articles', { headline: true }, []],
+  ['imperative', 'Start date announced', { headline: true }, []],
+  ['imperative', 'Stay order blocks demolition', { headline: true }, []],
+  ['imperative', 'Get out of jail free card sold', { headline: true }, []],
+  ['imperative', 'Keep net found on riverbank', { headline: true }, []],
+  ['imperative', 'Find spot recorded by archaeologists', { headline: true }, []],
+  ['imperative', 'Follow up appointments delayed', { headline: true }, []],
+  ['imperative', 'Picture quality improves', { headline: true }, []],
+  ['imperative', 'Spot prices rise', { headline: true }, []],
+  ['imperative', 'Wait times grow', { headline: true }, []],
+  ['imperative', 'Take home pay falls', { headline: true }, []],
+  ['imperative', 'Tell tale signs of wear', { headline: true }, []],
+  ['imperative', 'Try scorer injured', { headline: true }, []],
+  ['imperative', 'Watch brand Rolex unveils a model', { headline: true }, []],
+  ['imperative', 'Meet the Press returns', { headline: true }, []],
+  ['imperative', 'Think tank warns of cuts', { headline: true }, []],
+  ['imperative', 'Check: prices fall', { headline: true }, []],
+  ['imperative', 'Come to the meeting', { headline: true }, ['Come']],
+  ['imperative', 'Act responsibly', { headline: true }, ['Act']],
+  ['imperative', 'Ask your doctor', { headline: true }, ['Ask']],
+  ['imperative', 'Beware falling rocks', { headline: true }, ['Beware']],
+  ['imperative', 'Buy fresh bread', { headline: true }, ['Buy']],
+  ['imperative', 'Choose a candidate', { headline: true }, ['Choose']],
+  ['imperative', 'Click here for details', { headline: true }, ['Click']],
+  ['imperative', 'Consider the evidence', { headline: true }, ['Consider']],
+  ['imperative', 'Discover the truth', { headline: true }, ['Discover']],
+  ['imperative', 'Download the report', { headline: true }, ['Download']],
+  ['imperative', 'Enjoy the show', { headline: true }, ['Enjoy']],
+  ['imperative', 'Explore the city', { headline: true }, ['Explore']],
+  ['imperative', 'Find the answer', { headline: true }, ['Find']],
+  ['imperative', 'Follow the instructions', { headline: true }, ['Follow']],
+  ['imperative', 'Forget the rumours', { headline: true }, ['Forget']],
+  ['imperative', 'Get ready', { headline: true }, ['Get']],
+  ['imperative', 'Give generously', { headline: true }, ['Give']],
+  ['imperative', 'Grab a seat', { headline: true }, ['Grab']],
+  ['imperative', 'Imagine a better future', { headline: true }, ['Imagine']],
+  ['imperative', 'Join the club', { headline: true }, ['Join']],
+  ['imperative', 'Keep the receipt', { headline: true }, ['Keep']],
+  ['imperative', 'Learn the facts', { headline: true }, ['Learn']],
+  ['imperative', 'Listen carefully', { headline: true }, ['Listen']],
+  ['imperative', 'Look closely', { headline: true }, ['Look']],
+  ['imperative', 'Meet the candidates', { headline: true }, ['Meet']],
+  ['imperative', 'Remember the victims', { headline: true }, ['Remember']],
+  ['imperative', 'See the difference', { headline: true }, ['See']],
+  ['imperative', 'Start saving today', { headline: true }, ['Start']],
+  ['imperative', 'Stay safe', { headline: true }, ['Stay']],
+  ['imperative', 'Take a look', { headline: true }, ['Take']],
+  ['imperative', 'Tell the truth', { headline: true }, ['Tell']],
+  ['imperative', 'Think carefully', { headline: true }, ['Think']],
+  ['imperative', 'Try this recipe', { headline: true }, ['Try']],
+  ['imperative', 'Wait for the signal', { headline: true }, ['Wait']],
+  ['imperative', 'Watch the video', { headline: true }, ['Watch']],
+  ['imperative', 'Enter the competition', { headline: true }, ['Enter']],
+  ['imperative', 'Subscribe today', { headline: true }, ['Subscribe']],
+  ['imperative', 'Spot the difference', { headline: true }, ['Spot']],
+  ['imperative', 'Picture a better future', { headline: true }, ['Picture']],
   ['direct-address', 'How you can save £50', { headline: true }, ['you']],
   ['direct-address', 'Your pension is at risk', { headline: true }, ['Your']],
   ['direct-address', "What you'll need to know", { headline: true }, ["you'll"]],
@@ -293,6 +408,9 @@ const DEVICE_CASES = [
   ['modality', 'A must-have bag and a must-see film', { headline: true }, []],
   ['modality', 'The cinema is a must for fans', { headline: true }, []],
   ['modality', 'The need to protect children is clear', { headline: true }, []],
+  ['modality', 'The Post had to flee during the airstrike', { headline: true }, []],
+  ['modality', 'The day I had to ban him', {}, []],
+  ['modality', 'We have to act. She has to go. They need to prepare.', { headline: true }, ['have to', 'has to', 'need to']],
   ['modality', 'Add mustard and pass the shoulders', { headline: true }, []],
   ['tricolon', 'He offered blood, sweat and tears.', {}, ['blood, sweat and tears']],
   ['tricolon', 'Faster, cheaper and safer.', {}, ['Faster, cheaper and safer']],
@@ -324,6 +442,8 @@ for (const [type, text, context, wordings] of DEVICE_CASES) {
 }
 // Default level: word devices only in headlines, anaphora yes, tricolon only at "everything".
 const standardTypes = (text, context) => analyze(text, { ...PUBLICATION, ...context }, normalizeSettings({})).entries.map(entry => entry.term.type);
+assert.deepStrictEqual(standardTypes('Come clean about the payments', { headline: true }), ['imperative']);
+assert.ok(!standardTypes('Come clean Hilary Duff gets wet and wild', { headline: true }).includes('imperative'));
 assert.deepStrictEqual(standardTypes('You must act', { headline: true }), ['direct-address', 'modality']);
 assert.deepStrictEqual(standardTypes('You must act', {}), []);
 assert.deepStrictEqual(standardTypes('We will fight on the beaches. We will fight in the hills.', {}), ['anaphora', 'anaphora']);
@@ -458,6 +578,7 @@ const EXCEPTION_CASES = [
   ['elite', 'Xbox Elite controller leaks', false], ['elite', 'Hasbro Elite figures', false], ['elite', 'An elite athlete', false], ['elite', 'The wealthy elite', true],
   ['legendary', 'Marvel Legendary series', false], ['legendary', 'Her legendary performance', true],
   ['miracle', 'Scotts Miracle cream brand', false], ['miracle', 'A miracle cure', true], ['miracle', 'Miraculous comeback for the team', true], ['miracle', 'Doctors Hail Miraculous Escape', true],
+  ['come', 'Come clean Hilary Duff gets wet and wild', false],
   ['meet', 'Meet the Press returns', false], ['meet', 'Meet the maniacs who love middle seats', true],
   ['watch', 'Watch brand Rolex unveils a model', false], ['watch', 'Watch the moment he scores', true],
   ['think', 'Think tank warns of cuts', false], ['think', 'Think hard, Britain', true],

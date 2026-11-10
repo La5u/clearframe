@@ -1,4 +1,4 @@
-# newssite3.html mode=reword highlights=264
+# newssite3.html mode=reword highlights=263
 conflict | t TWO DAYS' worth stored up - [sparking] fears of a supply shortage as
 authority | for just 1.5 days of demand, [according to] new data published by Nationa
 aggression | war: Foreign Secretary Cooper [blasts] president's 'diplomacy throug
@@ -71,7 +71,6 @@ all-caps-underline | ith 'zombie' drugs as up to a [quarter] of e-cigarettes con
 negative-framing | [Tragedy] as boy, 7, is killed after be
 negative-framing | share [Tragedy] as boy, 7, is killed after be
 clickbait-underline | h Prince Andrew and his three [surprising] requests, day I had to ban hi
-modality-medium | ee surprising requests, day I [had to] ban him from an event in case
 clickbait | [EXCLUSIVE]Distasteful truth about arroga
 direct-address-medium | f a huge fortune while giving [you] tips that will never make you
 direct-address-medium | you tips that will never make [you] rich... and betrayal he's des

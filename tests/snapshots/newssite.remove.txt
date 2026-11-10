@@ -1,4 +1,4 @@
-# newssite.html mode=remove highlights=333
+# newssite.html mode=remove highlights=332
 fear | 'safest place on Earth' - as [frightened] holidaymakers scramble for fl
 negative-framing-medium | thousands of ordinary Britons [desperate] to get home. While the United
 conflict | Protestors [clash] with mourners at candlelit vi
@@ -65,7 +65,6 @@ hype | ue francaise when he accepted [a prestigious] film award in Paris on Thur
 all-caps | share Was it [REALLY] a French Jim Carrey who accep
 authority | Bosses and [experts say] Labour's national insurance h
 clickbait | h Prince Andrew and his three [jaw-dropping] requests, day I had to ban hi
-modality-medium | jaw-dropping requests, day I [had to] ban him from an event in case
 direct-address-medium | f a huge fortune while giving [you] tips that will never make you
 direct-address-medium | you tips that will never make [you] rich... and betrayal he's des
 negative-framing-medium | you rich... and betrayal he's [desperate] to hide

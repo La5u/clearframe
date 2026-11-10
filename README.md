@@ -157,7 +157,7 @@ To approve candidates, read `research/reports/llm-mining-review.md`, then in
 `reword.reviewed` to `true` (or delete the `reword`), move any drafted `exception` into
 `data/terms/exceptions.json` (keyed by the phrase, then delete it from the record), and
 keep partisan terms out unless they come with a mirror in `data/mirror-pairs.json`.
-`confidence` is `high` (>=90% on >=8 judged uses), `medium` (>=75%) or `contextual`
+`confidence` is `high` (>=90% on >=8 judged uses), `medium` (>=75% on >=6 judged uses) or `contextual`
 (headlines only); precision is a model-judged estimate on a small sample.
 
 ## Regression snapshots and accuracy

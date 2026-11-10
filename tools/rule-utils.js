@@ -95,3 +95,24 @@ export function approvedRuleTerms(root) {
     contexts: Array.isArray(record.contexts) ? record.contexts : [],
   }));
 }
+
+export function candidateConfidence(p, n, headlines = 0, hp = 0) {
+  return p >= 0.9 && n >= 8 ? 'high' : p >= 0.75 && n >= 6 ? 'medium'
+    : p >= 0.75 || (headlines >= 4 && hp >= 0.75) ? 'contextual' : 'reject';
+}
+
+export function uniqueRecordIds(records, reserved = []) {
+  const used = new Set([...reserved, ...records.map(record => record.id)]);
+  const seen = new Set(reserved);
+  for (const record of records) {
+    const base = record.id;
+    if (seen.has(base)) {
+      let suffix = 2;
+      while (used.has(`${base}-${suffix}`)) suffix++;
+      record.id = `${base}-${suffix}`;
+      used.add(record.id);
+    }
+    seen.add(record.id);
+  }
+}
+

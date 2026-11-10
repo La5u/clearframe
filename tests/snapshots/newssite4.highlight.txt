@@ -1,4 +1,4 @@
-# newssite4.html mode=highlight highlights=266
+# newssite4.html mode=highlight highlights=265
 clickbait | [EXCLUSIVE]The video we've ALL been waiti
 all-caps | EXCLUSIVEThe video we've [ALL] been waiting for: Moment wedd
 conflict | Moment wedding is thrown into [chaos] after sister-in-law chucked b
@@ -128,7 +128,6 @@ fear-medium | EXCLUSIVE[Heartbroken] Australian woman discloses ho
 fear-medium | A [heartbroken] Australian woman returning to
 clickbait | [EXCLUSIVE]Five years ago, his painted fa
 negative-framing-medium | opened up about her mother's [tragic] death when she was a child.
-modality-medium | herine Ryan discloses why she [had to] cancel her facelift with Kris
 negative-framing | rait of Hormuz as the Iranian [regime] mocks his 'meaningless' cease
 direct-address-medium | Why [you] should never copy viral pimpl
 modality-medium | Why you [should] never copy viral pimple-poppi

@@ -4,7 +4,25 @@
 // A type can carry the same two lists for all its terms. Yes/no tests, then
 // text windows around a match:
 export const CLAUSE_FLAGS = ['headline', 'conversational'];
-export const CLAUSE_WINDOWS = ['before', 'after', 'match', 'nearby', 'textBefore'];
+export const CLAUSE_WINDOWS = ['before', 'after', 'match', 'nearby', 'textBefore', 'openQuotes'];
+
+const QUOTE_STATES = Array.from({ length: 16 }, (_, bits) => ['“', '‘', "'", '"'].filter((_, i) => bits & (1 << i)).join(''));
+
+function quoteStates(text) {
+  const states = new Uint8Array(text.length + 1);
+  let bits = 0;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '“') bits |= 1;
+    else if (ch === '”') bits &= ~1;
+    else if (ch === '‘') bits |= 2;
+    else if (ch === '’') bits &= ~2;
+    else if (ch === "'") bits = (i === 0 || /[\s(]/u.test(text[i - 1])) ? bits | 4 : bits & ~4;
+    else if (ch === '"') bits ^= 8;
+    states[i + 1] = bits;
+  }
+  return states;
+}
 
 // Patterns are written as JS regex literals ("/.../iu") so the flags stay visible.
 export function parseRulePattern(value) {
@@ -37,7 +55,7 @@ export function createLexicalFilter({ terms = {}, only = {}, shared = {}, contex
 
   // Most text has single plain spaces, which `flat` would leave as they are;
   // knowing that once per text keeps long texts with many matches linear.
-  let checkedText = null, plainText = false;
+  let checkedText = null, plainText = false, quotes = null;
 
   function shouldKeepLexicalMatch(term, sourceText, fullText, { headline = false, conversational = false, pageContext = 'publication' } = {}, start = fullText.indexOf(sourceText)) {
     const end = start + sourceText.length;
@@ -45,6 +63,7 @@ export function createLexicalFilter({ terms = {}, only = {}, shared = {}, contex
     // written with single spaces, so source whitespace runs read as one space.
     if (fullText !== checkedText) {
       checkedText = fullText; plainText = !/[^\S ]| {2}/.test(fullText);
+      quotes = null;
     }
     const flat = text => plainText ? text : text.replace(/\s+/g, ' ');
     const view = {
@@ -55,6 +74,8 @@ export function createLexicalFilter({ terms = {}, only = {}, shared = {}, contex
       get after() { return flat(fullText.slice(end, end + 40)); },
       get nearby() { return flat(fullText.slice(Math.max(0, start - 40), end + 40)); },
       get textBefore() { return flat(fullText.slice(0, start)); },
+      // Prefix quote tests otherwise rescan the whole text for every word device.
+      get openQuotes() { return QUOTE_STATES[(quotes ||= quoteStates(fullText))[start]]; },
     };
     const unless = termClauses.get(term?.phrase || ''), rule = typeRules.get(term?.type), required = termOnly.get(term?.phrase || '');
     if (unless && matchesAny(unless, view)) return false;

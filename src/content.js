@@ -57,6 +57,7 @@ let hoverFrame = 0;
 let pendingHoverEvent = null;
 let hoverSwitchTimer = 0;
 let hoverSwitchRecord = null;
+let tooltipAnchor = null;
 const lastPointer = { x: 0, y: 0 };
 let pageObserver = null;
 let analysisTimer = 0;
@@ -651,6 +652,7 @@ function showTooltip(record, x, y) {
   tooltip.style.display = 'block';
   revealOriginalText(record);
   const rect = record.range.getBoundingClientRect();
+  tooltipAnchor = { record, left: rect.left, top: rect.top };
   const anchorLeft = Number.isFinite(rect.left) && rect.width > 0 ? rect.left : x;
   const anchorTop = Number.isFinite(rect.top) && rect.height > 0 ? rect.top : y;
   const anchorBottom = Number.isFinite(rect.bottom) && rect.height > 0 ? rect.bottom : y;
@@ -778,7 +780,13 @@ function handleScroll(event) {
   const target = event.target;
   const record = pinnedTooltipRecord || activeHover;
   const movesPage = target === document || target === document.documentElement || target === document.body;
-  if (movesPage || !record || (target instanceof Node && target.contains(record.node))) hideTooltip(true);
+  if (movesPage || !record || (target instanceof Node && target.contains(record.node))) {
+    // Scroll anchoring scrolls the page when content above changes size, but
+    // keeps the text in view where it was; that should not close the tooltip.
+    const rect = record?.range.getBoundingClientRect();
+    const moved = !rect || tooltipAnchor?.record !== record || Math.abs(rect.left - tooltipAnchor.left) > 1 || Math.abs(rect.top - tooltipAnchor.top) > 1;
+    if (moved) hideTooltip(true);
+  }
   hideSuggestion();
 }
 

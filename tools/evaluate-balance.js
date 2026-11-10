@@ -7,8 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { parseCsv, loadTerms } from '../src/core/term-utils.js';
-import { buildMatcher, findMatches } from '../src/core/matcher.js';
-import { createLexicalFilter } from '../src/core/context-filter.js';
+import { createAnalyzer } from '../src/core/analyze.js';
 import { approvedRuleTerms } from './rule-utils.js';
 import { assertSourcesAllowed, loadSourceRegistry } from './source-policy.js';
 
@@ -23,8 +22,9 @@ const [header, ...rows] = parseCsv(fs.readFileSync(input, 'utf8').replace(/^sep=
 const col = Object.fromEntries(header.map((name, index) => [name, index]));
 const SIDES = { LL: 'left', L: 'left', M: 'centre', R: 'right', RR: 'right' };
 const index = loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT));
-const shouldKeepLexicalMatch = createLexicalFilter(index.exceptions);
-const matcher = buildMatcher(index);
+const { findLexicalMatches } = createAnalyzer({ index });
+// Every type enabled: no settings turn any off.
+const ALL_TYPES = {};
 
 const stats = {};
 for (const row of rows) {
@@ -35,8 +35,7 @@ for (const row of rows) {
   bucket.mentions++;
   // Annotated mentions come from article bodies; apply the extension's own context rules.
   const context = { headline: false, pageContext: 'publication' };
-  const matches = findMatches(matcher, mention, index.termsById, index.regexTerms, () => true,
-    (termId, start, end) => shouldKeepLexicalMatch(index.termsById[termId], mention.slice(start, end), mention, context, start));
+  const matches = findLexicalMatches(mention, context, ALL_TYPES);
   if (matches.length) bucket.flagged++;
   // Below-high confidence renders faint; this rate counts only full-strength highlights.
   if (matches.some(match => (index.termsById[match.termId]?.confidence || 'high') === 'high')) bucket.flaggedHigh++;

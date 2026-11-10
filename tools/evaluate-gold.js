@@ -9,12 +9,8 @@ import fs from 'fs';
 import path from 'path';
 import { loadTerms } from '../src/core/term-utils.js';
 import { approvedRuleTerms } from './rule-utils.js';
-import { buildMatcher, findMatches } from '../src/core/matcher.js';
 import { DEFAULT_SETTINGS, normalizeSettings } from '../src/core/settings-utils.js';
-import { resolveMatchGroups } from '../src/core/match-plan.js';
-import { ALL_CAPS_TERM_ID, findAllCapsMatches } from '../src/core/all-caps.js';
-import { CONTEXTUAL_TERMS, findContextualMatches } from '../src/core/contextual.js';
-import { createLexicalFilter } from '../src/core/context-filter.js';
+import { createAnalyzer, getMostImportantType } from '../src/core/analyze.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const inputs = process.argv.slice(2).filter(arg => !arg.startsWith('--'));
@@ -22,35 +18,18 @@ const TYPES = Object.keys(JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'ty
 const allTypes = process.argv.includes('--all');
 const TOP = Number(process.argv.find(arg => arg.startsWith('--top='))?.slice(6)) || 10;
 
-// --- Mirror of processText() in src/content.js (highlight mode only). ---
-// content.js reads a bundled global and cannot be imported in Node; the
-// planned refactor moves this composition into src/core so both share it.
-// Keep in step with content.js until then: TYPE_PRIORITY, ALL_CAPS_TERM and
-// the order of detectors below are copied from it.
-const TYPE_PRIORITY = ['derogatory', 'aggression', 'fear', 'loaded', 'moral', 'dysphemism', 'clickbait', 'loaded-framing', 'unsourced', 'euphemism', 'passive', 'negative-framing', 'conflict', 'exaggeration', 'superlative', 'hype', 'authority', 'uncertainty', 'distancing', 'minimizing', 'all-caps', 'absolute', 'repetition', 'rhetorical-question', 'colloquialism', 'idiom', 'reveal', 'quote'];
-const ALL_CAPS_TERM = { phrase: 'caps emphasis', type: 'all-caps' };
 const index = loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT));
-const shouldKeepLexicalMatch = createLexicalFilter(index.exceptions);
 const settings = normalizeSettings(allTypes ? { types: Object.fromEntries(TYPES.map(type => [type, true])) } : DEFAULT_SETTINGS);
 const isEnabled = type => settings.types?.[type] !== false;
-const matcher = buildMatcher(index, term => isEnabled(term.type));
-const getTermById = id => index.termsById[id] || CONTEXTUAL_TERMS[id] || (id === ALL_CAPS_TERM_ID ? ALL_CAPS_TERM : null);
-const rank = type => (TYPE_PRIORITY.indexOf(type) + 1 || TYPE_PRIORITY.length + 1);
+const { analyze } = createAnalyzer({ index });
 
+// The content script's analysis in highlight mode, so offsets are into the original text.
 function detect(text, context) {
-  const matches = findMatches(matcher, text, index.termsById, index.regexTerms || [],
-    term => isEnabled(term.type),
-    (termId, start, end) => shouldKeepLexicalMatch(getTermById(termId), text.slice(start, end), text, context, start));
-  const allCaps = isEnabled(ALL_CAPS_TERM.type) && !context.capsLabel ? findAllCapsMatches(text) : [];
-  const contextual = findContextualMatches(text, context).filter(match => isEnabled(getTermById(match.termId)?.type));
-  return resolveMatchGroups([...matches, ...allCaps, ...contextual]).map(match => {
-    const terms = (match.termIds || [match.termId]).map(getTermById).filter(Boolean);
+  return analyze(text, context, settings).entries.map(({ start, end, terms }) => {
     const types = terms.map(term => term.type);
-    const type = types.reduce((best, item) => rank(item) < rank(best) ? item : best);
-    return { start: match.start, end: match.end, type, types, rule: terms.map(term => term.phrase).join(' + ') };
+    return { start, end, type: getMostImportantType(terms), types, rule: terms.map(term => term.phrase).join(' + ') };
   });
 }
-// --- End of mirror. ---
 
 const files = (inputs.length ? inputs : [path.join(ROOT, 'tests', 'gold')]).flatMap(input => fs.statSync(input).isDirectory()
   ? fs.readdirSync(input).filter(file => file.endsWith('.jsonl')).sort().map(file => path.join(input, file)) : [input]);

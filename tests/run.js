@@ -21,6 +21,7 @@ import { approvedRuleTerms } from '../tools/rule-utils.js';
 import { classifyPageContext, findContextualMatches } from '../src/core/contextual.js';
 import { createLexicalFilter } from '../src/core/context-filter.js';
 import { recoverOriginalText } from '../src/core/restore.js';
+import { createAnalyzer } from '../src/core/analyze.js';
 import { assertSourcesShippable } from '../tools/source-policy.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -53,6 +54,37 @@ assert.strictEqual(recoverOriginalText(rewrittenNode, 'Now: Boil trouble.'), 'No
 assert.strictEqual(recoverOriginalText(rewrittenNode, 'Boil big trouble.'), null);
 const removedNode = { originalText: 'A shocking twist ends.', displayedText: 'A  twist ends.', records: [{ startOffset: 2, endOffset: 2, sourceText: 'shocking', replacementText: '' }] };
 assert.strictEqual(recoverOriginalText(removedNode, 'A  twist ends. Update.'), 'A shocking twist ends. Update.');
+
+// The content script's per-text analysis: display text plus one entry per
+// detection as "source>replacement action highlightName". Mode is highlight,
+// reword (replaceTerms) or remove (removeTerms).
+const { analyze } = createAnalyzer({ index });
+const ANALYZE_SETTINGS = { highlight: normalizeSettings({}), reword: normalizeSettings({ replaceTerms: true }), remove: normalizeSettings({ removeTerms: true }) };
+const PUBLICATION = { pageContext: 'publication' };
+/** @type {Array<[string, string, object, string, string[]]>} */
+const ANALYZE_CASES = [
+  ['The committee met on Tuesday.', 'reword', PUBLICATION, 'The committee met on Tuesday.', []],
+  ['Meta axes 8,000 jobs.', 'highlight', PUBLICATION, 'Meta axes 8,000 jobs.', ['axes>axes highlighted clearframe-dysphemism']],
+  ['Meta axes 8,000 jobs.', 'reword', PUBLICATION, 'Meta cuts 8,000 jobs.', ['axes>cuts replaced clearframe-dysphemism-underline']],
+  ['EXCLUSIVE: Chilling details emerge.', 'remove', PUBLICATION, ':  details emerge.', ['EXCLUSIVE> removed null', 'Chilling> removed null']],
+  ['A SHOCKING twist.', 'reword', PUBLICATION, 'A shocking twist.', ['SHOCKING>shocking replaced clearframe-all-caps-underline']],
+  ['A SHOCKING twist.', 'highlight', { ...PUBLICATION, capsLabel: true }, 'A SHOCKING twist.', []],
+  // Same span: the lexical term decides, on caps-normalized wording.
+  ['The report was CHILLING.', 'reword', PUBLICATION, 'The report was chilling.', ['CHILLING>chilling replaced clearframe-fear']],
+  ['The report was CHILLING.', 'remove', PUBLICATION, 'The report was .', ['CHILLING> removed null']],
+  // A caps run wider than the lexical term is only caps-normalized, never removed.
+  ['This is CHILLING NEWS for everyone.', 'remove', PUBLICATION, 'This is CHILLING NEWS for everyone.', ['CHILLING NEWS>CHILLING NEWS highlighted clearframe-fear']],
+  ['This is CHILLING NEWS for everyone.', 'reword', PUBLICATION, 'This is chilling news for everyone.', ['CHILLING NEWS>chilling news replaced clearframe-fear']],
+  ['Is this the end of DEVASTATING cuts?', 'reword', { ...PUBLICATION, headline: true }, 'Is this the end of devastating cuts?', ['Is this the end of DEVASTATING cuts?>Is this the end of devastating cuts? replaced clearframe-clickbait']],
+  ['Is this the end of DEVASTATING cuts?', 'reword', { ...PUBLICATION, headline: true, preserveText: true }, 'Is this the end of DEVASTATING cuts?', ['Is this the end of DEVASTATING cuts?>Is this the end of DEVASTATING cuts? highlighted clearframe-clickbait']],
+];
+for (const [text, mode, context, displayText, entries] of ANALYZE_CASES) {
+  const plan = analyze(text, context, ANALYZE_SETTINGS[mode]);
+  assert.strictEqual(plan.displayText, displayText, `${mode}: ${text}`);
+  assert.deepStrictEqual(plan.entries.map(entry => `${entry.sourceText}>${entry.replacementText} ${entry.action} ${entry.highlightName}`), entries, `${mode}: ${text}`);
+  for (const entry of plan.entries) assert.strictEqual(plan.displayText.slice(entry.start, entry.end), entry.replacementText, `${mode}: ${text} offsets`);
+}
+assert.deepStrictEqual(analyze('Meta axes 8,000 jobs.', PUBLICATION, normalizeSettings({ replaceTerms: true, types: { dysphemism: false } })).entries, [], 'disabled types are not detected');
 
 function countMatches(html) {
   const text = extractText(html);

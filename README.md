@@ -140,9 +140,8 @@ Run it before and after any change to detection or rendering.
 `context` is `headline` or `body`, `page` is the page context (`publication`,
 `discussion`, `video`), `type` is a type from `data/type-labels.json`, and `text`
 on a span is a checked copy of the labelled wording; `note` is optional.
-`tools/evaluate-gold.js` runs the detection pipeline of `processText` in
-`src/content.js` on each block (mirrored in the tool until the refactor shares it)
-and reports exact and overlap precision, recall and F1, overall and per type,
+`tools/evaluate-gold.js` runs the content script's analyzer (`src/core/analyze.js`)
+on each block and reports exact and overlap precision, recall and F1, overall and per type,
 plus false positives by rule and misses by wording. Types that are off by
 default are left out unless `--all` is given.
 
@@ -171,6 +170,25 @@ Highlights or optional rewording
         ↓
 Original wording remains inspectable
 ```
+
+The content script is a pipeline of small modules (`src/content.js` is the
+entry point that loads settings and wires events and popup messages):
+
+- `content/observer.js` runs a full pass on load and a debounced pass over the
+  text nodes a `MutationObserver` saw the page change.
+- `content/scanner.js` finds the text nodes to analyze and gives each one its
+  element context (heading, link, caption, comment, protected text).
+- `core/analyze.js` (pure, also used by the evaluation tools) turns a text, its
+  context and the settings into a plan: the text to display and one entry per
+  detection with its action (highlighted, replaced, removed) and highlight name.
+- `content/store.js` writes the display text into the node, keeps one record
+  (with a live `Range`) per entry, restores original text, and holds the
+  per-term summary for the badge and popup.
+- `content/highlights.js` draws the records' ranges in the CSS Custom Highlight
+  registry and keeps the highlight stylesheet.
+- Beside the pipeline: `content/tooltip.js` (hover and pinned tooltip),
+  `content/reveal.js` (original wording under the pointer), `content/feedback.js`
+  (feedback buttons and suggestion panel), `content/settings.js` (current settings).
 
 The design should:
 

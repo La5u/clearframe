@@ -1,4 +1,4 @@
-# newssite3.html mode=remove highlights=217
+# newssite3.html mode=remove highlights=220
 conflict | t TWO DAYS' worth stored up - [sparking] fears of a supply shortage as
 authority | for just 1.5 days of demand, [according to] new data published by Nationa
 aggression | war: Foreign Secretary Cooper [blasts] president's 'diplomacy throug
@@ -57,6 +57,7 @@ derogatory | hion Week - nine months after [nepo baby] came out as transgender
 all-caps | ith 'zombie' drugs as up to a [QUARTER] of e-cigarettes confiscated i
 negative-framing | [Tragedy] as boy, 7, is killed after be
 negative-framing | share [Tragedy] as boy, 7, is killed after be
+loaded-framing-medium | BORIS JOHNSON: My [bizarre] tea with Prince Andrew and hi
 clickbait | h Prince Andrew and his three [jaw-dropping] requests, day I had to ban hi
 direct-address-medium | f a huge fortune while giving [you] tips that will never make you
 direct-address-medium | you tips that will never make [you] rich... and betrayal he's des
@@ -123,6 +124,7 @@ negative-framing-medium | A TikTok star mom has [tragically] died at 47 after su
 modality-medium | s Steve Borthwick and the RFU [must] answer after unforgivable Ita
 moral | One of the most [evil] child killers in history Ian
 hype | How [glamorous] nurse became embroiled in Tur
+negative-framing-medium | How glamorous nurse became [embroiled] in Turkish mafia murder plot
 all-caps | [WAR IN THE MIDDLE EAST]
 authority | who in the world: As military [experts warn] World War III has never been
 authority | ts' during his teenage years, [according to] royal author Tina Brown. Yet
@@ -201,6 +203,7 @@ moral | Grey's Anatomy star exposes '[brutal]' sacking that 'came out of no
 all-caps | er begging for an explanation [NINETEEN] times during exit meeting
 fear-medium | urbulent love life: From her '[horrendous]' split with a rugby player to
 dysphemism | U-turn on Christine Lampard's [axing] as she's parachuted back in t
+conflict-medium | backfires with animal welfare [backlash]
 all-caps | Ryan Gosling makes [VERY] rare public appearance with E
 all-caps | golden retriever Honey going [VERY] wrong
 hype-medium | Karren Brady, 56, looks [flawless] in glamorous Instagram snaps

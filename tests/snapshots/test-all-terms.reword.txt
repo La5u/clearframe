@@ -1,9 +1,10 @@
-# test-all-terms.html mode=reword highlights=90
+# test-all-terms.html mode=reword highlights=91
 repetition-underline | [repeatedly] | is not | alarming | alleged
 colloquialism-underline | repeatedly | [is not] | alarming | alleged | ambush
 distancing-medium | eatedly | is not | alarming | [alleged] | ambush | animal | apparentl
 uncertainty | | alleged | ambush | animal | [apparently] | attack | authorities say |
 authority | nimal | apparently | attack | [authorities say] | backlash | beast | best
+conflict-medium | | attack | authorities say | [backlash] | beast | best
 negative-framing | biggest | blast | [bloodbath] | bombshell | break | breakth
 hype | oodbath | bombshell | break | [breakthrough] | brutal | catastrophic | cha
 moral | hell | break | breakthrough | [brutal] | catastrophic | chaos | clas

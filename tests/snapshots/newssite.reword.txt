@@ -1,4 +1,4 @@
-# newssite.html mode=reword highlights=390
+# newssite.html mode=reword highlights=395
 clickbait | [EXCLUSIVE]Expats scared to speak out abo
 fear | 'safest place on Earth' - as [frightened] holidaymakers scramble for fl
 negative-framing-medium | thousands of ordinary Britons [desperate] to get home. While the United
@@ -54,6 +54,7 @@ reveal | e right person': Harry Styles [reveals] his five year plan to get mar
 idiom-medium | romance with Zoë Kravitz goes [from strength to strength]
 clickbait | [Shocking] moment Trump's Homeland Secur
 uncertainty-medium | er she is having sex with her [rumored] lover and trusted adviser.
+aggression-medium | Weight-loss jabs could [slash] the risk of alcohol, cigarett
 clickbait-underline | Why at 64 I [now] got married. We've been toget
 clickbait-underline | these are the two things that [now] made me walk down the aisle
 direct-address-medium | 10 chic home finds will make [your] space look instantly designer
@@ -64,6 +65,7 @@ uncertainty-medium | The Princess of Wales' [rumoured] favourite anti-ageing for
 clickbait-underline | ourite anti-ageing formula is [now] on sale in an amazing value s
 uncertainty-medium | SHOPPING: [Rumoured] to be a favourite of Catherin
 idiom-medium | es, this bee venom formula is [turning heads] across social media.
+aggression-medium | odial's £335 Mother's Day Kit [Slashed] to £125
 all-caps-underline | unches a new pushchair with a [genius] folding carrycot as parents h
 idiom-medium | d loved by royal families, is [turning heads] among city parents with its n
 direct-address-medium | brand is about to be all over [your] feed - and these are the piec
@@ -73,6 +75,7 @@ hype | ue francaise when he accepted [a prestigious] film award in Paris on Thur
 all-caps-underline | share Was it [really] a French Jim Carrey who accep
 authority | Bosses and [experts say] Labour's national insurance h
 reveal-underline | ideo that still haunts me and [what's] lurking in the internet's mos
+loaded-framing-medium | BORIS JOHNSON: My [bizarre] tea with Prince Andrew and hi
 clickbait-underline | h Prince Andrew and his three [surprising] requests, day I had to ban hi
 clickbait | [EXCLUSIVE]Distasteful truth about arroga
 direct-address-medium | f a huge fortune while giving [you] tips that will never make you
@@ -157,6 +160,7 @@ reveal | ill you, concerning new study [reveals]: It raises blood pressure and
 reveal | usband Lee Andrews legal in a [secret] second Dubai ceremony after r
 reveal | t second Dubai ceremony after [revealing] she hasn't signed a pre-nup
 hype-underline | How [stylish] nurse became embroiled in Tur
+negative-framing-medium | How stylish nurse became [embroiled] in Turkish mafia murder plot
 clickbait | [EXCLUSIVE]My son the serial killer: The
 moral | erial killer: The murderer so [evil] his own father called him a '
 fear | Steve Wright's father gives a [chilling] insight into the warped mind
@@ -317,6 +321,7 @@ uncertainty-medium | Week with daughter, 16, amid [rumors] he is back with Megan
 uncertainty-medium | daughter Casie amid Megan Fox [rumors]
 clickbait | - and it comes in a range of [stunning] colours
 reveal | A frequent traveller [reveals] her ultimate packing hacks (i
+negative-framing-medium | Cantlie was kidnapped by the [infamous] Beatles and appeared in propa
 rhetorical-question-medium | ppeared in propaganda videos. [Was he a hero or traitor - and could he still be alive?]
 direct-address-medium | test. Here are the top models [you] can rely on for powerful, fus
 dysphemism-underline | Sky Sports [cut] pundit after she came out as

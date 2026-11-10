@@ -1,4 +1,4 @@
-# newssite10th.html mode=remove highlights=290
+# newssite10th.html mode=remove highlights=299
 hype-medium | ft my 'meno-middle'... Then a [miracle] method banished it in just fo
 negative-framing-medium | [Desperate] BBC bosses save Katya Jones a
 negative-framing | s save Katya Jones amid pros '[bloodbath]'
@@ -73,6 +73,9 @@ idiom-medium | share Zara Tindall [turns heads] in elegant skirt suit at Chel
 hype | race for best-dressed is on! [Glamorous] Cheltenham revellers don thei
 hype | al has kicked off in style as [glamorous] racegoers clad in tweed and f
 reveal | prices at Cheltenham Festival [revealed]: Guinness slashed for first t
+aggression-medium | m Festival revealed: Guinness [slashed] for first time since 2022 - a
+negative-framing-medium | nd James Watts' beer business [woes]
+negative-framing-medium | am after Jame Watts' business [woes]
 distancing-medium | oercive behaviour. Trybus had [allegedly] bragged about how 'easy' it w
 aggression-medium | Mother's [fury] after police officer who took
 aggression-medium | share Mum's [fury] after PC who took selfies at
@@ -84,6 +87,7 @@ hype | ointed Erika Kirk to serve on [an influential] board which oversees the U
 direct-address-medium | ays 'there's no-one there for [you] when you crash' in latest swi
 direct-address-medium | e's no-one there for you when [you] crash' in latest swipe at the
 all-caps | [WAR IN THE MIDDLE EAST]
+loaded-framing-medium | ng ruler 'who protects us' in [bizarre] identical TikToks
 reveal | Iran [reveals] stealthier 'kamikaze' drone b
 moral | [Ruthless] new Ayatollah 'even more brut
 moral | less new Ayatollah 'even more [brutal] than his slain father': How h
@@ -167,16 +171,19 @@ conflict | before they endured a 30-year [feud]
 hype | with six nods - including a '[breakthrough]' prize for Owen Cooper, 16
 negative-framing | drama as they share the same [furious] complaint after just one epis
 idiom-medium | Zara Tindall [turns heads] in elegant navy skirt suit on
+negative-framing-medium | James Watts' Brewdog business [woes]
 all-caps | Timothee Chalamet [ROASTED] by Jeopardy! with 'ballet and
 fear-medium | return to the UK amid 'rising [panic]'
 fear | Ashley James [horrified] as fake This Morning intervie
 moral | d Ozark creators team up for '[ruthless]' new Netflix period drama ful
 moral | a full of 'forbidden love and [brutal] war'
 loaded | of For The Love Of Dogs after [vicious] backlash to Alison Hammond ta
+conflict-medium | he Love Of Dogs after vicious [backlash] to Alison Hammond taking over
 hype-medium | uller bust' swimwear range in [sizzling] Jamaica holiday snaps
 dysphemism | Bychkova's Strictly sacking: [Axe] had nothing to do with ageism
 idiom-medium | Paris Hilton [turns heads] in pastel pink as she rings t
 aggression-medium | Harry Styles fans are left '[fuming]' as they criticise screening
+conflict-medium | n on Timothee Chalamet ballet [backlash] and quips he 'doesn't need to
 moral | an' after her offensive tweet [scandal]
 dysphemism | BBC 'may [axe] even more Strictly profession
 conflict | irthday tribute to her mum as [feud] with estranged son Brooklyn r
@@ -185,8 +192,10 @@ all-caps | ink claws into 'worst episode [EVER]' as they take aim at BBC scri
 dysphemism | show fronted by huge TV stars [AXED] after being trounced by The T
 all-caps | rns 62, he's bracing for some [VERY] 'intimate insights' in a tell
 all-caps | How Lewis Hamilton [REALLY] feels about Kim Kardashian
+negative-framing-medium | about Joe Swash and his money [woes] as insiders tell OLIVIA KEMP
 all-caps | ms she won't return to TV for [SEVEN WEEKS] in emotional health update
 aggression-medium | ctful' Timothée Chalamet amid [fury] over 'no one cares about' ope
+conflict-medium | Rachel Zegler addresses [backlash] to woke Snow White reboot and
 negative-framing | after humiliating box office [disaster]
 derogatory | Iconic [nepo baby] daughter of Hollywood royalty
 hype | a pinstriped suit as he joins [glamorous] co-stars Sandra Hüller and Pr

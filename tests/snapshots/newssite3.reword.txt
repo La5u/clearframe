@@ -1,4 +1,4 @@
-# newssite3.html mode=reword highlights=263
+# newssite3.html mode=reword highlights=266
 conflict | t TWO DAYS' worth stored up - [sparking] fears of a supply shortage as
 authority | for just 1.5 days of demand, [according to] new data published by Nationa
 aggression | war: Foreign Secretary Cooper [blasts] president's 'diplomacy throug
@@ -70,6 +70,7 @@ derogatory | hion Week - nine months after [nepo baby] came out as transgender
 all-caps-underline | ith 'zombie' drugs as up to a [quarter] of e-cigarettes confiscated i
 negative-framing | [Tragedy] as boy, 7, is killed after be
 negative-framing | share [Tragedy] as boy, 7, is killed after be
+loaded-framing-medium | BORIS JOHNSON: My [bizarre] tea with Prince Andrew and hi
 clickbait-underline | h Prince Andrew and his three [surprising] requests, day I had to ban hi
 clickbait | [EXCLUSIVE]Distasteful truth about arroga
 direct-address-medium | f a huge fortune while giving [you] tips that will never make you
@@ -142,6 +143,7 @@ negative-framing-medium | A TikTok star mom has [tragically] died at 47 after su
 modality-medium | s Steve Borthwick and the RFU [must] answer after unforgivable Ita
 moral | One of the most [evil] child killers in history Ian
 hype-underline | How [stylish] nurse became embroiled in Tur
+negative-framing-medium | How stylish nurse became [embroiled] in Turkish mafia murder plot
 all-caps-underline | [War in the Middle East]
 authority | who in the world: As military [experts warn] World War III has never been
 authority | ts' during his teenage years, [according to] royal author Tina Brown. Yet
@@ -241,6 +243,7 @@ all-caps-underline | er begging for an explanation [nineteen] times during exit 
 fear-medium | urbulent love life: From her '[horrendous]' split with a rugby player to
 negative-framing | Chris Packham reveals the [horrific] ways he amassed his collectio
 dysphemism-underline | U-turn on Christine Lampard's [cutting] as she's parachuted back in t
+conflict-medium | backfires with animal welfare [backlash]
 all-caps-underline | Ryan Gosling makes [very] rare public appearance with E
 all-caps-underline | golden retriever Honey going [very] wrong
 hype-medium | Karren Brady, 56, looks [flawless] in stylish Instagram snaps af

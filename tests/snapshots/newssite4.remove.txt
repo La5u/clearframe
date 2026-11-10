@@ -1,4 +1,4 @@
-# newssite4.html mode=remove highlights=218
+# newssite4.html mode=remove highlights=223
 all-caps | The video we've [ALL] been waiting for: Moment wedd
 conflict | Moment wedding is thrown into [chaos] after sister-in-law chucked b
 reveal | wis Hamilton... and the 'open [secret] in the industry' the 'couple'
@@ -14,6 +14,7 @@ dysphemism | Gladiators' Giant '[axed] after being faced with choice
 moral | ent his father. He isn't just [deluded] and dim-witted, he's dangerou
 negative-framing | [Bloodbath] on the streets as millions of
 fear-medium | Healthy but [heartbroken] British mother Wendy Duffy di
+negative-framing-medium | ' in Ukraine, six years after [infamous] Megxit split
 clickbait | hs in December 2025 were 'too [devastating] to comprehend.'
 reveal | I kept my £15,000 debt a [secret] for nine years until one day
 clickbait-medium | day it all came spilling out. [Here's how] I dug myself out - and four s
@@ -72,6 +73,7 @@ dysphemism | Airline boss who [axed] London-LA flights says more c
 dysphemism | share Boss who [axed] London-LA flights says more c
 direct-address-medium | Is [your] garden 'common'? Expert discl
 derogatory | ediction only to mentally ill [thug] into changing his ways
+negative-framing-medium | aily mail comment: Starmer is [doomed] to death by a thousand cuts..
 modality-medium | eath by a thousand cuts... He [should] fall on his sword instead
 all-caps | obic comment to Vinicius Jr - [NOT] 'monkey slur' he was accused
 hype-medium | ey slur' he was accused of in [explosive] row
@@ -97,6 +99,7 @@ clickbait-medium | represent one in seven cars - [can you guess] which ones?
 all-caps | I'M A celeb [ALL] stars
 aggression-medium | hem to win': I'm A Celeb fans [furiously] brand final line up 'worst in
 hype-medium | st in show's history' as most [explosive] series yet falls flat with 'i
+negative-framing-medium | I'm A Celeb's Adam Thomas [embroiled] in third row with Harry Redkn
 conflict | th Harry Redknapp after fiery [clashes] with David Haye and Jimmy Bul
 conflict | hey have spotted another camp [feud] between Adam Thomas and Harry
 aggression | ted while unimpressed viewers [slam] the show's format
@@ -128,6 +131,7 @@ conflict | th Harry Redknapp after fiery [clashes] with David Haye and Jimmy Bul
 aggression-medium | hem to win': I'm A Celeb fans [furiously] brand final line up 'worst in
 hype-medium | st in show's history' as most [explosive] series yet falls flat with 'i
 unsourced | The Devil Wears Prada 2 [raises eyebrows] 'by roasting Jeff Bezos and L
+negative-framing-medium | oss brushes off her financial [woes] at a London pub as she shares
 conflict | gown as she continues her US [takeover] at the Time100 Gala in NYC af
 idiom-medium | Olivia Attwood [turns heads] in a blue corset as she joins
 hype | in a blue corset as she joins [glamorous] Michelle Keegan and Princess
@@ -191,6 +195,7 @@ negative-framing | are BOB seely: Our heroes are [furious] about legal vultures 
 fear-medium | This is the [harrowing] moment a bullfighter was gore
 dysphemism | Meta [axes] 8,000 jobs as Zuckerberg doub
 negative-framing | on AI - and the white-collar [bloodbath] gathers pace
+aggression-medium | Meta has confirmed it will [slash] roughly one in 10 jobs - arou
 dysphemism | 55 shares Meta [axes] 8,000 jobs as Zuckerberg doub
 conflict | entity - three years after it [sparked] fears of aliens
 hype | [Glamorous] ex-tennis star poised to retu

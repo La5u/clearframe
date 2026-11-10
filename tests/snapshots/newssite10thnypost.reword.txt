@@ -1,4 +1,4 @@
-# newssite10thnypost.html mode=reword highlights=71
+# newssite10thnypost.html mode=reword highlights=76
 loaded-framing | [Disturbing] Déjà Vu
 loaded-framing-medium | cnn deletes [tone-deaf] post downplaying moment suspe
 distancing | -deaf post downplaying moment [suspected] terrorists hurled bombs near
@@ -8,6 +8,7 @@ loaded-framing | [Common sense]. No nonsense.
 fear-medium | What the oil-price [panic] really tells you about our le
 direct-address-medium | oil-price panic really tells [you] about our leaders
 fear | Senior Iranian leader issues [chilling] warning that Trump could be ‘
+loaded-framing-medium | from head to toe — leading to [bizarre] bedroom discovery
 reveal | I found out my dad has a [secret] child — how do I confront him
 clickbait | Trading blows [Wild] brawl breaks out at usa vs. M
 clickbait | for divorce after wife makes [shocking] accusations
@@ -32,7 +33,9 @@ hype-medium | Larry Summers kicked out of [prestigious] economics group over Jef
 negative-framing-medium | Vlad the inhaler Russia [desperately] wipes video showing Putin cou
 uncertainty-medium | or breath amid ongoing health [rumors]
 uncertainty-medium | ng to breathe mid-speech — as [rumors] of his health woes ramp up.
+negative-framing-medium | ech — as rumors of his health [woes] ramp up.
 clickbait | Mayor Daniel Lurie blamed for [wild] brawl that injured his bodygu
+fear-medium | Increased tornado threat [looms] over millions across more tha
 distancing-medium | 'Immediate harm' Rihanna’s [alleged] shooter also went after Billi
 conflict | Rock out Cher, 79, [sparks] marriage speculation with Ale
 direct-address-medium | Gen Z, [you] have one advantage in this wo
@@ -58,6 +61,7 @@ direct-address-medium | t the puzzle, including those [you] may have missed
 direct-address-medium | Daily Word Search: Use [your] noggin to find the hidden wor
 clickbait | [Shocking] moment gang storms luxury LA
 direct-address-medium | e saved — and doesn’t deserve [your] hate
+fear-medium | Dark days [loom] for New Yorkers as climate la
 modality-medium | lax’s People Mover [needs to] be completed before embarrass
 imperative-medium | read the word, not the virus: [Get] measles vax
 conflict-underline | l Beretta of plotting stealth [acquisition]
@@ -66,6 +70,7 @@ direct-address-medium | [Your] everything shower just got mo
 imperative-medium | [Learn] why thousands are trading the
 clickbait-underline | 9-year-old dad helps son, 80, [now] crack free oysters promotion
 direct-address-medium | ew eatery — and it isn’t what [you’d] expect
+aggression-medium | Larry Ellison’s Oracle [slashing] thousands of jobs due to AI c
 distancing-medium | amos’ wedding called off over [alleged] ‘ongoing infidelity issues’
 clickbait | Hilary Duff gets wet and [wild] for ‘Tonight Show’ performanc
 loaded-framing-medium | an of not protecting her from [disgraced] football coach Sherrone Moore

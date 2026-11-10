@@ -1,4 +1,4 @@
-# newssite4.html mode=remove highlights=223
+# newssite4.html mode=remove highlights=228
 all-caps | The video we've [ALL] been waiting for: Moment wedd
 conflict | Moment wedding is thrown into [chaos] after sister-in-law chucked b
 reveal | wis Hamilton... and the 'open [secret] in the industry' the 'couple'
@@ -28,6 +28,7 @@ modality-medium | s disclose why anyone on jabs [must] take it - and how it can 
 direct-address-medium | take it - and how it can stop [you] putting weight back on
 direct-address-medium | to get my clothes off, aren't [you]?' Catrina thought they had a
 hype | at blind date… but here's the [surprising] reason 'fussy' James wasn't i
+exaggeration-medium | eeks as Iran war sends prices [soaring], warn pharmacies
 fear-medium | public life after humiliating [heartbreak], breaks cover at Barcelona Br
 uncertainty | nch-Greek aristocrat, 41, who [reportedly] splits her time between a sma
 direct-address-medium | Brace [yourself] for a super El Niño: Likeliho
@@ -39,6 +40,7 @@ hype | shareSimba unveils [game-changing] bedding for every type of sle
 hype-medium | The liquid formula hailed as '[flawless]' and 'better than luxury bran
 reveal | Victoria Beckham's [secret] for glowy skin is the star in
 direct-address-medium | The seven subtle signs [your] marriage is over, long before
+exaggeration-medium | eir minds often go to sudden, [dramatic] events: cheating, money issue
 aggression-medium | Paris [Fury] says Molly-Mae Hague would ha
 aggression-medium | Paris [Fury] has set the record straight o
 idiom-medium | Paris Fury has [set the record straight] on why Molly-Mae Hague didn't
@@ -98,7 +100,7 @@ direct-address-medium | red. Read it exclusively when [you] sign up to The Crime
 clickbait-medium | represent one in seven cars - [can you guess] which ones?
 all-caps | I'M A celeb [ALL] stars
 aggression-medium | hem to win': I'm A Celeb fans [furiously] brand final line up 'worst in
-hype-medium | st in show's history' as most [explosive] series yet falls flat with 'i
+hype-medium | st in show's history' as most [explosive] series yet falls flat with 'b
 negative-framing-medium | I'm A Celeb's Adam Thomas [embroiled] in third row with Harry Redkn
 conflict | th Harry Redknapp after fiery [clashes] with David Haye and Jimmy Bul
 conflict | hey have spotted another camp [feud] between Adam Thomas and Harry
@@ -128,8 +130,9 @@ clickbait-medium | earing iconic red swimsuit... [can you guess] who?
 hype-medium | s on 'snake' Amanda Batula in [explosive] audio leak from Summer House
 idiom-medium | One is a [chip off the old block]! Prince Louis proves he's Pri
 conflict | th Harry Redknapp after fiery [clashes] with David Haye and Jimmy Bul
+exaggeration-medium | e in your at-home routine can [dramatically] extend the life of your cloth
 aggression-medium | hem to win': I'm A Celeb fans [furiously] brand final line up 'worst in
-hype-medium | st in show's history' as most [explosive] series yet falls flat with 'i
+hype-medium | st in show's history' as most [explosive] series yet falls flat with 'b
 unsourced | The Devil Wears Prada 2 [raises eyebrows] 'by roasting Jeff Bezos and L
 negative-framing-medium | oss brushes off her financial [woes] at a London pub as she shares
 conflict | gown as she continues her US [takeover] at the Time100 Gala in NYC af
@@ -217,12 +220,14 @@ derogatory | felt like a floating piece of [trash]': Zara Larsson recalls being
 hype-medium | ter being the centre stage in [explosive] trial with Johnny Depp
 hype-medium | ra print bikini as she shares [sizzling] beach snaps with fiancé Thom
 conflict | th The Stars lineup as her US [takeover] soars to new heights amid cla
+exaggeration-medium | ars lineup as her US takeover [soars] to new heights amid claims sh
 derogatory-medium | ty's David Haye takes another [vile] swipe at co-star Adam Thomas
 all-caps | obic comment to Vinicius Jr - [NOT] 'monkey slur' he was accused
 hype-medium | ey slur' he was accused of in [explosive] row
 dysphemism | ers BBC's 'crazy' decision to [axe] long-running show at end of t
 all-caps | chael Carrick insists he will [NOT] press Sir Jim Ratcliffe for c
-# changed text nodes=48
+colloquialism | erarchy after Liam Rosenior's [sacking]
+# changed text nodes=59
 ~ [EXCLUSIVE => ]
 ~ [inside story => ]
 ~ The [heartbreaking  => ]consequences of 'empty' threat
@@ -234,6 +239,8 @@ all-caps | chael Carrick insists he will [NOT] press Sir Jim Ratcliffe for c
 ~ mas' and says scenes were too [shocking  => ]to air
 ~ g point in what they called a ['heartbreaking journey'. => 'journey'.]
 ~ [EXCLUSIVE => ]
+~ ' that led to her dropping an [incredible  => ]11st 'disclosed' as pals share
+~ ison Hammond has undergone an [incredible  => ]body transformation, losing a
 ~ [Chilling moment => Moment] beauty queen is shot dead 'by
 ~ This is the [chilling  => ]moment a former beauty queen i
 ~ [Chilling moment => Moment] beauty queen is shot dead 'by
@@ -246,22 +253,30 @@ all-caps | chael Carrick insists he will [NOT] press Sir Jim Ratcliffe for c
 ~ [EXCLUSIVE => ]
 ~ his birthday after decades of [wild  => ]partying and serial womanising
 ~ [EXCLUSIVE => ]
+~ ve series yet falls flat with ['incredibly boring' => 'boring'] all male finale
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ Westbrook, 52, shows off the [incredible  => ]results of her extensive recon
 ~ Rob Reiner's son Jake shares [horrific  => ]new details of his parents' mu
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ ' that led to her dropping an [incredible  => ]11st 'disclosed' as pals share
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ ve series yet falls flat with ['incredibly boring' => 'boring'] all male finale
+~ anna breaks the internet with [eye-popping  => ]images of her in a bra and boo
 ~ [EXCLUSIVE => ]
+~ Iris Law shows off her [incredible  => ]figure in a series of skimpy b
 ~ [EXCLUSIVE => ]
 ~ an and her two daughters that [shocked  => ]the US
 ~ - and why it might be time to [finally  => ]switch to a passkey
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ anna breaks the internet with [eye-popping  => ]images of her in a bra and boo
+~ anna breaks the internet with [eye-popping  => ]images in a bra
 ~ [EXCLUSIVE => ]
 ~ car, 50, who called himself a ['wild child' => 'child'] abused girls at youth group b
 ~ the sea is solved: Scientists [finally  => ]pinpoint its true identity - t
@@ -270,4 +285,5 @@ all-caps | chael Carrick insists he will [NOT] press Sir Jim Ratcliffe for c
 ~ nsuccessful rounds of IVF and [heartbreaking  => ]miscarriages
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ outh Wales, when she made the [incredible  => ]find on April 10. The axolotl,
 ~ [Shocking moment => Moment] Massachusetts woman was maule

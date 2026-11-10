@@ -1,8 +1,9 @@
-# newssite2.html mode=remove highlights=60
+# newssite2.html mode=remove highlights=67
 imperative-medium | sible Coup”, Peter Schweizer. [LISTEN] NOW
 imperative-medium | hop smarter with Post Wanted. [SIGN UP] NOW
 imperative-medium | odcast. New episodes Mon-Fri. [LISTEN] NOW
 distancing-medium | Police remove protester — who [allegedly] injured 3 officers and appear
+exaggeration-medium | [Dramatic] video of the incident shows t
 distancing-medium | [Alleged] mistress of disgraced ex-Mich
 loaded-framing-medium | Alleged mistress of [disgraced] ex-Michigan coach leaves univ
 loaded-framing | [Common sense]. No nonsense.
@@ -17,9 +18,11 @@ distancing-medium | 'Sexual sadist' [Alleged] Gilgo Beach killer’s deviant
 reveal | s deviant texts, web searches [revealed] — including more than 500 DMs
 uncertainty | e the accused murderer wasn’t [apparently] swiping, he had “significant
 authority | ” with dozens of prostitutes, [according to] prosecutors.
+exaggeration-medium | [Dramatic] bodycam footage shows moment
 reveal | Kamala Harris is [secretly] milking Calif. taxpayers to g
 reveal | New Mets star [reveals] why he’s ‘looking forward’ to
 reveal | Gypsy Rose Blanchard [reveals] drastic weight-loss transform
+exaggeration-medium | Gypsy Rose Blanchard reveals [drastic] weight-loss transformation 2
 negative-framing-medium | injury on the job before his [tragic] death
 idiom-medium | Ex-ESPN star [sets the record straight] on his Augusta National ban t
 authority | sing Virginia football coach, [according to] 16-year-old victim’s family
@@ -46,17 +49,21 @@ direct-address-medium | Daily Word Search: Use [your] noggin to find the hidden 
 aggression | tana GOP senator to ‘pass the [torch]’ — becomes 6th Republican to
 conflict | LA City Hall [showdown] over $1.3B homeless spending
 modality-medium | Jimmy Kimmel jokes Trump [should] let him host White House Corr
+exaggeration | Top Yankees prospect has [huge] day against Red Sox ace
 modality-medium | Reality check: Sex offender [should] quit race for Fresno City Cou
 direct-address-medium | Where [you] get your drinking water from
 direct-address-medium | Where you get [your] drinking water from can raise
 direct-address-medium | drinking water from can raise [your] risk of Parkinson’s by up to
+exaggeration | e your risk of Parkinson’s by [up to] 62%
 direct-address-medium | Gen Z, [you] have one advantage in this wo
 modality-medium | much emotional support — they [should] be FSA-approved
 imperative-medium | [See] how few square feet a whoppin
+exaggeration-medium | al from first modern Olympics [dramatically] exceeds estimate at auction
 reveal | Apple [reveals] cheapest MacBook ever — comin
 authority | [Experts warn] of ‘mysterious’ leaked US gov
 loaded-framing-medium | [Bizarre] wellness fads you forgot abou
 direct-address-medium | Bizarre wellness fads [you] forgot about — and what we’re
+exaggeration-medium | nator urges DOJ, FTC to probe [soaring] costs of watching NFL games o
 reveal | for Harry and Meghan as it’s [revealed] their movie projects are in l
 distancing-medium | ho made JFK Jr. jealous — and [allegedly] got her pregnant
 # changed text nodes=10

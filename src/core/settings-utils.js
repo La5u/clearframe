@@ -8,7 +8,7 @@ export const DEFAULT_SETTINGS = {
   predictFirst: false,
   headlinesOnly: false,
   sensitivity: 'standard',
-  types: { absolute: false, exaggeration: false, superlative: false, quote: false },
+  types: { absolute: false, superlative: false, quote: false },
   userTypeColors: {},
 };
 

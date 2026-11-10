@@ -1,7 +1,8 @@
 phrase,type,neutral,aliases,stemmable,regex,remove,contexts
 dodge,negative-framing,avoid,,verb,,,publication
 nepo baby,derogatory,,nepo babies,,,,publication
-sacked,colloquialism,dismissed,,,,,publication
+sacking,colloquialism,,,,,,publication
+sack,colloquialism,dismiss,,verb,,,publication
 disgruntled,negative-framing,dissatisfied,,,,,publication
 mask slipped,idiom,revealed their attitude,,,,,publication
 mask slips,idiom,reveals their attitude,,,,,publication

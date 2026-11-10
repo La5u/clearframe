@@ -1,4 +1,5 @@
-# newssite10th.html mode=remove highlights=299
+# newssite10th.html mode=remove highlights=323
+exaggeration | The [massive] search began after New Mexico
 hype-medium | ft my 'meno-middle'... Then a [miracle] method banished it in just fo
 negative-framing-medium | [Desperate] BBC bosses save Katya Jones a
 negative-framing | s save Katya Jones amid pros '[bloodbath]'
@@ -28,12 +29,14 @@ negative-framing-medium | BBC bosses were '[desperate]' to keep the 36-year-old 
 negative-framing | r-old Russian dancer amid the [bloodbath] because 'they know how popula
 negative-framing-medium | share [Desperate] BBC bosses save Katya Jones w
 authority | 'deliciously sweet' flavour, [according to] Which?.
+exaggeration-medium | here to buy NOW before prices [soar] (and how to snaffle yourself
 direct-address-medium | ices soar (and how to snaffle [yourself] the ultimate property nest eg
 all-caps | latasaray Team News - Osimhen [STARTS]View post
 all-caps | Liverpool Team News - Wirtz [STARTS]View post
 reveal | zon Spring Deal Days 2026: We [reveal] all the best deals as they co
 all-caps | rdable teeth whitening powder [REALLY] rival the dentist? I reviewed
 authority | Amazon Spring Deals Day buys [according to] Daily Mail shopping editors -
+exaggeration | shopping editors - including [huge] savings on Apple AirPods, Sha
 authority | n Spring Deal Days buys 2026, [according to] experts
 clickbait-medium | month to beat the 3pm slump - [here's how] it transformed my energy (and
 reveal | here are the 10 perfumes mum [secretly] wants this Mother's Day (and
@@ -83,6 +86,7 @@ clickbait-medium | month to beat the 3pm slump - [here's how] it transformed my 
 all-caps | ldest map of the night sky is [REVEALED] after 2,000 years: Hipparchus
 all-caps | ldest map of the night sky is [REVEALED] after 2,000 years
 all-caps | England star announces he's [QUITTING] international football, three
+exaggeration-medium | Oil prices have [soared] since the US and Israel began
 hype | ointed Erika Kirk to serve on [an influential] board which oversees the US A
 direct-address-medium | ays 'there's no-one there for [you] when you crash' in latest swi
 direct-address-medium | e's no-one there for you when [you] crash' in latest swipe at the
@@ -94,8 +98,11 @@ moral | less new Ayatollah 'even more [brutal] than his slain father': How h
 negative-framing | l than his slain father': How [hardline] Mojtaba Khamenei oversaw merc
 negative-framing | ated an important role in the [regime] over his lifetime.
 negative-framing | Mojtaba Khamenei, 56, a [hardline] cleric viewed as even more ex
+exaggeration | [Massive] airstrikes hit Tehran with 'u
+exaggeration | 111 shares [Massive] airstrikes hit Tehran with 'u
 reveal | Interactive map [reveals] cheapest place to buy petrol
 direct-address-medium | to buy petrol and diesel near [you] as fuel prices surge amid Ira
+exaggeration-medium | began amid concerns over the [soaring] cost of oil.
 aggression-medium | reatens Tehran with 'fire and [fury]' if blockade continues
 fear-medium | sands try to flee amid rising [panic] in Middle East warzone
 conflict-medium | d rising panic in Middle East [warzone]
@@ -104,6 +111,7 @@ negative-framing-medium | one with thousands of Britons [desperate] to get out.
 direct-address-medium | Why [you] should start prepping your ga
 modality-medium | Why you [should] start prepping your garden fu
 direct-address-medium | Why you should start prepping [your] garden furniture NOW to be re
+exaggeration | on the cheek while wearing a [huge] hat
 distancing-medium | The [alleged] rape took place at Sheffield
 authority | was reported by a third party [according to] British Transport Police.
 hype | l-Salem is accused of playing [a leading] role in the violent crackdown
@@ -122,11 +130,14 @@ all-caps | crash victims died avoidable [FIREBALL] death after legal tycoon's wi
 all-caps | crash victims died avoidable [FIREBALL] death
 reveal | the Hollywood smile: Experts [reveal] what perfect teeth REALLY loo
 all-caps | rts reveal what perfect teeth [REALLY] look like - and which stars c
+exaggeration-medium | s MPs' expenses watchdog over [soaring] costs
 reveal | Spain's cheapest coastline [revealed] - with 150 miles of beaches,
 reveal | and sports bridal white amid [secret] wedding rumours as she leads
 uncertainty-medium | dal white amid secret wedding [rumours] as she leads the A-list glamo
 negative-framing-medium | Single, nearly 40 and [desperate] for a baby, Jess Nuremberg kn
+exaggeration-medium | uremberg knew she had to take [drastic] action to become a mother..
 hype | Endometriosis [breakthrough]: Simple five-minute test coul
+colloquialism | Nadiya Bychkova's Strictly [sacking]: Axe had nothing to do with a
 dysphemism | Bychkova's Strictly sacking: [Axe] had nothing to do with ageism
 dysphemism | iya Bychkova blamed her shock [axing] on 'ageism', but insiders at
 all-caps | Alexander brothers are found [GUILTY] of all sex trafficking charge
@@ -172,6 +183,7 @@ hype | with six nods - including a '[breakthrough]' prize for Owen Cooper, 16
 negative-framing | drama as they share the same [furious] complaint after just one epis
 idiom-medium | Zara Tindall [turns heads] in elegant navy skirt suit on
 negative-framing-medium | James Watts' Brewdog business [woes]
+exaggeration-medium | e in your at-home routine can [dramatically] extend the life of your cloth
 all-caps | Timothee Chalamet [ROASTED] by Jeopardy! with 'ballet and
 fear-medium | return to the UK amid 'rising [panic]'
 fear | Ashley James [horrified] as fake This Morning intervie
@@ -180,15 +192,19 @@ moral | a full of 'forbidden love and [brutal] war'
 loaded | of For The Love Of Dogs after [vicious] backlash to Alison Hammond ta
 conflict-medium | he Love Of Dogs after vicious [backlash] to Alison Hammond taking over
 hype-medium | uller bust' swimwear range in [sizzling] Jamaica holiday snaps
+colloquialism | ut Nadiya Bychkova's Strictly [sacking]: Axe had nothing to do with a
 dysphemism | Bychkova's Strictly sacking: [Axe] had nothing to do with ageism
 idiom-medium | Paris Hilton [turns heads] in pastel pink as she rings t
 aggression-medium | Harry Styles fans are left '[fuming]' as they criticise screening
 conflict-medium | n on Timothee Chalamet ballet [backlash] and quips he 'doesn't need to
 moral | an' after her offensive tweet [scandal]
+exaggeration | on the cheek while wearing a [huge] hat
 dysphemism | BBC 'may [axe] even more Strictly profession
+exaggeration | ore Strictly professionals in [HUGE] shake-up ahead of the next se
 conflict | irthday tribute to her mum as [feud] with estranged son Brooklyn r
 distancing-medium | Rihanna jets out of LA after [alleged] shooter is charged with attem
 all-caps | ink claws into 'worst episode [EVER]' as they take aim at BBC scri
+exaggeration | udget reality show fronted by [huge] TV stars AXED after being tro
 dysphemism | show fronted by huge TV stars [AXED] after being trounced by The T
 all-caps | rns 62, he's bracing for some [VERY] 'intimate insights' in a tell
 all-caps | How Lewis Hamilton [REALLY] feels about Kim Kardashian
@@ -197,6 +213,7 @@ all-caps | ms she won't return to TV for [SEVEN WEEKS] in emotional health updat
 aggression-medium | ctful' Timothée Chalamet amid [fury] over 'no one cares about' ope
 conflict-medium | Rachel Zegler addresses [backlash] to woke Snow White reboot and
 negative-framing | after humiliating box office [disaster]
+exaggeration | ng a luxury beauty edit after [huge] Grammy and BRITs success
 derogatory | Iconic [nepo baby] daughter of Hollywood royalty
 hype | a pinstriped suit as he joins [glamorous] co-stars Sandra Hüller and Pr
 dysphemism | ush off Strictly Come Dancing [axing] during £3K-a-night holiday at
@@ -219,13 +236,16 @@ negative-framing | Montana Brown sparks [furious] debate over 'tone deaf' criti
 all-caps | Good Morning Britain studio [EVACUATED] mid-broadcast as scrambling h
 clickbait | Nadiya Bychkova is '[devastated]' by Strictly axing as friends
 dysphemism | a is 'devastated' by Strictly [axing] as friends accuse show of age
+exaggeration | isses out on celeb partner in [huge] shake-up
 uncertainty-medium | dies of London after baseless [rumour] that she is a high-end 'madam
 hype | Lily James joins [glamorous] Jessica Chastain and Naomi Wa
 dysphemism | ' as it's revealed she's been [axed]
 all-caps | t hopeful returns to show for [FOURTH] time, six years on from makin
 aggression-medium | ITV [hits back] at claims This Morning bosses
 conflict | Rival barbers' 'turf war' [sparked] huge street brawl with '13 me
+exaggeration | l barbers' 'turf war' sparked [huge] street brawl with '13 men fig
 conflict | h barbers on February 13. The [feud] started when one barber who w
+exaggeration | re Barbers 'turf war' sparked [huge] street brawl of 13 men, court
 all-caps | 'dirty seven euro kebabs' is [BETTER]
 moral | ing for help… while hiding an [evil] secret: Why monsters face the
 reveal | or help… while hiding an evil [secret]: Why monsters face the camera
@@ -240,6 +260,7 @@ direct-address-medium | or pension glitch which means [you] could be given acces
 direct-address-medium | you could be given access to [your] pot only for it to be snatche
 direct-address-medium | a small window to save it if [you] act NOW: TANYA JEFFERIES
 clickbait-medium | mall window to save it if you [act NOW]: TANYA JEFFERIES
+exaggeration-medium | collapses on street in tears: [Dramatic] minute-by-minute account of f
 direct-address-medium | POLL OF THE DAY: Do [you] believe war in the Middle Eas
 reveal | tain's most expensive streets [revealed]: Road where homes are worth a
 authority | [According to] Rightmove, Winnington Road in
@@ -251,7 +272,7 @@ negative-framing | ruled in a landmark case that [severe] female hair loss can b
 aggression-medium | cash machine for the world': [Fury] as stats suggest a quarter of
 aggression-medium | share [Fury] as stats suggest 1-in-4 non-E
 hype-medium | uller bust' swimwear range in [sizzling] Jamaica holiday snaps
-hype-medium | le curves in a pink bikini in [sizzling] holiday snaps from her trip t
+hype-medium | er curves in a pink bikini in [sizzling] holiday snaps from her trip t
 modality-medium | s connects to Pluto, one sign [must] trust their instincts, says J
 modality-medium | JEMIMA CAINER, while another [should] embrace emotion
 hype-medium | Cox scooped the event's most [prestigious] award in Birmingham on Sunday
@@ -270,6 +291,7 @@ all-caps | [MORE DON'T MISS]
 all-caps | s revealed as the new face of [FRASERS] in 'nostalgic' partnership as
 hype-medium | The Last Leg takes [explosive] turn as Penny Mordaunt brande
 clickbait | racter brutally killed off in [jaw-dropping] twist
+exaggeration | ms a whopping 21 new stars in [huge] cast update - and fans have A
 all-caps | e cast update - and fans have [A LOT] to say about the Slytherin st
 all-caps | riana Grande and Ethan Slater [ALMOST] called it quits: Insider reve
 dysphemism | insist any "bad eggs' will be [AXED] no matter how famous'
@@ -277,6 +299,7 @@ uncertainty-medium | after clapping back at split [rumours]
 dysphemism | hes off Strictly Come Dancing [axing] as she enjoys a £3K-a-night h
 negative-framing | Katie Price's husband's [furious] ex accuses him of scamming MO
 all-caps | pping point': Insiders reveal [REAL] trigger for their divorce
+exaggeration | val hiatus to be filled with '[huge] charity concert honouring lat
 fear-medium | madan flee Dubai amid 'rising [panic]' as they drive 11 hours to Om
 negative-framing-medium | hey drive 11 hours to Oman in [desperate] bid to finally return to UK
 all-caps | ts pulses racing as she poses [TOPLESS] for sizzling selfie before sl
@@ -296,9 +319,10 @@ negative-framing-medium | [Dodgy] Fire Stick crackdown: Eight n
 all-caps | Donald Trump warns Australia [NOT] to let Iran's female soccer s
 all-caps | l Carrick: Ex-Man United star [DEFENDS] viral post and reveals what i
 moral | interim boss told him after '[brutal]' message about former team-ma
+exaggeration | arn next opponents - with one [HUGE] tie
 all-caps | gend Xavi reveals why he will [NEVER] return to club amid explosive
 hype-medium | ill NEVER return to club amid [explosive] row with president Joan Lapor
-# changed text nodes=60
+# changed text nodes=77
 ~ [EXCLUSIVE => ]
 ~ [FINALLY => ]
 ~ [EXCLUSIVE => ]
@@ -314,23 +338,32 @@ hype-medium | ill NEVER return to club amid [explosive] row with president Joan 
 ~ [EXCLUSIVE => ]
 ~ [finally => ]
 ~ [EXCLUSIVE => ]
+~ [Incredible => ]
+~ [Incredible => ]
 ~ [EXCLUSIVE => ]
 ~ [shocking => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ [Incredible => ]
 ~ Hannibal the Cannibal'... and [the TRUTH about  => ]his 'glass cell'. Read it in T
 ~ [EXCLUSIVE => ]
+~ [incredible => ]
 ~ [shocking => ]
 ~ [EXCLUSIVE => ]
 ~ [The truth about  => ]Nadiya Bychkova's Strictly sac
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ [incredible => ]
+~ [incredible => ]
 ~ [EXCLUSIVE => ]
 ~ [Nightmare => ]
+~ [incredible => ]
 ~ [EXCLUSIVE => ]
+~ [incredible => ]
 ~ [EXCLUSIVE => ]
+~ Leigh-Anne Pinnock praises ['incredible'  => ]Jesy Nelson amid her baby twin
 ~ y Nelson amid her baby twins' ['heartbreaking'  => ]diagnosis
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
@@ -342,13 +375,21 @@ hype-medium | ill NEVER return to club amid [explosive] row with president Joan 
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ ITV drops all episodes of [outrageous  => ]comedy series 'that would even
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [FINALLY => ]
 ~ ere': Mollie King reveals the [heartbreaking  => ]reason why she and Stuart Broa
 ~ Mollie King has revealed the [heartbreaking  => ]reason why she and cricketer S
+~ [incredible => ]
+~ [incredible => ]
+~ [incredible => ]
 ~ [EXCLUSIVE => ]
+~ cas, 20, violently kicked the ['incredibly vulnerable' => 'vulnerable'] woman, aged in her 50s, as sh
 ~ [EXCLUSIVE => ]
+~ [Staggering  => ]242 Special Forces troops - in
+~ A [staggering  => ]242 Special Forces troops - in
+~ [Staggering  => ]242 Special Forces troops 'bei
 ~ [EXCLUSIVE => ]
 ~ leaves BBC fans in tears over [heartbreaking  => ]death just as show legend retu
 ~ [EXCLUSIVE => ]
@@ -356,6 +397,7 @@ hype-medium | ill NEVER return to club amid [explosive] row with president Joan 
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ [incredible => ]
 ~ 'missing him tremendously' in [heartbreaking  => ]tribute on his 49th birthday
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]

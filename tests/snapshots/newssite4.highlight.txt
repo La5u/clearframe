@@ -1,4 +1,4 @@
-# newssite4.html mode=highlight highlights=271
+# newssite4.html mode=highlight highlights=287
 clickbait | [EXCLUSIVE]The video we've ALL been waiti
 all-caps | EXCLUSIVEThe video we've [ALL] been waiting for: Moment wedd
 conflict | Moment wedding is thrown into [chaos] after sister-in-law chucked b
@@ -33,6 +33,7 @@ modality-medium | s disclose why anyone on jabs [must] take it - and how it can 
 direct-address-medium | take it - and how it can stop [you] putting weight back on
 direct-address-medium | to get my clothes off, aren't [you]?' Catrina thought they had a
 hype | at blind date… but here's the [surprising] reason 'fussy' James wasn't i
+exaggeration-medium | eeks as Iran war sends prices [soaring], warn pharmacies
 fear-medium | public life after humiliating [heartbreak], breaks cover at Barcelona Br
 uncertainty | nch-Greek aristocrat, 41, who [reportedly] splits her time between a sma
 direct-address-medium | Brace [yourself] for a super El Niño: Likeliho
@@ -47,6 +48,7 @@ hype-medium | The liquid formula hailed as '[flawless]' and 'better than luxury 
 reveal | Victoria Beckham's [secret] for glowy skin is the star in
 clickbait | [EXCLUSIVE]Prince Harry's 'arrogant' Ukra
 direct-address-medium | The seven subtle signs [your] marriage is over, long before
+exaggeration-medium | eir minds often go to sudden, [dramatic] events: cheating, money issue
 clickbait | mas' and says scenes were too [shocking] to air
 aggression-medium | Paris [Fury] says Molly-Mae Hague would ha
 aggression-medium | Paris [Fury] has set the record straight o
@@ -65,6 +67,8 @@ negative-framing | kes and even riots to cut the [bloated] benefits bill.
 direct-address-medium | o Gaviscon, what to take when [you're] struggling with painful acid
 loaded | imum term of 14 years for the [vicious] sex attack on a woman in her
 aggression | Navy cover hours before Iran [slammed] waterway shut again
+exaggeration | ' that led to her dropping an [incredible] 11st 'disclosed' as pals shar
+exaggeration | ison Hammond has undergone an [incredible] body transformation, losing a
 fear | [Chilling] moment beauty queen is shot d
 fear | This is the [chilling] moment a former beauty queen
 distancing-medium | ment a former beauty queen is [allegedly] shot in front of her baby by
@@ -122,6 +126,7 @@ clickbait-medium | represent one in seven cars - [can you guess] which ones?
 all-caps | I'M A celeb [ALL] stars
 aggression-medium | hem to win': I'm A Celeb fans [furiously] brand final line up 'worst in
 hype-medium | st in show's history' as most [explosive] series yet falls flat with 'i
+exaggeration | e series yet falls flat with '[incredibly] boring' all male finale
 negative-framing-medium | I'm A Celeb's Adam Thomas [embroiled] in third row with Harry Redkn
 conflict | th Harry Redknapp after fiery [clashes] with David Haye and Jimmy Bul
 conflict | hey have spotted another camp [feud] between Adam Thomas and Harry
@@ -144,12 +149,14 @@ negative-framing-medium | he industry' the 'couple' are [desperate] to hide
 dysphemism | Gladiators' Giant '[axed] after being faced with choice
 aggression-medium | Paris [Fury] says Molly-Mae Hague would ha
 moral | ent his father. He isn't just [deluded] and dim-witted, he's dangerou
+exaggeration | Westbrook, 52, shows off the [incredible] results of her extensive reco
 clickbait | following her twin daughter's [devastating] diagnosis
 loaded-framing | Selling [Sunset] star Emma Hernan is back with
 hype-medium | Davis again two months after [explosive] fight
 negative-framing | Rob Reiner's son Jake shares [horrific] new details of his parents' m
 clickbait | [EXCLUSIVE]Prince Harry's 'arrogant' Ukra
 clickbait | [EXCLUSIVE]How Sara Cox reacted to new ro
+exaggeration | ' that led to her dropping an [incredible] 11st 'disclosed' as pals shar
 clickbait | [EXCLUSIVE]Noughties icon Lemar discloses
 aggression-medium | Anthony Quinlan [hits back] at cruel trolls who targeted
 clickbait | [EXCLUSIVE]Pregnant Scarlett Moffatt pose
@@ -161,17 +168,21 @@ hype-medium | s on 'snake' Amanda Batula in [explosive] audio leak from Summer H
 idiom-medium | One is a [chip off the old block]! Prince Louis proves he's Pri
 clickbait | [EXCLUSIVE]Awkward moment for Elon Musk a
 conflict | th Harry Redknapp after fiery [clashes] with David Haye and Jimmy Bul
+exaggeration-medium | e in your at-home routine can [dramatically] extend the life of your cloth
 aggression-medium | hem to win': I'm A Celeb fans [furiously] brand final line up 'worst in
 hype-medium | st in show's history' as most [explosive] series yet falls flat with 'i
+exaggeration | e series yet falls flat with '[incredibly] boring' all male finale
 unsourced | The Devil Wears Prada 2 [raises eyebrows] 'by roasting Jeff Bezos and L
 negative-framing-medium | oss brushes off her financial [woes] at a London pub as she shares
 conflict | gown as she continues her US [takeover] at the Time100 Gala in NYC af
 idiom-medium | Olivia Attwood [turns heads] in a blue corset as she joins
 hype | in a blue corset as she joins [glamorous] Michelle Keegan and Princess
+exaggeration | anna breaks the internet with [eye-popping] images of her in a bra and bo
 clickbait | [EXCLUSIVE]Has tax-exile Rio Ferdinand qu
 loaded-framing-medium | Hailey Bieber dazzles in [racy] silver lace gown as she and D
 aggression-medium | Paris [Fury] breaks her silence on husband
 conflict | er silence on husband Tyson's [feud] with his dad John after he de
+exaggeration | Iris Law shows off her [incredible] figure in a series of skimpy
 conflict | inal after Adam Thomas' fiery [clashes] with both Jimmy Bullard and D
 clickbait | [EXCLUSIVE]The secret behind Millie Macki
 uncertainty-medium | d Zoe Kravitz fuel engagement [rumours] as she flashes diamond ring o
@@ -224,6 +235,8 @@ direct-address-medium | ighbours are secretly judging [you] for - and the on-tre
 clickbait-medium | gest outdoor trend for SS26 - [here's how] to style it, plus the best pi
 fear | confidential: How the taxman [terrified] Lady Angela, 87, with false d
 fear | share eden: How the taxman [terrified] Lady Angela, 87, with false d
+exaggeration | anna breaks the internet with [eye-popping] images of her in a bra and bo
+exaggeration | anna breaks the internet with [eye-popping] images in a bra
 clickbait | [EXCLUSIVE]Has tax-exile Rio Ferdinand qu
 conflict | ted Right… or a 'coalition of [chaos]': Megapoll finds Reform would
 conflict | underlines the potential for [chaos], with no single party close t
@@ -263,10 +276,13 @@ derogatory | felt like a floating piece of [trash]': Zara Larsson recalls being
 hype-medium | ter being the centre stage in [explosive] trial with Johnny Depp
 hype-medium | ra print bikini as she shares [sizzling] beach snaps with fiancé Thom
 conflict | th The Stars lineup as her US [takeover] soars to new heights amid cla
+exaggeration-medium | ars lineup as her US takeover [soars] to new heights amid claims sh
 derogatory-medium | ty's David Haye takes another [vile] swipe at co-star Adam Thomas
 clickbait | [EXCLUSIVE]Jack Whitehall's wedding venue
+exaggeration | outh Wales, when she made the [incredible] find on April 10. The axolotl
 clickbait | [Shocking] moment Massachusetts woman wa
 all-caps | obic comment to Vinicius Jr - [NOT] 'monkey slur' he was accused
 hype-medium | ey slur' he was accused of in [explosive] row
 dysphemism | ers BBC's 'crazy' decision to [axe] long-running show at end of t
 all-caps | chael Carrick insists he will [NOT] press Sir Jim Ratcliffe for c
+colloquialism | erarchy after Liam Rosenior's [sacking]

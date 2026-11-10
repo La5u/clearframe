@@ -127,7 +127,7 @@ const ANALYZE_CASES = [
   // Bylines keep their capitals; shouting is lowercased, headings get Title Case.
   ["It's ugly: MAUREEN CALLAHAN", 'reword', PUBLICATION, "It's ugly: MAUREEN CALLAHAN", []],
   ['But as HAVIV RETTIG GUR writes, the war is NOT over.', 'reword', PUBLICATION, 'But as HAVIV RETTIG GUR writes, the war is not over.', ['NOT>not replaced clearframe-all-caps-underline']],
-  ['THIS IS HUGE NEWS FOR EVERYONE', 'reword', PUBLICATION, 'This is huge news for everyone', ['THIS IS HUGE NEWS FOR EVERYONE>This is huge news for everyone replaced clearframe-all-caps-underline']],
+  ['THIS IS BIG NEWS FOR EVERYONE', 'reword', PUBLICATION, 'This is big news for everyone', ['THIS IS BIG NEWS FOR EVERYONE>This is big news for everyone replaced clearframe-all-caps-underline']],
   ['WAR IN THE MIDDLE EAST', 'reword', PUBLICATION, 'War in the Middle East', ['WAR IN THE MIDDLE EAST>War in the Middle East replaced clearframe-all-caps-underline']],
   // A capitalised term inside a name or title is only highlighted.
   ['Compared to 2003’s Shock and Awe invasion', 'remove', { ...PUBLICATION, headline: true }, 'Compared to 2003’s Shock and Awe invasion', ['Shock>Shock highlighted clearframe-clickbait']],
@@ -570,9 +570,10 @@ const EXCEPTION_CASES = [
   ['under fire', 'Minister came under fire from critics', true], ['under fire', 'Police under fire over handling of the case', true], ['under fire', 'Airport came under fire', true],
   ['evil', 'Resident Evil remake announced', false], ['evil', 'Evil Dead sequel', false], ['evil', 'This is pure evil', true], ['evil', 'A resident evil plot', true],
   ['evil', 'RESIDENT EVIL remake announced', false], ['evil', 'EVIL DEAD sequel', false], ['evil', 'Evil plan revealed', true],
-  ['sacked', 'He was sacked eight times', false, BODY], ['sacked', 'Allen sacked for a loss', false, BODY], ['sacked', 'The QB was sacked by Watt for 9 yards', false, BODY],
-  ['sacked', 'The minister was sacked by the premier', true, BODY], ['sacked', 'Was sacked by Watt for 9 yards', false, BODY],
-  ['sacked', 'Quarterback sacked twice for 12 yards', false, BODY], ['sacked', 'The firm sacked 300 staff', true, BODY], ['sacked', 'He was sacked twice by the club', true, BODY],
+  ['sack', 'She carried a sack of rice', false, BODY], ['sack', 'He had 3 sacks on Sunday', false, BODY], ['sack', 'Time to hit the sack', false, BODY], ['sack', 'Club to sack manager after defeat', true, BODY], ['sack', 'Board sacks chief executive', true, BODY], ['sacking', 'Calls grow for sacking of minister', true, BODY],
+  ['sack', 'He was sacked eight times', false, BODY], ['sack', 'Allen sacked for a loss', false, BODY], ['sack', 'The QB was sacked by Watt for 9 yards', false, BODY],
+  ['sack', 'The minister was sacked by the premier', true, BODY], ['sack', 'Was sacked by Watt for 9 yards', false, BODY],
+  ['sack', 'Quarterback sacked twice for 12 yards', false, BODY], ['sack', 'The firm sacked 300 staff', true, BODY], ['sack', 'He was sacked twice by the club', true, BODY],
   ['severe', 'Severe storms hit Texas', false], ['severe', 'Severe criticism of the plan', true],
   ['exclusive', 'They signed an exclusive license', false, BODY], ['exclusive', 'An EXCLUSIVE interview', true, BODY], ['exclusive', 'Exclusive: the inside story', true],
   ['elite', 'Xbox Elite controller leaks', false], ['elite', 'Hasbro Elite figures', false], ['elite', 'An elite athlete', false], ['elite', 'The wealthy elite', true],
@@ -670,11 +671,11 @@ assert.deepStrictEqual(
 
 assert.deepStrictEqual(
   normalizeSettings({ types: {} }).types,
-  { absolute: false, exaggeration: false, superlative: false, quote: false },
+  { absolute: false, superlative: false, quote: false },
 );
 assert.deepStrictEqual(
   normalizeSettings({ types: { loaded: false } }).types,
-  { absolute: false, exaggeration: false, superlative: false, quote: false, loaded: false },
+  { absolute: false, superlative: false, quote: false, loaded: false },
 );
 assert.deepStrictEqual(
   normalizeSettings({ userTypeColors: { hype: 'red' } }, { moral: 'blue' }).userTypeColors,

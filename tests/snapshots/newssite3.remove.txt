@@ -1,4 +1,4 @@
-# newssite3.html mode=remove highlights=220
+# newssite3.html mode=remove highlights=246
 conflict | t TWO DAYS' worth stored up - [sparking] fears of a supply shortage as
 authority | for just 1.5 days of demand, [according to] new data published by Nationa
 aggression | war: Foreign Secretary Cooper [blasts] president's 'diplomacy throug
@@ -41,10 +41,14 @@ modality-medium | Richard Branson warns Britain [must] prepare for conflict in s
 loaded-framing-medium | The Mail on Sunday reveal the [disgraced] former prince met with the ba
 direct-address-medium | ED face mask really transform [your] skin? My results, an expert's
 clickbait-medium | ts, an expert's thoughts, and [what you need to know] before buying
+exaggeration | ed up 15 beauty gifts I would [totally] keep for myself - everything
+exaggeration | g to allbeauty where there is [up to] 45 per cent off perfume, make
 clickbait-medium | share[Here's how] to get a free diamond ring fr
 direct-address-medium | e pieces will instantly boost [your] confidence and they're all on
+exaggeration | rbox where there is currently [up to] 30 per cent off bras, knicker
 clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it's gone
 direct-address-medium | 10 chic home finds will make [your] space look instantly designer
+exaggeration | e look instantly designer and [totally] Instagram-worthy - here's wha
 conflict | re in tell-all book on family [feud] after refusing to sign NDA'
 uncertainty | n Beckham's ex Hana Cross has [reportedly] been asked to feature in a te
 uncertainty | ictoria and David Beckham are [reportedly] aware that relatives, acquain
@@ -59,6 +63,7 @@ negative-framing | [Tragedy] as boy, 7, is killed after be
 negative-framing | share [Tragedy] as boy, 7, is killed after be
 loaded-framing-medium | BORIS JOHNSON: My [bizarre] tea with Prince Andrew and hi
 clickbait | h Prince Andrew and his three [jaw-dropping] requests, day I had to ban hi
+exaggeration | s is how he's built himself a [huge] fortune while giving you tips
 direct-address-medium | f a huge fortune while giving [you] tips that will never make you
 direct-address-medium | you tips that will never make [you] rich... and betrayal he's des
 negative-framing-medium | you rich... and betrayal he's [desperate] to hide
@@ -68,6 +73,8 @@ all-caps | to divorce? Five women reveal [EXACTLY] how much they made love in th
 direct-address-medium | eye-opening results may have [you] ringing your lawyer...
 direct-address-medium | results may have you ringing [your] lawyer...
 all-caps | [WAR IN THE MIDDLE EAST]
+exaggeration-medium | ere were no injuries, but the [dramatic] sight of the buildings with h
+exaggeration | c sight of the buildings with [huge] palls of smoke coming from th
 negative-framing | demonstrating against Iranian [regime]... which has brutally oppress
 negative-framing | ng 'f*** you' at anti-Iranian [regime] protesters and flashing her m
 negative-framing | activists swear at anti-Iran [regime] protesters
@@ -113,21 +120,28 @@ authority | r a spectacular home refresh, [according to] the experts
 modality-medium | licking mission to Washington [should] be postponed for as long as p
 derogatory | Haunting prison mugshots show [mob] jailed for stealing iron and
 derogatory | rison mugshots show Victorian [mob] jailed for stealing iron
+exaggeration-medium | Accidental poisoning deaths [soar] among over-65s - with dementi
+exaggeration-medium | e Accidental poisoning deaths [soar] among over-65s
 negative-framing-medium | [Tragic] royal Thomas Kingston's inves
 negative-framing-medium | 110 shares [Tragic] royal Tom Kingston's firm owe
+exaggeration | Harry and Meghan's [huge] Australia plans: Couple to re
 loaded-framing-medium | of an investigation into the [disgraced] former prince.
 reveal | said publicly. Hearing these [secrets] revealed utterly shook me - a
 reveal | blicly. Hearing these secrets [revealed] utterly shook me - and I'm no
 loaded-framing | In the [so-called] modern world, what place is t
 aggression | James Corden ordered to [rip] up 'unsightly' paving slabs l
 negative-framing-medium | A TikTok star mom has [tragically] died at 47 after suffering co
+exaggeration | oan Gruffudd after he secured [huge] win by getting his domestic v
 modality-medium | s Steve Borthwick and the RFU [must] answer after unforgivable Ita
 moral | One of the most [evil] child killers in history Ian
 hype | How [glamorous] nurse became embroiled in Tur
 negative-framing-medium | How glamorous nurse became [embroiled] in Turkish mafia murder plot
 all-caps | [WAR IN THE MIDDLE EAST]
+exaggeration-medium | Mortgage costs set to [soar] as Iran conflict means intere
+exaggeration-medium | share Mortgage costs to [soar] as Iran conflict means intere
 authority | who in the world: As military [experts warn] World War III has never been
 authority | ts' during his teenage years, [according to] royal author Tina Brown. Yet
+exaggeration-medium | ce had begun to embark upon a [drastically] different path. Aged 40, he a
 all-caps | [DON'T MISS]
 fear | ecting Harvey Weinstein after [horrifying] hotel encounter
 dysphemism | HREE professional dancers are [axed] by BBC bosses ahead of new se
@@ -140,10 +154,12 @@ moral | er to 'cash in on the Epstein [scandal]'
 conflict | court war with Justin Baldoni [rages on]
 clickbait | Jack Osbourne recalls [devastating] moment he realized dad Ozzy w
 all-caps | A-list pop star [CRASHES] Ryan Gosling's Saturday Night
+exaggeration-medium | ar Matthew Macfadyen in first [dramatic] shots from remake of classic
 loaded-framing-medium | Leon flashes her bottom in a [racy] sheer skirt during Paris Fash
 uncertainty-medium | er-Man co-star fuels marriage [rumors] with cryptic Instagram post
 loaded-framing-medium | Lily Allen puts on a [racy] display in a pink silk bra as
 conflict | n's Got Talent collapses into [chaos] as judges Alesha Dixon and Si
+exaggeration-medium | e in your at-home routine can [dramatically] extend the life of your cloth
 negative-framing | [Tragedy] of Emma Watson's billionaire
 all-caps | Timothee Chalamet [SLAMMED] by Met Opera and Covent Garde
 conflict | [Clash] of the co-stars! All the on-s
@@ -156,13 +172,16 @@ aggression-medium | indiscretion. Coleen's utter [fury] all revealed by ALISON B
 uncertainty-medium | after denying marriage split [rumours] in bizarre video
 conflict | ctoria's PFW show amid family [feud]
 all-caps | ruly cynical reason I believe [REALLY] lies behind the Beckhams' gus
+exaggeration-medium | en Panettiere stuns fans with [dramatic] hair transformation just week
 all-caps | Sydney Sweeney shows off her [VERY] ample chest in racy webcam sn
 loaded-framing-medium | s off her VERY ample chest in [racy] webcam snap as she plugs her
-all-caps | pping diamond engagement ring [DURING] her first-round win at Indian
+exaggeration | without Jessie Buckley would [totally] fall apart
+all-caps | wears diamond engagement ring [DURING] her first-round win at Indian
 distancing | ritney Spears is arrested for [suspected] DUI, we revisit what the trou
 all-caps | rrects photographer after his [DAUGHTER], 16, is mistaken for Megan Fo
 derogatory-medium | e Adams is accused of being a [foul-mouthed] aggressive bully who humiliat
 all-caps | ictured for the first time in [MONTHS]
+exaggeration | e Abrams and Paul Mescal take [huge] step in their relationship as
 uncertainty-medium | Romeo Beckham's [rumoured] ex Caroline Daur turns heads
 idiom-medium | m's rumoured ex Caroline Daur [turns heads] at Victoria's Paris Fashion W
 moral | Rachel Weisz's [scandalous] new Netflix series is her rau
@@ -170,13 +189,17 @@ all-caps | iest role yet as she performs [VERY] X-rated sex scenes with White
 all-caps | ge of her pleasure' - but had [VERY] different ideas about what to
 hype-medium | reconciling following their '[explosive] row' over secret affair with
 idiom-medium | David and Victoria Beckham's [olive branch] with 'love you' message to Br
-all-caps | ristina Applegate reveals the [HUGE] favor Will Ferrell did for he
+exaggeration | sh £20M Cheshire mansion with [huge] trophy room for dad Wayne's f
+exaggeration | ristina Applegate reveals the [HUGE] favor Will Ferrell did for he
+exaggeration | fter ex Ioan Gruffudd secured [huge] win by getting his domestic v
 dysphemism | months after streaming giant [axed] her lifestyle show amid scath
 aggression | axed her lifestyle show amid [scathing] reviews
+exaggeration-medium | s goes braless as she flaunts [drastic] weight loss amid speculation
 fear | himself on camera in front of [horrified] castmates
 negative-framing-medium | sad new estrangement and the '[desperate]' meaning behind these picture
 rhetorical-question | some kind of special effects, [right?]!'
 distancing-medium | ichael Bay sues two women who [allegedly] crashed car into his Bel-Air
+exaggeration | Two [huge] ITV daytime shows pulled off
 distancing-medium | ciating with'... after police [allegedly] discover unknown substance in
 conflict | ctly about Brooklyn Beckham's [feud] with David and Victoria - bef
 clickbait-medium | ve lives makes rare outing... [can you guess] who?
@@ -184,8 +207,10 @@ hype-medium | British comedy legends among [star-studded] guests hitting screens
 distancing-medium | Britney Spears [allegedly] open to seeking treatment aft
 modality-medium | k-lifting epidemic! Now Tesco [has to] slap security tags on £2.85 p
 negative-framing | In [a desperate] attempt to foil shoplifters,
-all-caps | pping diamond engagement ring [DURING] her first-round win at Indian
+all-caps | wears diamond engagement ring [DURING] her first-round win at Indian
 all-caps | wears diamond engagement ring [DURING] her win at Indian Wells
+exaggeration-medium | ar Matthew Macfadyen in first [dramatic] shots from remake of classic
+exaggeration-medium | z appears distressed during a [dramatic] arrest. But this is not the O
 conflict | [Clash] of the co-stars! All the on-s
 reveal | racing commentator John Hunt [reveals] grieving process after crossb
 aggression | a TOWEL on stage after being [ripped] out of leather catsuit by fan
@@ -200,6 +225,7 @@ all-caps | [MORE DON'T MISS]
 negative-framing-medium | Amanda Holden's microphone in [desperate] bid to get revenge on Simon C
 all-caps | girlfriend Kim Turnbull risks [ANOTHER] awkward run-in with his ex Mi
 moral | Grey's Anatomy star exposes '[brutal]' sacking that 'came out of no
+colloquialism | Anatomy star exposes 'brutal' [sacking] that 'came out of nowhere' -
 all-caps | er begging for an explanation [NINETEEN] times during exit meeting
 fear-medium | urbulent love life: From her '[horrendous]' split with a rugby player to
 dysphemism | U-turn on Christine Lampard's [axing] as she's parachuted back in t
@@ -219,7 +245,7 @@ all-caps | angry boss says he will go on [HOLIDAY]
 fear-medium | [Heartbroken] Blake Lively cuts a downcast
 conflict | of FA Cup following thrilling [clash] with Premier League side Chel
 fear-medium | Wrexham 2-4 Chelsea: [Heartbreak] for 10-man Championship side
-# changed text nodes=46
+# changed text nodes=55
 ~ s are using state TV to issue [chilling  => ]warnings that they and their c
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
@@ -231,6 +257,7 @@ fear-medium | Wrexham 2-4 Chelsea: [Heartbreak] for 10-man Championship side
 ~ Jump racing in [shock  => ]after 'lovely and bubbly' amat
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ ched to share stories for the ['eye-watering'  => ]book, due for release in Augus
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
@@ -239,6 +266,7 @@ fear-medium | Wrexham 2-4 Chelsea: [Heartbreak] for 10-man Championship side
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ SIR CLIVE WOODWARD: I am [incredibly  => ]angry. These are the FOUR key
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
@@ -246,23 +274,30 @@ fear-medium | Wrexham 2-4 Chelsea: [Heartbreak] for 10-man Championship side
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ ares emotional tribute to his ['incredible'  => ]wife Victoria after her Paris
+~ [EXCLUSIVE => ]
+~ [EXCLUSIVE => ]
+~ engaged Aryna Sabalenka wears [eye-popping  => ]diamond engagement ring DURING
+~ Lizzo shows off her [incredible  => ]60lb weight loss in a leggy pi
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
-~ [EXCLUSIVE => ]
-~ [EXCLUSIVE => ]
+~ i shows off her toned body in [incredible  => ]yacht holiday photos - with fo
 ~ e of Robert Peston!' Viewers' [shock  => ]at 65-year-old broadcaster's g
+~ engaged Aryna Sabalenka wears [eye-popping  => ]diamond engagement ring DURING
 ~ commentator John Hunt reveals [heartbreaking  => ]grieving process after crossbo
 ~ Commentator John Hunt reveals [heartbreaking  => ]grieving process
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ tone weight loss as he shares [incredible  => ]before and after pictures
 ~ Chris Packham reveals the [HORRIFIC  => ]ways he amassed his collection
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ SIR CLIVE WOODWARD: I am [incredibly  => ]angry. These are the FOUR key
 ~ commentator John Hunt reveals [heartbreaking  => ]grieving process after crossbo
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]

@@ -1,4 +1,4 @@
-# test-all-types.html mode=highlight highlights=112
+# test-all-types.html mode=highlight highlights=122
 aggression | st | hit with | rip | roast | [scathing] | slam | taken out | torch |
 aggression | p | roast | scathing | slam | [taken out] | torch | under fire
 aggression | | slam | taken out | torch | [under fire]
@@ -36,6 +36,16 @@ euphemism | [collateral damage] | enhanced interrogation | no
 euphemism | collateral damage | [enhanced interrogation] | non-consensual encounter |
 euphemism | ge | enhanced interrogation | [non-consensual encounter] | passed away | probe
 euphemism | | non-consensual encounter | [passed away] | probe
+exaggeration | [alarming] | countless | eye-watering |
+exaggeration | alarming | [countless] | eye-watering | huge | incre
+exaggeration | alarming | countless | [eye-watering] | huge | incredibly | massive
+exaggeration | | countless | eye-watering | [huge] | incredibly | massive | outr
+exaggeration | tless | eye-watering | huge | [incredibly] | massive | outrageous | stag
+exaggeration | atering | huge | incredibly | [massive] | outrageous | staggering | t
+exaggeration | huge | incredibly | massive | [outrageous] | staggering | totally | up t
+exaggeration | ibly | massive | outrageous | [staggering] | totally | up to 10
+exaggeration | e | outrageous | staggering | [totally] | up to 10
+exaggeration | eous | staggering | totally | [up to] 10
 fear | dangerous | [frighten] | horrify | panic | terrify |
 fear | dangerous | frighten | [horrify] | panic | terrify | terror |
 fear-medium | gerous | frighten | horrify | [panic] | terrify | terror | threat |

@@ -1,4 +1,4 @@
-# newssite.html mode=remove highlights=338
+# newssite.html mode=remove highlights=361
 fear | 'safest place on Earth' - as [frightened] holidaymakers scramble for fl
 negative-framing-medium | thousands of ordinary Britons [desperate] to get home. While the United
 conflict | Protestors [clash] with mourners at candlelit vi
@@ -51,9 +51,11 @@ idiom-medium | romance with Zoë Kravitz goes [from strength to strength]
 uncertainty-medium | er she is having sex with her [rumored] lover and trusted adviser.
 aggression-medium | Weight-loss jabs could [slash] the risk of alcohol, cigarett
 direct-address-medium | 10 chic home finds will make [your] space look instantly designer
+exaggeration | e look instantly designer and [totally] Instagram-worthy - here's wha
 all-caps | SHOPPING: Primark's latest [MAJOR FIND] has shoppers rushing for the
 clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it's gone
 direct-address-medium | e pieces will instantly boost [your] confidence and they're all on
+exaggeration | rbox where there is currently [up to] 30 per cent off bras, knicker
 uncertainty-medium | The Princess of Wales' [rumoured] favourite anti-ageing formula
 uncertainty-medium | SHOPPING: [Rumoured] to be a favourite of Catherin
 idiom-medium | es, this bee venom formula is [turning heads] across social media.
@@ -65,9 +67,12 @@ reveal | Amazon just [revealed] its longest sale yet! Here ar
 all-caps | TOM LEONARD: [Was it REALLY a French-speaking Jim Carrey who accepted an award in Paris this week - or could the crazy conspiracy theories be true?]
 hype | ue francaise when he accepted [a prestigious] film award in Paris on Thursd
 all-caps | share Was it [REALLY] a French Jim Carrey who accep
+exaggeration-medium | um wage as youth unemployment [soars]
 authority | Bosses and [experts say] Labour's national insurance h
+exaggeration-medium | e plans as youth unemployment [soars]
 loaded-framing-medium | BORIS JOHNSON: My [bizarre] tea with Prince Andrew and hi
 clickbait | h Prince Andrew and his three [jaw-dropping] requests, day I had to ban hi
+exaggeration | s is how he's built himself a [huge] fortune while giving you tips
 direct-address-medium | f a huge fortune while giving [you] tips that will never make you
 direct-address-medium | you tips that will never make [you] rich... and betrayal he's des
 negative-framing-medium | you rich... and betrayal he's [desperate] to hide
@@ -81,19 +86,23 @@ reveal | band: Lee Andrews' furious ex [reveals] details of secret phone call
 reveal | furious ex reveals details of [secret] phone call with model and war
 negative-framing-medium | e what Alana describes as her [desperate] attempts to warn her, includi
 negative-framing | share [Furious] ex of Katie Price's husband r
+exaggeration | s from Iran. Footage showed a [huge] explosion beneath her stern,
 reveal | predicted to resume? Experts [reveal] when travel will return to no
 loaded-framing-medium | ng Britain to avoid Labour's '[tax grab]'.
 conflict | traordinary missions that can [spark] one's imagination' says Air F
 fear-medium | The '[panicking]' cruise passengers trapped in
 conflict-medium | se passengers trapped in Gulf [warzone] by Iran's Strait of Hormuz bl
 negative-framing | srael air assault against the [regime] that resulted in the killing
+exaggeration-medium | ncellor's headroom amid fears [soaring] oil prices could spark a surg
 conflict | ears soaring oil prices could [spark] a surge in inflation
 modality-medium | aring the start of WWIII - we [must] stand up to him
 dysphemism | redouble demands on Labour to [axe] approval for Beijing mega-emb
 dysphemism | ries new demands on Labour to [axe] approval for Beijing mega-emb
 all-caps | f recovery - and the symptoms [EVERYONE] should be aware of
 modality-medium | y - and the symptoms EVERYONE [should] be aware of
+exaggeration | d it is set to give customers [huge] rewards for spending nights i
 direct-address-medium | e pieces will instantly boost [your] confidence and they're all on
+exaggeration | rbox where there is currently [up to] 30 per cent off bras, knicker
 clickbait-medium | arly Spring Deal Days offer - [here's how] to claim before it's gone
 minimizing | who is getting right and what [mere] mortals must know if they dar
 modality-medium | g right and what mere mortals [must] know if they dare to bare
@@ -125,6 +134,7 @@ idiom-medium | his estranged family's latest [olive branch] in brutal snub
 moral | mily's latest olive branch in [brutal] snub
 conflict | latest olive branch in brutal [snub]
 conflict | lead role in Prima after she [sparked] health concerns with drastic
+exaggeration-medium | sparked health concerns with [drastic] weight loss
 unsourced | ormation in recent months has [raised eyebrows]. A synopsis for the movie tea
 fear-medium | [Urgent warning] to iPhone users over 'sophist
 clickbait-medium | ing financial data and texts: [Act NOW]
@@ -163,6 +173,7 @@ all-caps | 110 shares Karoline Leavitt [EXPLODES] at CNN's Kaitlan Collins
 fear | in Middle Eastern bunker in '[terrifying]' ordeal amid US-Iran conflict
 fear | char has revealed he spent a '[terrifying]' few days in the Middle East
 fear | share '[Terrified]' Premier League star forced t
+exaggeration | umage, King penguins, growing [up to] 95cm tall, are the second lar
 reveal | is Morning's Dr Philippa Kaye [reveals] she has undergone a hysterect
 authority | Kate, Beatrice's display was, [according to] UK body language judge Judi J
 hype | Oops, looks like [supermodel] Kate has made a Fergie fashio
@@ -184,12 +195,14 @@ clickbait | Karla Thaynnara dies at 25 in [devastating] motorcycle crash shortly
 conflict | m 'want to draw a line' under [feud] with son Brooklyn after exten
 idiom-medium | lyn after extending emotional [olive branch] on his 27th birthday
 clickbait | Deadliest Catch star's [devastated] mom begs producers not to air
+exaggeration-medium | Gypsy-Rose Blanchard reveals [drastic] weight-loss transformation tw
 idiom-medium | r Albert Square role - and it [spells trouble] for Zoe Slater
 uncertainty-medium | Week with daughter, 16, amid [rumors] he is back with Megan Fox
 distancing-medium | Deadliest Catch star [allegedly] suffered a concussion on set
 aggression-medium | st of her life as she reveals [merciless trolls] left her contemplating her TV
 negative-framing | mera as pal breaks silence on [tragedy] at sea
 idiom-medium | shion Week after extending an [olive branch] to estranged brother Brooklyn
+exaggeration-medium | e in your at-home routine can [dramatically] extend the life of your cloth
 hype | helle Pfeiffer, 67, joins her [dazzling] co-stars Elle Chapman and Bea
 moral | d James Charles new move, the [scandal] that won't go away... and the
 idiom-medium | ' as they extend an emotional [olive branch] to son Brooklyn on his 27th b
@@ -198,6 +211,7 @@ all-caps | ic Finland trip... and shares [VERY] racy snap
 loaded-framing-medium | nland trip... and shares VERY [racy] snap
 all-caps | !' as Cat Deeley pays co-star [VERY] creepy compliment that 'no ma
 hype-medium | Kai Trump and Tiger Woods at [star-studded] TGL event... before golf icon
+exaggeration | nd discusses being offered 'a [huge] percentage less than a male c
 fear-medium | [Excruciating moment] Pink is forced to correct gue
 clickbait | Doctor Who fans '[devastated]' as Torchwood 'shrine' from B
 clickbait | er forehead - amid the twins' [devastating] health battle
@@ -250,6 +264,7 @@ loaded-framing-medium | ics after she was blasted for [racy] outfit at Egyptian 
 dysphemism | EDEN CONFIDENTIAL: [Axed] Gregg cooking up a comeback w
 fear-medium | Revealed: [Harrowing] details of Deadliest Catch st
 moral | nd told her to lose weight in [brutal] text
+exaggeration | lcoming her baby as she lands [massive] campaign
 distancing-medium | rs as three men sue actor for [allegedly] attacking them
 hype | Tuesday evening. The British [supermodel], 52, arrived arm in arm with
 moral | ing beliefs in witchcraft and [evil] spirits go unreported every y
@@ -293,7 +308,10 @@ aggression-medium | [Fury] over Chinese 'monkey executio
 aggression-medium | [Fury] has erupted in China after fo
 negative-framing | show at a tourist attraction. [A disturbing] video shows the primate made
 aggression-medium | share [Fury] over Chinese 'monkey executio
+exaggeration | Sea levels may be [up to] 4.9 feet HIGHER than we thoug
 all-caps | levels may be up to 4.9 feet [HIGHER] than we thought - leaving mil
+exaggeration | Sea levels could be [up to] 4.9 feet (1.5 metres) higher
+exaggeration | share Sea levels may be [up to] 4.9 feet HIGHER than we thoug
 all-caps | levels may be up to 4.9 feet [HIGHER] than we thought
 reveal | s learns her fate... as probe [reveals] reason why it happened
 negative-framing-medium | oment 'vaping' Brit passenger [desperately] apologises as he is thrown of
@@ -314,8 +332,10 @@ uncertainty-medium | The [rumoured] secrets behind Kristen Wiig's
 all-caps | tandout performance poet will [NEVER] win the show - and the genius
 idiom-medium | Macaulay Culkin [turns heads] in a Dior Very Hungry Caterpi
 fear | basement gym while stuck in '[terrifying]' Covid-like lockdown
+exaggeration-medium | ing himself to pieces' during [dramatic] weight loss
 loaded-framing-medium | otting Weatherfield legend in [raunchy] BBC drama three years after e
 hype-medium | n 16... eight years after her [explosive] exit
+exaggeration | otter star Rupert Grint faces [massive] 2,000-home estate being built
 derogatory | eveals he's become a 'fitness [freak]' and has developed an 'addict
 aggression-medium | Louise Thompson [furiously] hits back at 'surrogacy-shame
 aggression-medium | Louise Thompson furiously [hits back] at 'surrogacy-shamers' for at
@@ -329,15 +349,18 @@ negative-framing-medium | from restaurant after chef's [disastrous] blunder - as
 direct-address-medium | t beach has been named - does [YOUR] favourite make the list?
 rhetorical-question-medium | [Will supermarket prices rise thanks to the Middle East conflict - and which products could run out?]
 authority | n Britain in the longer-term, [experts warn].
+exaggeration | one thing in common - they're [massive].
 distancing-medium | d to play football' amid more [alleged] time-wasting during 1-0 win
 idiom-medium | [Chip off the old block]! Super-sub Kai Rooney produce
+exaggeration | [Huge] controversy as Newcastle star
 all-caps | being given second yellow for [DIVING] in chaotic first half
 derogatory | who fell down a lift shaft in [freak] accident opens up on 'miracle
 hype-medium | n freak accident opens up on '[miracle]' recovery as he reveals he is
 all-caps | Harry Maguire is found [GUILTY] of assaulting Greek police an
 all-caps | Simon Jordan [DEFENDS] Leeds fans accused of racism
 fear | in Middle Eastern bunker in '[terrifying]' ordeal amid US-Iran conflict
-# changed text nodes=56
+exaggeration | star nepo-baby son is handed [huge] ban for 'gay boy' slur at opp
+# changed text nodes=64
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ s. This is what really works, [the truth about  => ]wires - and precisely what to
@@ -377,14 +400,20 @@ fear | in Middle Eastern bunker in '[terrifying]' ordeal amid US-Iran conflict
 ~ [EXCLUSIVE => ]
 ~ the death of his 'brother' in [heartbreaking  => ]post
 ~ [EXCLUSIVE => ]
+~ betic diagnosis following her [incredible  => ]11 stone weight loss
+~ Kelly Brook flaunts her [incredible  => ]figure in a floral bikini as s
 ~ nd Michele Reiner were issued [chilling  => ]warning over son Nick living a
 ~ [EXCLUSIVE => ]
+~ Maura Higgins shows off her [incredible  => ]abs in a crop top and barely-t
 ~ [EXCLUSIVE => ]
 ~ ancer as she prepares for her ['worst nightmare' => 'worst'] of a red carpet
 ~ [EXCLUSIVE => ]
+~ Michelle Keegan looks [incredible  => ]in a brown polka dot dress and
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
 ~ [EXCLUSIVE => ]
+~ as Diane Kruger dazzles in an [eye-popping  => ]gown at Louvre gala dinner dur
+~ Alison Hammond shows off her [incredible  => ]11 stone weight loss as she pu
 ~ Kelly Osbourne's [heartbreaking  => ]words as grief-stricken star i
 ~ [EXCLUSIVE => ]
 ~ rged him to end his life in a [chilling  => ]series of messages, a new laws
@@ -394,4 +423,6 @@ fear | in Middle Eastern bunker in '[terrifying]' ordeal amid US-Iran conflict
 ~ nd Michele Reiner were issued [chilling  => ]warning over son Nick living a
 ~ Rob and Michele Reiner issued [chilling  => ]warning over son Nick
 ~ [EXCLUSIVE => ]
+~ ut fast after showing off her [incredible  => ]11 stone weight loss
+~ Kelly Brook shows off her [incredible  => ]curves in a leopard print biki
 ~ for the entire experiment' in [heartbreaking  => ]reunion clash

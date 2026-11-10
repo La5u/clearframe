@@ -17,7 +17,7 @@ const urls = process.argv.slice(2).length ? process.argv.slice(2) : [
   'https://edition.cnn.com/',
   'https://arstechnica.com/',
 ];
-const disabledTypes = new Set(['absolute', 'exaggeration', 'superlative']);
+const disabledTypes = new Set(['absolute', 'superlative']);
 const terms = Object.entries(loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT)).termsById)
   .filter(([term, data]) => term.length >= 4 && term.length <= 50 && !disabledTypes.has(data.type) && !data.contexts?.length)
   .map(([term]) => term).sort((a, b) => b.length - a.length);

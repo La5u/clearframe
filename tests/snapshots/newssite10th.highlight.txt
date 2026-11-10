@@ -1,5 +1,6 @@
-# newssite10th.html mode=highlight highlights=359
+# newssite10th.html mode=highlight highlights=401
 clickbait | [EXCLUSIVE]Cops swarm on Jeffrey Epstein'
+exaggeration | The [massive] search began after New Mexico
 clickbait | Royal Navy [FINALLY] sets sail to defend Cyprus af
 hype-medium | ft my 'meno-middle'... Then a [miracle] method banished it in just fo
 clickbait | [EXCLUSIVE]'Netflix were not happy with A
@@ -35,6 +36,7 @@ negative-framing-medium | BBC bosses were '[desperate]' to keep the 36-year-old 
 negative-framing | r-old Russian dancer amid the [bloodbath] because 'they know how popula
 negative-framing-medium | share [Desperate] BBC bosses save Katya Jones w
 authority | 'deliciously sweet' flavour, [according to] Which?.
+exaggeration-medium | here to buy NOW before prices [soar] (and how to snaffle yourself
 direct-address-medium | ices soar (and how to snaffle [yourself] the ultimate property nest eg
 all-caps | latasaray Team News - Osimhen [STARTS]View post
 all-caps | Liverpool Team News - Wirtz [STARTS]View post
@@ -42,6 +44,7 @@ reveal | zon Spring Deal Days 2026: We [reveal] all the best deals as they co
 negative-framing | aped unconscious Brit teen in [horrific] 30-minute ordeal in Magaluf a
 all-caps | rdable teeth whitening powder [REALLY] rival the dentist? I reviewed
 authority | Amazon Spring Deals Day buys [according to] Daily Mail shopping editors -
+exaggeration | shopping editors - including [huge] savings on Apple AirPods, Sha
 authority | n Spring Deal Days buys 2026, [according to] experts
 clickbait-medium | month to beat the 3pm slump - [here's how] it transformed my energy (and
 clickbait | Dry, cracked heels? The [shocking] footcare trend that's both di
@@ -87,8 +90,10 @@ idiom-medium | Zara Tindall [turns heads] in elegant navy skirt suit on
 idiom-medium | share Zara Tindall [turns heads] in elegant skirt suit at Chel
 hype | race for best-dressed is on! [Glamorous] Cheltenham revellers don thei
 hype | al has kicked off in style as [glamorous] racegoers clad in tweed and f
+exaggeration | [Incredible] pint prices at Cheltenham Fes
 reveal | prices at Cheltenham Festival [revealed]: Guinness slashed for first t
 aggression-medium | m Festival revealed: Guinness [slashed] for first time since 2022 - a
+exaggeration | share [Incredible] pint prices at this year's Ch
 negative-framing-medium | nd James Watts' beer business [woes]
 negative-framing-medium | am after Jame Watts' business [woes]
 distancing-medium | oercive behaviour. Trybus had [allegedly] bragged about how 'easy' it w
@@ -100,6 +105,7 @@ all-caps | ldest map of the night sky is [REVEALED] after 2,000 years: Hipparchu
 all-caps | ldest map of the night sky is [REVEALED] after 2,000 years
 clickbait | months for repeating 'deeply [shocking]' Ricky Gervais joke during ot
 all-caps | England star announces he's [QUITTING] international football, three
+exaggeration-medium | Oil prices have [soared] since the US and Israel began
 clickbait | [EXCLUSIVE]Jimmy Savile appears in Epstei
 hype | ointed Erika Kirk to serve on [an influential] board which oversees the US A
 direct-address-medium | ays 'there's no-one there for [you] when you crash' in latest swi
@@ -112,18 +118,23 @@ moral | less new Ayatollah 'even more [brutal] than his slain father': How h
 negative-framing | l than his slain father': How [hardline] Mojtaba Khamenei oversaw merc
 negative-framing | ated an important role in the [regime] over his lifetime.
 negative-framing | Mojtaba Khamenei, 56, a [hardline] cleric viewed as even more ex
+exaggeration | [Massive] airstrikes hit Tehran with 'u
+exaggeration | 111 shares [Massive] airstrikes hit Tehran with 'u
 clickbait | [EXCLUSIVE]Interactive map reveals cheape
 reveal | EXCLUSIVEInteractive map [reveals] cheapest place to buy petrol
 direct-address-medium | to buy petrol and diesel near [you] as fuel prices surge amid Ira
+exaggeration-medium | began amid concerns over the [soaring] cost of oil.
 aggression-medium | reatens Tehran with 'fire and [fury]' if blockade continues
 clickbait | [EXCLUSIVE]Anthony Joshua quits the UK to
 fear-medium | sands try to flee amid rising [panic] in Middle East warzone
 conflict-medium | d rising panic in Middle East [warzone]
 conflict-medium | h the desert city is now in a [warzone] with thousands of Britons des
 negative-framing-medium | one with thousands of Britons [desperate] to get out.
+exaggeration | Dogfight over Dubai: [Incredible] moment UAE fighter jet chases
 direct-address-medium | Why [you] should start prepping your ga
 modality-medium | Why you [should] start prepping your garden fu
 direct-address-medium | Why you should start prepping [your] garden furniture NOW to be re
+exaggeration | on the cheek while wearing a [huge] hat
 distancing-medium | The [alleged] rape took place at Sheffield
 authority | was reported by a third party [according to] British Transport Police.
 hype | l-Salem is accused of playing [a leading] role in the violent crackdown
@@ -144,14 +155,18 @@ all-caps | crash victims died avoidable [FIREBALL] death
 reveal | the Hollywood smile: Experts [reveal] what perfect teeth REALLY loo
 all-caps | rts reveal what perfect teeth [REALLY] look like - and which stars c
 clickbait | [EXCLUSIVE]Cabinet minister condemns MPs'
+exaggeration-medium | s MPs' expenses watchdog over [soaring] costs
 reveal | Spain's cheapest coastline [revealed] - with 150 miles of beaches,
 reveal | and sports bridal white amid [secret] wedding rumours as she leads
 uncertainty-medium | dal white amid secret wedding [rumours] as she leads the A-list glamo
+exaggeration | and Jennifer Connelly, looked [incredible] in a bridal white skirt with
 clickbait | cebook group I discovered the [shocking] truth about my donor
 negative-framing-medium | Single, nearly 40 and [desperate] for a baby, Jess Nuremberg kn
+exaggeration-medium | uremberg knew she had to take [drastic] action to become a mother..
 hype | Endometriosis [breakthrough]: Simple five-minute test coul
 clickbait | [EXCLUSIVE]The truth about Nadiya Bychkov
 reveal | EXCLUSIVE[The truth about] Nadiya Bychkova's Strictly sa
+colloquialism | ut Nadiya Bychkova's Strictly [sacking]: Axe had nothing to do with a
 dysphemism | Bychkova's Strictly sacking: [Axe] had nothing to do with ageism
 dysphemism | iya Bychkova blamed her shock [axing] on 'ageism', but insiders at
 all-caps | Alexander brothers are found [GUILTY] of all sex trafficking charge
@@ -184,6 +199,8 @@ colloquialism | -serving female pro dancer is [sacked] in major lineup shake-up
 dysphemism | car-winning film star, 92, is [AXED] from show - as fans fume 'ima
 all-caps | als 'The GC' has demanded £1M [A DAY] to return to show
 all-caps | Is Cher [MARRIED]? Singer, 79, wears diamond ri
+exaggeration | Daisy Edgar-Jones looks [incredible] in blue co-ord as she and Pop
+exaggeration | sis: A guide to Saudi's eight [incredible] UNESCO sites Ad Feature
 uncertainty-medium | dal white amid secret wedding [rumours] as she leads the A-list glamo
 clickbait | [EXCLUSIVE]Criss Angel sued by audience m
 distancing-medium | l sued by audience member for [alleged] battery and assault following
@@ -202,6 +219,7 @@ hype | with six nods - including a '[breakthrough]' prize for Owen Cooper, 16
 negative-framing | drama as they share the same [furious] complaint after just one epis
 idiom-medium | Zara Tindall [turns heads] in elegant navy skirt suit on
 negative-framing-medium | James Watts' Brewdog business [woes]
+exaggeration-medium | e in your at-home routine can [dramatically] extend the life of your cloth
 all-caps | Timothee Chalamet [ROASTED] by Jeopardy! with 'ballet and
 fear-medium | return to the UK amid 'rising [panic]'
 fear | Ashley James [horrified] as fake This Morning intervie
@@ -209,19 +227,26 @@ moral | d Ozark creators team up for '[ruthless]' new Netflix period drama ful
 moral | a full of 'forbidden love and [brutal] war'
 loaded | of For The Love Of Dogs after [vicious] backlash to Alison Hammond ta
 conflict-medium | he Love Of Dogs after vicious [backlash] to Alison Hammond taking over
+exaggeration | Kelly Brook shows off her [incredible] curves in a pink bikini from
 hype-medium | uller bust' swimwear range in [sizzling] Jamaica holiday snaps
 clickbait | [EXCLUSIVE]The truth about Nadiya Bychkov
+colloquialism | ut Nadiya Bychkova's Strictly [sacking]: Axe had nothing to do with a
 dysphemism | Bychkova's Strictly sacking: [Axe] had nothing to do with ageism
 idiom-medium | Paris Hilton [turns heads] in pastel pink as she rings t
+exaggeration | mas cards ever produced' with [incredible] royal connection
 clickbait | [EXCLUSIVE]'Netflix were not happy with A
 aggression-medium | Harry Styles fans are left '[fuming]' as they criticise screening
 conflict-medium | n on Timothee Chalamet ballet [backlash] and quips he 'doesn't need to
 moral | an' after her offensive tweet [scandal]
+exaggeration | on the cheek while wearing a [huge] hat
 dysphemism | BBC 'may [axe] even more Strictly profession
+exaggeration | ore Strictly professionals in [HUGE] shake-up ahead of the next se
 conflict | irthday tribute to her mum as [feud] with estranged son Brooklyn r
 distancing-medium | Rihanna jets out of LA after [alleged] shooter is charged with attem
 all-caps | ink claws into 'worst episode [EVER]' as they take aim at BBC scri
+exaggeration | udget reality show fronted by [huge] TV stars AXED after being tro
 dysphemism | show fronted by huge TV stars [AXED] after being trounced by The T
+exaggeration | Leigh-Anne Pinnock praises '[incredible]' Jesy Nelson amid her baby tw
 fear | Nelson amid her baby twins' '[heartbreaking]' diagnosis
 all-caps | rns 62, he's bracing for some [VERY] 'intimate insights' in a tell
 all-caps | How Lewis Hamilton [REALLY] feels about Kim Kardashian
@@ -234,6 +259,7 @@ fear | [Chilling] 911 audio details shooting at
 aggression-medium | ctful' Timothée Chalamet amid [fury] over 'no one cares about' ope
 conflict-medium | Rachel Zegler addresses [backlash] to woke Snow White reboot and
 negative-framing | after humiliating box office [disaster]
+exaggeration | ng a luxury beauty edit after [huge] Grammy and BRITs success
 clickbait | [EXCLUSIVE]Iconic nepo baby daughter of H
 derogatory | EXCLUSIVEIconic [nepo baby] daughter of Hollywood royalty
 hype | a pinstriped suit as he joins [glamorous] co-stars Sandra Hüller and Pr
@@ -262,13 +288,17 @@ negative-framing | Montana Brown sparks [furious] debate over 'tone deaf' criti
 all-caps | Good Morning Britain studio [EVACUATED] mid-broadcast as scrambling h
 clickbait | Nadiya Bychkova is '[devastated]' by Strictly axing as friends
 dysphemism | a is 'devastated' by Strictly [axing] as friends accuse show of age
+exaggeration | isses out on celeb partner in [huge] shake-up
 uncertainty-medium | dies of London after baseless [rumour] that she is a high-end 'madam
+exaggeration | ITV drops all episodes of [outrageous] comedy series 'that would eve
 hype | Lily James joins [glamorous] Jessica Chastain and Naomi Wa
 dysphemism | ' as it's revealed she's been [axed]
 all-caps | t hopeful returns to show for [FOURTH] time, six years on from makin
 aggression-medium | ITV [hits back] at claims This Morning bosses
 conflict | Rival barbers' 'turf war' [sparked] huge street brawl with '13 me
+exaggeration | l barbers' 'turf war' sparked [huge] street brawl with '13 men fig
 conflict | h barbers on February 13. The [feud] started when one barber who w
+exaggeration | re Barbers 'turf war' sparked [huge] street brawl of 13 men, court
 all-caps | 'dirty seven euro kebabs' is [BETTER]
 clickbait | [EXCLUSIVE]They went before live TV beggi
 moral | ing for help… while hiding an [evil] secret: Why monsters face the
@@ -285,6 +315,7 @@ direct-address-medium | you could be given access to [your] pot only for it to b
 direct-address-medium | a small window to save it if [you] act NOW: TANYA JEFFERIES
 clickbait-medium | mall window to save it if you [act NOW]: TANYA JEFFERIES
 clickbait | [EXCLUSIVE]Moment wife of Alexander broth
+exaggeration-medium | collapses on street in tears: [Dramatic] minute-by-minute account of f
 clickbait | Punch the monkey is [FINALLY] accepted by his peers after p
 direct-address-medium | POLL OF THE DAY: Do [you] believe war in the Middle Eas
 reveal | tain's most expensive streets [revealed]: Road where homes are worth a
@@ -298,8 +329,11 @@ negative-framing | wasn't an enormous industrial [disaster].
 negative-framing | ruled in a landmark case that [severe] female hair loss can be class
 aggression-medium | cash machine for the world': [Fury] as stats suggest a quarter of
 aggression-medium | share [Fury] as stats suggest 1-in-4 non-E
+exaggeration | Kelly Brook shows off her [incredible] curves in a pink bikini from
 hype-medium | uller bust' swimwear range in [sizzling] Jamaica holiday snaps
+exaggeration | Kelly Brook showed off her [incredible] curves in a pink bikini in si
 hype-medium | le curves in a pink bikini in [sizzling] holiday snaps from her trip t
+exaggeration | are Kelly Brook shows off her [incredible] curves in a pink bikini
 modality-medium | s connects to Pluto, one sign [must] trust their instincts, says J
 modality-medium | JEMIMA CAINER, while another [should] embrace emotion
 hype-medium | Cox scooped the event's most [prestigious] award in Birmingham on Sunday
@@ -310,18 +344,23 @@ clickbait | [EXCLUSIVE]Iconic nepo baby daughter of H
 derogatory | EXCLUSIVEIconic [nepo baby] daughter of Hollywood royalty
 derogatory | She is a [nepo baby] to two very iconic, talented
 derogatory | 91 shares Iconic [nepo baby] daughter of Hollywood royalty
+exaggeration | as, 20, violently kicked the '[incredibly] vulnerable' woman, aged in he
 hype | er Sian's birthday with their [glamorous] mum at swanky spa day after r
 hype-medium | reconciling following their '[explosive] row'
 hype | er, her sister Sian and their [glamorous] mother enjoyed a spa day on T
 direct-address-medium | What's [YOUR] Online Language? Scientists s
 direct-address-medium | ser - take the test to see if [you're] a 'Rabbit Hole Explorer' or a
 clickbait | [EXCLUSIVE]Staggering 242 Special Forces
+exaggeration | EXCLUSIVE[Staggering] 242 Special Forces troops - i
+exaggeration | A [staggering] 242 Special Forces troops - i
+exaggeration | share [Staggering] 242 Special Forces troops 'be
 clickbait | [EXCLUSIVE]Police employee who was caught
 all-caps | [MORE DON'T MISS]
 all-caps | s revealed as the new face of [FRASERS] in 'nostalgic' partnership as
 hype-medium | The Last Leg takes [explosive] turn as Penny Mordaunt brande
 fear | leaves BBC fans in tears over [heartbreaking] death just as show legend ret
 clickbait | racter brutally killed off in [jaw-dropping] twist
+exaggeration | ms a whopping 21 new stars in [huge] cast update - and fans have A
 all-caps | e cast update - and fans have [A LOT] to say about the Slytherin st
 clickbait | [EXCLUSIVE]How Ariana Grande and Ethan Sl
 all-caps | riana Grande and Ethan Slater [ALMOST] called it quits: Insider reve
@@ -333,6 +372,7 @@ negative-framing | Katie Price's husband's [furious] ex accuses him of scamming 
 clickbait | [EXCLUSIVE]EXPOSED: Andrew's messages abo
 clickbait | [EXCLUSIVE]Fergie and Josh Duhamel's 'tip
 all-caps | pping point': Insiders reveal [REAL] trigger for their divorce
+exaggeration | val hiatus to be filled with '[huge] charity concert honouring lat
 fear-medium | madan flee Dubai amid 'rising [panic]' as they drive 11 hours to Om
 negative-framing-medium | hey drive 11 hours to Oman in [desperate] bid to finally return to UK
 all-caps | ts pulses racing as she poses [TOPLESS] for sizzling selfie before sl
@@ -340,6 +380,7 @@ hype-medium | cing as she poses TOPLESS for [sizzling] selfie before slipping in
 clickbait | [EXCLUSIVE]Bloodbath at Strictly continue
 negative-framing | EXCLUSIVE[Bloodbath] at Strictly continues: Now pr
 all-caps | phie Habboo's Raising Chelsea [FIRST LOOK]: Fans go wild as couple tease
+exaggeration | 's simple hack to achieve her [incredible] figure that doesn't require a
 fear | 'missing him tremendously' in [heartbreaking] tribute on his 49th birthday
 fear | ecting Harvey Weinstein after [horrifying] hotel encounter
 conflict | Fulham and Southampton FA cup [clash] at Craven Cottage
@@ -356,5 +397,6 @@ negative-framing-medium | [Dodgy] Fire Stick crackdown: Eight n
 all-caps | Donald Trump warns Australia [NOT] to let Iran's female soccer s
 all-caps | l Carrick: Ex-Man United star [DEFENDS] viral post and reveals what i
 moral | interim boss told him after '[brutal]' message about former team-ma
+exaggeration | arn next opponents - with one [HUGE] tie
 all-caps | gend Xavi reveals why he will [NEVER] return to club amid explosive
 hype-medium | ill NEVER return to club amid [explosive] row with president Joan Lapor

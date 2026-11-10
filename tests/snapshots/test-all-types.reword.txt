@@ -1,4 +1,4 @@
-# test-all-types.html mode=reword highlights=112
+# test-all-types.html mode=reword highlights=122
 aggression-underline | st | hit with | rip | roast | [harsh] | slam | taken out | torch |
 aggression | rip | roast | harsh | slam | [taken out] | torch | under fire
 aggression | | slam | taken out | torch | [under fire]
@@ -36,6 +36,16 @@ euphemism-underline | [civilian harm] | torture | assault | died |
 euphemism-underline | civilian harm | [torture] | assault | died | probe
 euphemism-underline | civilian harm | torture | [assault] | died | probe
 euphemism-underline | an harm | torture | assault | [died] | probe
+exaggeration-underline | [concerning] | many | eye-watering | huge
+exaggeration-underline | concerning | [many] | eye-watering | huge | very
+exaggeration | concerning | many | [eye-watering] | huge | very | massive | out
+exaggeration | rning | many | eye-watering | [huge] | very | massive | outrageous
+exaggeration-underline | many | eye-watering | huge | [very] | massive | outrageous | stag
+exaggeration | eye-watering | huge | very | [massive] | outrageous | staggering | t
+exaggeration | ing | huge | very | massive | [outrageous] | staggering | totally | up t
+exaggeration | very | massive | outrageous | [staggering] | totally | up to 10
+exaggeration | e | outrageous | staggering | [totally] | up to 10
+exaggeration | eous | staggering | totally | [up to] 10
 fear | dangerous | [frighten] | horrify | panic | terrify |
 fear | dangerous | frighten | [horrify] | panic | terrify | terror |
 fear-medium | gerous | frighten | horrify | [panic] | terrify | terror | threat |
@@ -111,7 +121,7 @@ unsourced | d expert | multiple sources | [people close to] | unnamed sources | 
 unsourced-underline | e sources | people close to | [unnamed sources] | unsourced | sources
 unsourced-underline | close to | unnamed sources | [unsourced] | sources
 unsourced-underline | unnamed sources | unsourced | [sources]
-# changed text nodes=11
+# changed text nodes=12
 ~ st | hit with | rip | roast | [scathing => harsh] | slam | taken out | torch |
 ~ experts say | experts warn | [trusted partners => third parties]
 ~ state | exclusive | finally | [jaw-dropping => surprising] | must-see | must-watch | nig
@@ -128,6 +138,9 @@ unsourced-underline | unnamed sources | unsourced | [sources]
 ~ collateral damage | [enhanced interrogation => torture] | assault | died | probe
 ~ ge | enhanced interrogation | [non-consensual encounter => assault] | died | probe
 ~ | non-consensual encounter | [passed away => died] | probe
+~ [alarming => concerning] | many | eye-watering | huge
+~ alarming | [countless => many] | eye-watering | huge | very
+~ tless | eye-watering | huge | [incredibly => very] | massive | outrageous | stag
 ~ [gone to ground => disappeared] | hidden
 ~ gone to ground | [holed up => hidden]
 ~ [elitist => elite] | level playing field | offic

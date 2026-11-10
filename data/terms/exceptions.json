@@ -84,9 +84,11 @@
         { "after": "/^\\s*(?:guards?|war|army|front|committee|party)\\b/iu" }
       ]
     },
-    "sacked": {
-      "note": "American football: a quarterback \"sacked eight times\" or \"sacked for a loss\"; not a firm that \"sacked 300 staff\".",
+    "sack": {
+      "note": "American football: a quarterback \"sacked eight times\" or \"sacked for a loss\"; not a firm that \"sacked 300 staff\". Also the bag (\"a sack of rice\", \"hit the sack\") and football \"sacks\" as a statistic.",
       "unless": [
+        { "match": "/^sacks?$/iu", "after": "/^\\s+of\\b/iu" },
+        { "match": "/^sacks?$/iu", "before": "/\\b(?:a|an|the|hit the|in the|\\d+(?:\\.\\d)?|two|three|four|five|six|seven|eight|nine|ten|many|several|his|her|their|career|season|quarterback|qb)\\s+$/iu" },
         { "after": "/^\\s*(?:(?:\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\s+(?:more\\s+)?times\\b|for\\s+(?:a\\s+)?(?:loss|safety|\\d))/iu" },
         { "before": "/\\b(?:quarterback|qb|was|got|been)\\s+$/iu", "after": "/\\b(?:times|loss|yards?|sacks?)\\b/iu" }
       ]

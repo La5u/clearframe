@@ -52,7 +52,7 @@ Color-coded categories track types of manipulation:
 - **indigo** address & obligation: imperative, direct-address, inclusive-pronoun, modality
 - **slate** quotes: quote
 
-Disabled by default: `absolute`, `exaggeration`, `superlative`, `quote`.
+Disabled by default: `absolute`, `superlative`, `quote`.
 
 The address and structure devices are mostly common words, so they are kept
 quiet. Word lists (`data/terms/{imperative,direct-address,inclusive-pronoun,modality}.csv`)

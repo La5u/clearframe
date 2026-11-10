@@ -1,6 +1,7 @@
-# test-all-terms.html mode=remove highlights=90
+# test-all-terms.html mode=remove highlights=96
 repetition | [again and again] | ain't | alarming | alleged
 colloquialism | again and again | [ain't] | alarming | alleged | ambush
+exaggeration | again and again | ain't | [alarming] | alleged | ambush | animal |
 distancing-medium | nd again | ain't | alarming | [alleged] | ambush | animal | apparentl
 uncertainty | | alleged | ambush | animal | [apparently] | attack | authorities say |
 authority | nimal | apparently | attack | [authorities say] | backlash | beast | best
@@ -14,6 +15,7 @@ conflict | utal | catastrophic | chaos | [clash] | cockroach | collateral dama
 euphemism | | chaos | clash | cockroach | [collateral damage]
 rhetorical-question | controversial | [correct?] | corrupt | countless | cutti
 moral | controversial | correct? | [corrupt] | countless | cutting-edge |
+exaggeration | ersial | correct? | corrupt | [countless] | cutting-edge | dangerous |
 hype | rect? | corrupt | countless | [cutting-edge] | dangerous | despicable | de
 moral | | cutting-edge | dangerous | [despicable] | devastate | disaster | diss
 clickbait | ge | dangerous | despicable | [devastate] | disaster | dissident | elit
@@ -22,11 +24,11 @@ derogatory | able | devastate | disaster | [dissident] | elite | elitist
 loaded-framing | isaster | dissident | elite | [elitist]
 euphemism | [enhanced interrogation] | erupt | evil | exclusive |
 moral | anced interrogation | erupt | [evil] | exclusive | experts claim |
-unsourced | | erupt | evil | exclusive | [experts claim] | experts say | extremist | e
-authority | | exclusive | experts claim | [experts say] | extremist | eye-watering |
-derogatory | experts claim | experts say | [extremist] | eye-watering | feud | final
-conflict | | extremist | eye-watering | [feud] | finally | frighten | fury
-fear | e-watering | feud | finally | [frighten] | fury
+unsourced | | erupt | evil | exclusive | [experts claim] | experts say | extremist | |
+authority | | exclusive | experts claim | [experts say] | extremist | | feud | finall
+derogatory | experts claim | experts say | [extremist] | | feud | finally | frighten
+conflict | | experts say | extremist | | [feud] | finally | frighten | fury
+fear | xtremist | | feud | finally | [frighten] | fury
 aggression-medium | | feud | finally | frighten | [fury]
 hype | [game-changing] | gone to ground | gotta | go
 idiom | game-changing | [gone to ground] | gotta | government handouts
@@ -36,12 +38,14 @@ moral | gotta | government handouts | [heroic] | hit with | holed up | horde
 idiom | andouts | heroic | hit with | [holed up] | horde | horrify | huge | il
 derogatory | eroic | hit with | holed up | [horde] | horrify | huge | illegal al
 fear | hit with | holed up | horde | [horrify] | huge | illegal aliens | inc
+exaggeration | holed up | horde | horrify | [huge] | illegal aliens | incident o
 loaded-framing | up | horde | horrify | huge | [illegal aliens] | incident occurred
 passive | ify | huge | illegal aliens | [incident occurred]
-rhetorical-question | incredibly | inside scoop | [isn't it?] | jaw-dropping | junta | kind
-clickbait | | inside scoop | isn't it? | [jaw-dropping] | junta | kinda | lash out |
+rhetorical-question | inside scoop | [isn't it?] | jaw-dropping | junta | kind
+clickbait | inside scoop | isn't it? | [jaw-dropping] | junta | kinda | lash out |
 negative-framing | | isn't it? | jaw-dropping | [junta] | kinda | lash out | massive
 colloquialism | it? | jaw-dropping | junta | [kinda] | lash out | massive | mere |
+exaggeration | | junta | kinda | lash out | [massive] | mere | minor glitch | mista
 minimizing | kinda | lash out | massive | [mere] | minor glitch | mistakes wer
 minimizing | | lash out | massive | mere | [minor] glitch | mistakes were made
 passive | ssive | mere | minor glitch | [mistakes were made]
@@ -50,9 +54,9 @@ repetition | mob | [more and more] | most | must-have | | non-co
 hype | mob | more and more | most | [must-have] | | non-consensual encounter
 euphemism | d more | most | must-have | | [non-consensual encounter] | officer-involved shooting |
 loaded-framing | | non-consensual encounter | [officer-involved] shooting | oppressive | outra
-moral | | officer-involved shooting | [oppressive] | outrage | outrageous | over
-repetition | sive | outrage | outrageous | [over and over] | panic
-fear-medium | outrageous | over and over | [panic]
+moral | | officer-involved shooting | [oppressive] | outrage | | over and over |
+repetition | ng | oppressive | outrage | | [over and over] | panic
+fear-medium | | outrage | | over and over | [panic]
 euphemism | [passed away] | people familiar | piracy |
 unsourced | passed away | [people familiar] | piracy | plot | probe | pup
 moral | ssed away | people familiar | [piracy] | plot | probe | puppet | pur
@@ -71,23 +75,29 @@ loaded-framing | scandal | scathing | secret | [self-styled]
 conflict | shock | [showdown] | sinful | slam | snub | so-c
 moral | shock | showdown | [sinful] | slam | snub | so-called | s
 conflict | | showdown | sinful | slam | [snub] | so-called | sources say | s
-loaded-framing | down | sinful | slam | snub | [so-called] | sources say | spark | stagg
-unsourced | l | slam | snub | so-called | [sources say] | spark | staggering | sunset
-loaded-framing | es say | spark | staggering | [sunset] | suspected | suspicion of
-distancing | spark | staggering | sunset | [suspected] | suspicion of
-uncertainty | gering | sunset | suspected | [suspicion of]
+loaded-framing | down | sinful | slam | snub | [so-called] | sources say | spark | | sun
+unsourced | l | slam | snub | so-called | [sources say] | spark | | sunset | suspecte
+loaded-framing | led | sources say | spark | | [sunset] | suspected | suspicion of
+distancing | rces say | spark | | sunset | [suspected] | suspicion of
+uncertainty | park | | sunset | suspected | [suspicion of]
 aggression | [taken out] | tax relief | tax breaks for
 loaded | taken out | [tax relief] | tax breaks for the wealthy
 loaded | taken out | tax relief | [tax breaks for the wealthy] | terrify | terror | the trut
 fear | tax breaks for the wealthy | [terrify] | terror | the truth about |
 repetition | | the truth about | threat | [time after time] | time and time again | torch
 repetition | | threat | time after time | [time and time again] | torch | totally | tragedy
+exaggeration | time and time again | torch | [totally] | tragedy
 negative-framing | ime again | torch | totally | [tragedy]
 derogatory | [trash] | trusted partners | ultimate
 authority | trash | [trusted partners] | ultimate | under fire | unn
 aggression | trusted partners | ultimate | [under fire] | unnamed sources | up to 10
 unsourced | ers | ultimate | under fire | [unnamed sources] | up to 10 | urgent | vermin
+exaggeration | nder fire | unnamed sources | [up to] 10 | urgent | vermin | what's
 conflict | rmin | what's really | wild | [wipeout] | worst
 colloquialism | [y'all] | you won't believe
-# changed text nodes=1
+# changed text nodes=4
+~ m | experts say | extremist | [eye-watering  => ]| feud | finally | frighten |
+~ [incredibly |  => ]inside scoop | isn't it? | jaw
 ~ and more | most | must-have | [nightmare  => ]| non-consensual encounter | o
+~ ting | oppressive | outrage | [outrageous  => ]| over and over | panic
+~ alled | sources say | spark | [staggering  => ]| sunset | suspected | suspici

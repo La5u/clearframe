@@ -1,4 +1,4 @@
-# newssite10thnypost.html mode=remove highlights=62
+# newssite10thnypost.html mode=remove highlights=67
 loaded-framing | [Disturbing] Déjà Vu
 loaded-framing-medium | cnn deletes [tone-deaf] post downplaying moment suspe
 distancing | -deaf post downplaying moment [suspected] terrorists hurled bombs near
@@ -11,6 +11,7 @@ loaded-framing-medium | from head to toe — leading to [bizarre] bedroom discov
 reveal | I found out my dad has a [secret] child — how do I confront him
 reveal | Happiest cities in the US [revealed] — we have good and bad news f
 imperative-medium | nfl free agency live updates: [See] which players are left on Day
+exaggeration | Professors sound the alarm on [huge] rise of students registering
 negative-framing-medium | [Desperate] hunt Ex-fbi agent claims bloo
 dysphemism | Yogi [axed] from nyc school after ‘inappr
 imperative-medium | Space race [See] the space-saving renovations
@@ -28,8 +29,11 @@ uncertainty-medium | ng to breathe mid-speech — as [rumors] of his health woes
 negative-framing-medium | ech — as rumors of his health [woes] ramp up.
 fear-medium | Increased tornado threat [looms] over millions across more tha
 distancing-medium | 'Immediate harm' Rihanna’s [alleged] shooter also went after Billi
+exaggeration | Pennsylvania woman lives in [massive] $40K church — and claims buyi
 conflict | Rock out Cher, 79, [sparks] marriage speculation with Ale
+exaggeration | Alexander Edwards, 40, after [massive] ring spotted at son’s wedding
 direct-address-medium | Gen Z, [you] have one advantage in this wo
+exaggeration | California prices see another [huge] spike overnight
 direct-address-medium | st cancer treatment increases [your] risk of dying by 400%
 hype | The [Surprising] Metros Where an Entry-Level L
 hype | [Supermodel] Kendall Jenner Opens Up the D
@@ -49,6 +53,7 @@ imperative-medium | Daily Crossword: [Take] a crack at the puzzle, includ
 direct-address-medium | t the puzzle, including those [you] may have missed
 direct-address-medium | Daily Word Search: Use [your] noggin to find the hidden wor
 direct-address-medium | e saved — and doesn’t deserve [your] hate
+exaggeration | Which [huge] edm act just announced a nati
 fear-medium | Dark days [loom] for New Yorkers as climate la
 modality-medium | lax’s People Mover [needs to] be completed before embarrass
 imperative-medium | read the word, not the virus: [Get] measles vax
@@ -61,10 +66,11 @@ aggression-medium | Larry Ellison’s Oracle [slashing] thousands of jobs due to
 distancing-medium | amos’ wedding called off over [alleged] ‘ongoing infidelity issues’
 loaded-framing-medium | an of not protecting her from [disgraced] football coach Sherrone Moore
 moral | one Moore in first remarks on [scandal]
-# changed text nodes=14
+# changed text nodes=15
 ~ [chilling => ]
 ~ [Wild brawl => Brawl] breaks out at
 ~ [shocking => ]
+~ The [staggering  => ]amount of time airport travele
 ~ r-old tennis star loses it in [wild  => ]meltdown after failing to defe
 ~ Sad footage exposes [heartbreaking  => ]reality of animals in Dubai as
 ~ [exclusive => ]

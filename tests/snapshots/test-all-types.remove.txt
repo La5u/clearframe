@@ -1,4 +1,4 @@
-# test-all-types.html mode=remove highlights=110
+# test-all-types.html mode=remove highlights=116
 aggression | st | hit with | rip | roast | [scathing] | slam | taken out | torch |
 aggression | p | roast | scathing | slam | [taken out] | torch | under fire
 aggression | | slam | taken out | torch | [under fire]
@@ -35,6 +35,12 @@ euphemism | [collateral damage] | enhanced interrogation | no
 euphemism | collateral damage | [enhanced interrogation] | non-consensual encounter |
 euphemism | ge | enhanced interrogation | [non-consensual encounter] | passed away | probe
 euphemism | | non-consensual encounter | [passed away] | probe
+exaggeration | [alarming] | countless | | huge | | mass
+exaggeration | alarming | [countless] | | huge | | massive | | | to
+exaggeration | alarming | countless | | [huge] | | massive | | | totally | u
+exaggeration | ming | countless | | huge | | [massive] | | | totally | up to 10
+exaggeration | ss | | huge | | massive | | | [totally] | up to 10
+exaggeration | e | | massive | | | totally | [up to] 10
 fear | dangerous | [frighten] | horrify | panic | terrify |
 fear | dangerous | frighten | [horrify] | panic | terrify | terror |
 fear-medium | gerous | frighten | horrify | [panic] | terrify | terror | threat |
@@ -109,6 +115,10 @@ unsourced | ts claim | multiple sources | [people close to] | people familiar | 
 unsourced | e sources | people close to | [people familiar] | sources say | unnamed sourc
 unsourced | close to | people familiar | [sources say] | unnamed sources
 unsourced | ople familiar | sources say | [unnamed sources]
-# changed text nodes=2
+# changed text nodes=3
 ~ ing | must-see | must-watch | [nightmare  => ]| reveal | shock | shocking |
+~ alarming | countless | [eye-watering  => ]| huge | | massive | | | total
+~ tless | eye-watering | huge | [incredibly  => ]| massive | | | totally | up t
+~ huge | incredibly | massive | [outrageous  => ]| | totally | up to 10
+~ ibly | massive | outrageous | [staggering  => ]| totally | up to 10
 ~ aster | gruesome | hardline | [horrific  => ]| junta | puppet | regime | tr

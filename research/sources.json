@@ -156,6 +156,15 @@
       "redistribution": "local-only",
       "citation": "Spinde et al., 2021",
       "notes": "Sealed evaluation only: never mining, training, tuning, vocabulary fitting, threshold selection, or rule review."
+    },
+    {
+      "id": "llm-assisted-corpus-mining",
+      "name": "LLM-assisted mining of public news headlines",
+      "role": "mining",
+      "license": "Project's own editorial decisions",
+      "redistribution": "allowed",
+      "citation": "Candidate phrases proposed by a language model reading public RSS/Atom headlines and summaries, then verified by a second model call and approved by the owner.",
+      "notes": "Feeds listed in research/llm-feeds.json; titles and summaries stay in git-ignored research/raw and research/cache and are never shipped. Only the short phrases (the project's own editorial choices informed by public headlines) are rules. Candidates stay status \"candidate\" until the owner approves them. tests/gold and tests/fixtures are never mining input."
     }
   ]
 }

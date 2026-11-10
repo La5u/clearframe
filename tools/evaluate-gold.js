@@ -6,10 +6,12 @@
 //   npm run evaluate:gold -- --sensitivity=strong|standard|all   (default: the extension default)
 //   npm run evaluate:gold -- FILE...   other .jsonl files or directories
 //   npm run evaluate:gold -- --top=30  longer error lists
+//   npm run evaluate:gold -- --with-candidates[=medium|high]  dry run: also use unapproved candidate rules
+//                                    (in memory only) at that confidence or better; default medium (= high + medium)
 import fs from 'fs';
 import path from 'path';
 import { loadTerms } from '../src/core/term-utils.js';
-import { approvedRuleTerms } from './rule-utils.js';
+import { approvedRuleTerms, loadRuleRecords } from './rule-utils.js';
 import { DEFAULT_SETTINGS, normalizeSettings } from '../src/core/settings-utils.js';
 import { createAnalyzer, getMostImportantType } from '../src/core/analyze.js';
 
@@ -20,7 +22,10 @@ const allTypes = process.argv.includes('--all');
 const sensitivity = process.argv.find(arg => arg.startsWith('--sensitivity='))?.slice(14);
 const TOP = Number(process.argv.find(arg => arg.startsWith('--top='))?.slice(6)) || 10;
 
-const index = loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT));
+const withCandidates = process.argv.find(arg => arg.startsWith('--with-candidates'))?.split('=')[1] || (process.argv.includes('--with-candidates') ? 'medium' : '');
+const candidates = withCandidates ? loadRuleRecords(ROOT).filter(record => record.status === 'candidate' && (withCandidates === 'high' ? ['high'] : ['high', 'medium']).includes(record.confidence)) : [];
+const index = loadTerms(path.join(ROOT, 'data', 'terms'), [...approvedRuleTerms(ROOT), ...candidates.map(record => ({ phrase: record.phrase, type: record.type, neutral: '', aliases: record.aliases || [], stemType: record.stemType || '', regex: record.pattern || '', remove: false, confidence: record.confidence, contexts: record.contexts || [] }))]);
+for (const record of candidates) if (record.exception) index.exceptions.terms[record.phrase] = record.exception.unless;
 const settings = normalizeSettings({ ...(allTypes ? { types: Object.fromEntries(TYPES.map(type => [type, true])) } : DEFAULT_SETTINGS), ...(sensitivity && { sensitivity }) });
 if (sensitivity && settings.sensitivity !== sensitivity) throw new Error(`unknown --sensitivity=${sensitivity}`);
 const isEnabled = type => settings.types?.[type] !== false;
@@ -82,7 +87,7 @@ const reviewed = blocks.filter(block => block.reviewed === true).length;
 const goldSpans = results.reduce((sum, item) => sum + item.gold.length, 0);
 const predictedSpans = results.reduce((sum, item) => sum + item.predicted.length, 0);
 console.log(`Gold: ${blocks.length} blocks, ${blocks.reduce((sum, block) => sum + block.spans.length, 0)} spans; reviewed ${reviewed}, unreviewed ${blocks.length - reviewed}${reviewed < blocks.length ? ' (scores are provisional)' : ''}`);
-console.log(`Sensitivity: ${settings.sensitivity}`);
+console.log(`Sensitivity: ${settings.sensitivity}${withCandidates ? `; DRY RUN with ${candidates.length} unapproved candidate rules (${withCandidates} confidence or better)` : ''}`);
 console.log(`Settings: ${allTypes ? 'all types enabled' : `defaults (off: ${TYPES.filter(type => !isEnabled(type)).join(', ')}; their gold spans are left out)`}`);
 console.log(`Scored: ${goldSpans} gold spans, ${predictedSpans} detections, ${results.filter(item => !item.gold.length).length} blocks without gold spans\n`);
 for (const [label, typed] of [['Any type', false], ['Same type', true]]) {

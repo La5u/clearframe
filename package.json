@@ -14,6 +14,7 @@
     "data:download:evaluation": "node tools/download-data.js --include-evaluation babe",
     "mine:wnc": "node tools/mine-wnc.js",
     "mine:gst": "node tools/mine-gst.js",
+    "mine:llm": "node tools/mine-llm.js",
     "data:crec": "node tools/download-crec.js",
     "mine:crec": "node tools/mine-crec.js",
     "rules:magpie": "node tools/generate-magpie-rules.js",

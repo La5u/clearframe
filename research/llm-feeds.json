@@ -1,0 +1,78 @@
+{
+  "note": "Public RSS/Atom feeds for the offline rule-mining corpus (titles and summaries only). lean is a rough editorial-leaning label used only to report corpus balance; it is not a rating.",
+  "outlets": [
+    {"outlet": "BBC", "lean": "centre", "kind": "public broadcaster", "feeds": [
+      ["news", "https://feeds.bbci.co.uk/news/rss.xml"], ["world", "https://feeds.bbci.co.uk/news/world/rss.xml"], ["uk", "https://feeds.bbci.co.uk/news/uk/rss.xml"],
+      ["business", "https://feeds.bbci.co.uk/news/business/rss.xml"], ["politics", "https://feeds.bbci.co.uk/news/politics/rss.xml"], ["entertainment", "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml"],
+      ["sport", "https://feeds.bbci.co.uk/sport/rss.xml"], ["football", "https://feeds.bbci.co.uk/sport/football/rss.xml"], ["health", "https://feeds.bbci.co.uk/news/health/rss.xml"], ["technology", "https://feeds.bbci.co.uk/news/technology/rss.xml"]]},
+    {"outlet": "Guardian", "lean": "left", "kind": "broadsheet", "feeds": [
+      ["uk", "https://www.theguardian.com/uk/rss"], ["world", "https://www.theguardian.com/world/rss"], ["us", "https://www.theguardian.com/us-news/rss"], ["opinion", "https://www.theguardian.com/commentisfree/rss"],
+      ["lifestyle", "https://www.theguardian.com/lifeandstyle/rss"], ["culture", "https://www.theguardian.com/culture/rss"], ["sport", "https://www.theguardian.com/sport/rss"], ["football", "https://www.theguardian.com/football/rss"],
+      ["business", "https://www.theguardian.com/uk/business/rss"], ["environment", "https://www.theguardian.com/environment/rss"]]},
+    {"outlet": "Daily Mail", "lean": "right", "kind": "tabloid", "feeds": [
+      ["news", "https://www.dailymail.co.uk/news/index.rss"], ["home", "https://www.dailymail.co.uk/home/index.rss"], ["showbiz", "https://www.dailymail.co.uk/tvshowbiz/index.rss"], ["sport", "https://www.dailymail.co.uk/sport/index.rss"],
+      ["femail", "https://www.dailymail.co.uk/femail/index.rss"], ["health", "https://www.dailymail.co.uk/health/index.rss"], ["money", "https://www.dailymail.co.uk/money/index.rss"], ["sciencetech", "https://www.dailymail.co.uk/sciencetech/index.rss"], ["travel", "https://www.dailymail.co.uk/travel/index.rss"], ["debate", "https://www.dailymail.co.uk/debate/index.rss"]]},
+    {"outlet": "The Sun", "lean": "right", "kind": "tabloid", "feeds": [
+      ["all", "https://www.thesun.co.uk/feed/"], ["news", "https://www.thesun.co.uk/news/feed/"], ["sport", "https://www.thesun.co.uk/sport/feed/"], ["tvandshowbiz", "https://www.thesun.co.uk/tvandshowbiz/feed/"],
+      ["fabulous", "https://www.thesun.co.uk/fabulous/feed/"], ["money", "https://www.thesun.co.uk/money/feed/"], ["football", "https://www.thesun.co.uk/sport/football/feed/"], ["motors", "https://www.thesun.co.uk/motors/feed/"]]},
+    {"outlet": "Mirror", "lean": "left", "kind": "tabloid", "feeds": [
+      ["news", "https://www.mirror.co.uk/news/?service=rss"], ["uk-news", "https://www.mirror.co.uk/news/uk-news/?service=rss"], ["politics", "https://www.mirror.co.uk/news/politics/?service=rss"], ["tv", "https://www.mirror.co.uk/3am/?service=rss"],
+      ["sport", "https://www.mirror.co.uk/sport/?service=rss"], ["football", "https://www.mirror.co.uk/sport/football/?service=rss"], ["lifestyle", "https://www.mirror.co.uk/lifestyle/?service=rss"], ["money", "https://www.mirror.co.uk/money/?service=rss"]]},
+    {"outlet": "Daily Express", "lean": "right", "kind": "tabloid", "feeds": [
+      ["all", "https://www.express.co.uk/posts/rss"], ["news", "https://www.express.co.uk/posts/rss/1/news"], ["celebrity", "https://www.express.co.uk/posts/rss/1/celebrity-news"], ["sport", "https://www.express.co.uk/posts/rss/1/sport"], ["showbiz", "https://www.express.co.uk/posts/rss/1/showbiz"], ["life-style", "https://www.express.co.uk/posts/rss/1/life-style"]]},
+    {"outlet": "Telegraph", "lean": "right", "kind": "broadsheet", "feeds": [
+      ["news", "https://www.telegraph.co.uk/news/rss.xml"], ["politics", "https://www.telegraph.co.uk/politics/rss.xml"], ["opinion", "https://www.telegraph.co.uk/opinion/rss.xml"], ["sport", "https://www.telegraph.co.uk/sport/rss.xml"],
+      ["culture", "https://www.telegraph.co.uk/culture/rss.xml"], ["business", "https://www.telegraph.co.uk/business/rss.xml"], ["world", "https://www.telegraph.co.uk/news/world/rss.xml"]]},
+    {"outlet": "Independent", "lean": "left", "kind": "broadsheet", "feeds": [
+      ["news", "https://www.independent.co.uk/news/rss"], ["uk", "https://www.independent.co.uk/news/uk/rss"], ["voices", "https://www.independent.co.uk/voices/rss"], ["sport", "https://www.independent.co.uk/sport/rss"], ["life-style", "https://www.independent.co.uk/life-style/rss"], ["arts", "https://www.independent.co.uk/arts-entertainment/rss"], ["world", "https://www.independent.co.uk/news/world/rss"]]},
+    {"outlet": "Sky News", "lean": "centre", "kind": "broadcaster", "feeds": [
+      ["home", "https://feeds.skynews.com/feeds/rss/home.xml"], ["uk", "https://feeds.skynews.com/feeds/rss/uk.xml"], ["world", "https://feeds.skynews.com/feeds/rss/world.xml"], ["politics", "https://feeds.skynews.com/feeds/rss/politics.xml"], ["entertainment", "https://feeds.skynews.com/feeds/rss/entertainment.xml"], ["business", "https://feeds.skynews.com/feeds/rss/business.xml"]]},
+    {"outlet": "Metro", "lean": "centre", "kind": "tabloid", "feeds": [
+      ["all", "https://metro.co.uk/feed/"], ["news", "https://metro.co.uk/news/feed/"], ["entertainment", "https://metro.co.uk/entertainment/feed/"], ["sport", "https://metro.co.uk/sport/feed/"], ["lifestyle", "https://metro.co.uk/lifestyle/feed/"], ["tech", "https://metro.co.uk/tech/feed/"]]},
+    {"outlet": "Evening Standard", "lean": "centre", "kind": "newspaper", "feeds": [
+      ["all", "https://www.standard.co.uk/rss"], ["news", "https://www.standard.co.uk/news/rss"], ["sport", "https://www.standard.co.uk/sport/rss"], ["showbiz", "https://www.standard.co.uk/showbiz/rss"]]},
+    {"outlet": "Spectator", "lean": "right", "kind": "opinion", "feeds": [["all", "https://www.spectator.co.uk/feed"]]},
+    {"outlet": "New Statesman", "lean": "left", "kind": "opinion", "feeds": [["all", "https://www.newstatesman.com/feed"]]},
+    {"outlet": "UnHerd", "lean": "right", "kind": "opinion", "feeds": [["all", "https://unherd.com/feed/"]]},
+    {"outlet": "NY Post", "lean": "right", "kind": "tabloid", "feeds": [
+      ["news", "https://nypost.com/news/feed/"], ["all", "https://nypost.com/feed/"], ["opinion", "https://nypost.com/opinion/feed/"], ["sports", "https://nypost.com/sports/feed/"], ["entertainment", "https://nypost.com/entertainment/feed/"],
+      ["lifestyle", "https://nypost.com/lifestyle/feed/"], ["metro", "https://nypost.com/metro/feed/"], ["page-six", "https://pagesix.com/feed/"], ["business", "https://nypost.com/business/feed/"]]},
+    {"outlet": "Fox News", "lean": "right", "kind": "broadcaster", "feeds": [
+      ["latest", "https://moxie.foxnews.com/google-publisher/latest.xml"], ["politics", "https://moxie.foxnews.com/google-publisher/politics.xml"], ["world", "https://moxie.foxnews.com/google-publisher/world.xml"], ["opinion", "https://moxie.foxnews.com/google-publisher/opinion.xml"],
+      ["sports", "https://moxie.foxnews.com/google-publisher/sports.xml"], ["entertainment", "https://moxie.foxnews.com/google-publisher/entertainment.xml"], ["lifestyle", "https://moxie.foxnews.com/google-publisher/lifestyle.xml"]]},
+    {"outlet": "Breitbart", "lean": "right", "kind": "opinion", "feeds": [["all", "https://feeds.feedburner.com/breitbart"]]},
+    {"outlet": "Washington Examiner", "lean": "right", "kind": "newspaper", "feeds": [["all", "https://www.washingtonexaminer.com/feed"]]},
+    {"outlet": "National Review", "lean": "right", "kind": "opinion", "feeds": [["all", "https://www.nationalreview.com/feed/"]]},
+    {"outlet": "Daily Wire", "lean": "right", "kind": "opinion", "feeds": [["all", "https://www.dailywire.com/feeds/rss.xml"]]},
+    {"outlet": "New York Times", "lean": "left", "kind": "broadsheet", "feeds": [
+      ["home", "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"], ["world", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"], ["us", "https://rss.nytimes.com/services/xml/rss/nyt/US.xml"], ["opinion", "https://rss.nytimes.com/services/xml/rss/nyt/Opinion.xml"],
+      ["arts", "https://rss.nytimes.com/services/xml/rss/nyt/Arts.xml"], ["sports", "https://rss.nytimes.com/services/xml/rss/nyt/Sports.xml"], ["style", "https://rss.nytimes.com/services/xml/rss/nyt/FashionandStyle.xml"], ["business", "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml"], ["politics", "https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml"]]},
+    {"outlet": "Washington Post", "lean": "left", "kind": "broadsheet", "feeds": [
+      ["politics", "https://feeds.washingtonpost.com/rss/politics"], ["national", "https://feeds.washingtonpost.com/rss/national"], ["world", "https://feeds.washingtonpost.com/rss/world"], ["opinions", "https://feeds.washingtonpost.com/rss/opinions"], ["sports", "https://feeds.washingtonpost.com/rss/sports"], ["lifestyle", "https://feeds.washingtonpost.com/rss/lifestyle"]]},
+    {"outlet": "CNN", "lean": "left", "kind": "broadcaster", "feeds": [
+      ["top", "http://rss.cnn.com/rss/edition.rss"], ["world", "http://rss.cnn.com/rss/edition_world.rss"], ["us", "http://rss.cnn.com/rss/edition_us.rss"], ["sport", "http://rss.cnn.com/rss/edition_sport.rss"], ["entertainment", "http://rss.cnn.com/rss/edition_entertainment.rss"], ["technology", "http://rss.cnn.com/rss/edition_technology.rss"]]},
+    {"outlet": "HuffPost", "lean": "left", "kind": "opinion", "feeds": [["all", "https://www.huffpost.com/section/front-page/feed"], ["politics", "https://www.huffpost.com/section/politics/feed"], ["entertainment", "https://www.huffpost.com/section/entertainment/feed"], ["opinion", "https://www.huffpost.com/section/opinion/feed"]]},
+    {"outlet": "Vox", "lean": "left", "kind": "opinion", "feeds": [["all", "https://www.vox.com/rss/index.xml"]]},
+    {"outlet": "The Atlantic", "lean": "left", "kind": "opinion", "feeds": [["all", "https://www.theatlantic.com/feed/all/"]]},
+    {"outlet": "Daily Beast", "lean": "left", "kind": "tabloid", "feeds": [["all", "https://feeds.thedailybeast.com/rss/articles"]]},
+    {"outlet": "Slate", "lean": "left", "kind": "opinion", "feeds": [["all", "https://slate.com/feeds/all.rss"]]},
+    {"outlet": "Reason", "lean": "right", "kind": "opinion", "feeds": [["all", "https://reason.com/feed/"]]},
+    {"outlet": "NPR", "lean": "centre", "kind": "public broadcaster", "feeds": [
+      ["news", "https://feeds.npr.org/1001/rss.xml"], ["world", "https://feeds.npr.org/1004/rss.xml"], ["politics", "https://feeds.npr.org/1014/rss.xml"], ["culture", "https://feeds.npr.org/1008/rss.xml"], ["opinion", "https://feeds.npr.org/1057/rss.xml"], ["business", "https://feeds.npr.org/1006/rss.xml"]]},
+    {"outlet": "PBS NewsHour", "lean": "centre", "kind": "public broadcaster", "feeds": [["headlines", "https://www.pbs.org/newshour/feeds/rss/headlines"], ["politics", "https://www.pbs.org/newshour/feeds/rss/politics"], ["world", "https://www.pbs.org/newshour/feeds/rss/world"]]},
+    {"outlet": "ABC News (US)", "lean": "centre", "kind": "broadcaster", "feeds": [["top", "https://abcnews.go.com/abcnews/topstories"], ["us", "https://abcnews.go.com/abcnews/usheadlines"], ["politics", "https://abcnews.go.com/abcnews/politicsheadlines"], ["entertainment", "https://abcnews.go.com/abcnews/entertainmentheadlines"]]},
+    {"outlet": "CBS News", "lean": "centre", "kind": "broadcaster", "feeds": [["latest", "https://www.cbsnews.com/latest/rss/main"], ["politics", "https://www.cbsnews.com/latest/rss/politics"], ["world", "https://www.cbsnews.com/latest/rss/world"], ["entertainment", "https://www.cbsnews.com/latest/rss/entertainment"]]},
+    {"outlet": "The Hill", "lean": "centre", "kind": "newspaper", "feeds": [["home", "https://thehill.com/homenews/feed/"], ["opinion", "https://thehill.com/opinion/feed/"]]},
+    {"outlet": "ESPN", "lean": "centre", "kind": "sport", "feeds": [["top", "https://www.espn.com/espn/rss/news"], ["nfl", "https://www.espn.com/espn/rss/nfl/news"], ["nba", "https://www.espn.com/espn/rss/nba/news"], ["soccer", "https://www.espn.com/espn/rss/soccer/news"]]},
+    {"outlet": "TMZ", "lean": "centre", "kind": "celebrity", "feeds": [["all", "https://www.tmz.com/rss.xml"]]},
+    {"outlet": "People", "lean": "centre", "kind": "celebrity", "feeds": [["all", "https://people.com/feed/"]]},
+    {"outlet": "Entertainment Weekly", "lean": "centre", "kind": "celebrity", "feeds": [["all", "https://ew.com/feed/"]]},
+    {"outlet": "Al Jazeera", "lean": "centre", "kind": "broadcaster", "feeds": [["all", "https://www.aljazeera.com/xml/rss/all.xml"]]},
+    {"outlet": "ABC Australia", "lean": "centre", "kind": "public broadcaster", "feeds": [["top", "https://www.abc.net.au/news/feed/51120/rss.xml"], ["world", "https://www.abc.net.au/news/feed/45910/rss.xml"]]},
+    {"outlet": "Sydney Morning Herald", "lean": "centre", "kind": "broadsheet", "feeds": [["all", "https://www.smh.com.au/rss/feed.xml"]]},
+    {"outlet": "Irish Times", "lean": "centre", "kind": "broadsheet", "feeds": [["all", "https://www.irishtimes.com/arc/outboundfeeds/feed-irish-times-news/?outputType=xml"]]},
+    {"outlet": "The Times", "lean": "right", "kind": "broadsheet", "feeds": [["all", "https://www.thetimes.com/rss"]]},
+    {"outlet": "Financial Times", "lean": "centre", "kind": "broadsheet", "feeds": [["home", "https://www.ft.com/rss/home"]]},
+    {"outlet": "Deadline", "lean": "centre", "kind": "celebrity", "feeds": [["all", "https://deadline.com/feed/"]]}
+  ]
+}

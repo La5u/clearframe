@@ -18,3 +18,10 @@ keyed by the rule's `phrase`; see `TERMS.md`.
 
 Corpora with `role: "evaluation-only"` in `research/sources.json` are rejected as
 rule provenance during every build.
+
+`llm-mined.jsonl` is written by `npm run mine:llm -- output` and holds only
+`status: "candidate"` records (they do not ship). It adds `evidence` (`proposals`,
+`outlets`, `judged`, `precision`), an optional drafted `exception` (not read by the
+build; move it into `data/terms/exceptions.json` on approval) and an unreviewed
+`reword` suggestion. Re-running the stage regenerates the candidates but leaves records you have
+already moved to another status untouched.

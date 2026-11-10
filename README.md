@@ -120,6 +120,35 @@ corpus-derived approval that fails the evidence gates. Chrome and Firefox ZIPs
 also fail CI at 50 MB. See `CLEARFRAME_TAXONOMY.md`, `research/README.md`, and
 `FUTURE_DATA_PLAN.md`.
 
+## Mining rules with an LLM reader (offline, proposes only)
+
+`tools/mine-llm.js` uses a second model ("Terra") as a careful reader to propose
+rules for wording the current list misses. The extension itself stays rule-based
+and offline; nothing here ships until you approve it.
+
+```sh
+npm run mine:llm -- corpus      # fetch public RSS/Atom feeds (research/llm-feeds.json) -> research/raw/llm-mining/corpus.jsonl
+npm run mine:llm -- baseline    # what the current analyzer already marks (sensitivity all)
+npm run mine:llm -- propose     # Terra marks missed wording (--pilot = one small batch first; --parallel=4 max)
+npm run mine:llm -- aggregate   # group by rule phrase; keep >=3 proposals from >=2 outlets; drop covered phrases
+npm run mine:llm -- verify      # Terra judges up to 12 real occurrences per candidate; precision, confidence, drafted exceptions
+npm run mine:llm -- output      # data/rules/llm-mined.jsonl + research/reports/llm-mining-review.md
+npm run evaluate:gold -- --with-candidates --sensitivity=all   # dry run: candidates at medium/high treated as approved, in memory
+```
+
+Every Terra answer is cached under `research/cache/llm-mining/`, so each stage resumes
+where it stopped; on a usage limit (exit code 75) the miner stops with a message, and
+you re-run the same command after the quota resets. Corpus text stays in git-ignored
+`research/raw/` and `research/cache/`; `tests/gold` and `tests/fixtures` are never mining input.
+
+To approve candidates, read `research/reports/llm-mining-review.md`, then in
+`data/rules/llm-mined.jsonl` change `status` from `"candidate"` to `"approved"`. Set
+`reword.reviewed` to `true` (or delete the `reword`), move any drafted `exception` into
+`data/terms/exceptions.json` (keyed by the phrase, then delete it from the record), and
+keep partisan terms out unless they come with a mirror in `data/mirror-pairs.json`.
+`confidence` is `high` (>=90% on >=8 judged uses), `medium` (>=75%) or `contextual`
+(headlines only); precision is a model-judged estimate on a small sample.
+
 ## Regression snapshots and accuracy
 
 ```sh

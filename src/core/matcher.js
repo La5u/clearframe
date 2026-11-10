@@ -20,7 +20,31 @@ export function buildMatcher(index, isTermEnabled = _term => true) {
   return root;
 }
 
+// Source formatting puts newlines, tabs, runs of spaces or U+00A0 between the
+// words of a phrase. Phrases are matched on a copy where every whitespace run
+// (blank lines included) is one space; offsets map back to the original text.
+function collapseWhitespace(text) {
+  let collapsed = '', space = false;
+  const offsets = [];
+  for (let i = 0; i < text.length; i++) {
+    const isSpace = /\s/.test(text[i]);
+    if (isSpace && space) continue;
+    space = isSpace;
+    collapsed += isSpace ? ' ' : text[i];
+    offsets.push(i);
+  }
+  return { collapsed, offsets };
+}
+
 export function collectPhraseMatches(matcher, text, keepMatch = (_termId, _start, _end) => true) {
+  if (!matcher || !/[^\S ]| {2}/.test(text)) return collectLiteralMatches(matcher, text, keepMatch);
+  const { collapsed, offsets } = collapseWhitespace(text);
+  const end = i => offsets[i - 1] + 1;
+  return collectLiteralMatches(matcher, collapsed, (termId, start, stop) => keepMatch(termId, offsets[start], end(stop)))
+    .map(match => ({ ...match, start: offsets[match.start], end: end(match.end) }));
+}
+
+function collectLiteralMatches(matcher, text, keepMatch) {
   if (!matcher) {
     return [];
   }

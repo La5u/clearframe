@@ -1,7 +1,8 @@
-# newssite4.html mode=reword highlights=273
+# newssite4.html mode=reword highlights=278
 clickbait | [EXCLUSIVE]The video we've all been waiti
 all-caps-underline | EXCLUSIVEThe video we've [all] been waiting for: Moment wedd
 conflict | Moment wedding is thrown into [chaos] after sister-in-law chucked b
+idiom-low | e walked down the aisle, when [out of the blue], 'it' happened. 'It' being th
 clickbait | [inside story]Kim Kardashian, Lewis Hamilton
 reveal | wis Hamilton... and the 'open [secret] in the industry' the 'couple'
 negative-framing-medium | he industry' the 'couple' are [desperate] to hide
@@ -76,6 +77,7 @@ clickbait | [EXCLUSIVE]Disclosed: How the woman at ce
 negative-framing-medium | 125 share[Tragic] life of woman who accused Che
 clickbait-medium | st as much as the weight had. [Here's how] to banish it
 clickbait | [EXCLUSIVE]Labour accused of 'ideological
+idiom-low | [Third time lucky]? Zoe Kravitz's 'engagement' t
 idiom-low | itz appears to be hoping it's [third time lucky] amid reports she is engaged t
 hype | ously being spotted wearing a [dazzling] diamond ring. On her outing s
 reveal | tious - but these are my real [secrets] to looking this great at 48,
@@ -128,6 +130,7 @@ fear-medium | A [heartbroken] Australian woman returning to
 clickbait | [EXCLUSIVE]Five years ago, his painted fa
 negative-framing-medium | opened up about her mother's [tragic] death when she was a child.
 negative-framing | rait of Hormuz as the Iranian [regime] mocks his 'meaningless' cease
+clickbait-low | [Why you should] never copy viral pimple-poppi
 clickbait-medium | friend after I fell pregnant. [Here's why] I refuse to feel bad… and why
 clickbait | [EXCLUSIVE]Americans' true obsession with
 hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
@@ -141,6 +144,7 @@ loaded-framing | Selling [Sunset] star Emma Hernan is back with
 hype-medium | Davis again two months after [explosive] fight
 hype-low | r hellraiser Jack Nicholson's [youthful] looks on his birthday after d
 negative-framing | Rob Reiner's son Jake shares [horrific] new details of his parents' m
+idiom-low | [Third time lucky]? Zoe Kravitz's 'engagement' t
 clickbait | [EXCLUSIVE]Prince Harry's 'arrogant' Ukra
 clickbait | [EXCLUSIVE]How Sara Cox reacted to new ro
 clickbait | [EXCLUSIVE]Noughties icon Lemar discloses
@@ -193,6 +197,7 @@ clickbait-underline | - and why it might be time to [now] switch to a passkey
 distancing-medium | lie-Mae Doherty, both 22, are [alleged] to have committed misconduct
 aggression | Large tornados [rip] through Oklahoma, destroying
 fear-medium | across four states are issued [urgent warning]
+clickbait-low | [Why you should] never copy viral pimple-poppi
 clickbait-medium | friend after I fell pregnant. [Here's why] I refuse to feel bad… and why
 fear-low | drive by the Russian army and [warned] students they face certain de
 authority | thousands of men each month, [according to] Ukrainian authorities.

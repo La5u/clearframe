@@ -62,7 +62,7 @@ function getSourceForm(source, base, stemType) {
 const PARTICIPLE_BEFORE = /\b(?:am|is|are|was|were|be|been|being|has|have|had|having|get|gets|got|gotten|getting)\s+(?:\w+ly\s+)?$/i;
 
 function applyStemmedReplacement(src, base, replacement, stemType, textBefore) {
-  const form = stemType ? getSourceForm(src.toLowerCase(), base.toLowerCase(), stemType) : null;
+  const form = stemType ? getSourceForm(src.replace(/\s+/g, ' ').toLowerCase(), base.toLowerCase(), stemType) : null;
   const next = form === null ? replacement
     : inflectPhrase(replacement, stemType, form === 'past' && PARTICIPLE_BEFORE.test(textBefore.slice(-40)) ? 'participle' : form);
   return matchReplacementCase(src, next);

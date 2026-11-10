@@ -116,6 +116,34 @@ for (const [text, displayText] of [
   for (const entry of plan.entries) assert.strictEqual(plan.displayText.slice(entry.start, entry.end), entry.replacementText, `remove offsets: ${text}`);
   assert.ok(plan.entries.every(entry => entry.sourceText.includes(entry.wording)), `wording inside the removed span: ${text}`);
 }
+// Phrases match across any whitespace run (newline, tab, nbsp, repeated or blank-line gaps);
+// offsets stay on the original text and never start or end on whitespace.
+for (const [text, wording] of [
+  ['It came out of\nthe blue.', 'out of\nthe blue'], ['He came under\tfire again.', 'under\tfire'], ['Critics hit  back at him.', 'hit  back'],
+  ['It was a\u00a0 passed\u00a0away\r\n', 'passed\u00a0away'],
+  ['a\n\nout of\n\nthe blue', 'out of\n\nthe blue'], ['  out of the blue', 'out of the blue'], ['out of the blue\n', 'out of the blue'],
+]) {
+  const found = findMatches(matcher, text, index.termsById, index.regexTerms).map(match => text.slice(match.start, match.end));
+  assert.ok(found.includes(wording), `matches ${JSON.stringify(wording)} in ${JSON.stringify(text)}, got ${JSON.stringify(found)}`);
+  assert.ok(found.every(match => match === match.trim()), `no match on whitespace edges in ${JSON.stringify(text)}`);
+}
+assert.deepStrictEqual(findMatches(matcher, 'out of\nthe bluebird', index.termsById, index.regexTerms), [], 'word boundary still applies after whitespace');
+assert.strictEqual(findContextualMatches('One of the most\ndramatic moments in\nhistory', { headline: true }).length, 1, 'contextual patterns cross source whitespace');
+// Headline rules see the same wording.
+for (const [text, wording] of [['Why\nyou should care', 'Why\nyou should'], ['Third\ntime lucky', 'Third\ntime lucky']]) {
+  assert.ok(analyze(text, { ...PUBLICATION, headline: true }, ANALYZE_SETTINGS.highlight).entries.some(entry => entry.sourceText === wording), `headline ${JSON.stringify(text)}`);
+}
+for (const [text, mode, displayText, source] of [
+  ['It was a collateral\ndamage case.', 'reword', 'It was a civilian harm case.', 'collateral\ndamage'],
+  ['COLLATERAL  DAMAGE rose.', 'reword', 'Civilian harm rose.', 'COLLATERAL  DAMAGE'],
+  ['He passed\u00a0 away today.', 'reword', 'He died today.', 'passed\u00a0 away'],
+  ['A breath\ttaking view', 'remove', 'A view', 'breath\ttaking '],
+]) {
+  const plan = analyze(text, PUBLICATION, mode === 'remove' ? normalizeSettings({ removeTerms: true, types: { exaggeration: true } }) : ANALYZE_SETTINGS[mode]);
+  assert.strictEqual(plan.displayText, displayText, `${mode}: ${JSON.stringify(text)}`);
+  assert.deepStrictEqual(plan.entries.map(entry => entry.sourceText), [source], `${mode} source: ${JSON.stringify(text)}`);
+  assert.strictEqual(plan.entries.reduceRight((value, entry) => value.slice(0, entry.start) + entry.sourceText + value.slice(entry.end), plan.displayText), text, `${mode} restores: ${JSON.stringify(text)}`);
+}
 // [phrase, stem type, form, expected]
 for (const [phrase, stemType, form, expected] of [
   ['cut', 'verb', 'past', 'cut'], ['hit', 'verb', 'ing', 'hitting'], ['quit', 'verb', 'ing', 'quitting'], ['spread', 'verb', 'third', 'spreads'],

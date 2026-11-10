@@ -1,6 +1,7 @@
-# newssite4.html mode=remove highlights=225
+# newssite4.html mode=remove highlights=230
 all-caps | The video we've [ALL] been waiting for: Moment wedd
 conflict | Moment wedding is thrown into [chaos] after sister-in-law chucked b
+idiom-low | e walked down the aisle, when [out of the blue], 'it' happened. 'It' being th
 reveal | wis Hamilton... and the 'open [secret] in the industry' the 'couple'
 negative-framing-medium | he industry' the 'couple' are [desperate] to hide
 negative-framing-medium | lton and 'open secret they're [desperate] to hide'
@@ -59,6 +60,7 @@ reveal | ther disclosed this harrowing [secret] 20 years later that made the
 negative-framing-medium | eard her mother Josephine was [desperately] ill, she knocked on her door
 negative-framing-medium | 125 share[Tragic] life of woman who accused Che
 clickbait-medium | st as much as the weight had. [Here's how] to banish it
+idiom-low | [Third time lucky]? Zoe Kravitz's 'engagement' t
 idiom-low | itz appears to be hoping it's [third time lucky] amid reports she is engaged t
 hype | ously being spotted wearing a [dazzling] diamond ring. On her outing s
 reveal | tious - but these are my real [secrets] to looking this great at 48,
@@ -103,6 +105,7 @@ fear-medium | [Heartbroken] Australian woman discloses ho
 fear-medium | A [heartbroken] Australian woman returning to
 negative-framing-medium | opened up about her mother's [tragic] death when she was a child.
 negative-framing | rait of Hormuz as the Iranian [regime] mocks his 'meaningless' cease
+clickbait-low | [Why you should] never copy viral pimple-poppi
 clickbait-medium | friend after I fell pregnant. [Here's why] I refuse to feel bad… and why
 hype-low | Tess Daly, 57, [shows off] her figure in a plunging biki
 negative-framing-medium | he industry' the 'couple' are [desperate] to hide
@@ -114,6 +117,7 @@ clickbait | following her twin daughter's [devastating] diagnosis
 loaded-framing | Selling [Sunset] star Emma Hernan is back with
 hype-medium | Davis again two months after [explosive] fight
 hype-low | r hellraiser Jack Nicholson's [youthful] looks on his birthday after d
+idiom-low | [Third time lucky]? Zoe Kravitz's 'engagement' t
 aggression-medium | Anthony Quinlan [hits back] at cruel trolls who targeted
 hype | The new '[must-have]' Mylee nail treatments are he
 hype-low | Emily Atack [shows off] her remarkable weight loss as
@@ -156,6 +160,7 @@ clickbait-low | e passwords: Experts disclose [why you should] never reuse or wr
 distancing-medium | lie-Mae Doherty, both 22, are [alleged] to have committed misconduct
 aggression | Large tornados [rip] through Oklahoma, destroying
 fear-medium | across four states are issued [urgent warning]
+clickbait-low | [Why you should] never copy viral pimple-poppi
 clickbait-medium | friend after I fell pregnant. [Here's why] I refuse to feel bad… and why
 fear-low | drive by the Russian army and [warned] students they face certain de
 authority | thousands of men each month, [according to] Ukrainian authorities.

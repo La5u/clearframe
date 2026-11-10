@@ -30,14 +30,16 @@ export function createLexicalFilter({ terms = {}, shared = {}, contexts = {}, ty
 
   return function shouldKeepLexicalMatch(term, sourceText, fullText, { headline = false, conversational = false, pageContext = 'publication' } = {}, start = fullText.indexOf(sourceText)) {
     const end = start + sourceText.length;
-    // Windows are sliced on demand: most terms have no clauses.
+    // Windows are sliced on demand: most terms have no clauses. Rules are
+    // written with single spaces, so source whitespace runs read as one space.
+    const flat = text => text.replace(/\s+/g, ' ');
     const view = {
       headline,
-      match: sourceText,
-      get before() { return fullText.slice(Math.max(0, start - 40), start); },
-      get after() { return fullText.slice(end, end + 40); },
-      get nearby() { return fullText.slice(Math.max(0, start - 40), end + 40); },
-      get textBefore() { return fullText.slice(0, start); },
+      match: flat(sourceText),
+      get before() { return flat(fullText.slice(Math.max(0, start - 40), start)); },
+      get after() { return flat(fullText.slice(end, end + 40)); },
+      get nearby() { return flat(fullText.slice(Math.max(0, start - 40), end + 40)); },
+      get textBefore() { return flat(fullText.slice(0, start)); },
     };
     const unless = termClauses.get(term?.phrase || '');
     if (unless && matchesAny(unless, view)) return false;

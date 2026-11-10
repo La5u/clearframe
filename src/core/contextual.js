@@ -54,12 +54,12 @@ function addQuotedWording(matches, text) {
 }
 
 const DIRECT_ADDRESS_PATTERNS = [
-  /\byou (?:won't|will not) believe\b/giu,
-  /\bwhat you (?:need|must|should) (?:to )?know\b/giu,
-  /\b(?:mistakes?|things?) you(?:'re| are) (?:making|doing)\b/giu,
-  /\b(?:mistakes?|things?|signs?|reasons?) you (?:need|must|should|could|can)\b/giu,
-  /\b(?:why|how) you (?:need|must|should|could|can|will|are|keep)\b/giu,
-  /\bwill make you\b/giu,
+  /\byou\s+(?:won't|will\s+not)\s+believe\b/giu,
+  /\bwhat\s+you\s+(?:need|must|should)\s+(?:to\s+)?know\b/giu,
+  /\b(?:mistakes?|things?)\s+you(?:'re|\s+are)\s+(?:making|doing)\b/giu,
+  /\b(?:mistakes?|things?|signs?|reasons?)\s+you\s+(?:need|must|should|could|can)\b/giu,
+  /\b(?:why|how)\s+you\s+(?:need|must|should|could|can|will|are|keep)\b/giu,
+  /\bwill\s+make\s+you\b/giu,
 ];
 
 export function classifyPageContext(hostname = '') {
@@ -72,7 +72,7 @@ export function classifyPageContext(hostname = '') {
 export function findContextualMatches(text, { headline = false, conversational = false, pageContext = 'publication' } = {}) {
   const matches = [];
   if (pageContext === 'publication' && !conversational) {
-    addMatches(matches, text, /\b(?:(?:mistakes?|errors?) (?:was|were|have been|had been) made|(?:concerns?|questions?) (?:was|were|have been|had been) raised|(?:jobs?|positions?) (?:was|were|have been|had been) (?:cut|eliminated)|(?:funds?|money) (?:was|were|have been|had been) (?:spent|lost)|(?:records?|evidence) (?:was|were|have been|had been) (?:removed|deleted|destroyed)|it was decided|(?:was|were) asked to resign)\b/giu, '__clearframe_passive_agency__');
+    addMatches(matches, text, /\b(?:(?:mistakes?|errors?)\s+(?:was|were|have\s+been|had\s+been)\s+made|(?:concerns?|questions?)\s+(?:was|were|have\s+been|had\s+been)\s+raised|(?:jobs?|positions?)\s+(?:was|were|have\s+been|had\s+been)\s+(?:cut|eliminated)|(?:funds?|money)\s+(?:was|were|have\s+been|had\s+been)\s+(?:spent|lost)|(?:records?|evidence)\s+(?:was|were|have\s+been|had\s+been)\s+(?:removed|deleted|destroyed)|it\s+was\s+decided|(?:was|were)\s+asked\s+to\s+resign)\b/giu, '__clearframe_passive_agency__');
   }
   if (!headline) return matches;
   if (pageContext === 'publication' && /\?\s*$/.test(text)) {
@@ -94,7 +94,7 @@ export function findContextualMatches(text, { headline = false, conversational =
   // A transformation arc opens the headline ("From forgotten room to luxury retreat");
   // mid-sentence "from X to Y" is usually a route, a range, or a list.
   if (pageContext !== 'discussion') addMatches(matches, text, /^\s*from\s+[^.!?;:$\d]{1,40}\s+to\s+[^.!?;:$\d]{1,40}/giu, '__clearframe_transformation__');
-  addMatches(matches, text, /\bone of the most\s+[^.!?;:]{1,45}\s+in history\b/giu, '__clearframe_history_claim__');
+  addMatches(matches, text, /\bone\s+of\s+the\s+most\s+[^.!?;:]{1,45}\s+in\s+history\b/giu, '__clearframe_history_claim__');
   addMatches(matches, text, /\b(?:top|best)\s+(?:five|ten|\d+)\s+[^.!?;:]{1,45}\b(?:you|everyone|every\s+\w+)\s+needs?\b/giu, '__clearframe_list_promise__');
   addMatches(matches, text, /\b(?:fans|viewers|critics|users)\s+(?:gasp|rave|insist|slam|love|hate)\b/giu, '__clearframe_reaction_claim__');
   return matches;

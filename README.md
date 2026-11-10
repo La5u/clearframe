@@ -64,7 +64,8 @@ exclusive,clickbait,,,adjective,,true,headline
 - `remove`: mark term for deletion in remove-mode
 - `contexts`: optional pipe-separated allowlist such as `headline` or `evaluative`; there is no second exclusion list
 - `confidence`: optional `medium|contextual|exploratory`; drawn at 75% (`medium`) or 50% strength
-- `colloquialism` rules default to publication pages, so ordinary Reddit and YouTube language is not flagged
+- `colloquialism` rules default to publication pages, so ordinary Reddit and YouTube language is not flagged (set under `types` in `data/terms/exceptions.json`)
+- Exceptions ("electric shock", "Secret Service") go in `data/terms/exceptions.json`, keyed by phrase; see `TERMS.md`
 - Every normalized phrase must be unique across all types (enforced at build)
 - Politically one-sided terms need a mirror term; see `TERMS.md` and `data/mirror-pairs.json`
 
@@ -75,7 +76,8 @@ exclusive,clickbait,,,adjective,,true,headline
 | `build.js` | Loads CSV terms, validates taxonomy, bundles with esbuild |
 | `src/content.js` | Watches page text, matches phrases, owns per-node results, and renders highlights/tooltips |
 | `src/core/matcher.js` | Trie-based phrase matcher with longest-match and word-boundary detection |
-| `src/core/term-utils.js` | CSV parser, alias/stem expansion, duplicate validation |
+| `src/core/term-utils.js` | CSV parser, alias/stem expansion, duplicate and exception validation |
+| `src/core/context-filter.js` | Applies `data/terms/exceptions.json` and context allowlists to each match |
 | `src/core/stemmer.js` | Lightweight inflection for plural/past/-ing/adverb |
 | `src/popup.js` | Customize/Detected tab UI, type toggle, drag-to-recolor |
 | `src/background.js` | Badge sync across tabs |

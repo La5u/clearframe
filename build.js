@@ -68,7 +68,7 @@ function compactContentIndex(index) {
   // The matcher builds its trie from term IDs at load time. Regex terms carry
   // their pattern here instead of duplicating it on the term record.
   const regexTerms = index.regexTerms.map(({ termId, pattern }) => ({ termId, pattern }));
-  return { termsById, regexTerms };
+  return { termsById, regexTerms, exceptions: index.exceptions };
 }
 
 function copyFile(from, to) {

@@ -14,7 +14,7 @@ import { DEFAULT_SETTINGS, normalizeSettings } from '../src/core/settings-utils.
 import { resolveMatchGroups } from '../src/core/match-plan.js';
 import { ALL_CAPS_TERM_ID, findAllCapsMatches } from '../src/core/all-caps.js';
 import { CONTEXTUAL_TERMS, findContextualMatches } from '../src/core/contextual.js';
-import { shouldKeepLexicalMatch } from '../src/core/context-filter.js';
+import { createLexicalFilter } from '../src/core/context-filter.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const inputs = process.argv.slice(2).filter(arg => !arg.startsWith('--'));
@@ -30,6 +30,7 @@ const TOP = Number(process.argv.find(arg => arg.startsWith('--top='))?.slice(6))
 const TYPE_PRIORITY = ['derogatory', 'aggression', 'fear', 'loaded', 'moral', 'dysphemism', 'clickbait', 'loaded-framing', 'unsourced', 'euphemism', 'passive', 'negative-framing', 'conflict', 'exaggeration', 'superlative', 'hype', 'authority', 'uncertainty', 'distancing', 'minimizing', 'all-caps', 'absolute', 'repetition', 'rhetorical-question', 'colloquialism', 'idiom', 'reveal', 'quote'];
 const ALL_CAPS_TERM = { phrase: 'caps emphasis', type: 'all-caps' };
 const index = loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT));
+const shouldKeepLexicalMatch = createLexicalFilter(index.exceptions);
 const settings = normalizeSettings(allTypes ? { types: Object.fromEntries(TYPES.map(type => [type, true])) } : DEFAULT_SETTINGS);
 const isEnabled = type => settings.types?.[type] !== false;
 const matcher = buildMatcher(index, term => isEnabled(term.type));

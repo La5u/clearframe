@@ -8,7 +8,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { parseCsv, loadTerms } from '../src/core/term-utils.js';
 import { buildMatcher, findMatches } from '../src/core/matcher.js';
-import { shouldKeepLexicalMatch } from '../src/core/context-filter.js';
+import { createLexicalFilter } from '../src/core/context-filter.js';
 import { approvedRuleTerms } from './rule-utils.js';
 import { assertSourcesAllowed, loadSourceRegistry } from './source-policy.js';
 
@@ -23,6 +23,7 @@ const [header, ...rows] = parseCsv(fs.readFileSync(input, 'utf8').replace(/^sep=
 const col = Object.fromEntries(header.map((name, index) => [name, index]));
 const SIDES = { LL: 'left', L: 'left', M: 'centre', R: 'right', RR: 'right' };
 const index = loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT));
+const shouldKeepLexicalMatch = createLexicalFilter(index.exceptions);
 const matcher = buildMatcher(index);
 
 const stats = {};

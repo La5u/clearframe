@@ -13,5 +13,8 @@ Every approved rule needs at least one source, and each source must have
 review without deriving the rule go in `corroboratedBy`. Evidence gates fail
 when evidence fields are missing.
 
+Exceptions for a rule ("electric shock") go in `data/terms/exceptions.json`,
+keyed by the rule's `phrase`; see `TERMS.md`.
+
 Corpora with `role: "evaluation-only"` in `research/sources.json` are rejected as
 rule provenance during every build.

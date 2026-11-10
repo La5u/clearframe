@@ -30,6 +30,32 @@ shock,clickbait,,,verb,,true
 
 If you are unsure, add the simplest base form and leave the replacement blank.
 
+## Exceptions
+
+When a term is fine in some phrases ("electric shock", "Secret Service"), add
+an entry for its main phrase (as in the CSV or JSONL, not an alias) to
+`data/terms/exceptions.json`. It applies to every alias and inflection. This is
+the only place for exceptions; do not hard-code phrases in JavaScript.
+
+```json
+"shock": {
+  "unless": [
+    { "before": "/\\b(?:electric|toxic)\\s+$/iu" },
+    { "after": "/^\\s*(?:absorbers?|therapy)\\b/iu" }
+  ]
+}
+```
+
+The match is dropped if any `unless` clause matches; a clause matches when all
+its tests pass. Tests are regexes written as `/pattern/flags` (JSON doubles each
+backslash) against `before` / `after` (40 characters either side), `match` (the
+matched text), `nearby` (before + match + after) or `textBefore` (all text
+before), plus `"headline": true|false`. A string in `unless` names a list under
+`shared`, for patterns several terms use. `contexts` defines derived contexts
+such as `evaluative`, and `types` sets default contexts per type. Use `note` for
+the reason. The build rejects bad regexes, unknown phrases, shared names and
+fields. Add a case to the exception table in `tests/run.js`.
+
 ## Labels
 
 Each type in `data/type-colors.json` needs an entry in `data/type-labels.json`:

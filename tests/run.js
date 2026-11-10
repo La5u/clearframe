@@ -6,7 +6,7 @@ import os from 'os';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-import { extractText, loadTerms } from '../src/core/term-utils.js';
+import { extractText, loadExceptions, loadTerms } from '../src/core/term-utils.js';
 import { buildMatcher, findMatches } from '../src/core/matcher.js';
 import { adverbWord } from '../src/core/stemmer.js';
 import { ALL_CAPS_TERM_ID, findAllCapsMatches } from '../src/core/all-caps.js';
@@ -19,7 +19,7 @@ import { assertSourcesAllowed, loadSourceRegistry } from '../tools/source-policy
 import { loadRuleRecords } from '../tools/rule-utils.js';
 import { approvedRuleTerms } from '../tools/rule-utils.js';
 import { classifyPageContext, findContextualMatches } from '../src/core/contextual.js';
-import { shouldKeepLexicalMatch } from '../src/core/context-filter.js';
+import { createLexicalFilter } from '../src/core/context-filter.js';
 import { recoverOriginalText } from '../src/core/restore.js';
 import { assertSourcesShippable } from '../tools/source-policy.js';
 
@@ -29,6 +29,7 @@ const ROOT = path.resolve(__dirname, '..');
 const TERMS_DIR = path.join(ROOT, 'data', 'terms');
 const index = loadTerms(TERMS_DIR, approvedRuleTerms(ROOT));
 const matcher = buildMatcher(index);
+const shouldKeepLexicalMatch = createLexicalFilter(index.exceptions);
 assert.ok(findMatches(matcher, 'The shocking warning was finally revealed.', index.termsById, index.regexTerms).length >= 3);
 for (const text of ['That is a proverb.', 'The minor signed the form.', 'He swung an axe at the door.', 'Boil the hot water.', 'Netflix licensed it exclusively.']) {
   assert.deepStrictEqual(findMatches(matcher, text, index.termsById, index.regexTerms), [], `no match expected in: ${text}`);
@@ -233,6 +234,33 @@ assert.strictEqual(shouldKeepLexicalMatch({ phrase: 'breaking' }, 'breaking', 'T
 assert.strictEqual(shouldKeepLexicalMatch({ phrase: 'breaking' }, 'BREAKING', 'BREAKING NEWS: vote delayed', { headline: true }), true);
 assert.strictEqual(shouldKeepLexicalMatch({ phrase: 'elite' }, 'Elite', 'Xbox Elite 3 controller leaks', { headline: true }), false);
 assert.strictEqual(shouldKeepLexicalMatch({ phrase: 'elite' }, 'elite', 'A corrupt elite captured the state', { headline: true }), true);
+// data/terms/exceptions.json: [phrase, text, still flagged, context].
+const HEAD = { headline: true }, BODY = { headline: false }, REDDIT = { headline: false, pageContext: 'discussion' };
+/** @type {[string, string, boolean, ({ headline: boolean, pageContext?: string })?][]} */
+const EXCEPTION_CASES = [
+  ['far-left', 'Pictured at far left, the senator', false], ['far-left', 'A far-left group marched', true],
+  ['far-right', 'Seen in the far right corner', false], ['far-right', 'The mayor (far right) spoke', false], ['far-right', 'A far-right party won', true],
+  ['breaking', 'The bridge is breaking apart', false], ['breaking', 'BREAKING: vote delayed', true], ['breaking', 'Senators share breaking news today', true],
+  ['wild', 'Released into the wild', false], ['wild', 'A wild card entry', false], ['wild', 'Fans erupt in wild rant', true],
+  ['revolutionary', "Iran's Revolutionary Guards", false], ['revolutionary', 'A revolutionary gadget', true],
+  ['secret', 'Secret Service chief speaks', false], ['secret', 'Star reveals secret affair', true],
+  ['shock', 'Workers felt an electric shock', false], ['shock', 'New shock absorbers fitted', false], ['shock', 'A shock result in Ohio', true],
+  ['under fire', 'Airport came under fire', false], ['under fire', 'Troops under fire from rebels', false], ['under fire', 'Coach under fire after debacle', true],
+  ['evil', 'Resident Evil remake announced', false], ['evil', 'Evil Dead sequel', false], ['evil', 'This is pure evil', true], ['evil', 'A resident evil plot', true],
+  ['sacked', 'He was sacked eight times', false, BODY], ['sacked', 'Allen sacked for a loss', false, BODY], ['sacked', 'The QB was sacked by Watt for 9 yards', false, BODY],
+  ['sacked', 'The minister was sacked by the premier', true, BODY], ['sacked', 'The minister Was sacked by Watt for 9 yards', true, BODY],
+  ['severe', 'Severe storms hit Texas', false], ['severe', 'Severe criticism of the plan', true],
+  ['exclusive', 'They signed an exclusive license', false, BODY], ['exclusive', 'An EXCLUSIVE interview', true, BODY], ['exclusive', 'Exclusive: the inside story', true],
+  ['elite', 'Xbox Elite controller leaks', false], ['elite', 'Hasbro Elite figures', false], ['elite', 'An elite athlete', false], ['elite', 'The wealthy elite', true],
+  ['legendary', 'Marvel Legendary series', false], ['legendary', 'Her legendary performance', true],
+  ['gotta', 'You gotta see this', true, BODY], ['gotta', 'You gotta see this', false, REDDIT],
+];
+for (const [phrase, text, flagged, context = HEAD] of EXCEPTION_CASES) {
+  const found = findMatches(matcher, text, index.termsById, index.regexTerms, () => true,
+    (termId, start, end) => shouldKeepLexicalMatch(index.termsById[termId], text.slice(start, end), text, context, start))
+    .some(match => index.termsById[match.termId].phrase === phrase);
+  assert.strictEqual(found, flagged, `exception for "${phrase}" in: ${text}`);
+}
 assert.ok(headlineTerms('A bargain, but at what cost?').includes('at what cost'), 'rhetorical stock phrases are lexical rules');
 assert.deepStrictEqual(findContextualMatches('You said that the plan worked.', { headline: false }), []);
 assert.strictEqual(
@@ -361,4 +389,25 @@ try {
   assert.throws(() => loadTerms(invalidContextDir), /Unsupported context "unknown-place"/);
 } finally {
   fs.rmSync(invalidContextDir, { recursive: true, force: true });
+}
+
+const exceptionsFile = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'clearframe-exceptions-')), 'exceptions.json');
+try {
+  const exceptionTerms = { shock: { phrase: 'shock', type: 'clickbait' } };
+  for (const [data, error] of [
+    [{ terms: { shock: { unless: [{ after: '/(/iu' }] } } }, /term "shock".unless\[0\].after: invalid regex/],
+    [{ terms: { shock: { unless: [{ after: '^gloves' }] } } }, /expected "\/pattern\/flags"/],
+    [{ terms: { shock: { unless: [{ after: '/x/g' }] } } }, /flags "g" and "y" are not allowed/],
+    [{ terms: { shocks: { unless: [{ after: '/x/u' }] } } }, /term "shocks": is not a term phrase/],
+    [{ terms: { shock: { unless: ['missing'] } } }, /unknown shared pattern "missing"/],
+    [{ terms: { shock: { unless: [{ afterr: '/x/u' }] } } }, /unknown field "afterr"/],
+    [{ terms: { shock: { unless: [{}] } } }, /empty clause/],
+    [{ term: {} }, /top level: unknown field "term"/],
+    [{ types: { clickbait: { contexts: ['nowhere'] } } }, /unsupported context "nowhere"/],
+  ]) {
+    fs.writeFileSync(exceptionsFile, JSON.stringify(data));
+    assert.throws(() => loadExceptions(exceptionsFile, exceptionTerms), error);
+  }
+} finally {
+  fs.rmSync(path.dirname(exceptionsFile), { recursive: true, force: true });
 }

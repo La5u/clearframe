@@ -14,6 +14,7 @@ interface ClearFrameTerm {
 interface ClearFrameIndex {
   termsById: Record<string, ClearFrameTerm>;
   regexTerms: { termId: string; pattern?: string }[];
+  exceptions: { terms: Record<string, any[]>; shared: Record<string, object[]>; contexts: Record<string, object[]>; types: Record<string, string[]> };
 }
 
 interface ClearFrameColor {

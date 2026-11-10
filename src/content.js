@@ -7,9 +7,10 @@ import { chooseAction, chooseReplacementTerm, getReplacementSourceText, resolveM
 import { ALL_CAPS_TERM_ID, findAllCapsMatches } from './core/all-caps.js';
 import { CONTEXTUAL_TERMS, classifyPageContext, findContextualMatches } from './core/contextual.js';
 import { recoverOriginalText } from './core/restore.js';
-import { shouldKeepLexicalMatch } from './core/context-filter.js';
+import { createLexicalFilter } from './core/context-filter.js';
 
 const { index, types: TYPE_MAP, categories: TYPE_CATEGORIES, labels: LABELS, colors, underlines, intensity } = ClearFrame;
+const shouldKeepLexicalMatch = createLexicalFilter(index.exceptions);
 const SKIP_TAGS_SELECTOR = 'script,style,noscript,textarea,input,code,pre,kbd,samp';
 const MEDIA_UI_SELECTOR = '.ytp-caption-window-container,.ytp-caption-segment,.caption-window,.vjs-text-track-display,.jw-captions,.jw-text-track-display,.plyr__captions,.ytp-chrome-controls,.vjs-control-bar,.jw-controlbar,.plyr__controls,[data-testid=video-subtitles]';
 // Captions, photo credits, and section labels set in capitals by design.

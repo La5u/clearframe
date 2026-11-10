@@ -1,0 +1,101 @@
+{
+  "terms": {
+    "breaking": {
+      "note": "Only a \"BREAKING:\" / \"breaking news\" label, or a text that opens with the word; not \"breaking the law\" or \"record-breaking\".",
+      "unless": [
+        { "before": "/\\S/u", "after": "/^(?!\\s*(?::|news\\b|update|story))/iu" }
+      ]
+    },
+    "elite": { "unless": ["productName"] },
+    "evil": {
+      "note": "Titles: \"Resident Evil\", \"Evil Dead\".",
+      "unless": [
+        { "before": "/\\bResident\\s+$/u" },
+        { "after": "/^\\s*Dead\\b/u" }
+      ]
+    },
+    "exclusive": {
+      "note": "\"EXCLUSIVE\" badges are clickbait; an \"exclusive license\" in body text is not.",
+      "unless": [
+        { "headline": false, "match": "/\\p{Changes_When_Uppercased}/u" }
+      ]
+    },
+    "far-left": { "unless": ["position"] },
+    "far-right": { "unless": ["position"] },
+    "iconic": { "unless": ["productName"] },
+    "legendary": { "unless": ["productName"] },
+    "miracle": { "unless": ["productName"] },
+    "revolutionary": {
+      "unless": [
+        { "after": "/^\\s*(?:guards?|war|army|front|committee|party)\\b/iu" }
+      ]
+    },
+    "sacked": {
+      "note": "American football: a quarterback \"sacked eight times\" or \"sacked for a loss\".",
+      "unless": [
+        { "after": "/^\\s*(?:\\d+|one|two|three|four|five|six|seven|eight|nine|ten|twice|once)\\b(?:\\s+(?:times|more))?|^\\s*for\\s+(?:a\\s+)?(?:loss|safety|\\d)/iu" },
+        { "before": "/\\b(?:quarterback|QB|was|got|been)\\s+$/u", "after": "/\\b(?:times|loss|yards?|sacks?)\\b/iu" }
+      ]
+    },
+    "secret": {
+      "unless": [
+        { "after": "/^\\s*service\\b/iu" }
+      ]
+    },
+    "severe": {
+      "unless": [
+        { "after": "/^\\s*(?:storms?|thunderstorms?|weather|drought|flooding|turbulence|winds?|allerg)/iu" }
+      ]
+    },
+    "shock": {
+      "unless": [
+        { "before": "/\\b(?:electric|economic|price|oil|supply|culture|toxic|septic|anaphylactic|shell)\\s+$/iu" },
+        { "after": "/^\\s*(?:gloves?|therapy|absorbers?|wave|collars?)\\b/iu" }
+      ]
+    },
+    "superstar": { "unless": ["productName"] },
+    "under fire": {
+      "unless": [
+        { "before": "/\\b(?:came|come|comes|coming)\\s+$/iu" },
+        { "after": "/^\\s*from\\b/iu" }
+      ]
+    },
+    "wild": {
+      "unless": [
+        { "before": "/\\b(?:the|into)\\s+$/iu" },
+        { "after": "/^\\s*(?:card|fire|life|animals?|horses?|'n|‘n)/iu" }
+      ]
+    }
+  },
+  "shared": {
+    "position": {
+      "note": "Position words: \"far right corner\", \"pictured at far left\", \"(far right)\".",
+      "unless": [
+        { "after": "/^\\s*(?:corner|side|column|lane|edge|end|hand|wing of the (?:building|stage)|of (?:the|this) (?:photo|image|picture|screen|page|frame|row|stage|field)|in (?:the|this) (?:photo|image|picture))\\b/iu" },
+        { "before": "/(?:\\(|\\b(?:pictured|seen|standing|seated|sits|sitting|from)\\b[^.]{0,20})\\s*$/iu", "after": "/^\\s*[),]/u" },
+        { "before": "/\\((?:\\s*at)?\\s*$/iu" }
+      ]
+    },
+    "productName": {
+      "note": "Capitalized as part of a product or brand name: \"Xbox Elite 3 controller\", \"Marvel Legendary series\".",
+      "unless": [
+        { "match": "/^[\\p{Lu}\\d]/u", "nearby": "/\\b(?:xbox|playstation|pixel|iphone|galaxy|controller|gamepad|keyboard|mouse|laptop|phone|model|series|edition|package|trim|brand|product|album|film|show|team|unit|magazine|newspaper|records|studios)\\b/iu" },
+        { "match": "/^[\\p{Lu}\\d]/u", "textBefore": "/\\b[A-Z][\\p{L}\\d-]+\\s+$/u" }
+      ]
+    }
+  },
+  "contexts": {
+    "evaluative": {
+      "note": "Keep this list politically mirrored: each side's pejorative \"elite\" modifiers count.",
+      "when": [
+        { "nearby": "/\\b(?:billionaire|coastal|conservative|corporate|corrupt|detached|entrenched|global|greedy|liberal|political|powerful|privileged|rich|ruling|urban|wealthy)\\b/iu" }
+      ]
+    }
+  },
+  "types": {
+    "colloquialism": {
+      "note": "Ordinary Reddit and YouTube language is not flagged.",
+      "contexts": ["publication"]
+    }
+  }
+}

@@ -38,6 +38,23 @@ export class Cdp {
   close() { this.ws.close(); }
 }
 
+// /usr/bin/chromium, else the newest Playwright Chromium (the headless shell
+// cannot load extensions).
+export function findChromium() {
+  if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;
+  if (fs.existsSync('/usr/bin/chromium')) return '/usr/bin/chromium';
+  const cache = path.join(os.homedir(), '.cache', 'ms-playwright');
+  const builds = fs.existsSync(cache) ? fs.readdirSync(cache).filter(name => /^chromium-\d+$/.test(name))
+    .sort((a, b) => Number(b.split('-')[1]) - Number(a.split('-')[1])) : [];
+  for (const build of builds) {
+    for (const dir of fs.readdirSync(path.join(cache, build)).filter(name => name.startsWith('chrome-'))) {
+      const binary = path.join(cache, build, dir, 'chrome');
+      if (fs.existsSync(binary)) return binary;
+    }
+  }
+  return '/usr/bin/chromium';
+}
+
 async function connect(port) {
   const target = (await fetch(`http://127.0.0.1:${port}/json/list`).then(response => response.json())).find(item => item.type === 'page');
   if (!target) throw new Error('Chromium page target not found');
@@ -52,10 +69,10 @@ async function connect(port) {
 export async function launchExtensionBrowser({ windowSize } = {}) {
   if (process.env.CLEARFRAME_CDP_PORT) {
     const cdp = await connect(process.env.CLEARFRAME_CDP_PORT);
-    return { cdp, close: async () => cdp.close() };
+    return { cdp, port: process.env.CLEARFRAME_CDP_PORT, close: async () => cdp.close() };
   }
   const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'clearframe-chromium-'));
-  const browser = spawn(process.env.CHROMIUM_PATH || '/usr/bin/chromium', [
+  const browser = spawn(findChromium(), [
     '--headless=new', '--no-sandbox', '--disable-gpu', '--no-first-run', ...(windowSize ? [`--window-size=${windowSize}`] : []),
     `--user-data-dir=${profile}`, `--disable-extensions-except=${path.join(ROOT, 'dist')}`,
     `--load-extension=${path.join(ROOT, 'dist')}`, '--remote-debugging-port=0', 'about:blank',
@@ -76,7 +93,7 @@ export async function launchExtensionBrowser({ windowSize } = {}) {
     if (!fs.existsSync(portFile)) throw new Error(`Chromium did not start: ${stderr}`);
     const [port] = fs.readFileSync(portFile, 'utf8').trim().split(/\r?\n/);
     cdp = await connect(port);
-    return { cdp, close };
+    return { cdp, port, close };
   } catch (error) {
     await close();
     throw error;

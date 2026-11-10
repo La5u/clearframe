@@ -1,0 +1,145 @@
+# test-all-types.html mode=reword highlights=114
+aggression-underline | st | hit with | rip | roast | [harsh] | slam | taken out | torch |
+aggression | rip | roast | harsh | slam | [taken out] | torch | under fire
+aggression | | slam | taken out | torch | [under fire]
+authority | [according to] | authorities say | experts s
+authority | according to | [authorities say] | experts say | experts warn
+authority | ording to | authorities say | [experts say] | experts warn | third partie
+authority | thorities say | experts say | [experts warn] | third parties
+authority-underline | experts say | experts warn | [third parties]
+clickbait | bombshell | break | [devastate] | exclusive | finally | surpr
+clickbait-underline | state | exclusive | finally | [surprising] | must-see | must-watch | nig
+clickbait | ing | must-see | must-watch | [nightmare] | reveal | shock | shocking |
+colloquialism-underline | [is not] | got to | kind of | you all
+colloquialism-underline | is not | [got to] | kind of | you all
+colloquialism-underline | is not | got to | [kind of] | you all
+colloquialism-underline | is not | got to | kind of | [you all]
+conflict | [chaos] | clash | erupt | feud | plot
+conflict | chaos | [clash] | erupt | feud | plot | showd
+conflict | chaos | clash | erupt | [feud] | plot | showdown | ignored |
+conflict | clash | erupt | feud | plot | [showdown] | ignored | spark | loss
+conflict-underline | pt | feud | plot | showdown | [ignored] | spark | loss
+conflict-underline | showdown | ignored | spark | [loss]
+derogatory | [bigot] | opponents | elite | extremi
+derogatory-underline | bigot | [opponents] | elite | extremist | large g
+derogatory | bigot | opponents | elite | [extremist] | large groups | illegal alie
+derogatory-underline | ponents | elite | extremist | [large groups] | illegal aliens | mob | radi
+loaded-framing | | extremist | large groups | [illegal aliens] | mob | radical | thug | poor
+derogatory | rge groups | illegal aliens | [mob] | radical | thug | poor quali
+derogatory | oups | illegal aliens | mob | [radical] | thug | poor quality
+derogatory | egal aliens | mob | radical | [thug] | poor quality
+derogatory-underline | iens | mob | radical | thug | [poor quality]
+distancing-medium | [alleged] | purportedly | suspected
+distancing | alleged | [purportedly] | suspected
+distancing | alleged | purportedly | [suspected]
+euphemism-underline | [civilian harm] | torture | assault | died |
+euphemism-underline | civilian harm | [torture] | assault | died | probe
+euphemism-underline | civilian harm | torture | [assault] | died | probe
+euphemism-underline | an harm | torture | assault | [died] | probe
+euphemism-low | | torture | assault | died | [probe]
+fear | dangerous | [frighten] | horrify | panic | terrify |
+fear | dangerous | frighten | [horrify] | panic | terrify | terror |
+fear-medium | gerous | frighten | horrify | [panic] | terrify | terror | threat |
+fear | frighten | horrify | panic | [terrify] | terror | threat | urgent
+hype | [big win] | breakthrough | cutting-edge
+hype | big win | [breakthrough] | cutting-edge | game-changin
+hype | big win | breakthrough | [cutting-edge] | game-changing | must-have |
+hype | breakthrough | cutting-edge | [game-changing] | must-have | revolutionary
+hype | utting-edge | game-changing | [must-have] | revolutionary
+hype | | game-changing | must-have | [revolutionary]
+idiom-underline | [disappeared] | hidden
+idiom-underline | disappeared | [hidden]
+loaded | [government handouts] | corporate welfare | tax rel
+loaded | government handouts | [corporate welfare] | tax relief | tax breaks for
+loaded | andouts | corporate welfare | [tax relief] | tax breaks for the wealthy
+loaded | porate welfare | tax relief | [tax breaks for the wealthy]
+loaded-framing-underline | [elite] | level playing field | offic
+loaded-framing | elite | [level playing field] | officer-involved shooting |
+loaded-framing | elite | level playing field | [officer-involved] shooting | poison pill | righ
+loaded-framing | | officer-involved shooting | [poison pill] | rightsize | runaway debt |
+loaded-framing | lved shooting | poison pill | [rightsize] | runaway debt | science and
+loaded-framing | g | poison pill | rightsize | [runaway debt] | science and common sense |
+loaded-framing | | runaway debt | science and [common sense] | self-proclaimed | called |
+loaded-framing-underline | | science and common sense | [self-proclaimed] | called | sunset
+loaded-framing-underline | mon sense | self-proclaimed | [called] | sunset
+loaded-framing | | self-proclaimed | called | [sunset]
+minimizing | [mere] | minor glitch
+minimizing | mere | [minor] glitch
+moral | [brutal] | controversial | courage | c
+loaded-framing-low | brutal | [controversial] | courage | corrupt | deluded
+moral | l | controversial | courage | [corrupt] | deluded | despicable | drac
+moral | versial | courage | corrupt | [deluded] | despicable | draconian | ev
+moral | courage | corrupt | deluded | [despicable] | draconian | evil | fair | f
+moral | rupt | deluded | despicable | [draconian] | evil | fair | fearless | he
+moral | ed | despicable | draconian | [evil] | fair | fearless | heroic |
+moral | spicable | draconian | evil | [fair] | fearless | heroic | oppress
+moral | an | evil | fair | fearless | [heroic] | oppressive | piracy | prote
+moral | | fair | fearless | heroic | [oppressive] | piracy | protect | ridiculo
+moral | rless | heroic | oppressive | [piracy] | protect | ridiculous | righ
+clickbait | pressive | piracy | protect | [ridiculous] | right thing to do | ruthles
+moral | racy | protect | ridiculous | [right thing to do] | ruthless | scandal | scanda
+moral | iculous | right thing to do | [ruthless] | scandal | scandalous | sinf
+moral | ight thing to do | ruthless | [scandal] | scandalous | sinful
+moral | to do | ruthless | scandal | [scandalous] | sinful
+moral | less | scandal | scandalous | [sinful]
+negative-framing | [bloodbath] | bloated | catastrophic | di
+negative-framing | bloodbath | [bloated] | catastrophic | disaster | g
+negative-framing | bloodbath | bloated | [catastrophic] | disaster | gruesome | hardl
+negative-framing | th | bloated | catastrophic | [disaster] | gruesome | hardline | horri
+negative-framing | d | catastrophic | disaster | [gruesome] | hardline | horrific | junta
+negative-framing | ophic | disaster | gruesome | [hardline] | horrific | junta | puppet |
+negative-framing | aster | gruesome | hardline | [horrific] | junta | puppet | regime | t
+negative-framing | esome | hardline | horrific | [junta] | puppet | regime | tragedy
+negative-framing | hardline | horrific | junta | [puppet] | regime | tragedy
+negative-framing | | horrific | junta | puppet | [regime] | tragedy
+negative-framing | c | junta | puppet | regime | [tragedy]
+passive | [incident occurred] | mistakes were made
+passive | incident occurred | [mistakes were made]
+repetition-underline | [repeatedly] | more and more | repeatedly
+repetition | repeatedly | [more and more] | repeatedly | repeatedly | r
+repetition-underline | repeatedly | more and more | [repeatedly] | repeatedly | repeatedly
+repetition-underline | more and more | repeatedly | [repeatedly] | repeatedly
+repetition-underline | e | repeatedly | repeatedly | [repeatedly]
+reveal | [reveal]
+rhetorical-question | [correct?] | isn't it? | right?
+rhetorical-question | correct? | [isn't it?] | right?
+rhetorical-question | correct? | isn't it? | [right?]
+uncertainty | [apparently] | reportedly | suspicion of
+uncertainty | apparently | [reportedly] | suspicion of
+uncertainty | apparently | reportedly | [suspicion of]
+unsourced-underline | [unnamed expert] | multiple sources | people c
+unsourced | unnamed expert | [multiple sources] | people close to | unnamed s
+unsourced | d expert | multiple sources | [people close to] | unnamed sources | unsourced
+unsourced-underline | e sources | people close to | [unnamed sources] | unsourced | sources
+unsourced-underline | close to | unnamed sources | [unsourced] | sources
+unsourced-underline | unnamed sources | unsourced | [sources]
+# changed text nodes=11
+~ st | hit with | rip | roast | [scathing => harsh] | slam | taken out | torch |
+~ experts say | experts warn | [trusted partners => third parties]
+~ state | exclusive | finally | [jaw-dropping => surprising] | must-see | must-watch | nig
+~ [ain't  => is not ]| got to | kind of | you all
+~ ain't | [gotta  => got to ]| kind of | you all
+~ ain't | gotta | [kinda  => kind of ]| you all
+~ ain't | gotta | kinda | [y'all => you all]
+~ pt | feud | plot | showdown | [snub => ignored] | spark | loss
+~ t | showdown | snub | spark | [wipeout => loss]
+~ bigot | [dissident => opponents] | elite | extremist | large g
+~ ssident | elite | extremist | [horde  => large groups ]| illegal aliens | mob | radic
+~ iens | mob | radical | thug | [trash => poor quality]
+~ [collateral damage => civilian harm] | torture | assault | died |
+~ collateral damage | [enhanced interrogation => torture] | assault | died | probe
+~ ge | enhanced interrogation | [non-consensual encounter => assault] | died | probe
+~ | non-consensual encounter | [passed away => died] | probe
+~ [gone to ground => disappeared] | hidden
+~ gone to ground | [holed up => hidden]
+~ [elitist => elite] | level playing field | offic
+~ | science and common sense | [self-styled => self-proclaimed] | called | sunset
+~ common sense | self-styled | [so-called => called] | sunset
+~ [again and again => repeatedly] | more and more | repeatedly
+~ n and again | more and more | [over and over => repeatedly] | repeatedly | repeatedly
+~ re and more | over and over | [time after time => repeatedly] | repeatedly
+~ and over | time after time | [time and time again => repeatedly]
+~ [experts claim => unnamed expert] | multiple sources | people c
+~ e sources | people close to | [people familiar => unnamed sources] | unsourced | sources
+~ close to | people familiar | [sources say => unsourced] | sources
+~ ople familiar | sources say | [unnamed  => ]sources

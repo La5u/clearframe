@@ -21,10 +21,14 @@
     "evaluate:babe": "node tools/evaluate-babe.js",
     "evaluate:context": "node tools/evaluate-context-sanity.js",
     "evaluate:balance": "node tools/evaluate-balance.js",
+    "evaluate:gold": "node tools/evaluate-gold.js",
     "bench": "node tools/benchmark-matcher.js",
     "bench:browsers": "node tools/browser-benchmark.js",
     "profile:browsers": "node tools/profile-extension.js",
-    "smoke:sites": "node tools/browser-smoke.js"
+    "smoke:sites": "node tools/browser-smoke.js",
+    "snapshot": "npm run build && node tools/snapshot-highlights.js",
+    "snapshot:check": "npm run build && node tools/snapshot-highlights.js --check",
+    "snapshot:update": "npm run build && node tools/snapshot-highlights.js --update"
   },
   "devDependencies": {
     "@types/chrome": "^0.1.42",

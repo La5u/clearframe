@@ -108,6 +108,52 @@ corpus-derived approval that fails the evidence gates. Chrome and Firefox ZIPs
 also fail CI at 50 MB. See `CLEARFRAME_TAXONOMY.md`, `research/README.md`, and
 `FUTURE_DATA_PLAN.md`.
 
+## Regression snapshots and accuracy
+
+```sh
+npm run snapshot:check     # build, then compare real-browser output with tests/snapshots/
+npm run snapshot:update    # rewrite the snapshots after an intended change; review the git diff
+npm run evaluate:gold      # precision/recall against tests/gold/ (add -- --all for every type)
+```
+
+**Snapshots** (`tools/snapshot-highlights.js`) load every page in `tests/fixtures/`
+from a local server into one headless Chromium with `dist/` installed, with all
+other network requests blocked and any `<script>` stripped. Each fixture is
+recorded in three modes: highlight (defaults), reword (`replaceTerms`) and
+remove (`removeTerms`). Every highlight becomes one line, `name | context[text]context`,
+in document order; the reword and remove files also list each rewritten text
+node as `~ context[old => new]context`. A full check takes about 30 seconds.
+The browser is `CHROMIUM_PATH`, else `/usr/bin/chromium`, else the newest
+Playwright Chromium in `~/.cache/ms-playwright`. This check is local only, not
+part of `npm run ci`: it needs a Chromium that still accepts `--load-extension`
+(branded Chrome no longer does), and that has not been verified on the GitHub runner.
+Run it before and after any change to detection or rendering.
+
+**Gold labels** (`tests/gold/*.jsonl`) hold one text block per line:
+
+```json
+{"id":"g001","source":"newssite.html","context":"headline","page":"publication","text":"…","spans":[{"start":11,"end":20,"type":"quote","text":"'awkward'"}],"reviewed":false}
+```
+
+`context` is `headline` or `body`, `page` is the page context (`publication`,
+`discussion`, `video`), `type` is a type from `data/type-labels.json`, and `text`
+on a span is a checked copy of the labelled wording; `note` is optional.
+`tools/evaluate-gold.js` runs the detection pipeline of `processText` in
+`src/content.js` on each block (mirrored in the tool until the refactor shares it)
+and reports exact and overlap precision, recall and F1, overall and per type,
+plus false positives by rule and misses by wording. Types that are off by
+default are left out unless `--all` is given.
+
+The 200 seed blocks were sampled from the six news fixtures (headlines and body
+text, many with no loaded wording at all) and labelled by an AI model reading
+them against `CLEARFRAME_TAXONOMY.md` and `data/type-labels.json`, not from
+detector output. Conventions used: routine attribution ("police say", "court
+told") and ordinary reporting verbs ("warns") are not marked; vague sources
+("experts warn", "insiders say") are `unsourced`; words inside a full quotation
+are not marked, but short quoted fragments that carry a judgment are `quote`. **None of the labels are reviewed yet** (`"reviewed": false`), so
+the scores are provisional and the tool is a report, not a CI gate. Set
+`reviewed` to `true` on each block once you agree with its spans.
+
 ## Analysis Flow
 
 The current implementation analyzes pages automatically:

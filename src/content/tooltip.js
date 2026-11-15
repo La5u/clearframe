@@ -1,12 +1,11 @@
 // Owns the hover tooltip: finds the match under the pointer, shows its
-// labels (with feedback buttons when pinned), reveals reworded text while
+// labels, reveals reworded text while
 // hovered, and closes on selection, scroll or click elsewhere.
 import { getStrength } from '../core/analyze.js';
-import { getSettings, isFeedbackEnabled } from './settings.js';
-import { getLabel } from './labels.js';
+import { getSettings, normalizeDismissedTerms } from './settings.js';
+import { getLabel, getTypeLabel } from './labels.js';
 import { getNodeRecords, hasResults } from './store.js';
 import { isPointInsideHoverReveal, restoreHoverReveal, revealOriginalText } from './reveal.js';
-import { appendFeedbackActions, hideSuggestion } from './feedback.js';
 
 let activeHover = null;
 let pinnedTooltipRecord = null;
@@ -43,12 +42,6 @@ export function hideTooltip(force = false) {
   if (tooltip) tooltip.style.display = 'none';
 }
 
-// For when feedback is turned off: a pinned tooltip may hold its buttons.
-export function hideFeedbackInTooltip() {
-  if (pinnedTooltipRecord) hideTooltip(true);
-  document.querySelector('#cf-tooltip .cf-feedback-actions')?.remove();
-}
-
 function showTooltip(record, x, y) {
   let tooltip = document.getElementById('cf-tooltip');
   if (!tooltip) {
@@ -57,7 +50,8 @@ function showTooltip(record, x, y) {
   const terms = record.terms?.length ? record.terms : [{ type: record.type }];
   tooltip.textContent = '';
   if (revealedRecord !== record) revealedRecord = null;
-  const hidden = getSettings().predictFirst === true && !revealedRecord;
+  const studyMode = getSettings().studyMode;
+  const hidden = studyMode && getSettings().predictFirst === true && !revealedRecord;
   const seen = new Set();
   if (hidden) {
     const prompt = document.createElement('div'); prompt.className = 'cf-predict'; prompt.append('What is this wording doing?');
@@ -66,27 +60,44 @@ function showTooltip(record, x, y) {
     prompt.appendChild(show); tooltip.appendChild(prompt);
   }
   for (const term of hidden ? [] : terms) {
-    const label = getLabel(term);
+    const label = studyMode ? getLabel(term) : getTypeLabel(term.type);
     if (seen.has(label.term)) continue;
     seen.add(label.term);
     const row = document.createElement('div'); row.className = 'cf-term';
     const line = document.createElement('div'); line.className = 'cf-term-line';
-    const name = document.createElement('span'); name.className = 'cf-term-name'; name.textContent = label.term;
+    const name = document.createElement('span'); name.className = 'cf-term-name'; name.textContent = studyMode ? label.term : ClearFrame.categories[term.type];
     line.appendChild(name);
     if (term.confidence && term.confidence !== 'high') {
       const confidence = document.createElement('span'); confidence.className = 'cf-confidence'; confidence.textContent = ` · ${getStrength(term.confidence) === 'medium' ? 'medium' : 'low'} confidence`;
       line.appendChild(confidence);
     }
-    const info = document.createElement('span'); info.className = 'cf-info'; info.textContent = 'i';
-    info.tabIndex = 0; info.setAttribute('role', 'button'); info.setAttribute('aria-label', `In plain words: ${label.plain}`);
-    const plain = document.createElement('div'); plain.className = 'cf-plain';
+    const plain = document.createElement('div'); plain.className = studyMode ? 'cf-plain' : 'cf-explanation';
     const plainName = document.createElement('strong'); plainName.textContent = label.plain;
     plain.append(plainName, label.effect ? ` – ${label.effect}` : '');
-    line.appendChild(info); row.append(line, plain);
+    if (studyMode) {
+      const info = document.createElement('span'); info.className = 'cf-info'; info.textContent = 'i';
+      info.tabIndex = 0; info.setAttribute('role', 'button'); info.setAttribute('aria-label', `In plain words: ${label.plain}`);
+      line.appendChild(info);
+    }
+    row.append(line, plain);
     tooltip.appendChild(row);
   }
+  const dismiss = document.createElement('button'); dismiss.type = 'button'; dismiss.className = 'cf-dismiss';
+  dismiss.textContent = 'Not persuasive here';
+  dismiss.addEventListener('click', async () => {
+    dismiss.disabled = true;
+    try {
+      const local = await chrome.storage.local.get('dismissedTerms');
+      const phrases = (record.terms || []).map(term => term.phrase).filter(Boolean);
+      await chrome.storage.local.set({ dismissedTerms: normalizeDismissedTerms([...normalizeDismissedTerms(local.dismissedTerms), ...phrases]) });
+      hideTooltip(true);
+    } catch {
+      dismiss.disabled = false;
+      dismiss.textContent = 'Could not save — try again';
+    }
+  });
+  tooltip.appendChild(dismiss);
   tooltip.classList.toggle('pinned', pinnedTooltipRecord === record);
-  if (pinnedTooltipRecord === record && isFeedbackEnabled()) appendFeedbackActions(tooltip, record);
   tooltip.style.display = 'block';
   revealOriginalText(record);
   const rect = record.range.getBoundingClientRect();
@@ -141,7 +152,7 @@ function findRecordAtPoint(x, y) {
   // beneath it, without scanning every match on the page.
   const stack = document.elementsFromPoint(x, y);
   // Over ClearFrame's own tooltip, the text beneath it is not being pointed at.
-  if (stack[0]?.closest('#cf-tooltip,#cf-suggestion')) return null;
+  if (stack[0]?.closest('#cf-tooltip')) return null;
   const candidates = new Set();
   for (let element = /** @type {Element | null} */ (stack[0] || null), depth = 0; element && depth < 5; depth++, element = element.parentElement) candidates.add(element);
   for (const element of stack.slice(1, 8)) candidates.add(element);
@@ -217,7 +228,7 @@ export function handleTooltipClick(event) {
 // A finished text selection closes the tooltip and drops a pending hover.
 /** @param {MouseEvent} event */
 export function handleSelectionEnd(event) {
-  if (event.target instanceof Element && event.target.closest('#cf-tooltip,#cf-suggestion')) return;
+  if (event.target instanceof Element && event.target.closest('#cf-tooltip')) return;
   const selection = getSelection();
   if (selection && !selection.isCollapsed) {
     pendingHoverEvent = null;
@@ -243,5 +254,4 @@ export function handleScroll(event) {
     const moved = !rect || tooltipAnchor?.record !== record || Math.abs(rect.left - tooltipAnchor.left) > 1 || Math.abs(rect.top - tooltipAnchor.top) > 1;
     if (moved) hideTooltip(true);
   }
-  hideSuggestion();
 }

@@ -1,4 +1,4 @@
-# test-all-types.html mode=highlight highlights=122
+# test-all-types.html mode=highlight highlights=120
 aggression | st | hit with | rip | roast | [scathing] | slam | taken out | torch |
 aggression | p | roast | scathing | slam | [taken out] | torch | under fire
 aggression | | slam | taken out | torch | [under fire]
@@ -29,7 +29,6 @@ derogatory | st | horde | illegal aliens | [mob] | radical | thug | trash
 derogatory | orde | illegal aliens | mob | [radical] | thug | trash
 derogatory | egal aliens | mob | radical | [thug] | trash
 derogatory | iens | mob | radical | thug | [trash]
-distancing-medium | [alleged] | purportedly | suspected
 distancing | alleged | [purportedly] | suspected
 distancing | alleged | purportedly | [suspected]
 euphemism | [collateral damage] | enhanced interrogation | no
@@ -48,7 +47,6 @@ exaggeration | e | outrageous | staggering | [totally] | up to 10
 exaggeration | eous | staggering | totally | [up to] 10
 fear | dangerous | [frighten] | horrify | panic | terrify |
 fear | dangerous | frighten | [horrify] | panic | terrify | terror |
-fear-medium | gerous | frighten | horrify | [panic] | terrify | terror | threat |
 fear | frighten | horrify | panic | [terrify] | terror | threat | urgent
 hype | [big win] | breakthrough | cutting-edge
 hype | big win | [breakthrough] | cutting-edge | game-changin

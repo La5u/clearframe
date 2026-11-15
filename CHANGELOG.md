@@ -1,5 +1,23 @@
 # Changelog
 
+## Unreleased
+
+### Simpler everyday reading
+- One popup screen with a collapsed Settings section and six plain wording groups.
+- Tooltips show the group, plain label, and effect directly. Study mode brings
+  back technical terms and the (i), Predict first, and Swap test with their shortcuts.
+- Pause everywhere or on the current site. Pausing restores original text;
+  switching back on analyses the page again without a reload.
+- “Not persuasive here” dismisses a rule phrase across pages, saved locally.
+  Settings shows the count and lets you restore all dismissed wordings.
+
+### Calmer defaults
+- Strong cues only by default. Direct address, imperatives, and modality join
+  absolute claims, superlatives, and quotes as devices that start switched off.
+  Saved sensitivity and device preferences are kept; monochrome stays the default.
+- Removed Remove mode, colour dragging and resets, and the feedback tools.
+  Old settings are ignored; the legacy CSV removal column is no longer built.
+
 ## 1.2.1
 
 - Highlights appear while the page is still loading instead of after it

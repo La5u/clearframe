@@ -3,9 +3,9 @@
 // badge show (term counts, navigation through matches).
 import { createAnalyzer } from '../core/analyze.js';
 import { recoverOriginalText } from '../core/restore.js';
-import { getSettings } from './settings.js';
+import { getSettings, getAnalysisSettings } from './settings.js';
 import { PAGE_CONTEXT, getElementContext, isLikelyHeadline } from './scanner.js';
-import { getLabel } from './labels.js';
+import { getLabel, getTypeLabel } from './labels.js';
 
 /** @typedef {{node: Text, originalText: string, displayedText: string, records: any[]}} NodeResult */
 
@@ -31,7 +31,7 @@ export function processTextNode(node) {
   const context = getElementContext(node.parentElement);
   const { conversational, preserveText, capsLabel } = context;
   const headline = isLikelyHeadline(context, originalText);
-  const plan = analyze(originalText, { headline, conversational, preserveText, capsLabel, pageContext: PAGE_CONTEXT }, getSettings());
+  const plan = analyze(originalText, { headline, conversational, preserveText, capsLabel, pageContext: PAGE_CONTEXT }, getAnalysisSettings());
   const displayedNodeText = plan.displayText;
   if (displayedNodeText !== originalText) node.nodeValue = displayedNodeText;
 
@@ -122,10 +122,12 @@ export function rebuildSummary() {
   totalMatches = 0;
   deviceStats = new Map();
   for (const result of nodeResults.values()) {
-    for (const { label, wording } of result.records) {
-      let device = deviceStats.get(label.term);
-      if (!device) deviceStats.set(label.term, device = { effects: new Set(), wordings: new Map() });
-      if (label.effect) device.effects.add(label.effect);
+    for (const { label, type, wording } of result.records) {
+      const name = getSettings().studyMode ? label.term : ClearFrame.categories[type];
+      let device = deviceStats.get(name);
+      if (!device) deviceStats.set(name, device = { effects: new Set(), wordings: new Map() });
+      const effect = getSettings().studyMode ? label.effect : getTypeLabel(type).effect;
+      if (effect) device.effects.add(effect);
       const key = wordingKey(wording);
       device.wordings.set(key, (device.wordings.get(key) || 0) + 1); totalMatches++;
     }
@@ -153,7 +155,7 @@ export function getDeviceGroups() {
 
 // Each call steps to the next match of this wording under this device, wrapping around.
 export function getNextRecord(wording, device) {
-  const records = getAllRecords().filter(record => record.label.term === device && wordingKey(record.wording) === wording && record.node.isConnected);
+  const records = getAllRecords().filter(record => (getSettings().studyMode ? record.label.term : ClearFrame.categories[record.type]) === device && wordingKey(record.wording) === wording && record.node.isConnected);
   if (!records.length) return null;
   const key = `${device}\n${wording}`;
   const nextIndex = ((navigationIndexes.get(key) ?? -1) + 1) % records.length;

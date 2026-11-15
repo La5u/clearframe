@@ -39,7 +39,7 @@ function buildTypeMaps(colorConfig) {
   for (const [color, config] of Object.entries(colorConfig.colors || {})) {
     const category = config.category || config.name || color;
     for (const type of config.types || []) {
-      if (types[type] && types[type] !== color) {
+      if (Object.prototype.hasOwnProperty.call(types, type)) {
         throw new Error(`Type "${type}" is assigned to multiple colors`);
       }
       types[type] = color;
@@ -58,11 +58,10 @@ function compactContentIndex(index) {
   const termsById = Object.fromEntries(Object.entries(index.termsById).map(([id, term]) => {
     const compact = { type: term.type };
     // Canonical terms use their ID as the phrase. Aliases/stem variants keep
-    // the canonical phrase because replacement and feedback need it.
+    // the canonical phrase because replacement and dismissal need it.
     if (id !== term.phrase) compact.phrase = term.phrase;
     if (term.neutral) compact.neutral = term.neutral;
     if (term.stemType) compact.stemType = term.stemType;
-    if (term.remove) compact.remove = true;
     if (term.confidence && term.confidence !== 'high') compact.confidence = term.confidence;
     if (term.contexts?.length) compact.contexts = term.contexts;
     return [id, compact];

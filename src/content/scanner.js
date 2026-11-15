@@ -8,7 +8,7 @@ const MEDIA_UI_SELECTOR = '.ytp-caption-window-container,.ytp-caption-segment,.c
 // Captions, photo credits, and section labels set in capitals by design.
 const CAPS_LABEL_SELECTOR = 'figcaption,[class*=caption],[class*=credit],[class*=kicker],[class*=eyebrow],[class*=badge],[class*=label]';
 const PROTECTED_TEXT_SELECTOR = 'ytd-transcript-segment-renderer,ytd-transcript-segment-list-renderer,.ytd-transcript-segment-renderer,yt-live-chat-app,yt-live-chat-renderer,[aria-live=polite],[aria-live=assertive],[role=status],[role=alert]';
-const SKIP_SELECTOR = `nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true],#cf-tooltip,#cf-suggestion,${MEDIA_UI_SELECTOR}`;
+const SKIP_SELECTOR = `nav,button,select,option,[role=navigation],[role=menu],[aria-hidden=true],#cf-tooltip,${MEDIA_UI_SELECTOR}`;
 const SKIP_ELEMENT_SELECTOR = `${SKIP_TAGS_SELECTOR},${SKIP_SELECTOR}`;
 const HEADING_SELECTOR = 'h1,h2,h3,[role=heading],[slot=title],a#video-title,[class*=headline],[class*=title]';
 const LINK_EXCLUDED_SELECTOR = 'nav,footer,[role=navigation],[class*=share],[class*=comment]';

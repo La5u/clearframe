@@ -10,19 +10,35 @@ The reader stays in control:
 
 - Pages are analyzed locally as they load and change.
 - Matches identify specific wording rather than assigning a political bias score.
-- Hovering a highlight names the rhetorical device (hedging, hyperbole, agentless passive...) and its effect; the reader does the explaining.
-- Rewording is a "swap test" the reader switches on; removal is an advanced option.
-- Highlights are monochrome by default; device colors are optional.
+- Hovering a highlight shows its group, a plain label, and the wording’s effect; the reader does the explaining.
+- Study mode adds technical device names, Predict first, and the optional Swap test.
+- Highlights are monochrome by default; colours for six groups are optional.
+- Pause everywhere or on the current site, and dismiss wordings you do not want flagged.
 
 ClearFrame exposes linguistic pressure without telling readers what to believe.
 
 ## Using it
 
-The popup has three tabs:
+The popup has one screen. At the top, switch ClearFrame on or off everywhere,
+or select **Pause on this site** for the current hostname. Pausing restores any
+reworded text and clears the badge; switching back on analyses the page without
+a reload. The extension's **Analyse pasted text** page follows only the global switch.
 
-- **This page**: how many wordings were flagged, grouped by device (most frequent first). Select a device to see its effect and the wordings found; select a wording to jump to its next occurrence.
-- **Study**: *Predict first* (the tooltip asks "What is this wording doing?" until you press Show; Alt+Shift+P), *Swap test* (shows a neutral alternative in place of each highlighted wording, hover for the original; Alt+Shift+R), *Headlines only*, and a link to *Analyse pasted text*.
-- **Settings**: *How much to highlight* (`sensitivity`: Strong cues only = high-confidence terms, Standard = high and medium, Everything = also uncertain cues; default Standard), monochrome highlights, per-device on/off and colors, and under *Advanced* Remove mode (Alt+Shift+X) and Feedback tools (Alt+Shift+F).
+**Wordings flagged** lists matches under six plain groups, most frequent first.
+Expand a group and select a wording to jump to its next occurrence. When paused,
+the count and list show **Paused** instead.
+
+The collapsed **Settings** section holds:
+
+- **How much to highlight**: Strong cues only (high confidence, the default), Standard (high and medium), or Everything (also uncertain cues). Saved sensitivity and device choices are kept.
+- **Headlines only** and **Colour highlights by group** (off by default, for monochrome highlights).
+- **Study mode** (off by default): technical device names and the (i) explanation, with the popup grouped by device. It makes **Predict first** (Alt+Shift+P) and **Swap test** (Alt+Shift+R) available. Predict first asks “What is this wording doing?” until you press Show. Swap test shows a neutral alternative; hover for the original. Both are inactive, including their shortcuts, while Study mode is off; their saved choices are kept.
+- Per-device on/off buttons, organised under the six groups.
+- The number of dismissed wordings and **Restore all**, followed by **Analyse pasted text**.
+
+Every tooltip has **Not persuasive here**. This dismisses the matched rule phrase,
+including its aliases and inflections, on all pages. Decisions stay in
+`chrome.storage.local` under `dismissedTerms`; Restore all flags those wordings again.
 
 ClearFrame reads wording only. It cannot see tone, irony, images or layout, and it misses things.
 
@@ -37,22 +53,16 @@ npm run ci        # build + size check + typecheck + test
 
 ## Detector Types
 
-Color-coded categories track types of manipulation:
+The six groups share colours when colour highlights are enabled:
 
-- **yellow** sensationalism: all-caps, clickbait, hype, reveal
-- **green** intensification: absolute, exaggeration, superlative
-- **gray** framing & sourcing: unsourced, authority, uncertainty, loaded-framing, distancing
-- **red** hostility: aggression, derogatory
-- **pink** value judgment: moral, loaded
-- **orange** conflict & drama: conflict, minimizing, negative-framing
-- **purple** urgency & fear: fear
-- **blue** softening & agency hiding: euphemism, passive
-- **brown** dysphemism: dysphemism
-- **teal** style & voice: colloquialism, idiom, repetition, rhetorical-question, anaphora, tricolon
-- **indigo** address & obligation: imperative, direct-address, inclusive-pronoun, modality
-- **slate** quotes: quote
+- **Hype and clickbait**: all-caps, clickbait, hype, reveal, absolute, exaggeration, superlative
+- **Fear and conflict**: fear, conflict, negative-framing, aggression
+- **Loaded words**: loaded, loaded-framing, moral, derogatory, dysphemism
+- **Vague sourcing**: unsourced, authority, uncertainty, distancing, quote
+- **Softening**: euphemism, passive, minimizing
+- **Style and address**: colloquialism, idiom, repetition, rhetorical-question, anaphora, tricolon, imperative, direct-address, inclusive-pronoun, modality
 
-Disabled by default: `absolute`, `superlative`, `quote`.
+Disabled by default: `absolute`, `superlative`, `quote`, `direct-address`, `imperative`, `modality`.
 
 The address and structure devices are mostly common words, so they are kept
 quiet. Word lists (`data/terms/{imperative,direct-address,inclusive-pronoun,modality}.csv`)
@@ -62,7 +72,7 @@ them at the default level only in headlines (body text, and every inclusive
 pronoun, appear at "Everything"). `tricolon` and `anaphora` are structural
 detectors in `src/core/rhetoric.js`; their cheap pre-checks reject nearly every
 text node, and neither takes a span an older type already marks. All six are
-highlight-only: reword and remove modes leave them alone.
+highlight-only: Swap test leaves them alone.
 
 ## Data Model
 
@@ -82,7 +92,7 @@ exclusive,clickbait,,,adjective,,true,headline
 - `aliases`: pipe-separated alternate forms
 - `stemmable`: `noun|verb|adjective` — adds literal inflected forms (plural, past, -ing, adverb); in reword mode the `neutral` is put into the same form (`axed` → `cut`, `hordes` → `large groups`)
 - `regex`: custom pattern for context-sensitive matches
-- `remove`: mark term for deletion in remove-mode; the space next to it and, at a sentence start, an orphaned `:`, `,` or dash go with it (`EXCLUSIVE: Chilling details` → `Details`). A capitalised term inside a name or title mid-sentence (`Shock and Awe`) is only highlighted, in reword mode too
+- `remove`: legacy column, ignored by the build. Swap test uses only `neutral`; a capitalised term inside a name or title mid-sentence (`Shock and Awe`) remains highlighted without rewording.
 - `contexts`: optional pipe-separated allowlist such as `headline` or `evaluative`; there is no second exclusion list
 - `confidence`: optional `medium|contextual|exploratory`; drawn at 75% (`medium`) or 50% strength
 - `colloquialism` rules default to publication pages, so ordinary Reddit and YouTube language is not flagged (set under `types` in `data/terms/exceptions.json`)
@@ -100,9 +110,12 @@ exclusive,clickbait,,,adjective,,true,headline
 | `src/core/term-utils.js` | CSV parser, alias/stem expansion, duplicate and exception validation |
 | `src/core/context-filter.js` | Applies `data/terms/exceptions.json` and context allowlists to each match |
 | `src/core/stemmer.js` | Lightweight inflection for plural/past/-ing/adverb |
-| `src/popup.js` | This page / Study / Settings tabs, device list, device toggle, drag-to-recolor |
+| `src/popup.js` | Single-screen match list, pause switches, collapsed Settings, device toggles, and dismissal restore |
+| `src/core/settings-utils.js` | Normalises supported preferences and pause hostnames; supplies defaults |
+| `src/core/analyze.js` | Pure detection and reword planning; receives dismissed phrases through options |
+| `src/content/settings.js` | Current preferences, page pause state, and local dismissed phrase set |
 | `src/background.js` | Badge sync across tabs |
-| `data/type-colors.json` | Color-to-subtype mapping |
+| `data/type-colors.json` | Six reader-facing groups, their colours, and per-type intensity |
 | `data/rules/*.jsonl` | Provenance-aware approved rules compiled at build time |
 | `research/sources.json` | Pinned corpus roles, licenses, URLs, and isolation policy |
 | `tools/mine-wnc.js` | Mines repeated minimal WNC edits into non-executable candidates |
@@ -120,7 +133,7 @@ npm run mine:crec          # recent partisan phrases; equal R/D review batches
 node tools/import-wtw.js   # Wikipedia "Words to watch" candidates (CC BY-SA)
 npm run evaluate:balance   # NewsWCL50 left/centre/right flag-rate diagnostic
 node tools/news-report.js  # live news front pages across the spectrum (CHROMIUM_PATH=...)
-npm run smoke:sites        # tooltip, feedback, and reword checks on live sites
+npm run smoke:sites        # tooltip and Study-mode reword checks on live sites
 npm run evaluate:babe      # sealed external diagnostic; never rule generation
 npm run bench               # 10,000-rule phrase-matcher budget
 npm run bench:browsers      # matching core in installed Chromium and Firefox
@@ -171,9 +184,9 @@ npm run evaluate:gold      # precision/recall against tests/gold/ (add -- --all 
 **Snapshots** (`tools/snapshot-highlights.js`) load every page in `tests/fixtures/`
 from a local server into one headless Chromium with `dist/` installed, with all
 other network requests blocked and any `<script>` stripped. Each fixture is
-recorded in three modes: highlight (defaults), reword (`replaceTerms`) and
-remove (`removeTerms`). Every highlight becomes one line, `name | context[text]context`,
-in document order; the reword and remove files also list each rewritten text
+recorded in two modes: highlight (defaults) and reword (`studyMode` and
+`replaceTerms`). Every highlight becomes one line, `name | context[text]context`,
+in document order; the reword files also list each rewritten text
 node as `~ context[old => new]context`. A full check takes about 30 seconds.
 The browser is `CHROMIUM_PATH`, else `/usr/bin/chromium`, else the newest
 Playwright Chromium in `~/.cache/ms-playwright`. This check is local only, not
@@ -230,22 +243,23 @@ entry point that loads settings and wires events and popup messages):
   element context (heading, link, caption, comment, protected text).
 - `core/analyze.js` (pure, also used by the evaluation tools) turns a text, its
   context and the settings into a plan: the text to display and one entry per
-  detection with its action (highlighted, replaced, removed) and highlight name.
+  detection with its action (highlighted or replaced) and highlight name. Dismissed
+  phrases are passed in as a set; the analyzer never reads storage.
 - `content/store.js` writes the display text into the node, keeps one record
   (with a live `Range`) per entry, restores original text, and holds the
   per-term summary for the badge and popup.
 - `content/highlights.js` draws the records' ranges in the CSS Custom Highlight
   registry and keeps the highlight stylesheet.
 - Beside the pipeline: `content/tooltip.js` (hover and pinned tooltip),
-  `content/reveal.js` (original wording under the pointer), `content/feedback.js`
-  (feedback buttons and suggestion panel), `content/settings.js` (current settings).
+  `content/reveal.js` (original wording under the pointer),
+  `content/settings.js` (current preferences and dismissed phrases).
 
 The design should:
 
 - Keep automatic analysis responsive on dynamic pages.
 - Prefer high-confidence patterns over isolated-word judgments.
 - Make every rewording reversible and keep original wording inspectable.
-- Optional feedback tools let readers classify bad matches and suggest selected wording; records stay in `chrome.storage.local` and can be copied from Settings > Advanced.
+- Dismissed rule phrases stay in `chrome.storage.local`; open pages react to changes immediately.
 - Keep preferences in `chrome.storage.sync`; the term index remains bundled.
 - Avoid opaque political scores, fact-checking claims, and automatic moral judgments.
 
@@ -255,13 +269,13 @@ the original text, so rewording and restoring replace the whole original span.
 
 ## Analyse pasted text
 
-The Study tab's "Analyse pasted text" link opens `analyze.html`, a page for texts that are
+The Settings section’s "Analyse pasted text" link opens `analyze.html`, a page for texts that are
 not web pages (PDFs, handouts). Paste a text and press Analyse: a blank line starts a
 paragraph, a single newline stays inside it and shows as a space, and the first line
 becomes an `<h1>` (so headline rules apply) unless "First line is the headline" is
 unticked. The page loads the same `content.js` and `content.css` as every web page, so
-highlights, the tooltip, swap test (Alt+Shift+R), the popup's This page list and the
-settings behave identically. `analyze.js` only builds the paragraphs. The text stays in
+highlights, the tooltip, Study mode’s Swap test (Alt+Shift+R), the popup’s wording list
+and settings behave identically. Only the global pause applies here. `analyze.js` only builds the paragraphs. The text stays in
 the page: nothing is stored or sent. It needs no extra permission.
 
 ## Intentional Limits

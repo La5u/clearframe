@@ -5,9 +5,10 @@ import { clearElementContexts, getTextTargets, isProcessableNode } from './scann
 import { clearResults, detachDisconnectedResults, forgetNode, getAllRecords, getTotalMatches, processTextNode, rebuildSummary, restoreAllText, updateBadge } from './store.js';
 import { addResultHighlights, clearHighlightPresentation, removeResultHighlights, renderHighlights, syncHighlightStyles } from './highlights.js';
 import { consumeInternalMutation, restoreHoverRevealUnobserved } from './reveal.js';
+import { isPagePaused } from './settings.js';
 import { hideTooltip } from './tooltip.js';
 
-const CLEARFRAME_IDS = ['cf-tooltip', 'cf-suggestion', 'cf-highlight-styles'];
+const CLEARFRAME_IDS = ['cf-tooltip', 'cf-highlight-styles'];
 const OBSERVE_OPTIONS = { childList: true, subtree: true, characterData: true };
 let pageObserver = null;
 let analysisTimer = 0;
@@ -26,7 +27,7 @@ function resetAnalysis() {
 function analyzeTargets(root) {
   resetAnalysis();
   clearElementContexts();
-  const targets = getTextTargets(root);
+  const targets = isPagePaused() ? [] : getTextTargets(root);
   for (const node of targets) if (node.isConnected) processTextNode(node);
   clearElementContexts();
   rebuildSummary();
@@ -47,7 +48,7 @@ export function analyzePage() {
   pageObserver?.disconnect();
   const count = analyzeTargets(document.body);
   pageObserver?.takeRecords();
-  pageObserver?.observe(document.body, OBSERVE_OPTIONS);
+  if (!isPagePaused()) pageObserver?.observe(document.body, OBSERVE_OPTIONS);
   return count;
 }
 
@@ -82,7 +83,7 @@ function analyzeMutations() {
   if (highlightNamesChanged) syncHighlightStyles();
   updateBadge();
   pageObserver?.takeRecords();
-  pageObserver?.observe(document.body, OBSERVE_OPTIONS);
+  if (!isPagePaused()) pageObserver?.observe(document.body, OBSERVE_OPTIONS);
 }
 
 function isClearFrameNode(node) {

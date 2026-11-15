@@ -21,9 +21,7 @@ const disabledTypes = new Set(['absolute', 'superlative']);
 const terms = Object.entries(loadTerms(path.join(ROOT, 'data', 'terms'), approvedRuleTerms(ROOT)).termsById)
   .filter(([term, data]) => term.length >= 4 && term.length <= 50 && !disabledTypes.has(data.type) && !data.contexts?.length)
   .map(([term]) => term).sort((a, b) => b.length - a.length);
-let feedbackEnabledForRun = false;
 let replaceEnabledForRun = false;
-let feedbackToggleTested = false;
 // Hover a word the extension actually highlighted, so context rules that
 // intentionally skip a phrase do not count as tooltip failures.
 const findNative = `(() => {
@@ -52,8 +50,6 @@ async function hover(cdp, point) {
 }
 
 async function testSite(cdp, url) {
-  // Feedback stays enabled after the first site, so the disabled-state check only applies there.
-  const feedbackWasEnabled = feedbackEnabledForRun;
   cdp.events.length = 0;
   await cdp.send('Page.navigate', { url });
   for (let i = 0; i < 40; i++) { await delay(500); if (await cdp.evaluate(`document.readyState === 'complete' && !!document.body`)) break; }
@@ -68,21 +64,16 @@ async function testSite(cdp, url) {
     native = await cdp.evaluate(findNative);
   }
   const nativeTooltip = native ? await hover(cdp, native) : null;
-  await cdp.evaluate(`(() => { const el=document.createElement('p'); el.id='clearframe-feedback-disabled-smoke'; el.textContent='selection should not open a feedback panel'; el.style='position:fixed;left:20px;top:20px;z-index:2147483646;background:white;color:black;font:20px sans-serif;padding:8px;margin:0'; document.body.appendChild(el); const range=document.createRange(); range.selectNodeContents(el.firstChild); const selection=getSelection(); selection.removeAllRanges(); selection.addRange(range); document.dispatchEvent(new MouseEvent('mouseup',{bubbles:true,clientX:30,clientY:30})); return document.querySelectorAll('#cf-suggestion button').length; })()`);
-  await delay(100);
-  const disabledSuggestionButtons = await cdp.evaluate(`document.querySelectorAll('#cf-suggestion button').length`);
-  await cdp.evaluate(`document.querySelector('#clearframe-feedback-disabled-smoke')?.remove(); getSelection()?.removeAllRanges()`);
-  if (!feedbackEnabledForRun) {
-    await cdp.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'F', code: 'KeyF', modifiers: 9 });
-    await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'F', code: 'KeyF', modifiers: 9 });
-    await delay(350); feedbackEnabledForRun = true;
-  }
   if (!replaceEnabledForRun) {
+    const context = [...cdp.events].reverse().find(event => event.method === 'Runtime.executionContextCreated' && event.params.context.name === 'ClearFrame')?.params.context.id;
+    if (!context) throw new Error('ClearFrame content script context not found');
+    await cdp.send('Runtime.evaluate', { contextId: context, awaitPromise: true, expression: `chrome.storage.sync.get('settings').then(({settings}) => chrome.storage.sync.set({settings:{...settings,studyMode:true}}))` });
+    await delay(350);
     await cdp.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'R', code: 'KeyR', modifiers: 9 });
     await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'R', code: 'KeyR', modifiers: 9 });
     await delay(350); replaceEnabledForRun = true;
   }
-  await cdp.evaluate(`(() => { const el=document.createElement('h2'); el.id='clearframe-smoke'; el.textContent='BREAKING NEWS: shocking warning reveals the secret'; el.style='position:fixed;left:20px;bottom:20px;z-index:2147483646;background:white;color:black;font:20px sans-serif;padding:8px;margin:0'; const suggestion=document.createElement('p'); suggestion.id='clearframe-suggestion-smoke'; suggestion.textContent='needlessly dramatic wording'; suggestion.style='position:fixed;left:20px;bottom:70px;z-index:2147483646;background:white;color:black;font:20px sans-serif'; const captions=document.createElement('div'); captions.id='clearframe-caption-smoke'; captions.className='ytp-caption-window-container'; captions.textContent='They passed away'; const transcript=document.createElement('div'); transcript.id='clearframe-transcript-smoke'; transcript.className='ytd-transcript-segment-renderer'; transcript.textContent='They passed away'; document.body.append(el,suggestion,captions,transcript); })()`);
+  await cdp.evaluate(`(() => { const el=document.createElement('h2'); el.id='clearframe-smoke'; el.textContent='BREAKING NEWS: shocking warning reveals the secret'; el.style='position:fixed;left:20px;bottom:20px;z-index:2147483646;background:white;color:black;font:20px sans-serif;padding:8px;margin:0'; const captions=document.createElement('div'); captions.id='clearframe-caption-smoke'; captions.className='ytp-caption-window-container'; captions.textContent='They passed away'; const transcript=document.createElement('div'); transcript.id='clearframe-transcript-smoke'; transcript.className='ytd-transcript-segment-renderer'; transcript.textContent='They passed away'; document.body.append(el,captions,transcript); })()`);
   await delay(2000);
   const protectedText = await cdp.evaluate(`({ caption:document.querySelector('#clearframe-caption-smoke')?.textContent, transcript:document.querySelector('#clearframe-transcript-smoke')?.textContent })`);
   const injected = await cdp.evaluate(`(() => { const n=document.querySelector('#clearframe-smoke').firstChild, at=n.nodeValue.indexOf('shocking'), r=document.createRange(); r.setStart(n,at);r.setEnd(n,at+8);const b=r.getBoundingClientRect();return{x:b.left+b.width/2,y:b.top+b.height/2}; })()`);
@@ -91,42 +82,13 @@ async function testSite(cdp, url) {
   await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: injected.x, y: injected.y, button: 'left', clickCount: 1 });
   await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: injected.x, y: injected.y, button: 'left', clickCount: 1 });
   await delay(100);
-  const feedbackButtons = await cdp.evaluate(`document.querySelectorAll('#cf-tooltip .cf-feedback-actions button').length`);
-  let feedbackStatus = 'disabled';
-  if (feedbackButtons) {
-    await cdp.evaluate(`document.querySelector('#cf-tooltip .cf-feedback-actions button')?.click()`);
-    await delay(150);
-    feedbackStatus = await cdp.evaluate(`document.querySelector('#cf-tooltip .cf-feedback-status')?.textContent || ''`);
-  }
-  const suggestionState = await cdp.evaluate(`(() => { const node=document.querySelector('#clearframe-suggestion-smoke').firstChild, selection=getSelection(), range=document.createRange(); range.selectNodeContents(node); selection.removeAllRanges(); selection.addRange(range); const rect=range.getBoundingClientRect(); document.dispatchEvent(new MouseEvent('mouseup',{bubbles:true,clientX:rect.right,clientY:rect.bottom})); return {x:rect.right,y:rect.bottom}; })()`);
-  await delay(100);
-  const suggestionButtons = await cdp.evaluate(`document.querySelectorAll('#cf-suggestion button').length`);
-  let suggestionStatus = 'disabled';
-  if (suggestionButtons) {
-    await cdp.evaluate(`document.querySelector('#cf-suggestion button')?.click()`); await delay(150);
-    suggestionStatus = await cdp.evaluate(`document.querySelector('#cf-suggestion .cf-feedback-status')?.textContent || ''`);
-  }
-  let feedbackToggleState = null;
-  if (!feedbackToggleTested && feedbackEnabledForRun) {
-    await cdp.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'F', code: 'KeyF', modifiers: 9 });
-    await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'F', code: 'KeyF', modifiers: 9 });
-    await delay(400);
-    feedbackToggleState = await cdp.evaluate(`({ panel:!!document.querySelector('#cf-suggestion'), actions:document.querySelectorAll('#cf-tooltip .cf-feedback-actions button').length })`);
-    await cdp.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'F', code: 'KeyF', modifiers: 9 });
-    await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'F', code: 'KeyF', modifiers: 9 });
-    await delay(400);
-    feedbackToggleTested = true;
-  }
   const errors = cdp.events.filter(event => event.method === 'Runtime.exceptionThrown' || event.method === 'Log.entryAdded').map(event =>
     event.params?.exceptionDetails?.exception?.description || event.params?.exceptionDetails?.text || event.params?.entry?.text,
   );
-  const feedbackPass = feedbackButtons === 0 || (feedbackButtons === 5 && feedbackStatus === 'Saved locally');
-  const suggestionPass = suggestionButtons === 0 || (suggestionButtons === 2 && suggestionStatus === 'Saved locally');
-  const feedbackDisabledPass = feedbackWasEnabled || (disabledSuggestionButtons === 0 && (!feedbackToggleState || (!feedbackToggleState.panel && feedbackToggleState.actions === 0)));
   const protectedPass = protectedText.caption === 'They passed away' && protectedText.transcript === 'They passed away';
-  const injectedPass = !!injectedTooltip && injectedTooltip.display !== 'none' && injectedTooltip.onScreen && feedbackPass && suggestionPass && protectedPass;
+  const injectedPass = !!injectedTooltip && injectedTooltip.display !== 'none' && injectedTooltip.onScreen && protectedPass;
   const nativePass = !native || (!!nativeTooltip && nativeTooltip.display !== 'none' && nativeTooltip.onScreen);
-  return { url, finalUrl, page, detectionCounts, protectedText, hiddenOverlays, native, nativeTooltip, injectionState, injectedTooltip, feedbackButtons, feedbackStatus, disabledSuggestionButtons, suggestionState, suggestionButtons, suggestionStatus, errors, pass: injectedPass && nativePass && feedbackDisabledPass };
+  return { url, finalUrl, page, detectionCounts, protectedText, hiddenOverlays, native, nativeTooltip, injectionState, injectedTooltip, errors, pass: injectedPass && nativePass };
 }
 
 let exitCode = 0;

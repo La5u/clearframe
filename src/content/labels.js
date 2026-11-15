@@ -5,3 +5,7 @@ const { categories: TYPE_CATEGORIES, labels: LABELS } = ClearFrame;
 export function getLabel(term) {
   return LABELS?.phrases?.[term.phrase] || LABELS?.types?.[term.type] || { term: term.type, plain: TYPE_CATEGORIES?.[term.type] || 'General', effect: '' };
 }
+
+export function getTypeLabel(type) {
+  return LABELS.types[type] || { term: type, plain: TYPE_CATEGORIES[type] || 'General', effect: '' };
+}

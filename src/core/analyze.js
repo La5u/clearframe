@@ -1,9 +1,9 @@
 // Detection and planning for one piece of text, without the DOM: runs the
 // lexical matcher (with rule exceptions), all-caps and contextual detectors,
-// resolves overlaps, and decides per match what to show (highlight, reword or
-// remove) and under which highlight name. Shared by the content script and
-// the Node evaluation tools.
-import { buildMatcher, findMatches } from './matcher.js';
+// resolves overlaps, and decides per match what to show (highlight or reword)
+// and under which highlight name. Shared by the content script and the Node
+// evaluation tools.
+import { buildMatcher, findMatches, normalize } from './matcher.js';
 import { matchReplacementCase } from './display-utils.js';
 import { pluralizeWord, pastTenseWord, ingWord, adverbWord, inflectPhrase } from './stemmer.js';
 import { chooseAction, chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from './match-plan.js';
@@ -82,7 +82,6 @@ function getReplacementForTerm(term, src, textBefore, restoreCase) {
 }
 
 function getReplacementText(term, src, action, textBefore, restoreCase) {
-  if (action === 'removed') return '';
   if (action === 'replaced') return getReplacementForTerm(term, src, textBefore, restoreCase);
   return src;
 }
@@ -98,39 +97,7 @@ function isPartOfTitle(text, start, end) {
   return joined && /(?:^|\s)(?!(?:and|from|into|with|that|this)\b)[a-z]{4,}/.test(`${before} ${after}`);
 }
 
-const CLOSING_QUOTE = { "'": "'", '‘': '’', '"': '"', '“': '”' };
-
-/**
- * Widens a removal over the debris it would leave: quotes around only the
- * removed wording, a doubled space or a space before punctuation, and at the
- * start of a sentence an orphaned ":", "," or dash ("EXCLUSIVE: Ewan"). A
- * capitalised removed word passes its capital on to the next word. Returns
- * the original span [start, end) and the text that replaces it, so restoring
- * the original stays a plain swap.
- * @param {string} text @param {string} shownBefore display text before match.start
- * @param {number} cursor end of the previous entry @param {number} limit start of the next one
- */
-function tidyRemoval(text, shownBefore, cursor, start, end, limit) {
-  const capital = /^[A-Z]/.test(text.slice(start, end));
-  if (start > cursor && CLOSING_QUOTE[text[start - 1]] && text[end] === CLOSING_QUOTE[text[start - 1]] && end < limit) {
-    start--; end++; shownBefore = shownBefore.slice(0, -1);
-  }
-  if (/(?:^|[.!?:]\s)\s*$/.test(shownBefore)) {
-    end += /^\s*(?:[:,;|–—-]+\s*)?/.exec(text.slice(end, limit))?.[0].length || 0;
-    const next = text[end];
-    return capital && end < limit && next && next !== next.toUpperCase()
-      ? { start, end: end + 1, replacement: next.toUpperCase() }
-      : { start, end, replacement: '' };
-  }
-  const space = /\s*$/.exec(text.slice(cursor, start))?.[0].length || 0;
-  const after = text.slice(end, limit);
-  if (space && (/^[,.;:!?)\]'’"”…]/.test(after) || end === text.length)) return { start: start - space, end, replacement: '' };
-  if (space || /['‘"“(]$/.test(shownBefore)) end += /^\s*/.exec(after)?.[0].length || 0;
-  return { start, end, replacement: '' };
-}
-
 function getHighlightNameForEntry(term, action, terms) {
-  if (action === 'removed') return null;
   const strength = getEntryStrength(terms.length ? terms : [term]);
   if (terms.length > 1) return getHighlightName(getMostImportantType(terms), 'highlight', strength);
   if (action === 'highlighted') return getHighlightName(term.type, 'highlight', strength);
@@ -141,6 +108,7 @@ function getHighlightNameForEntry(term, action, terms) {
  * @param {{index: {termsById: Record<string, any>, regexTerms?: any[], exceptions?: any}}} options
  */
 export function createAnalyzer({ index }) {
+  const termsById = Object.fromEntries(Object.entries(index.termsById).map(([id, term]) => [id, { ...term, phrase: term.phrase || id }]));
   const shouldKeepLexicalMatch = createLexicalFilter(index.exceptions);
   // The trie holds only enabled types; rebuilt when a new settings object arrives.
   let matcher = null, matcherSettings = null;
@@ -148,11 +116,10 @@ export function createAnalyzer({ index }) {
   const isEnabled = (settings, type) => settings.types?.[type] !== false;
   // A term is used when its type is on and its strength passes the sensitivity.
   const isShown = (settings, confidence) => SENSITIVITY_STRENGTHS[settings.sensitivity]?.includes(getStrength(confidence)) ?? true;
-  const isUsed = (settings, term) => isEnabled(settings, term.type) && isShown(settings, term.confidence);
+  const isUsed = (settings, term) => isEnabled(settings, term.type) && isShown(settings, term.confidence) && !settings.dismissedTerms?.has(normalize(term.phrase || ''));
 
   function getTermById(id) {
-    const term = index.termsById[id];
-    if (term && !term.phrase) term.phrase = id;
+    const term = termsById[id];
     return term || CONTEXTUAL_TERMS[id] || (id === ALL_CAPS_TERM_ID ? ALL_CAPS_TERM : null);
   }
 
@@ -167,10 +134,10 @@ export function createAnalyzer({ index }) {
   // resolution against the structural detectors.
   function findLexicalMatches(text, context, settings) {
     if (settings !== matcherSettings) {
-      matcher = buildMatcher(index, term => isUsed(settings, term));
+      matcher = buildMatcher({ ...index, termsById }, term => isUsed(settings, term));
       matcherSettings = settings;
     }
-    const matches = findMatches(matcher, text, index.termsById, index.regexTerms || [],
+    const matches = findMatches(matcher, text, termsById, index.regexTerms || [],
       term => isUsed(settings, term),
       (termId, start, end) => {
         const term = getTermById(termId);
@@ -188,10 +155,10 @@ export function createAnalyzer({ index }) {
    * into displayText.
    * @param {string} text
    * @param {{headline?: boolean, conversational?: boolean, preserveText?: boolean, capsLabel?: boolean, pageContext?: string}} context
-   * @param {{types?: Record<string, boolean>, replaceTerms?: boolean, removeTerms?: boolean, sensitivity?: string, headlinesOnly?: boolean}} settings
+   * @param {{types?: Record<string, boolean>, replaceTerms?: boolean, studyMode?: boolean, dismissedTerms?: Set<string>, paused?: boolean, sensitivity?: string, headlinesOnly?: boolean}} settings
    */
   function analyze(text, context = {}, settings) {
-    if (settings.headlinesOnly && !context.headline) return { displayText: text, entries: [] };
+    if (settings.paused || (settings.headlinesOnly && !context.headline)) return { displayText: text, entries: [] };
     const allCaps = isUsed(settings, ALL_CAPS_TERM) && !context.capsLabel ? findAllCapsMatches(text) : [];
     const contextual = findContextualMatches(text, context).filter(match => isUsed(settings, getTermById(match.termId) || {}));
     // Pronoun, modal and imperative words inside a marked scare quote are the quote's, not a device of their own.
@@ -209,7 +176,7 @@ export function createAnalyzer({ index }) {
     let cursor = 0, displayText = '';
     const entries = [];
     const termAction = term => chooseAction(term, settings, context.preserveText === true);
-    combined.forEach((match, i) => {
+    combined.forEach(match => {
       const terms = getTermsForMatch(match);
       // An expanded group spans beyond its lexical term; only all-caps
       // normalization is safe across the whole range, otherwise highlight.
@@ -222,13 +189,12 @@ export function createAnalyzer({ index }) {
       const textBefore = text.slice(0, match.start);
       const restoreCase = src => restoreAllCapsCase(src, textBefore, text.slice(match.end));
       const replacementSource = getReplacementSourceText(term, terms, wording, ALL_CAPS_TERM.phrase, restoreCase);
-      let span = { start: match.start, end: match.end, replacement: getReplacementText(term, replacementSource, action, textBefore, restoreCase) };
-      if (action === 'removed') span = tidyRemoval(text, displayText + textBefore.slice(cursor), cursor, match.start, match.end, combined[i + 1]?.start ?? text.length);
+      const span = { start: match.start, end: match.end, replacement: getReplacementText(term, replacementSource, action, textBefore, restoreCase) };
       displayText += text.slice(cursor, span.start);
       const start = displayText.length;
       displayText += span.replacement;
       // sourceText and replacementText are the exact original and displayed
-      // text of the entry; a tidied removal spans more than its wording.
+      // text of the entry.
       entries.push({ start, end: displayText.length, term, terms, action, wording, sourceText: text.slice(span.start, span.end), replacementText: span.replacement, highlightName: getHighlightNameForEntry(term, action, terms) });
       cursor = span.end;
     });

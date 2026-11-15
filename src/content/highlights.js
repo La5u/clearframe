@@ -15,7 +15,7 @@ let highlightScope = null;
 
 function getColor(type) {
   const settings = getSettings();
-  return settings.monochrome ? 'gray' : settings.userTypeColors?.[type] || TYPE_MAP[type] || 'gray';
+  return settings.monochrome ? 'gray' : TYPE_MAP[type] || 'gray';
 }
 
 export function clearHighlightPresentation() {
@@ -30,7 +30,7 @@ export function clearHighlightPresentation() {
 function buildHighlightRule(name) {
   const settings = getSettings();
   if (settings.monochrome && name === ALL_CAPS_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(0,0,0,.65);text-decoration-thickness:1px;text-underline-offset:2px}`;
-  if (name === ALL_CAPS_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(125,211,252,.42);text-decoration-thickness:.75px;text-underline-offset:2px}`;
+  if (name === ALL_CAPS_HIGHLIGHT_NAME) return `::highlight(${name}){background-color:transparent;text-decoration:underline;text-decoration-color:rgba(${UNDERLINE_RGB[TYPE_MAP['all-caps']]},.42);text-decoration-thickness:.75px;text-underline-offset:2px}`;
   const underline = name.endsWith('-underline');
   const base = name.slice(HIGHLIGHT_PREFIX.length, underline ? -'-underline'.length : undefined);
   const strength = Object.values(STRENGTHS).find(item => item.suffix && base.endsWith(item.suffix)) || STRENGTHS.high;

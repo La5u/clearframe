@@ -1,11 +1,9 @@
-# test-all-terms.html mode=reword highlights=101
+# test-all-terms.html mode=reword highlights=97
 repetition-underline | [repeatedly] | is not | concerning | alleg
 colloquialism-underline | repeatedly | [is not] | concerning | alleged | ambu
 exaggeration-underline | repeatedly | is not | [concerning] | alleged | ambush | animal |
-distancing-medium | tedly | is not | concerning | [alleged] | ambush | animal | apparentl
 uncertainty | | alleged | ambush | animal | [apparently] | attack | authorities say |
 authority | nimal | apparently | attack | [authorities say] | backlash | beast | best
-conflict-medium | | attack | authorities say | [backlash] | beast | best
 negative-framing | biggest | blast | [bloodbath] | bombshell | break | breakth
 hype | oodbath | bombshell | break | [breakthrough] | brutal | catastrophic | cha
 moral | hell | break | breakthrough | [brutal] | catastrophic | chaos | clas
@@ -30,7 +28,6 @@ derogatory | nnamed expert | experts say | [extremist] | eye-watering | feud | f
 exaggeration | t | experts say | extremist | [eye-watering] | feud | finally | frighten |
 conflict | | extremist | eye-watering | [feud] | finally | frighten | fury
 fear | e-watering | feud | finally | [frighten] | fury
-aggression-medium | | feud | finally | frighten | [fury]
 hype | [game-changing] | disappeared | got to | gove
 idiom-underline | game-changing | [disappeared] | got to | government handout
 colloquialism-underline | game-changing | disappeared | [got to] | government handouts | heroi
@@ -60,7 +57,6 @@ loaded-framing | -have | nightmare | assault | [officer-involved] shooting | opp
 moral | | officer-involved shooting | [oppressive] | outrage | outrageous | repe
 exaggeration | ting | oppressive | outrage | [outrageous] | repeatedly | panic
 repetition-underline | sive | outrage | outrageous | [repeatedly] | panic
-fear-medium | e | outrageous | repeatedly | [panic]
 euphemism-underline | [died] | unnamed sources | piracy |
 unsourced-underline | died | [unnamed sources] | piracy | plot | probe | pup
 moral | died | unnamed sources | [piracy] | plot | probe | puppet | pur

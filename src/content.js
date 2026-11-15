@@ -4,33 +4,29 @@
 // that handle them. The pipeline runs page -> scanner -> analyze -> store
 // (display text, records) -> highlights; see "Analysis Flow" in README.md.
 import { DEFAULT_SETTINGS, normalizeSettings } from './core/settings-utils.js';
-import { getSettings, isFeedbackEnabled, setSettings } from './content/settings.js';
+import { getSettings, setSettings, setDismissedTerms } from './content/settings.js';
 import { getNextRecord, getDeviceGroups, getTotalMatches } from './content/store.js';
 import { showSelectedRecord } from './content/highlights.js';
 import { analyzePage, startObserving } from './content/observer.js';
-import { handleHoverMove, handleScroll, handleSelectionEnd, handleTooltipClick, hideFeedbackInTooltip, hideTooltip } from './content/tooltip.js';
-import { handleSelectionSuggestion, hideSuggestion } from './content/feedback.js';
+import { handleHoverMove, handleScroll, handleSelectionEnd, handleTooltipClick, hideTooltip } from './content/tooltip.js';
 
-const RUNTIME_SHORTCUTS = { r: 'replaceTerms', x: 'removeTerms', f: 'feedbackEnabled', p: 'predictFirst' };
+const RUNTIME_SHORTCUTS = { r: 'replaceTerms', p: 'predictFirst' };
 // Set once settings were loaded: by init in the top frame, or by APPLY_SETTINGS.
 let settingsReady = false;
 
 function getSettingsKey(value) {
-  return JSON.stringify({ replaceTerms: value.replaceTerms === true, removeTerms: value.removeTerms === true, monochrome: value.monochrome === true, feedbackEnabled: value.feedbackEnabled === true, headlinesOnly: value.headlinesOnly === true, sensitivity: value.sensitivity, types: value.types || {}, userTypeColors: value.userTypeColors || {} });
+  return JSON.stringify(value);
 }
 
-function loadSettings(rawSettings = {}, rawTypeColors = {}) {
-  setSettings(rawSettings, rawTypeColors);
+/** @param {any} rawSettings */
+function loadSettings(rawSettings = {}) {
+  setSettings(rawSettings);
   settingsReady = true;
 }
 
-function applySettings(rawSettings = {}, rawTypeColors = {}) {
+function applySettings(rawSettings = {}) {
   const previousKey = getSettingsKey(getSettings());
-  loadSettings(rawSettings, rawTypeColors);
-  if (!isFeedbackEnabled()) {
-    hideSuggestion();
-    hideFeedbackInTooltip();
-  }
+  loadSettings(rawSettings);
   if (previousKey !== getSettingsKey(getSettings()) && document.body) {
     analyzePage();
   }
@@ -49,8 +45,9 @@ function handleKeyDown(event) {
   if (!event.altKey || !event.shiftKey || event.ctrlKey || event.metaKey || event.repeat) return;
   const setting = RUNTIME_SHORTCUTS[event.key.toLowerCase()];
   if (!setting) return;
-  event.preventDefault();
   const settings = getSettings();
+  if (!settings.studyMode) return;
+  event.preventDefault();
   saveRuntimeSettings(normalizeSettings({ ...settings, [setting]: !settings[setting] }));
 }
 
@@ -66,26 +63,27 @@ function init() {
   };
   const bodyWatcher = new MutationObserver(start);
   bodyWatcher.observe(document, { childList: true, subtree: true });
-  chrome.storage.sync.get(['settings', 'userTypeColors'], (/** @type {any} */ result) => {
-    const changed = getSettingsKey(getSettings()) !== getSettingsKey(normalizeSettings(result.settings, result.userTypeColors));
-    loadSettings(result.settings, result.userTypeColors);
+  Promise.all([chrome.storage.sync.get('settings'), chrome.storage.local.get('dismissedTerms')]).then(([result, local]) => {
+    loadSettings(result.settings);
+    setDismissedTerms(local.dismissedTerms);
     settingsLoaded = true;
-    if (!started) start();
-    else if (changed) analyzePage();
+    start();
   });
   document.addEventListener('mousemove', handleHoverMove, { capture: true, passive: true });
   document.addEventListener('click', handleTooltipClick, true);
-  // The tooltip closes (restoring any revealed wording) before the selected
-  // text is read for a suggestion.
-  document.addEventListener('mouseup', event => { handleSelectionEnd(event); handleSelectionSuggestion(event); }, true);
+  document.addEventListener('mouseup', handleSelectionEnd, true);
   document.addEventListener('keydown', handleKeyDown);
   document.addEventListener('scroll', handleScroll, true);
-  window.addEventListener('blur', () => { hideTooltip(true); hideSuggestion(); });
+  window.addEventListener('blur', () => { hideTooltip(true); });
 }
 
 if (window.top === window) init();
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName === 'local' && changes.dismissedTerms) {
+    setDismissedTerms(changes.dismissedTerms.newValue);
+    if (settingsReady && document.body) analyzePage();
+  }
   if (areaName === 'sync' && changes.settings && settingsReady) applySettings(changes.settings.newValue || {});
 });
 
@@ -102,7 +100,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     return;
   }
   if (message.type === 'APPLY_SETTINGS') {
-    applySettings(message.settings, message.settings?.userTypeColors);
+    applySettings(message.settings);
     sendResponse({ ok: true }); return;
   }
 });

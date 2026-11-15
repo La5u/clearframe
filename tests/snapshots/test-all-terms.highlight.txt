@@ -1,11 +1,9 @@
-# test-all-terms.html mode=highlight highlights=101
+# test-all-terms.html mode=highlight highlights=97
 repetition | [again and again] | ain't | alarming | alleged
 colloquialism | again and again | [ain't] | alarming | alleged | ambush
 exaggeration | again and again | ain't | [alarming] | alleged | ambush | animal |
-distancing-medium | nd again | ain't | alarming | [alleged] | ambush | animal | apparentl
 uncertainty | | alleged | ambush | animal | [apparently] | attack | authorities say |
 authority | nimal | apparently | attack | [authorities say] | backlash | beast | best
-conflict-medium | | attack | authorities say | [backlash] | beast | best
 negative-framing | biggest | blast | [bloodbath] | bombshell | break | breakth
 hype | oodbath | bombshell | break | [breakthrough] | brutal | catastrophic | cha
 moral | hell | break | breakthrough | [brutal] | catastrophic | chaos | clas
@@ -30,7 +28,6 @@ derogatory | experts claim | experts say | [extremist] | eye-watering | feud | f
 exaggeration | m | experts say | extremist | [eye-watering] | feud | finally | frighten |
 conflict | | extremist | eye-watering | [feud] | finally | frighten | fury
 fear | e-watering | feud | finally | [frighten] | fury
-aggression-medium | | feud | finally | frighten | [fury]
 hype | [game-changing] | gone to ground | gotta | go
 idiom | game-changing | [gone to ground] | gotta | government handouts
 colloquialism | e-changing | gone to ground | [gotta] | government handouts | heroi
@@ -60,7 +57,6 @@ loaded-framing | | non-consensual encounter | [officer-involved] shooting | oppr
 moral | | officer-involved shooting | [oppressive] | outrage | outrageous | over
 exaggeration | ting | oppressive | outrage | [outrageous] | over and over | panic
 repetition | sive | outrage | outrageous | [over and over] | panic
-fear-medium | outrageous | over and over | [panic]
 euphemism | [passed away] | people familiar | piracy |
 unsourced | passed away | [people familiar] | piracy | plot | probe | pup
 moral | ssed away | people familiar | [piracy] | plot | probe | puppet | pur

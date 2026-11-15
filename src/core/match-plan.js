@@ -44,7 +44,7 @@ export function resolveMatchGroups(matches) {
         virtual: false,
         structural: true,
         // The group now spans more than the lexical term, so that term's
-        // reword/removal must not be applied to the whole range.
+        // rewording must not be applied to the whole range.
         expanded: !!lexical.expanded || start !== lexical.start || end !== lexical.end,
       };
       continue;
@@ -54,8 +54,7 @@ export function resolveMatchGroups(matches) {
 }
 
 export function chooseReplacementTerm(terms, getTermAction, allCapsPhrase) {
-  return terms.find(term => term.phrase !== allCapsPhrase && getTermAction(term) === 'removed') ||
-    terms.find(term => term.phrase !== allCapsPhrase && getTermAction(term) === 'replaced') ||
+  return terms.find(term => term.phrase !== allCapsPhrase && getTermAction(term) === 'replaced') ||
     terms.find(term => term.phrase === allCapsPhrase) ||
     terms[0];
 }
@@ -67,10 +66,9 @@ export function getReplacementSourceText(term, terms, sourceText, allCapsPhrase,
 }
 
 // Protected text (captions, transcripts) is only highlighted; otherwise the
-// user's reword/remove settings decide.
-export function chooseAction(term, { removeTerms = false, replaceTerms = false } = {}, preserveText = false) {
+// user's reword settings decide.
+export function chooseAction(term, { replaceTerms = false, studyMode = false } = {}, preserveText = false) {
   if (preserveText) return 'highlighted';
-  if (term.remove && removeTerms) return 'removed';
-  if (replaceTerms && term.neutral) return 'replaced';
+  if (studyMode && replaceTerms && term.neutral) return 'replaced';
   return 'highlighted';
 }

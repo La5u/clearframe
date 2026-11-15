@@ -17,8 +17,7 @@ const CONTEXT = 30;
 const DIFF_LIMIT = 40;
 const MODES = {
   highlight: {},
-  reword: { replaceTerms: true },
-  remove: { removeTerms: true },
+  reword: { studyMode: true, replaceTerms: true },
 };
 const args = new Set(process.argv.slice(2));
 const only = process.argv.slice(2).filter(arg => !arg.startsWith('--'));
@@ -72,7 +71,7 @@ const COLLECT = `(() => {
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   while (walker.nextNode()) {
     const node = walker.currentNode;
-    if (!node.parentElement?.closest('script,style,#cf-tooltip,#cf-suggestion')) texts.push(node.nodeValue);
+    if (!node.parentElement?.closest('script,style,#cf-tooltip')) texts.push(node.nodeValue);
   }
   return {
     highlights: highlights.map(({ name, range }) => { const [before, after] = textAround(range); return name + ' | ' + before + '[' + clean(range.toString()) + ']' + after; }),
@@ -102,7 +101,7 @@ async function setSettings(cdp, overrides) {
   const context = [...cdp.events].reverse().find(event => event.method === 'Runtime.executionContextCreated'
     && event.params.context.auxData?.type === 'isolated' && event.params.context.name === 'ClearFrame')?.params.context.id;
   if (!context) throw new Error('ClearFrame content script context not found');
-  const settings = { replaceTerms: false, removeTerms: false, ...overrides };
+  const settings = { studyMode: false, replaceTerms: false, ...overrides };
   const result = await cdp.send('Runtime.evaluate', { contextId: context, awaitPromise: true, returnByValue: true,
     expression: `chrome.storage.sync.get('settings').then(({ settings }) => chrome.storage.sync.set({ settings: { ...(settings || {}), ...${JSON.stringify(settings)} } })).then(() => 'ok')` });
   if (result.result?.value !== 'ok') throw new Error(`could not write settings: ${JSON.stringify(result.exceptionDetails || result.result)}`);

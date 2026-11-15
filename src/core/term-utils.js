@@ -56,9 +56,6 @@ export function parseCsv(input) {
   return rows;
 }
 
-function parseBooleanCell(value) {
-  return /^(1|true|yes)$/i.test(String(value).trim());
-}
 function splitAliases(value) {
   return value ? String(value).split('|').map(a => a.trim()).filter(Boolean) : [];
 }
@@ -103,7 +100,7 @@ export function loadTerms(dataDir, extraTerms = []) {
         throw new Error(`Invalid regex for term "${phrase}" in ${source}: ${message}`);
       }
     }
-    terms[phrase] = { phrase: normalize(term.phrase), type: term.type, neutral: term.neutral || '', stemType: term.stemType || '', regex: term.regex || '', remove: term.remove === true, confidence: term.confidence || 'high', contexts: term.contexts || [] };
+    terms[phrase] = { phrase: normalize(term.phrase), type: term.type, neutral: term.neutral || '', stemType: term.stemType || '', regex: term.regex || '', confidence: term.confidence || 'high', contexts: term.contexts || [] };
     if (term.regex) regexTerms.push({ termId: phrase, pattern: term.regex });
   }
 
@@ -120,7 +117,7 @@ export function loadTerms(dataDir, extraTerms = []) {
       } return i;
     };
     idx('phrase'); idx('type');
-    const phI = idx('phrase'), tyI = idx('type'), neI = headers.indexOf('neutral'), alI = headers.indexOf('aliases'), stI = headers.indexOf('stemmable'), reI = headers.indexOf('regex'), rmI = headers.indexOf('remove'), cxI = headers.indexOf('contexts'), cfI = headers.indexOf('confidence');
+    const phI = idx('phrase'), tyI = idx('type'), neI = headers.indexOf('neutral'), alI = headers.indexOf('aliases'), stI = headers.indexOf('stemmable'), reI = headers.indexOf('regex'), cxI = headers.indexOf('contexts'), cfI = headers.indexOf('confidence');
 
     for (const row of bodyRows) {
       if (!row.some(c => c.trim().length > 0)) {
@@ -140,7 +137,6 @@ export function loadTerms(dataDir, extraTerms = []) {
         aliases: splitAliases(alI >= 0 ? row[alI] || '' : ''),
         stemType: parseStemTypeCell(stI >= 0 ? row[stI] || '' : ''),
         regex: reI >= 0 ? row[reI] || '' : '',
-        remove: rmI >= 0 ? parseBooleanCell(row[rmI] || '') : false,
         contexts: splitAliases(cxI >= 0 ? row[cxI] || '' : ''),
         confidence: cfI >= 0 ? (row[cfI] || '').trim() : '',
       };

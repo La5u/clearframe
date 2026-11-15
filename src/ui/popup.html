@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
+  <title>ClearFrame</title>
   <style>
     :root {
       --ink: #000;
       --stroke: #bbb;
     }
+    [hidden] { display: none !important; }
     * {
       box-sizing: border-box;
       border-radius: 0 !important;
@@ -51,39 +53,6 @@
       min-height: 0;
       overflow: auto;
     }
-    .top-tabs {
-      display: flex;
-      align-items: center;
-      margin: 10px 0;
-    }
-    .top-tab {
-      padding: 0;
-      border: 0;
-      background: transparent;
-      color: var(--ink);
-      cursor: pointer;
-    }
-    .top-tab {
-      font-size: 14px;
-      font-weight: 500;
-    }
-    .top-tab:not(:last-child)::after {
-      content: "|";
-      display: inline-block;
-      padding: 0 8px;
-      font-weight: 400;
-    }
-    .top-tab.active {
-      font-weight: 800;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-    .top-panel {
-      display: none;
-    }
-    .top-panel.active {
-      display: block;
-    }
     .count-row,
     .setting-row {
       display: flex;
@@ -114,7 +83,6 @@
       opacity: 0;
     }
     .toggle input:focus-visible + .track,
-    .top-tab:focus-visible,
     summary:focus-visible,
     a:focus-visible,
     button:focus-visible,
@@ -177,39 +145,6 @@
     .type-chip.disabled {
       opacity: 0.4;
     }
-    .type-chip.dragging {
-      opacity: 0.5;
-    }
-    .type-chip-label {
-      pointer-events: none;
-    }
-    .drop-zone {
-      border: 2px dashed transparent;
-    }
-    .drop-zone.drag-over {
-      border-color: var(--ink);
-    }
-    #reset-btn {
-      margin-top: 4px;
-      padding: 5px 0;
-      border: 0;
-      border-bottom: 1px solid var(--ink);
-      background: transparent;
-      color: var(--ink);
-      cursor: pointer;
-    }
-    #feedback-tools-actions {
-      display: none;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--stroke);
-    }
-    #copy-feedback {
-      padding: 6px 8px;
-      border: 1px solid var(--ink);
-      background: #fff;
-      color: var(--ink);
-    }
-    #feedback-copy-status { margin-left: 8px; font-size: 12px; }
     .muted {
       color: var(--ink);
       font-size: 13px;
@@ -311,99 +246,36 @@
     <p class="tagline">Wording choices to examine, not verdicts.</p>
   </div>
   <div class="content">
-    <div class="top-tabs" role="tablist" aria-label="ClearFrame sections">
-      <button class="top-tab active" id="page-tab" type="button" role="tab" aria-selected="true" aria-controls="page-panel">This page</button>
-      <button class="top-tab" id="study-tab" type="button" role="tab" aria-selected="false" aria-controls="study-panel">Study</button>
-      <button class="top-tab" id="settings-tab" type="button" role="tab" aria-selected="false" aria-controls="settings-panel">Settings</button>
-    </div>
-    <div class="top-panel active" id="page-panel" role="tabpanel" aria-labelledby="page-tab">
-      <div class="count-row">
-        <span>Wordings flagged</span>
-        <span class="count-value" id="detected-count">0</span>
-      </div>
-      <p class="muted" id="page-note" aria-live="polite"></p>
-      <div id="devices"></div>
-    </div>
-    <div class="top-panel" id="study-panel" role="tabpanel" aria-labelledby="study-tab">
-      <div class="setting-row">
-        <div>
-          <span class="setting-title">Predict first</span>
-          <span class="setting-desc" id="predict-first-desc">Hover asks what the wording is doing. Show reveals the device and its effect.</span>
-        </div>
-        <label class="toggle" aria-label="Predict first">
-          <input type="checkbox" id="predict-first" aria-describedby="predict-first-desc">
-          <span class="track" aria-hidden="true"></span>
-        </label>
-      </div>
-      <div class="setting-row">
-        <div>
-          <span class="setting-title">Swap test</span>
-          <span class="setting-desc" id="replace-terms-desc">Shows a neutral alternative in place of each highlighted wording. Hover to see the original. Ask what the original adds.</span>
-        </div>
-        <label class="toggle" aria-label="Swap test">
-          <input type="checkbox" id="replace-terms" aria-describedby="replace-terms-desc">
-          <span class="track" aria-hidden="true"></span>
-        </label>
-      </div>
-      <div class="setting-row">
-        <div>
-          <span class="setting-title">Headlines only</span>
-          <span class="setting-desc" id="headlines-only-desc">Looks at headlines and ignores body text.</span>
-        </div>
-        <label class="toggle" aria-label="Headlines only">
-          <input type="checkbox" id="headlines-only" aria-describedby="headlines-only-desc">
-          <span class="track" aria-hidden="true"></span>
-        </label>
-      </div>
-      <a class="study-link" id="analyze-link" href="analyze.html" target="_blank">Analyse pasted text</a>
-      <p class="muted">ClearFrame reads wording only. It cannot see tone, irony, images or layout, and it misses things. A highlight is a prompt to look closer.</p>
-    </div>
-    <div class="top-panel" id="settings-panel" role="tabpanel" aria-labelledby="settings-tab">
+    <div class="setting-row"><div><span class="setting-title">ClearFrame on</span></div><label class="toggle" aria-label="ClearFrame on"><input type="checkbox" role="switch" id="extension-on"><span class="track" aria-hidden="true"></span></label></div>
+    <label class="choice" id="site-pause-row" hidden><input type="checkbox" id="site-paused"> Pause on this site <span id="site-hostname"></span></label>
+    <div class="count-row" id="count-row"><span>Wordings flagged</span><span class="count-value" id="detected-count">0</span></div>
+    <p class="muted" id="page-note" aria-live="polite"></p>
+    <div id="devices"></div>
+    <details>
+      <summary>Settings</summary>
       <fieldset id="sensitivity">
         <legend>How much to highlight</legend>
         <label class="choice"><input type="radio" name="sensitivity" value="strong"> Strong cues only</label>
         <label class="choice"><input type="radio" name="sensitivity" value="standard"> Standard</label>
         <label class="choice"><input type="radio" name="sensitivity" value="all"> Everything (includes uncertain cues)</label>
       </fieldset>
-      <div class="setting-row">
-        <span class="setting-title">Monochrome highlights</span>
-        <label class="toggle" aria-label="Monochrome highlights">
-          <input type="checkbox" id="monochrome">
-          <span class="track" aria-hidden="true"></span>
-        </label>
+      <div class="setting-row"><div><span class="setting-title">Headlines only</span><span class="setting-desc" id="headlines-only-desc">Looks at headlines and ignores body text.</span></div><label class="toggle" aria-label="Headlines only"><input type="checkbox" role="switch" id="headlines-only" aria-describedby="headlines-only-desc"><span class="track" aria-hidden="true"></span></label></div>
+      <div class="setting-row"><div><span class="setting-title">Colour highlights by group</span></div><label class="toggle" aria-label="Colour highlights by group"><input type="checkbox" role="switch" id="colour-groups"><span class="track" aria-hidden="true"></span></label></div>
+      <div class="setting-row"><div><span class="setting-title">Study mode</span></div><label class="toggle" aria-label="Study mode"><input type="checkbox" role="switch" id="study-mode"><span class="track" aria-hidden="true"></span></label></div>
+      <div id="study-options" hidden>
+        <div class="setting-row"><div><span class="setting-title">Predict first</span><span class="setting-desc" id="predict-first-desc">Hover asks what the wording is doing. Show reveals the device and its effect. Alt+Shift+P.</span></div><label class="toggle" aria-label="Predict first"><input type="checkbox" role="switch" id="predict-first" aria-describedby="predict-first-desc"><span class="track" aria-hidden="true"></span></label></div>
+        <div class="setting-row"><div><span class="setting-title">Swap test</span><span class="setting-desc" id="replace-terms-desc">Shows a neutral alternative. Hover for the original and ask what it adds. Alt+Shift+R.</span></div><label class="toggle" aria-label="Swap test"><input type="checkbox" role="switch" id="replace-terms" aria-describedby="replace-terms-desc"><span class="track" aria-hidden="true"></span></label></div>
       </div>
       <div class="section-title">Devices</div>
       <div id="color-groups"></div>
-      <button id="reset-btn" type="button">Reset colors</button>
-      <p class="muted">Tap a device to turn it on or off. Drag it to another group to change its color.</p>
-      <details>
-        <summary>Advanced</summary>
-        <div class="setting-row">
-          <div>
-            <span class="setting-title">Remove mode</span>
-            <span class="setting-desc" id="remove-terms-desc">Deletes wording marked removable. This hides evidence; use with care.</span>
-          </div>
-          <label class="toggle" aria-label="Remove mode">
-            <input type="checkbox" id="remove-terms" aria-describedby="remove-terms-desc">
-            <span class="track" aria-hidden="true"></span>
-          </label>
-        </div>
-        <div class="setting-row">
-          <span class="setting-title">Feedback tools</span>
-          <label class="toggle" aria-label="Feedback tools: save local feedback and text suggestions">
-            <input type="checkbox" id="feedback-enabled">
-            <span class="track" aria-hidden="true"></span>
-          </label>
-        </div>
-        <div id="feedback-tools-actions">
-          <button id="copy-feedback" type="button">Copy saved feedback</button>
-          <span id="feedback-copy-status" aria-live="polite"></span>
-        </div>
-      </details>
-    </div>
+      <p class="muted">Select a device to turn it on or off.</p>
+      <div class="setting-row"><span id="dismissed-count" aria-live="polite">0 dismissed wordings</span><button id="restore-dismissed" type="button" hidden>Restore all</button></div>
+      <a class="study-link" id="analyze-link" href="analyze.html" target="_blank" rel="noreferrer">Analyse pasted text</a>
+    </details>
+    <p class="muted">ClearFrame reads wording only; it misses tone, irony, images and layout.</p>
   </div>
   <div class="footer">
-    <span id="popup-version">v1.0.0</span>
+    <span id="popup-version"></span>
     <a id="github-link" href="https://github.com/la5u/clearframe" target="_blank" rel="noreferrer">GitHub</a>
   </div>
   <script type="module" src="popup.js"></script>

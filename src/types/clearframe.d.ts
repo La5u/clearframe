@@ -1,12 +1,23 @@
 export {};
 
+export interface ClearFrameSettings {
+  paused: boolean;
+  pausedSites: string[];
+  studyMode: boolean;
+  replaceTerms: boolean;
+  predictFirst: boolean;
+  monochrome: boolean;
+  headlinesOnly: boolean;
+  sensitivity: string;
+  types: Record<string, boolean>;
+}
+
 interface ClearFrameTerm {
   phrase: string;
   type: string;
   neutral?: string;
   stemType?: string;
   regex?: string;
-  remove?: boolean;
   confidence?: string;
   contexts?: string[];
 }

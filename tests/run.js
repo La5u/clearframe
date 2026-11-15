@@ -13,7 +13,7 @@ import { ALL_CAPS_TERM_ID, findAllCapsMatches } from '../src/core/all-caps.js';
 import { getAllCapsAction, getContextualAllCapsAction, lowerAllCapsLongWords, matchReplacementCase } from '../src/core/display-utils.js';
 import { COMMON_SHORT_WORDS } from '../src/core/commonShortWords.js';
 import { chooseAction, chooseReplacementTerm, getReplacementSourceText, resolveMatchGroups } from '../src/core/match-plan.js';
-import { normalizeSettings } from '../src/core/settings-utils.js';
+import { DEFAULT_SETTINGS, normalizeSettings, isPaused } from '../src/core/settings-utils.js';
 import { EXPECTED_COUNTS } from './fixtures.js';
 import { assertSourcesAllowed, loadSourceRegistry } from '../tools/source-policy.js';
 import { loadRuleRecords } from '../tools/rule-utils.js';
@@ -53,17 +53,15 @@ assert.strictEqual(recoverOriginalText(rewrittenNode, 'Boil trouble.'), 'Boil ho
 assert.strictEqual(recoverOriginalText(rewrittenNode, 'Boil trouble. It is ready.'), 'Boil hot water. It is ready.');
 assert.strictEqual(recoverOriginalText(rewrittenNode, 'Now: Boil trouble.'), 'Now: Boil hot water.');
 assert.strictEqual(recoverOriginalText(rewrittenNode, 'Boil big trouble.'), null);
-const removedNode = { originalText: 'A shocking twist ends.', displayedText: 'A  twist ends.', records: [{ startOffset: 2, endOffset: 2, sourceText: 'shocking', replacementText: '' }] };
-assert.strictEqual(recoverOriginalText(removedNode, 'A  twist ends. Update.'), 'A shocking twist ends. Update.');
 
 // The content script's per-text analysis: display text plus one entry per
 // detection as "source>replacement action highlightName". Mode is highlight,
-// reword (replaceTerms) or remove (removeTerms).
+// reword (replaceTerms in Study mode).
 const { analyze } = createAnalyzer({ index });
-const ANALYZE_SETTINGS = { highlight: normalizeSettings({}), reword: normalizeSettings({ replaceTerms: true }), remove: normalizeSettings({ removeTerms: true }) };
+const ANALYZE_SETTINGS = { highlight: normalizeSettings({ sensitivity: 'standard' }), reword: normalizeSettings({ sensitivity: 'standard', studyMode: true, replaceTerms: true }) };
 const PUBLICATION = { pageContext: 'publication' };
 // Long nodes must stay within the scanner's responsiveness budget (best of three).
-const performanceSettings = normalizeSettings({ sensitivity: 'all' });
+const performanceSettings = normalizeSettings({ sensitivity: 'all', types: { modality: true } });
 for (const [phrase, repeats, expected] of /** @type {Array<[string, number, number]>} */ ([
   ['We must go. ', 1700, 1700], ['a, ', 7000, 0], ['no jobs, no homes and no hope. ', 650, 650],
 ])) {
@@ -109,14 +107,10 @@ const ANALYZE_CASES = [
   ['The committee met on Tuesday.', 'reword', PUBLICATION, 'The committee met on Tuesday.', []],
   ['Meta axes 8,000 jobs.', 'highlight', PUBLICATION, 'Meta axes 8,000 jobs.', ['axes>axes highlighted clearframe-dysphemism']],
   ['Meta axes 8,000 jobs.', 'reword', PUBLICATION, 'Meta cuts 8,000 jobs.', ['axes>cuts replaced clearframe-dysphemism-underline']],
-  ['EXCLUSIVE: Chilling details emerge.', 'remove', PUBLICATION, 'Details emerge.', ['EXCLUSIVE: > removed null', 'Chilling d>D removed null']],
   ['A SHOCKING twist.', 'reword', PUBLICATION, 'A shocking twist.', ['SHOCKING>shocking replaced clearframe-all-caps-underline']],
   ['A SHOCKING twist.', 'highlight', { ...PUBLICATION, capsLabel: true }, 'A SHOCKING twist.', []],
   // Same span: the lexical term decides, on caps-normalized wording.
   ['The report was CHILLING.', 'reword', PUBLICATION, 'The report was chilling.', ['CHILLING>chilling replaced clearframe-fear']],
-  ['The report was CHILLING.', 'remove', PUBLICATION, 'The report was.', [' CHILLING> removed null']],
-  // A caps run wider than the lexical term is only caps-normalized, never removed.
-  ['This is CHILLING NEWS for everyone.', 'remove', PUBLICATION, 'This is CHILLING NEWS for everyone.', ['CHILLING NEWS>CHILLING NEWS highlighted clearframe-fear']],
   ['This is CHILLING NEWS for everyone.', 'reword', PUBLICATION, 'This is chilling news for everyone.', ['CHILLING NEWS>chilling news replaced clearframe-fear']],
   ['Is this the end of DEVASTATING cuts?', 'reword', { ...PUBLICATION, headline: true }, 'Is this the end of devastating cuts?', ['Is this the end of DEVASTATING cuts?>Is this the end of devastating cuts? replaced clearframe-clickbait']],
   ['Is this the end of DEVASTATING cuts?', 'reword', { ...PUBLICATION, headline: true, preserveText: true }, 'Is this the end of DEVASTATING cuts?', ['Is this the end of DEVASTATING cuts?>Is this the end of DEVASTATING cuts? highlighted clearframe-clickbait']],
@@ -130,7 +124,7 @@ const ANALYZE_CASES = [
   ['THIS IS BIG NEWS FOR EVERYONE', 'reword', PUBLICATION, 'This is big news for everyone', ['THIS IS BIG NEWS FOR EVERYONE>This is big news for everyone replaced clearframe-all-caps-underline']],
   ['WAR IN THE MIDDLE EAST', 'reword', PUBLICATION, 'War in the Middle East', ['WAR IN THE MIDDLE EAST>War in the Middle East replaced clearframe-all-caps-underline']],
   // A capitalised term inside a name or title is only highlighted.
-  ['Compared to 2003’s Shock and Awe invasion', 'remove', { ...PUBLICATION, headline: true }, 'Compared to 2003’s Shock and Awe invasion', ['Shock>Shock highlighted clearframe-clickbait']],
+  ['Compared to 2003’s Shock and Awe invasion', 'reword', { ...PUBLICATION, headline: true }, 'Compared to 2003’s Shock and Awe invasion', ['Shock>Shock highlighted clearframe-clickbait']],
 ];
 for (const [text, mode, context, displayText, entries] of ANALYZE_CASES) {
   const plan = analyze(text, context, ANALYZE_SETTINGS[mode]);
@@ -152,27 +146,7 @@ for (const [text, context, expected] of SENSITIVITY_CASES) {
   }
 }
 assert.deepStrictEqual(analyze('The alleged scandal.', PUBLICATION, normalizeSettings({ headlinesOnly: true })), { displayText: 'The alleged scandal.', entries: [] }, 'headlinesOnly skips body text');
-assert.strictEqual(analyze('The alleged scandal.', { ...PUBLICATION, headline: true }, normalizeSettings({ headlinesOnly: true })).entries.length, 2, 'headlinesOnly keeps headlines');
-// Remove mode tidies the text around a removal; swapping each entry's
-// replacementText back for its sourceText restores the exact original.
-for (const [text, displayText] of [
-  ['EXCLUSIVE - Ewan speaks out', 'Ewan speaks out'],
-  ['The heartbreaking consequences of it', 'The consequences of it'],
-  ["Twins' 'heartbreaking' diagnosis", "Twins' diagnosis"],
-  ['She was a shocking sight. Chilling moment fans clash with police', 'She was a sight. Moment fans clash with police'],
-  ['Fans left in shock, then fury', 'Fans left in, then fury'],
-]) {
-  const plan = analyze(text, { ...PUBLICATION, headline: true }, ANALYZE_SETTINGS.remove);
-  assert.strictEqual(plan.displayText, displayText, `remove: ${text}`);
-  const rebuilt = plan.entries.reduceRight((value, entry) => value.slice(0, entry.start) + entry.sourceText + value.slice(entry.end), plan.displayText);
-  assert.strictEqual(rebuilt, text, `remove restores: ${text}`);
-  const records = plan.entries.map(entry => ({ ...entry, startOffset: entry.start, endOffset: entry.end }));
-  const node = { originalText: text, displayedText: plan.displayText, records };
-  assert.strictEqual(recoverOriginalText(node, plan.displayText), text);
-  assert.strictEqual(recoverOriginalText(node, `${plan.displayText} Update.`), `${text} Update.`);
-  for (const entry of plan.entries) assert.strictEqual(plan.displayText.slice(entry.start, entry.end), entry.replacementText, `remove offsets: ${text}`);
-  assert.ok(plan.entries.every(entry => entry.sourceText.includes(entry.wording)), `wording inside the removed span: ${text}`);
-}
+assert.strictEqual(analyze('The alleged scandal.', { ...PUBLICATION, headline: true }, normalizeSettings({ headlinesOnly: true })).entries.length, 1, 'headlinesOnly keeps headlines');
 // Phrases match across any whitespace run (newline, tab, nbsp, repeated or blank-line gaps);
 // offsets stay on the original text and never start or end on whitespace.
 for (const [text, wording] of [
@@ -188,15 +162,14 @@ assert.deepStrictEqual(findMatches(matcher, 'out of\nthe bluebird', index.termsB
 assert.strictEqual(findContextualMatches('One of the most\ndramatic moments in\nhistory', { headline: true }).length, 1, 'contextual patterns cross source whitespace');
 // Headline rules see the same wording (these are low-confidence cues, so every sensitivity level is needed).
 for (const [text, wording] of [['Why you\nneed\nto care', 'need\nto'], ['Third\ntime lucky', 'Third\ntime lucky']]) {
-  assert.ok(analyze(text, { ...PUBLICATION, headline: true }, normalizeSettings({ sensitivity: 'all' })).entries.some(entry => entry.sourceText === wording), `headline ${JSON.stringify(text)}`);
+  assert.ok(analyze(text, { ...PUBLICATION, headline: true }, normalizeSettings({ sensitivity: 'all', types: { modality: true } })).entries.some(entry => entry.sourceText === wording), `headline ${JSON.stringify(text)}`);
 }
 for (const [text, mode, displayText, source] of [
   ['It was a collateral\ndamage case.', 'reword', 'It was a civilian harm case.', 'collateral\ndamage'],
   ['COLLATERAL  DAMAGE rose.', 'reword', 'Civilian harm rose.', 'COLLATERAL  DAMAGE'],
   ['He passed\u00a0 away today.', 'reword', 'He died today.', 'passed\u00a0 away'],
-  ['A breath\ttaking view', 'remove', 'A view', 'breath\ttaking '],
 ]) {
-  const plan = analyze(text, PUBLICATION, mode === 'remove' ? normalizeSettings({ removeTerms: true, types: { exaggeration: true } }) : ANALYZE_SETTINGS[mode]);
+  const plan = analyze(text, PUBLICATION, ANALYZE_SETTINGS[mode]);
   assert.strictEqual(plan.displayText, displayText, `${mode}: ${JSON.stringify(text)}`);
   assert.deepStrictEqual(plan.entries.map(entry => entry.sourceText), [source], `${mode} source: ${JSON.stringify(text)}`);
   assert.strictEqual(plan.entries.reduceRight((value, entry) => value.slice(0, entry.start) + entry.sourceText + value.slice(entry.end), plan.displayText), text, `${mode} restores: ${JSON.stringify(text)}`);
@@ -435,13 +408,13 @@ const DEVICE_CASES = [
   ['anaphora', 'We will fight on the beaches. We will fight in the hills.', { conversational: true }, []],
 ];
 for (const [type, text, context, wordings] of DEVICE_CASES) {
-  const plan = analyze(text, { ...PUBLICATION, ...context }, normalizeSettings({ sensitivity: 'all' }));
+  const plan = analyze(text, { ...PUBLICATION, ...context }, normalizeSettings({ sensitivity: 'all', types: { 'direct-address': true, imperative: true, modality: true } }));
   const entries = plan.entries.filter(entry => entry.terms.some(term => term.type === type));
   assert.deepStrictEqual(entries.map(entry => entry.wording), wordings, `${type}: ${text}`);
   for (const entry of entries) assert.strictEqual(text.slice(entry.start, entry.end), entry.wording, `${type} offsets: ${text}`);
 }
-// Default level: word devices only in headlines, anaphora yes, tricolon only at "everything".
-const standardTypes = (text, context) => analyze(text, { ...PUBLICATION, ...context }, normalizeSettings({})).entries.map(entry => entry.term.type);
+// At Standard with word devices enabled: headline words, anaphora, and no tricolon.
+const standardTypes = (text, context) => analyze(text, { ...PUBLICATION, ...context }, normalizeSettings({ sensitivity: 'standard', types: { 'direct-address': true, imperative: true, modality: true } })).entries.map(entry => entry.term.type);
 assert.deepStrictEqual(standardTypes('Come clean about the payments', { headline: true }), ['imperative']);
 assert.ok(!standardTypes('Come clean Hilary Duff gets wet and wild', { headline: true }).includes('imperative'));
 assert.deepStrictEqual(standardTypes('You must act', { headline: true }), ['direct-address', 'modality']);
@@ -450,13 +423,13 @@ assert.deepStrictEqual(standardTypes('We will fight on the beaches. We will figh
 assert.deepStrictEqual(standardTypes('Faster, cheaper and safer', {}), []);
 assert.deepStrictEqual(standardTypes('Hope is a must', { headline: true }), []);
 // They are only ever highlighted, and an older type keeps its span.
-for (const mode of ['reword', 'remove']) {
-  const plan = analyze('Find out how you must act: no jobs, no homes, no hope', { ...PUBLICATION, headline: true }, normalizeSettings({ sensitivity: 'all', [mode === 'remove' ? 'removeTerms' : 'replaceTerms']: true }));
+for (const mode of ['reword']) {
+  const plan = analyze('Find out how you must act: no jobs, no homes, no hope', { ...PUBLICATION, headline: true }, normalizeSettings({ sensitivity: 'all', studyMode: true, replaceTerms: true }));
   assert.ok(plan.entries.length && plan.entries.every(entry => entry.action === 'highlighted'), mode);
 }
-assert.deepStrictEqual(analyze('Act now, we must win', { ...PUBLICATION, headline: true }, normalizeSettings({})).entries.map(entry => `${entry.wording}:${entry.term.type}`), ['Act now:clickbait', 'must:modality'], 'clickbait imperatives keep their longer span and label');
+assert.deepStrictEqual(analyze('Act now, we must win', { ...PUBLICATION, headline: true }, normalizeSettings({ sensitivity: 'standard', types: { modality: true } })).entries.map(entry => `${entry.wording}:${entry.term.type}`), ['Act now:clickbait', 'must:modality'], 'clickbait imperatives keep their longer span and label');
 assert.strictEqual(analyze("'Our' plan, they said", { ...PUBLICATION, headline: true }, normalizeSettings({ sensitivity: 'all', types: { quote: true } })).entries.map(entry => entry.term.type).join(), 'quote', 'a word inside a scare quote is not a device of its own');
-assert.strictEqual(normalizeSettings({}).types.modality, undefined, 'new devices are on by default');
+assert.strictEqual(normalizeSettings({}).types.modality, false, 'modality is off by default');
 assert.ok(findContextualMatches("The 'miracle' cure", { headline: true }).some(match => match.termId === '__clearframe_quoted_wording__'));
 for (const sample of ["don't do anything", "don't panic if it isn't ready", "James' plan", "students' work", "rock ’n’ roll", "the '90s", "a 6\" screen and 8\" tablet"]) {
   assert.ok(!findContextualMatches(sample, { headline: true }).some(match => match.termId === '__clearframe_quoted_wording__'), `apostrophe sanity check failed: ${sample}`);
@@ -607,9 +580,9 @@ assert.strictEqual(
   'quoted inflections must use the phrase matcher without per-rule regex scans',
 );
 
-const allCapsTestTerm = { phrase: 'caps emphasis', neutral: 'caps emphasis', remove: false };
-const getAction = (term, { removeTerms = false, replaceTerms = true } = {}) => chooseAction(term, { removeTerms, replaceTerms });
-assert.strictEqual(chooseAction(index.termsById.exclusive, { removeTerms: true, replaceTerms: true }, true), 'highlighted', 'protected text is never reworded');
+const allCapsTestTerm = { phrase: 'caps emphasis', neutral: 'caps emphasis' };
+const getAction = term => chooseAction(term, { studyMode: true, replaceTerms: true });
+assert.strictEqual(chooseAction(index.termsById.exclusive, { studyMode: true, replaceTerms: true }, true), 'highlighted', 'protected text is never reworded');
 const groupedAllCapsOverlap = resolveMatchGroups([
   { start: 0, end: 7, termId: 'finally' },
   { start: 0, end: 7, termId: '__clearframe_all_caps__', virtual: true },
@@ -620,7 +593,7 @@ assert.deepStrictEqual(
   ['finally', 'third-type', '__clearframe_all_caps__'],
 );
 assert.ok(!groupedAllCapsOverlap[0].expanded, 'same-span groups may still reword the lexical term');
-// "FINALLY COURT FINDS NO FRAUD": the caps run spans the headline, so "finally" must not reword or remove all of it.
+// "FINALLY COURT FINDS NO FRAUD": the caps run spans the headline, so "finally" must not reword all of it.
 const headlineGroup = resolveMatchGroups([
   { start: 0, end: 7, termId: 'finally' },
   { start: 0, end: 27, termId: '__clearframe_all_caps__', virtual: true },
@@ -628,17 +601,9 @@ const headlineGroup = resolveMatchGroups([
 assert.strictEqual(headlineGroup.length, 1);
 assert.ok(headlineGroup[0].expanded);
 
-const exclusiveTerm = chooseReplacementTerm(
-  [index.termsById.exclusive, allCapsTestTerm],
-  term => getAction(term, { removeTerms: true }),
-  allCapsTestTerm.phrase,
-);
-assert.strictEqual(exclusiveTerm.phrase, 'exclusive');
-assert.strictEqual(getAction(exclusiveTerm, { removeTerms: true }), 'removed');
-
 const finallyTerm = chooseReplacementTerm(
   [index.termsById.finally, allCapsTestTerm],
-  term => getAction(term, { removeTerms: false }),
+  term => getAction(term),
   allCapsTestTerm.phrase,
 );
 const finallySource = getReplacementSourceText(
@@ -653,7 +618,7 @@ assert.strictEqual(matchReplacementCase(finallySource, finallyTerm.neutral), 'no
 
 const neverTerm = chooseReplacementTerm(
   [index.termsById.never, allCapsTestTerm],
-  term => getAction(term, { removeTerms: false }),
+  term => getAction(term),
   allCapsTestTerm.phrase,
 );
 assert.strictEqual(neverTerm.phrase, allCapsTestTerm.phrase);
@@ -671,22 +636,15 @@ assert.deepStrictEqual(
 
 assert.deepStrictEqual(
   normalizeSettings({ types: {} }).types,
-  { absolute: false, superlative: false, quote: false },
+  { absolute: false, superlative: false, quote: false, 'direct-address': false, imperative: false, modality: false },
 );
 assert.deepStrictEqual(
   normalizeSettings({ types: { loaded: false } }).types,
-  { absolute: false, superlative: false, quote: false, loaded: false },
-);
-assert.deepStrictEqual(
-  normalizeSettings({ userTypeColors: { hype: 'red' } }, { moral: 'blue' }).userTypeColors,
-  { hype: 'red', moral: 'blue' },
+  { absolute: false, superlative: false, quote: false, 'direct-address': false, imperative: false, modality: false, loaded: false },
 );
 assert.strictEqual(normalizeSettings().monochrome, true, 'highlights are monochrome by default');
 assert.strictEqual(normalizeSettings({ monochrome: false }).monochrome, false, 'a saved color choice is kept');
 assert.strictEqual(normalizeSettings({ monochrome: true }).monochrome, true);
-assert.strictEqual(normalizeSettings().feedbackEnabled, false);
-assert.strictEqual(normalizeSettings({ feedbackEnabled: true }).feedbackEnabled, true);
-assert.strictEqual(normalizeSettings({ feedbackEnabled: 'false' }).feedbackEnabled, false);
 assert.strictEqual(normalizeSettings({ replaceTerms: 1, monochrome: 'true' }).replaceTerms, false);
 assert.strictEqual(normalizeSettings({ types: { loaded: 'false' } }).types.loaded, false);
 assert.deepStrictEqual(normalizeSettings([]), normalizeSettings());
@@ -696,7 +654,7 @@ assert.deepStrictEqual(
   'legacy site activation must be discarded',
 );
 assert.deepStrictEqual(
-  normalizeSettings(null, null),
+  normalizeSettings(null),
   normalizeSettings(),
   'null settings must fall back to defaults',
 );
@@ -706,17 +664,64 @@ assert.deepStrictEqual(
   'malformed nested settings must fall back to defaults',
 );
 
-// The three newer settings: defaults, accepted values, and fallbacks for anything else.
+// Confidence and study preferences: defaults, accepted values, and fallbacks.
 for (const [raw, expected] of /** @type {Array<[any, any]>} */ ([
-  [undefined, { predictFirst: false, headlinesOnly: false, sensitivity: 'standard' }],
-  [{}, { predictFirst: false, headlinesOnly: false, sensitivity: 'standard' }],
+  [undefined, { predictFirst: false, headlinesOnly: false, sensitivity: 'strong' }],
+  [{}, { predictFirst: false, headlinesOnly: false, sensitivity: 'strong' }],
   [{ predictFirst: true, headlinesOnly: true, sensitivity: 'strong' }, { predictFirst: true, headlinesOnly: true, sensitivity: 'strong' }],
   [{ sensitivity: 'all' }, { predictFirst: false, headlinesOnly: false, sensitivity: 'all' }],
-  [{ predictFirst: 'true', headlinesOnly: 1, sensitivity: 'loud' }, { predictFirst: false, headlinesOnly: false, sensitivity: 'standard' }],
+  [{ predictFirst: 'true', headlinesOnly: 1, sensitivity: 'loud' }, { predictFirst: false, headlinesOnly: false, sensitivity: 'strong' }],
 ])) {
   const { predictFirst, headlinesOnly, sensitivity } = normalizeSettings(raw);
   assert.deepStrictEqual({ predictFirst, headlinesOnly, sensitivity }, expected, JSON.stringify(raw));
 }
+
+// Pause preferences are strict booleans and normalized, unique hostnames.
+assert.strictEqual(normalizeSettings().paused, false);
+assert.strictEqual(normalizeSettings({ paused: true }).paused, true);
+assert.strictEqual(normalizeSettings({ paused: 'true' }).paused, false);
+assert.deepStrictEqual(normalizeSettings().pausedSites, []);
+assert.deepStrictEqual(normalizeSettings({ pausedSites: ['WWW.Example.COM', 'example.com', ' News.Example.COM ', 42, null, ''] }).pausedSites, ['example.com', 'news.example.com']);
+assert.deepStrictEqual(normalizeSettings({ pausedSites: 'example.com' }).pausedSites, []);
+const sitePause = normalizeSettings({ pausedSites: ['www.example.com'] });
+assert.strictEqual(isPaused(sitePause, 'WWW.EXAMPLE.COM'), true);
+assert.strictEqual(isPaused(sitePause, 'other.example.com'), false);
+assert.strictEqual(isPaused(sitePause, 'example.com', true), false, 'own analyze page ignores site pause');
+assert.strictEqual(isPaused(normalizeSettings({ paused: true }), '', true), true, 'own analyze page obeys global pause');
+assert.deepStrictEqual(analyze('Meta axes jobs.', PUBLICATION, normalizeSettings({ paused: true })), { displayText: 'Meta axes jobs.', entries: [] });
+// Old settings, including nested colours, never reach active settings.
+assert.deepStrictEqual(normalizeSettings({ removeTerms: true, feedbackEnabled: true, userTypeColors: { hype: 'red' }, enabled: false, siteEnabled: {} }), normalizeSettings());
+assert.strictEqual(DEFAULT_SETTINGS.sensitivity, 'strong');
+assert.ok(Object.values(index.termsById).every(term => !('remove' in term)), 'legacy CSV removal column is ignored by the build');
+assert.strictEqual(normalizeSettings({ sensitivity: 'standard', types: { imperative: true, modality: true, 'direct-address': true } }).types.imperative, true, 'saved type choices survive');
+assert.strictEqual(normalizeSettings({ sensitivity: 'standard' }).sensitivity, 'standard', 'saved sensitivity survives');
+// Dismiss the canonical rule phrase, including every alias, case and inflection.
+const dismissedSettings = { ...normalizeSettings({ sensitivity: 'all' }), dismissedTerms: new Set(['axe']) };
+for (const text of ['Meta axes jobs.', 'Meta axed jobs.', 'Meta AXED jobs.']) {
+  assert.ok(!analyze(text, PUBLICATION, dismissedSettings).entries.some(entry => entry.terms.some(term => term.phrase === 'axe')), `dismissed stem: ${text}`);
+}
+assert.ok(analyze('Meta axes jobs.', PUBLICATION, dismissedSettings).entries.length === 0, 'dismissed wording has no highlight');
+const dismissedRegex = { ...normalizeSettings(), dismissedTerms: new Set(['reveal']) };
+assert.ok(!analyze('The secret was revealed.', PUBLICATION, dismissedRegex).entries.some(entry => entry.terms.some(term => term.phrase === 'reveal')), 'dismissed regex terms are excluded');
+assert.ok(analyze('Meta axes jobs.', PUBLICATION, normalizeSettings()).entries.length, 'restoring dismissed phrases flags them again');
+for (const studyMode of [false, true]) {
+  const plan = analyze('Meta axes jobs.', PUBLICATION, normalizeSettings({ studyMode, replaceTerms: true }));
+  assert.strictEqual(plan.displayText, studyMode ? 'Meta cuts jobs.' : 'Meta axes jobs.', 'Study mode gates stored reword preference');
+  assert.strictEqual(plan.entries[0].action, studyMode ? 'replaced' : 'highlighted');
+}
+assert.strictEqual(normalizeSettings().studyMode, false);
+assert.strictEqual(normalizeSettings({ studyMode: true }).studyMode, true);
+assert.strictEqual(normalizeSettings({ studyMode: 'true' }).studyMode, false);
+assert.deepStrictEqual(analyze('You must act', { ...PUBLICATION, headline: true }, normalizeSettings()).entries, [], 'address and modality are quiet by default');
+// Compact built terms use their ID as the canonical phrase; aliases share it.
+const compactAnalyzer = createAnalyzer({ index: { termsById: { wording: { type: 'hype' }, alias: { phrase: 'wording', type: 'hype' } } } });
+assert.strictEqual(compactAnalyzer.analyze('wording alias', PUBLICATION, normalizeSettings()).entries.length, 2);
+assert.deepStrictEqual(compactAnalyzer.analyze('wording alias', PUBLICATION, { ...normalizeSettings(), dismissedTerms: new Set(['wording']) }).entries, []);
+// Every labelled type appears exactly once in the six groups.
+assert.strictEqual(Object.keys(colorConfig.colors).length, 6);
+const groupedTypes = Object.values(colorConfig.colors).flatMap(group => group.types);
+assert.strictEqual(new Set(groupedTypes).size, groupedTypes.length);
+assert.deepStrictEqual([...groupedTypes].sort(), Object.keys(JSON.parse(fs.readFileSync(path.join(ROOT, 'data/type-labels.json'), 'utf8')).types).sort());
 
 const invalidTermsDir = fs.mkdtempSync(path.join(os.tmpdir(), 'clearframe-terms-'));
 try {

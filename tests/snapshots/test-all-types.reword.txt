@@ -1,4 +1,4 @@
-# test-all-types.html mode=reword highlights=122
+# test-all-types.html mode=reword highlights=120
 aggression-underline | st | hit with | rip | roast | [harsh] | slam | taken out | torch |
 aggression | rip | roast | harsh | slam | [taken out] | torch | under fire
 aggression | | slam | taken out | torch | [under fire]
@@ -29,7 +29,6 @@ derogatory | arge group | illegal aliens | [mob] | radical | thug | poor quali
 derogatory | roup | illegal aliens | mob | [radical] | thug | poor quality
 derogatory | egal aliens | mob | radical | [thug] | poor quality
 derogatory-underline | iens | mob | radical | thug | [poor quality]
-distancing-medium | [alleged] | purportedly | suspected
 distancing | alleged | [purportedly] | suspected
 distancing | alleged | purportedly | [suspected]
 euphemism-underline | [civilian harm] | torture | assault | died |
@@ -48,7 +47,6 @@ exaggeration | e | outrageous | staggering | [totally] | up to 10
 exaggeration | eous | staggering | totally | [up to] 10
 fear | dangerous | [frighten] | horrify | panic | terrify |
 fear | dangerous | frighten | [horrify] | panic | terrify | terror |
-fear-medium | gerous | frighten | horrify | [panic] | terrify | terror | threat |
 fear | frighten | horrify | panic | [terrify] | terror | threat | urgent
 hype | [big win] | breakthrough | cutting-edge
 hype | big win | [breakthrough] | cutting-edge | game-changin
